@@ -5,7 +5,6 @@
 #include <Engine/Physics/PhysicsManager.h>
 #include <Engine/Network/NetworkManager.h>
 #include <Engine/Audio/AudioManager.h>
-#include <Engine/Font/FontManager.h>
 #include <Engine/Renderer/VertexBuffer/VertexBufferDX11.h>
 #include <Engine/Resource/ResourceCache.h>
 #include <Engine/Model/Model.h>
@@ -15,7 +14,11 @@
 
 namespace challenge
 {
+	static const std::string kDefaultFont = "arial";
+	static const int kDefaultFontSize = 15;
+
 	GameApplication* GameApplication::mGameInstance = NULL;
+	Font* GameApplication::sDefaultFont = NULL;
 
 	GameApplication::GameApplication(void)
 	{
@@ -282,6 +285,12 @@ namespace challenge
 		}
 
 		return NULL;
+	}
+
+	/* GUI Methods */
+	void GameApplication::SetRootView(View *view)
+	{
+		mUIManager->AddControl(view);
 	}
 
 	RendererType GameApplication::GetRendererType()

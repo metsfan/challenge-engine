@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Engine/Challenge.h>
-#include <Engine/Renderer/Texture.h>
+#include <Engine/Renderer/Renderer.h>
 #include <Engine/Input/InputManager.h>
 #include <Engine/UI/Events/UIEventArgs.h>
 
@@ -63,6 +63,9 @@ namespace challenge
 		View();
 		View(Frame frame);
 		virtual ~View(void);
+
+		virtual void Update(int deltaMillis);
+		virtual void Render(IGraphicsDevice *device, RenderState &state);
 
 		void SetFrame(Frame frame) 
 		{ 
@@ -133,12 +136,6 @@ namespace challenge
 				mAdjustedFrame = mFrame; 
 			}
 		}
-
-		void UpdateBase(int deltaMillis);
-		virtual void Update(int deltaMillis) {}
-
-		void RenderBase(UIManager *manager, Point origin);
-		virtual void Render(UIManager *manager, Point origin) {}
 
 		void OnKeyDown(const KeyboardEvent &e);
 		void OnKeyUp(const KeyboardEvent &e);

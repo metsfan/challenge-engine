@@ -1,34 +1,45 @@
 #pragma once
 
 #include <Engine/Challenge.h>
+#include <Engine/Font/FontTypes.h>
+
 #include <ft2build.h>
-#include <glm/glm.hpp>
-#include "FontTypes.h"
-#include "GlyphAtlas.h"
 #include FT_FREETYPE_H 
 
 namespace challenge
 {
 	typedef std::vector<GlyphSpan> TSpanList;
+    
+    class FontFace;
 
 	class Glyph
 	{
 		friend class Font;
+        friend class FontFace;
 
 	public:
-		Glyph(FT_Library &library, FT_Face &face, char c, int outlineWidth);
+		Glyph(FT_Library &library, FontFace &fontFace, int c, int outlineWidth);
+        ~Glyph();
 
-		void CopyToAtlas(GlyphAtlas &atlas);
+		void RenderToBuffer(FontColor &color, FontTexel *buffer, Size &size, Point &offset, int lineHeight, Glyph *prevChar = NULL);
+
+		const Point& GetAdvance() const { return mAdvance; }
+		const Size& GetSize() const { return mSize; }
+        const Point& GetBearing() const { return mBearing; }
+        const int GetKerning(Glyph *prevChar);
+        const int GetCharacter() { return mChar; }
 
 	private:
 		Size mSize;
 		Point mBearing;
 		Point mAdvance;
-		glm::vec2 mMinTexCoord;
-		glm::vec2 mMaxTexCoord;
+		Vector2 mMinTexCoord;
+		Vector2 mMaxTexCoord;
 		unsigned char *mBuffer;
 		unsigned int mGlyphIndex;
 		TSpanList mSpans;
+		int mChar;
+        FontFace &mFont;
 
 		void RenderSpans(FT_Library &library, FT_Outline *outline);
 		void AddSpan(int y, int count, const FT_Span *spans);

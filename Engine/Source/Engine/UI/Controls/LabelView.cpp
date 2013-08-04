@@ -1,51 +1,47 @@
 #include <Engine/Challenge.h>
 #include <Engine/UI/UIManager.h>
-#include <Engine/Font/FontManager.h>
-#include <Engine/Font/FontTypes.h>
+#include <Engine/Font/FontEngine.h>
+#include <Engine/Font/Font.h>
 #include <Engine/GameApplication.h>
 #include <Engine/Renderer/Texture/Texture2DDX11.h>
 #include <Engine/UI/Controls/LabelView.h>
 
 namespace challenge
 {
-	LabelView::LabelView() : View()
+	static const std::string kDefaultFont = "arial";
+	static const int kDefaultFontSize = 15;
+
+	LabelView::LabelView() : 
+		View(),
+		mLabelTexture(NULL),
+		mFont(NULL),
+		mTextChanged(false)
 	{
-		FONT_DESC font;
-		font.FontFamily = "arial";
-		font.FontSize = 15;
-		//mFont = FontManager::GetInstance()->GetFont(font);
-		mLabelTexture = NULL;
+		this->SetFont(Font::GetFont(kDefaultFont, kDefaultFontSize));
 	}
 
-	LabelView::LabelView(Frame frame) : View(frame)
+	LabelView::LabelView(Frame frame) : 
+		View(frame),
+		mLabelTexture(NULL),
+		mFont(NULL),
+		mTextChanged(false)
 	{
-		FONT_DESC font;
-		font.FontFamily = "arial";
-		font.FontSize = 15;
-		//mFont = FontManager::GetInstance()->GetFont(font);
-		mLabelTexture = NULL;
-	}
-
-	void LabelView::SetFont(std::string fontName, int size)
-	{
-		FONT_DESC font;
-		font.FontFamily = fontName;
-		font.FontSize = size;
-		//mFont = FontManager::GetInstance()->GetFont(font);
+		this->SetFont(Font::GetFont(kDefaultFont, kDefaultFontSize));
 	}
 
 	void LabelView::SetText(std::string text, bool outline) 
 	{ 
 		mText = text; 
+		mTextChanged = true;
 		/*if(text == "Metsfan") {
 			text = "eeeeee";
 		}*/
 		//text = "Skeletal Archer";
 		//text = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcefghijklmnopqrstuvwxyz1234567890!@#$%^&*()_+-=[]{}\|;:'\"/?.>,<`~ ";
-		FONT_STRING_DESC fontString;
-		fontString.Text = text;
+		
 
-		CStringBuffer stringBuffer = mFont->GetStringBitmap(fontString);
+		
+		//CStringBuffer stringBuffer = mFont-(fontString);
 		/*if(!mLabelTexture) {
 			RendererType rendererType = GameApplication::GetInstance()->GetRendererType();
 			if(rendererType == RendererTypeDX11) {
@@ -68,25 +64,36 @@ namespace challenge
 		/*if(outline) {
 			stringBuffer.texSize.width = 54;
 		}*/
-		SetSize(Size(stringBuffer.texSize.width, stringBuffer.texSize.height));
+		//SetSize(Size(stringBuffer.texSize.width, stringBuffer.texSize.height));
 
-		delete stringBuffer.buffer;
+		//delete stringBuffer.buffer;
 	}
 
-	void LabelView::Render(UIManager *manager, Point origin)
+	void LabelView::Update(int deltaMillis)
 	{
-		if(mLabelTexture != NULL) {
+		View::Update(deltaMillis);
+	}
+
+	void LabelView::Render(IGraphicsDevice *device, RenderState &state)
+	{
+		if(!mLabelTexture) {
 			//shader->setUniform("HasText", 1);
 			//mLabelTexture->Activate(GL_TEXTURE1);
 			//shader->setUniform("FontTexture", 1);
-			glm::vec4 textColorVec = glm::vec4(mTextColor.red, mTextColor.green, mTextColor.blue, mTextColor.alpha);
+			//glm::vec4 textColorVec = glm::vec4(mTextColor.red, mTextColor.green, mTextColor.blue, mTextColor.alpha);
 			//shader->setUniform("Color", textColorVec);
+			TEXTURE_DESC desc;
+			mLabelTexture = device->CreateTexture2D(desc);
+		}
 
-			RendererType rendererType = GameApplication::GetInstance()->GetRendererType();
+		if(mTextChanged) {
+			FONT_UTF8STRING_DESC fontString;
+			fontString.Text = mText;
+			StringBuffer stringBuffer = mFont->CreateStringBitmap<char>(fontString);
 
-			/*if(rendererType == RendererTypeDX11) {
-			
-			}*/
+			mLabelTexture->Initialize(stringBuffer.GetBuffer(), stringBuffer.GetSize());
+
+			mTextChanged = false;
 		}
 	}
 

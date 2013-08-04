@@ -1,64 +1,93 @@
 #pragma once
 
 #include <Engine/Challenge.h>
+#include <Engine/Font/Glyph.h>
+#include <Engine/Font/FontTypes.h>
+#include <Engine/Font/FontFace.h>
+#include <Engine/Util/Util.h>
+
 #include <ft2build.h>
 #include FT_FREETYPE_H 
-#include "Glyph.h"
-#include "GlyphAtlas.h"
-#include "FontTypes.h"
-
-#define NEWLINE_CHAR 10
-#define SPACE_CHAR 32
 
 namespace challenge
 {
-	static int const kBottomBuffer = 5;
+	static const int kBottomBuffer = 5;
 
-	typedef std::map<char, Glyph *> TGlyphMap;
+	typedef std::map<int, Glyph *> TGlyphMap;
+    
+    template <typename CharType>
+    class GlyphAtlas;
 
-	enum FontPassType
+	class FontCache;
+    
+	class StringBuffer
 	{
-		FontPassOutline,
-		FontPassShadow,
-		FontPassBuffer,
-		FontPassNormal
+		friend class Font;
+	public:
+		StringBuffer() :
+			mBuffer(NULL),
+			mSize() {}
+
+		~StringBuffer()
+		{
+			/*if(mBuffer != NULL) {
+				delete mBuffer;
+			}*/
+		}
+
+		const BYTE* GetBuffer() { return mBuffer; }
+		const Size& GetSize() const { return mSize; }
+
+	private:
+		BYTE *mBuffer;
+		Size mSize;
 	};
-
-	struct FontPass
-	{
-		FontPass() : type(FontPassNormal), x(0), y(0) {}
-		FontPass(FontPassType _type, int _x, int _y, FontColor _color) :
-			type(_type), x(_x), y(_y), color(_color) {}
-
-		FontPassType type;
-		int x;
-		int y;
-		FontColor color;
-	};
-
-	typedef std::vector<FontPass> TFontPassList;
 
 	class Font
 	{
+        friend class Glyph;
+        
 	public:
-		Font(FONT_DESC fontDesc);
+		Font(FONT_DESC &fontDesc);
 		~Font();
 
-		//void CopyAtlasToTexture(Texture *texture);
+        template <typename CharType>
+		StringBuffer CreateStringBitmap(FONT_STRING_DESC<CharType> fontStringDesc);
+		
+		template <typename CharType>
+		GlyphAtlas<CharType>* CreateGlyphAtlas(FONT_STRING_DESC<CharType> fontStringDesc, Size atlasSize);
 
-		CStringBuffer GetStringBitmap(FONT_STRING_DESC fontStringDesc);
+		long GetKerning(Glyph *leftGlyph, Glyph *rightGlyph);
+        int GetKerning(int leftChar, int rightChar);
+		Glyph* GetGlyph(int character, bool outline = false);
+		Glyph* GetGlyphForPass(FontPass &pass, int character);
 
-		static FT_Library s_FTLibrary;
+		int GetMaxCharHeight() { return mFaces[0]->GetMaxCharHeight(); }
+        int GetLineHeight() { return mFaces[0]->GetLineHeight(); }
+		
+		static FT_Library sFTLibrary;
+
+		/* Static Getters */
+		static Font* GetFont(const std::string &name, int size);
+		static Font* GetFont(FONT_DESC &fontDesc);
 
 	private:
-		FT_Face mFace;
+        std::vector<FontFace *> mFaces;
 		TGlyphMap mGlyphs;
 		TGlyphMap mOutlineGlyphs;
 		int mMaxHeight;
-		GlyphAtlas mGlyphAtlas;
 		FONT_DESC mFontDesc;
 
+		template <typename CharType>
+		void BuildStringBuffer(FONT_STRING_DESC<CharType> &fontStringDesc, StringBuffer &stringBuffer, std::function<void(Glyph*, Point&, Point&)> *charAddedFunc = NULL);
+
+		template <typename CharType>
+		TFontPassList GetPasses(FONT_STRING_DESC<CharType> &fontStringDesc);
 		
-		static std::string s_FontPath;
+		static std::string sFontPath;
+		static FontCache sGlobalFontCache;
 	};
 };
+
+#include <Engine/Font/Font.inl>
+

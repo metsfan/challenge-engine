@@ -19,7 +19,7 @@ namespace challenge
 		void Initialize();
 
 	public:
-		ButtonView(void);
+		ButtonView();
 		ButtonView(Frame frame);
 
 		void SetState(ButtonState state) { mState = state; }

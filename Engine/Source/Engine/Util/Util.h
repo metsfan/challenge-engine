@@ -20,5 +20,6 @@ namespace challenge
 		static int ParseInt(std::string str);
 		static std::vector<int> SplitIP(std::string ip);
 		static std::string JoinIP(int *parts);
+		static int Util::NearestPow2(int v);
 	};
 };

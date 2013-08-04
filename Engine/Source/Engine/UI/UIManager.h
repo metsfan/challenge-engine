@@ -1,12 +1,8 @@
 #include <Engine/Challenge.h>
 #include <Engine/Input/InputManager.h>
+#include <Engine/Renderer/Renderer.h>
 #include <Engine/UI/UI.h>
-//#include <Engine/Renderer/Shader/DX11/HLSLProgram.h>
-//#include <Engine/Util/TextureAtlas.h>
 #include <Engine/Util/Image.h>
-#include <Engine/Renderer/VertexBuffer.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 
 namespace challenge
 {
@@ -28,16 +24,15 @@ namespace challenge
 		friend class View;
 
 	public:
-		UIManager(void);
-		~UIManager(void);
+		UIManager(const Size &screenSize);
+		~UIManager();
 
-		void AddRootControl(View *control);
-		void AddControl(View *control);
+		void SetRootView(View *view);
 		void AddImageToAtlas(Image *image);
 		//TextureAtlasEntry GetImageForKey(std::string key);
 
 		void Update(int deltaMillis);
-		void Render();
+		void Render(IGraphicsDevice *device);
 
 		static UIManager *GetDefaultManager();
 
@@ -60,11 +55,8 @@ namespace challenge
 		void OnMouseDblClick(const MouseEvent &e);
 
 	private:
-		TControlList mRootControls;
-		int mControlCount;
-		//GLSLProgram *mShader;
-		//HLSLProgram *mShader;
-		glm::mat4 mProjectionMatrix;
+		View  *mRootView;
+		OrthoCamera *mCamera;
 		IVertexBuffer *mVertexBuffer;
 
 		//CTextureAtlas *mImageAtlas;

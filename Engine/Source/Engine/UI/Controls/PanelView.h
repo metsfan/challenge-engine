@@ -6,7 +6,7 @@ namespace challenge
 	class PanelView : public View
 	{
 	public:
-		PanelView(void);
+		PanelView();
 		PanelView(Frame frame);
 		virtual ~PanelView(void);
 

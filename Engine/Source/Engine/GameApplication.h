@@ -7,6 +7,7 @@
 #include <Engine/Renderer/GraphicsDevice.h>
 #include <Engine/Resource/ResourceCache.h>
 #include <Engine/Util/PrimitiveGenerator.h>
+#include <Engine/Font/FontTypes.h>
 
 namespace challenge 
 {
@@ -25,6 +26,10 @@ namespace challenge
 	class Model;
 	class ModelMesh;
 	class ModelResource;
+
+	class Font;
+
+	class View;
 
 	typedef std::function<void(int)> AppCallback;
 
@@ -79,6 +84,9 @@ namespace challenge
 		Model* CreateModel(const std::string &name, const std::vector<ModelMesh *> &meshes);
 		Model* CreatePrimitive(PrimitiveShape type);
 
+		/* GUI Methods */
+		void SetRootView(View *view);
+
 	protected:
 		IGraphicsDevice *mGraphicsDevice;
 		IWindow *mWindow;
@@ -99,6 +107,7 @@ namespace challenge
 		bool mInitialized;
 		
 		static GameApplication *mGameInstance;
+		static Font* sDefaultFont;
 
 		void StartRunning() { mApplicationRunning = true; }
 

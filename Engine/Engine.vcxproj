@@ -16,6 +16,9 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Engine/Challenge.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="Source\Engine\Core\BasicTypes.cpp" />
+    <ClCompile Include="Source\Engine\Font\Font.cpp" />
+    <ClCompile Include="Source\Engine\Font\FontFace.cpp" />
+    <ClCompile Include="Source\Engine\Font\Glyph.cpp" />
     <ClCompile Include="Source\Engine\Math\Triangle.cpp" />
     <ClCompile Include="Source\Engine\Math\MathUtil.cpp" />
     <ClCompile Include="Source\Engine\Model\ModelBone.cpp" />
@@ -34,10 +37,15 @@
     <ClCompile Include="Source\Engine\Database\DatabaseRecord.cpp" />
     <ClCompile Include="Source\Engine\Event\EventData.cpp" />
     <ClCompile Include="Source\Engine\Event\EventManager.cpp" />
-    <ClCompile Include="Source\Engine\Font\Font.cpp" />
-    <ClCompile Include="Source\Engine\Font\FontManager.cpp" />
-    <ClCompile Include="Source\Engine\Font\Glyph.cpp" />
-    <ClCompile Include="Source\Engine\Font\GlyphAtlas.cpp" />
+    <ClInclude Include="Source\Engine\Font\Font.inl">
+      <FileType>CppCode</FileType>
+    </ClInclude>
+    <ClCompile Include="Source\Engine\Font\FontCache.cpp" />
+    <ClInclude Include="Source\Engine\Font\FontEngine.h" />
+    <ClInclude Include="Source\Engine\Font\FontFace.h" />
+    <ClInclude Include="Source\Engine\Font\GlyphAtlas.inl">
+      <FileType>CppCode</FileType>
+    </ClInclude>
     <ClCompile Include="Source\Engine\GameApplication.cpp" />
     <ClCompile Include="Source\Engine\GameApplicationWindows.cpp" />
     <ClCompile Include="Source\Engine\GameController.cpp" />
@@ -132,8 +140,12 @@
     <ClCompile Include="Source\Engine\View\GameView.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\Users\Adam\Documents\vectormap\vectormap\CityMapsEngine\Lib\font-engine\FontEngine\Source\Font\Types.h" />
+    <ClInclude Include="..\..\..\..\Users\Adam\Documents\vectormap\vectormap\CityMapsEngine\Lib\font-engine\FontEngine\Source\Font\UnicodeRanges.h" />
+    <ClInclude Include="..\..\..\..\Users\Adam\Documents\vectormap\vectormap\CityMapsEngine\Lib\font-engine\FontEngine\Source\Font\Util.h" />
     <ClInclude Include="Source\Engine\Challenge.h" />
     <ClInclude Include="Source\Engine\Core\BasicTypes.h" />
+    <ClInclude Include="Source\Engine\Font\UnicodeRanges.h" />
     <ClInclude Include="Source\Engine\Math\Triangle.h" />
     <ClInclude Include="Source\Engine\Math\MathUtil.h" />
     <ClInclude Include="Source\Engine\Model\ModelBone.h" />
@@ -167,7 +179,7 @@
     <ClInclude Include="Source\Engine\Event\Types\MouseEventData.h" />
     <ClInclude Include="Source\Engine\Event\Types\NetworkEventData.h" />
     <ClInclude Include="Source\Engine\Font\Font.h" />
-    <ClInclude Include="Source\Engine\Font\FontManager.h" />
+    <ClInclude Include="Source\Engine\Font\FontCache.h" />
     <ClInclude Include="Source\Engine\Font\FontTypes.h" />
     <ClInclude Include="Source\Engine\Font\Glyph.h" />
     <ClInclude Include="Source\Engine\Font\GlyphAtlas.h" />
@@ -270,9 +282,6 @@
     <ClInclude Include="Source\Engine\UI\View.h" />
     <ClInclude Include="Source\Engine\UI\UIManager.h" />
     <ClInclude Include="Source\Engine\Util\CubeMapReader.h" />
-    <ClInclude Include="Source\Engine\Util\Font\Font.h" />
-    <ClInclude Include="Source\Engine\Util\Font\FontManager.h" />
-    <ClInclude Include="Source\Engine\Util\Font\Glyph.h" />
     <ClInclude Include="Source\Engine\Util\Image.h" />
     <ClInclude Include="Source\Engine\Util\Logger.h" />
     <ClInclude Include="Source\Engine\Util\Octree.h" />

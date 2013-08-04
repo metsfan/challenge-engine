@@ -1,39 +1,62 @@
 #pragma once
 
+#include <Engine/Challenge.h>
+
+#ifndef INFINITY
+#define INFINITY 9999999999
+#endif
+
+#define NEWLINE_CHAR 10
+#define SPACE_CHAR 32
+static const float oo255 = 1.0f / 255.0f;
+
 namespace challenge
 {
 	typedef unsigned char Byte;
 
-	/*struct Size {
-		int width, height;
-		Size() { width = 0; height = 0; }
-		Size(int width, int height) : width(width), height(height) {}
+	struct Vector2 {
+		float x, y;
+		Vector2() { x = 0; y = 0; }
+		Vector2(float x, float y) : x(x), y(y) {}
 	};
-	typedef struct Size Size;
-
-	struct Point {
-		int x, y;
-		Point() { x = 0; y = 0; }
-		Point(int x, int y) : x(x), y(y) {}
-	};
-	typedef struct Point Point;;*/
+    
+    struct Range {
+        int min, max;
+        Range() : min(0), max(0) {}
+        Range(int _min, int _max) : min(_min), max(_max) {}
+        
+        bool Contains(int n) { return min <= n && n <= max; }
+    };
+    
+    struct FontFile
+    {
+        FontFile(std::string _filepath) :
+            filepath(_filepath)
+        {}
+        
+        void AddRange(Range range) { glyphRanges.push_back(range); }
+        
+        std::string filepath;
+        std::vector<Range> glyphRanges;
+    };
 
 	struct FONT_DESC
 	{
-		friend class FontManager;
+		friend class FontCache;
 
 		FONT_DESC() {
 			memset(this, 0, sizeof(*this));
 		}
-
+        
+        std::vector<FontFile> Files;
 		std::string FontFamily;
 		int FontSize;
 		int OutlineWidth;
 
 	private:
-		int key;
+		long key;
 
-		int GetKey() {
+		long GetKey() {
 			if(key == 0) {
 				std::stringstream ss;
 				ss << FontFamily << ":" << FontSize;
@@ -62,20 +85,47 @@ namespace challenge
 		TextAlignMiddle,
 		TextAlignBottom
 	};
-
-	struct CStringBuffer
+    
+    union FontColor
 	{
-		void *buffer;
-		Size texSize;
-		Point texCoord;
-		Size realSize;
+        struct { float r, g, b, a; };
+        float color[4];
+        
+        FontColor()
+        {
+            this->SetColor(0, 0, 0, 0);
+        }
+        
+        FontColor(float r, float g, float b, float a)
+        {
+            this->SetColor(r, g, b, a);
+        }
+        
+		void SetColor(float r, float g, float b, float a) {
+			color[0] = r;
+			color[1] = g;
+			color[2] = b;
+			color[3] = a;
+		}
+		float& operator [](int i) { return color[i]; }
 	};
 
-	struct FontTexel
+	union FontTexel
 	{
-		unsigned char color[4];
+        struct { unsigned char r, g, b, a; };
+        unsigned char color[4];
+        
+        FontTexel()
+        {
+            this->SetColor(0, 0, 0, 0);
+        }
+        
+        FontTexel(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
+        {
+            this->SetColor(r, g, b, a);
+        }
 
-		void SetColor(int r, int g, int b, int a) {
+		void SetColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a) {
 			color[0] = r;
 			color[1] = g;
 			color[2] = b;
@@ -84,15 +134,14 @@ namespace challenge
 		unsigned char& operator [](int i) { return color[i]; }
 	};
 
-	typedef glm::vec4 FontColor;
-
+    template <typename CharType = char>
 	struct FONT_STRING_DESC
 	{
-		FONT_STRING_DESC() { 
+		FONT_STRING_DESC() {
 			memset(this, 0, sizeof(*this)); 
 		}
 
-		std::string Text;
+		std::basic_string<CharType> Text;
 		FontColor TextColor;
 		FontColor OutlineColor;
 		TextAlignHorizontal HorizontalAlign;
@@ -100,7 +149,12 @@ namespace challenge
 		FontColor ShadowColor;
 		int ShadowSize;
 		Point ShadowOffset;
+        int LineWidth;
 	};
+    
+    typedef FONT_STRING_DESC<char> FONT_UTF8STRING_DESC;
+    typedef FONT_STRING_DESC<char16_t> FONT_UTF16STRING_DESC;
+    typedef FONT_STRING_DESC<char32_t> FONT_UTF32STRING_DESC;
 
 	struct GlyphSpan
 	{
@@ -130,4 +184,26 @@ namespace challenge
 
 		float xmin, xmax, ymin, ymax;
 	};
+
+	enum FontPassType
+	{
+		FontPassOutline,
+		FontPassShadow,
+		FontPassBuffer,
+		FontPassNormal
+	};
+
+	struct FontPass
+	{
+		FontPass() : type(FontPassNormal), x(0), y(0) {}
+		FontPass(FontPassType _type, int _x, int _y, FontColor _color) :
+			type(_type), x(_x), y(_y), color(_color) {}
+
+		FontPassType type;
+		int x;
+		int y;
+		FontColor color;
+	};
+
+	typedef std::vector<FontPass> TFontPassList;
 }

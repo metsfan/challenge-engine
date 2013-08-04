@@ -4,12 +4,15 @@
 #include <Engine/UI/View.h>
 #include <Engine/Font/Font.h>
 #include <Engine/Renderer/Texture.h>
+
 namespace challenge
 {
+	//class Font;
+
 	class LabelView : public View
 	{
 	public:
-		LabelView(void);
+		LabelView();
 		LabelView(Frame frame);
 
 		void SetText(std::string text, bool outline);
@@ -17,15 +20,17 @@ namespace challenge
 
 		void SetTextColor(Color color) { mTextColor = color; }
 
-		void SetFont(std::string fontName, int size);
+		void SetFont(Font *font) { mFont = font; }
 
-		virtual void Render(UIManager *manager, Point origin);
+		virtual void Update(int deltaMillis);
+		virtual void Render(IGraphicsDevice *device, RenderState &state);
 
 	private:
 		std::string mText;
 		Font *mFont;
 		Color mTextColor;
 		ITexture *mLabelTexture;
+		bool mTextChanged;
 
 
 		//static HLSLProgram *sFontShader;
