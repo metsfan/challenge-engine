@@ -1,0 +1,457 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\Engine\Challenge.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Engine/Challenge.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Core\BasicTypes.cpp" />
+    <ClCompile Include="Source\Engine\Math\Triangle.cpp" />
+    <ClCompile Include="Source\Engine\Math\MathUtil.cpp" />
+    <ClCompile Include="Source\Engine\Model\ModelBone.cpp" />
+    <ClCompile Include="Source\Engine\Model\ModelResource.cpp" />
+    <ClCompile Include="Source\Engine\Renderer\Camera\Camera.cpp" />
+    <ClCompile Include="Source\Engine\Renderer\Camera\OrthoCamera.cpp" />
+    <ClCompile Include="Source\Engine\Renderer\Camera\PerspectiveCamera.cpp" />
+    <ClCompile Include="Source\Engine\Renderer\Device\GraphicsDeviceDX11.cpp" />
+    <ClCompile Include="Source\Engine\Renderer\Effect.cpp" />
+    <ClCompile Include="Source\Engine\Renderer\GraphicsDevice.cpp" />
+    <ClCompile Include="Source\Engine\Audio\AudioListener.cpp" />
+    <ClCompile Include="Source\Engine\Audio\AudioManager.cpp" />
+    <ClCompile Include="Source\Engine\Audio\Sound.cpp" />
+    <ClCompile Include="Source\Engine\Audio\SoundGroup.cpp" />
+    <ClCompile Include="Source\Engine\Database\DatabaseManager.cpp" />
+    <ClCompile Include="Source\Engine\Database\DatabaseRecord.cpp" />
+    <ClCompile Include="Source\Engine\Event\EventData.cpp" />
+    <ClCompile Include="Source\Engine\Event\EventManager.cpp" />
+    <ClCompile Include="Source\Engine\Font\Font.cpp" />
+    <ClCompile Include="Source\Engine\Font\FontManager.cpp" />
+    <ClCompile Include="Source\Engine\Font\Glyph.cpp" />
+    <ClCompile Include="Source\Engine\Font\GlyphAtlas.cpp" />
+    <ClCompile Include="Source\Engine\GameApplication.cpp" />
+    <ClCompile Include="Source\Engine\GameApplicationWindows.cpp" />
+    <ClCompile Include="Source\Engine\GameController.cpp" />
+    <ClCompile Include="Source\Engine\Input\InputManager.cpp" />
+    <ClCompile Include="Source\Engine\Math\Cylinder.cpp" />
+    <ClCompile Include="Source\Engine\Math\Ray.cpp" />
+    <ClCompile Include="Source\Engine\Model\Model.cpp" />
+    <ClCompile Include="Source\Engine\Model\ModelAnimationManager.cpp" />
+    <ClCompile Include="Source\Engine\Model\ModelManager.cpp" />
+    <ClCompile Include="Source\Engine\Model\ModelMaterial.cpp" />
+    <ClCompile Include="Source\Engine\Model\ModelMesh.cpp" />
+    <ClCompile Include="Source\Engine\Network\NetworkClient.cpp" />
+    <ClCompile Include="Source\Engine\Network\NetworkInterface.cpp" />
+    <ClCompile Include="Source\Engine\Network\NetworkManager.cpp" />
+    <ClCompile Include="Source\Engine\Network\NetworkServer.cpp" />
+    <ClCompile Include="Source\Engine\Network\NetworkSocket.cpp" />
+    <ClCompile Include="Source\Engine\Physics\BVH\Grid.cpp" />
+    <ClCompile Include="Source\Engine\Physics\BVH\Octree.cpp" />
+    <ClCompile Include="Source\Engine\Physics\BVH\QuadTree.cpp" />
+    <ClCompile Include="Source\Engine\Physics\Collision\CollisionData.cpp" />
+    <ClCompile Include="Source\Engine\Physics\Collision\CollisionDetector.cpp" />
+    <ClCompile Include="Source\Engine\Physics\Collision\CollisionResolver.cpp" />
+    <ClCompile Include="Source\Engine\Physics\Collision\Contact.cpp" />
+    <ClCompile Include="Source\Engine\Physics\Forces\ForceGenerator.cpp" />
+    <ClCompile Include="Source\Engine\Physics\Forces\GravityForceGenerator.cpp" />
+    <ClCompile Include="Source\Engine\Physics\Objects\PlaneObject.cpp" />
+    <ClCompile Include="Source\Engine\Physics\Objects\RigidBody.cpp" />
+    <ClCompile Include="Source\Engine\Physics\PhysicsCore.cpp" />
+    <ClCompile Include="Source\Engine\Physics\PhysicsManager.cpp" />
+    <ClCompile Include="Source\Engine\Physics\PhysicsWorld.cpp" />
+    <ClCompile Include="Source\Engine\Physics\Shapes\AABBShape.cpp" />
+    <ClCompile Include="Source\Engine\Physics\Shapes\ConcaveTriangleMeshShape.cpp" />
+    <ClCompile Include="Source\Engine\Physics\Shapes\Intersection.cpp" />
+    <ClCompile Include="Source\Engine\Physics\Shapes\PhysicsShape.cpp" />
+    <ClCompile Include="Source\Engine\Physics\Shapes\PlaneShape.cpp" />
+    <ClCompile Include="Source\Engine\Physics\Shapes\SphereShape.cpp" />
+    <ClCompile Include="Source\Engine\Physics\Shapes\TriangleMeshShape.cpp" />
+    <ClCompile Include="Source\Engine\Physics\Shapes\TriangleShape.cpp" />
+    <ClCompile Include="Source\Engine\Physics\Util\Math.cpp" />
+    <ClCompile Include="Source\Engine\Renderer\Material.cpp" />
+    <ClCompile Include="Source\Engine\Renderer\Pass.cpp" />
+    <ClCompile Include="Source\Engine\Renderer\RenderState.cpp" />
+    <ClCompile Include="Source\Engine\Renderer\ShaderData.cpp" />
+    <ClCompile Include="Source\Engine\Renderer\Shader\DX11\ConstantBufferDX11.cpp" />
+    <ClCompile Include="Source\Engine\Renderer\Shader\DX11\ShaderDX11.cpp" />
+    <ClCompile Include="Source\Engine\Renderer\Shader\DX11\ShaderProgramDX11.cpp" />
+    <ClCompile Include="Source\Engine\Renderer\Shader\InputLayout.cpp" />
+    <ClCompile Include="Source\Engine\Renderer\Shader\Shader.cpp" />
+    <ClCompile Include="Source\Engine\Renderer\Shader\ShaderProgram.cpp" />
+    <ClCompile Include="Source\Engine\Renderer\Shape.cpp" />
+    <ClCompile Include="Source\Engine\Renderer\Shape\BoxShape.cpp" />
+    <ClCompile Include="Source\Engine\Renderer\Shape\HeightMapShape.cpp" />
+    <ClCompile Include="Source\Engine\Renderer\Shape\ModelShape.cpp" />
+    <ClCompile Include="Source\Engine\Renderer\Shape\SkyboxShape.cpp" />
+    <ClCompile Include="Source\Engine\Renderer\Shape\SpriteShape.cpp" />
+    <ClCompile Include="Source\Engine\Renderer\Technique.cpp" />
+    <ClCompile Include="Source\Engine\Renderer\Texture.cpp" />
+    <ClCompile Include="Source\Engine\Renderer\Texture\Texture2DDX11.cpp" />
+    <ClCompile Include="Source\Engine\Renderer\Texture\TextureCubeDX11.cpp" />
+    <ClCompile Include="Source\Engine\Renderer\Texture\TextureDX11.cpp" />
+    <ClCompile Include="Source\Engine\Renderer\VertexBuffer.cpp" />
+    <ClCompile Include="Source\Engine\Renderer\VertexBuffer\VertexBufferDX11.cpp" />
+    <ClCompile Include="Source\Engine\Renderer\Window.cpp" />
+    <ClCompile Include="Source\Engine\Renderer\GraphicsContext.cpp" />
+    <ClCompile Include="Source\Engine\Renderer\Window\WindowWindows.cpp" />
+    <ClCompile Include="Source\Engine\Scene\Frustum.cpp" />
+    <ClCompile Include="Source\Engine\Scene\Nodes\CameraNode.cpp" />
+    <ClCompile Include="Source\Engine\Scene\Nodes\LevelNode.cpp" />
+    <ClCompile Include="Source\Engine\Scene\Nodes\ModelNode.cpp" />
+    <ClCompile Include="Source\Engine\Scene\Nodes\RootNode.cpp" />
+    <ClCompile Include="Source\Engine\Scene\Plane.cpp" />
+    <ClCompile Include="Source\Engine\Scene\Scene.cpp" />
+    <ClCompile Include="Source\Engine\Scene\SceneNode.cpp" />
+    <ClCompile Include="Source\Engine\UI\Controls\ButtonView.cpp" />
+    <ClCompile Include="Source\Engine\UI\Controls\LabelView.cpp" />
+    <ClCompile Include="Source\Engine\UI\Controls\PanelView.cpp" />
+    <ClCompile Include="Source\Engine\UI\Events\UIEventArgs.cpp" />
+    <ClCompile Include="Source\Engine\UI\View.cpp" />
+    <ClCompile Include="Source\Engine\UI\UIManager.cpp" />
+    <ClCompile Include="Source\Engine\Util\CubeMapReader.cpp" />
+    <ClCompile Include="Source\Engine\Util\Image.cpp" />
+    <ClCompile Include="Source\Engine\Util\Logger.cpp" />
+    <ClCompile Include="Source\Engine\Util\Octree.cpp" />
+    <ClCompile Include="Source\Engine\Util\PrimitiveGenerator.cpp" />
+    <ClCompile Include="Source\Engine\Util\Timer.cpp" />
+    <ClCompile Include="Source\Engine\Util\Util.cpp" />
+    <ClCompile Include="Source\Engine\Util\XML\XMLAttribute.cpp" />
+    <ClCompile Include="Source\Engine\Util\XML\XMLDocument.cpp" />
+    <ClCompile Include="Source\Engine\Util\XML\XMLNode.cpp" />
+    <ClCompile Include="Source\Engine\View\Actor.cpp" />
+    <ClCompile Include="Source\Engine\View\ActorParams.cpp" />
+    <ClCompile Include="Source\Engine\View\GameView.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\Engine\Challenge.h" />
+    <ClInclude Include="Source\Engine\Core\BasicTypes.h" />
+    <ClInclude Include="Source\Engine\Math\Triangle.h" />
+    <ClInclude Include="Source\Engine\Math\MathUtil.h" />
+    <ClInclude Include="Source\Engine\Model\ModelBone.h" />
+    <ClInclude Include="Source\Engine\Model\ModelResource.h" />
+    <ClInclude Include="Source\Engine\Renderer\Attribute.h" />
+    <ClInclude Include="Source\Engine\Renderer\Attribute\BoneAnimationAttribute.h" />
+    <ClInclude Include="Source\Engine\Renderer\Attribute\ColorAttribute.h" />
+    <ClInclude Include="Source\Engine\Renderer\Camera\Camera.h" />
+    <ClInclude Include="Source\Engine\Renderer\Camera\OrthoCamera.h" />
+    <ClInclude Include="Source\Engine\Renderer\Camera\PerspectiveCamera.h" />
+    <ClInclude Include="Source\Engine\Renderer\Effect.h" />
+    <ClInclude Include="Source\Engine\Renderer\Lights\DirectionalLightSource.h" />
+    <ClInclude Include="Source\Engine\Renderer\Lights\LightSource.h" />
+    <ClInclude Include="Source\Engine\Renderer\Lights\PointLightSource.h" />
+    <ClInclude Include="Source\Engine\Renderer\Attribute\ShadingAttribute.h" />
+    <ClInclude Include="Source\Engine\Renderer\Attribute\TextureAttribute.h" />
+    <ClInclude Include="Source\Engine\Renderer\Device\GraphicsDeviceDX11.h" />
+    <ClInclude Include="Source\Engine\Renderer\GraphicsContext.h" />
+    <ClInclude Include="Source\Engine\Renderer\GraphicsDevice.h" />
+    <ClInclude Include="Source\Engine\Audio\AudioListener.h" />
+    <ClInclude Include="Source\Engine\Audio\AudioManager.h" />
+    <ClInclude Include="Source\Engine\Audio\Sound.h" />
+    <ClInclude Include="Source\Engine\Audio\SoundGroup.h" />
+    <ClInclude Include="Source\Engine\Core\Globals.h" />
+    <ClInclude Include="Source\Engine\Database\DatabaseManager.h" />
+    <ClInclude Include="Source\Engine\Database\DatabaseRecord.h" />
+    <ClInclude Include="Source\Engine\Event\EventData.h" />
+    <ClInclude Include="Source\Engine\Event\EventManager.h" />
+    <ClInclude Include="Source\Engine\Event\Types\ActorEventData.h" />
+    <ClInclude Include="Source\Engine\Event\Types\KeyboardEventData.h" />
+    <ClInclude Include="Source\Engine\Event\Types\MouseEventData.h" />
+    <ClInclude Include="Source\Engine\Event\Types\NetworkEventData.h" />
+    <ClInclude Include="Source\Engine\Font\Font.h" />
+    <ClInclude Include="Source\Engine\Font\FontManager.h" />
+    <ClInclude Include="Source\Engine\Font\FontTypes.h" />
+    <ClInclude Include="Source\Engine\Font\Glyph.h" />
+    <ClInclude Include="Source\Engine\Font\GlyphAtlas.h" />
+    <ClInclude Include="Source\Engine\GameApplication.h" />
+    <ClInclude Include="Source\Engine\GameApplicationWindows.h" />
+    <ClInclude Include="Source\Engine\GameController.h" />
+    <ClInclude Include="Source\Engine\Input\InputManager.h" />
+    <ClInclude Include="Source\Engine\Input\KeyboardListener.h" />
+    <ClInclude Include="Source\Engine\Input\MouseListener.h" />
+    <ClInclude Include="Source\Engine\Math\Cylinder.h" />
+    <ClInclude Include="Source\Engine\Math\Ray.h" />
+    <ClInclude Include="Source\Engine\Model\Model.h" />
+    <ClInclude Include="Source\Engine\Model\ModelAnimationManager.h" />
+    <ClInclude Include="Source\Engine\Model\ModelManager.h" />
+    <ClInclude Include="Source\Engine\Model\ModelMaterial.h" />
+    <ClInclude Include="Source\Engine\Model\ModelMesh.h" />
+    <ClInclude Include="Source\Engine\Network\NetworkClient.h" />
+    <ClInclude Include="Source\Engine\Network\NetworkInterface.h" />
+    <ClInclude Include="Source\Engine\Network\NetworkManager.h" />
+    <ClInclude Include="Source\Engine\Network\NetworkServer.h" />
+    <ClInclude Include="Source\Engine\Network\NetworkSocket.h" />
+    <ClInclude Include="Source\Engine\Physics\BoundingBox.h" />
+    <ClInclude Include="Source\Engine\Physics\BVH\Grid.h" />
+    <ClInclude Include="Source\Engine\Physics\BVH\Octree.h" />
+    <ClInclude Include="Source\Engine\Physics\BVH\QuadTree.h" />
+    <ClInclude Include="Source\Engine\Physics\Collision\CollisionData.h" />
+    <ClInclude Include="Source\Engine\Physics\Collision\CollisionDetector.h" />
+    <ClInclude Include="Source\Engine\Physics\Collision\CollisionResolver.h" />
+    <ClInclude Include="Source\Engine\Physics\Collision\Contact.h" />
+    <ClInclude Include="Source\Engine\Physics\Forces\ForceGenerator.h" />
+    <ClInclude Include="Source\Engine\Physics\Forces\GravityForceGenerator.h" />
+    <ClInclude Include="Source\Engine\Physics\Objects\PlaneObject.h" />
+    <ClInclude Include="Source\Engine\Physics\Objects\RigidBody.h" />
+    <ClInclude Include="Source\Engine\Physics\PhysicsCore.h" />
+    <ClInclude Include="Source\Engine\Physics\PhysicsManager.h" />
+    <ClInclude Include="Source\Engine\Physics\PhysicsWorld.h" />
+    <ClInclude Include="Source\Engine\Physics\Shapes\AABBShape.h" />
+    <ClInclude Include="Source\Engine\Physics\Shapes\ConcaveTriangleMeshShape.h" />
+    <ClInclude Include="Source\Engine\Physics\Shapes\Intersection.h" />
+    <ClInclude Include="Source\Engine\Physics\Shapes\PhysicsShape.h" />
+    <ClInclude Include="Source\Engine\Physics\Shapes\PlaneShape.h" />
+    <ClInclude Include="Source\Engine\Physics\Shapes\SphereShape.h" />
+    <ClInclude Include="Source\Engine\Physics\Shapes\TriangleMeshShape.h" />
+    <ClInclude Include="Source\Engine\Physics\Shapes\TriangleShape.h" />
+    <ClInclude Include="Source\Engine\Physics\Util\Math.h" />
+    <ClInclude Include="Source\Engine\Renderer\DX11\TextureDX11.h" />
+    <ClInclude Include="Source\Engine\Renderer\DX11\VertexBufferDX11.h" />
+    <ClInclude Include="Source\Engine\Renderer\Material.h" />
+    <ClInclude Include="Source\Engine\Renderer\OpenGL\GLSLProgram.h" />
+    <ClInclude Include="Source\Engine\Renderer\Pass.h" />
+    <ClInclude Include="Source\Engine\Renderer\Pass\BasicColorPass.h" />
+    <ClInclude Include="Source\Engine\Renderer\Pass\DX11\BasicColorPassDX11.h" />
+    <ClInclude Include="Source\Engine\Renderer\Pass\DX11\ModelAnimationPassDX11.h" />
+    <ClInclude Include="Source\Engine\Renderer\Pass\DX11\PhongPassDX11.h" />
+    <ClInclude Include="Source\Engine\Renderer\Pass\ModelAnimationPass.h" />
+    <ClInclude Include="Source\Engine\Renderer\Renderer.h" />
+    <ClInclude Include="Source\Engine\Renderer\RenderState.h" />
+    <ClInclude Include="Source\Engine\Renderer\ShaderData.h" />
+    <ClInclude Include="Source\Engine\Renderer\Shader\DX11\ConstantBufferDX11.h" />
+    <ClInclude Include="Source\Engine\Renderer\Shader\DX11\ShaderDX11.h" />
+    <ClInclude Include="Source\Engine\Renderer\Shader\DX11\ShaderProgramDX11.h" />
+    <ClInclude Include="Source\Engine\Renderer\Shader\InputLayout.h" />
+    <ClInclude Include="Source\Engine\Renderer\Shader\Shader.h" />
+    <ClInclude Include="Source\Engine\Renderer\Shader\ShaderProgram.h" />
+    <ClInclude Include="Source\Engine\Renderer\Shape.h" />
+    <ClInclude Include="Source\Engine\Renderer\Shape\BoxShape.h" />
+    <ClInclude Include="Source\Engine\Renderer\Shape\HeightMapShape.h" />
+    <ClInclude Include="Source\Engine\Renderer\Shape\ModelShape.h" />
+    <ClInclude Include="Source\Engine\Renderer\Shape\SkyboxShape.h" />
+    <ClInclude Include="Source\Engine\Renderer\Shape\SpriteShape.h" />
+    <ClInclude Include="Source\Engine\Renderer\Technique.h" />
+    <ClInclude Include="Source\Engine\Renderer\Technique\BasicColorTechnique.h" />
+    <ClInclude Include="Source\Engine\Renderer\Technique\BasicModelTechnique.h" />
+    <ClInclude Include="Source\Engine\Renderer\Technique\DX11\BasicColorTechniqueDX11.h" />
+    <ClInclude Include="Source\Engine\Renderer\Technique\DX11\PhongTechniqueDX11.h" />
+    <ClInclude Include="Source\Engine\Renderer\Technique\PhongTechnique.h" />
+    <ClInclude Include="Source\Engine\Renderer\Texture.h" />
+    <ClInclude Include="Source\Engine\Renderer\Texture\Texture2DDX11.h" />
+    <ClInclude Include="Source\Engine\Renderer\Texture\TextureCubeDX11.h" />
+    <ClInclude Include="Source\Engine\Renderer\Texture\TextureDX11.h" />
+    <ClInclude Include="Source\Engine\Renderer\Types.h" />
+    <ClInclude Include="Source\Engine\Renderer\VertexBuffer.h" />
+    <ClInclude Include="Source\Engine\Renderer\VertexBuffer\VertexBufferDX11.h" />
+    <ClInclude Include="Source\Engine\Renderer\Window.h" />
+    <ClInclude Include="Source\Engine\Renderer\Window\WindowWindows.h" />
+    <ClInclude Include="Source\Engine\Resource\ResourceCache.h" />
+    <ClInclude Include="Source\Engine\Scene\Frustum.h" />
+    <ClInclude Include="Source\Engine\Scene\Nodes\CameraNode.h" />
+    <ClInclude Include="Source\Engine\Scene\Nodes\LevelNode.h" />
+    <ClInclude Include="Source\Engine\Scene\Nodes\ModelNode.h" />
+    <ClInclude Include="Source\Engine\Scene\Nodes\RootNode.h" />
+    <ClInclude Include="Source\Engine\Scene\Plane.h" />
+    <ClInclude Include="Source\Engine\Scene\Scene.h" />
+    <ClInclude Include="Source\Engine\Scene\SceneNode.h" />
+    <ClInclude Include="Source\Engine\UI\Controls\ButtonView.h" />
+    <ClInclude Include="Source\Engine\UI\Controls\LabelView.h" />
+    <ClInclude Include="Source\Engine\UI\Controls\PanelView.h" />
+    <ClInclude Include="Source\Engine\UI\Events\UIEventArgs.h" />
+    <ClInclude Include="Source\Engine\UI\UI.h" />
+    <ClInclude Include="Source\Engine\UI\View.h" />
+    <ClInclude Include="Source\Engine\UI\UIManager.h" />
+    <ClInclude Include="Source\Engine\Util\CubeMapReader.h" />
+    <ClInclude Include="Source\Engine\Util\Font\Font.h" />
+    <ClInclude Include="Source\Engine\Util\Font\FontManager.h" />
+    <ClInclude Include="Source\Engine\Util\Font\Glyph.h" />
+    <ClInclude Include="Source\Engine\Util\Image.h" />
+    <ClInclude Include="Source\Engine\Util\Logger.h" />
+    <ClInclude Include="Source\Engine\Util\Octree.h" />
+    <ClInclude Include="Source\Engine\Util\PrimitiveGenerator.h" />
+    <ClInclude Include="Source\Engine\Util\Timer.h" />
+    <ClInclude Include="Source\Engine\Util\Util.h" />
+    <ClInclude Include="Source\Engine\Util\XML\XMLAttribute.h" />
+    <ClInclude Include="Source\Engine\Util\XML\XMLDocument.h" />
+    <ClInclude Include="Source\Engine\Util\XML\XMLNode.h" />
+    <ClInclude Include="Source\Engine\View\Actor.h" />
+    <ClInclude Include="Source\Engine\View\ActorParams.h" />
+    <ClInclude Include="Source\Engine\View\GameView.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ChallengeEngine-settings.props" />
+    <None Include="Source\Engine\Renderer\Technique\BasicColorTechnique.inl" />
+    <None Include="Source\Engine\Renderer\Technique\BasicModelTechnique.inl" />
+    <None Include="Source\Engine\Renderer\Technique\PhongTechnique.inl" />
+    <ClInclude Include="Source\Engine\Resource\ResourceCache.inl">
+      <FileType>Document</FileType>
+    </ClInclude>
+    <None Include="Source\Engine\Shaders\GLSL\control.frag" />
+    <None Include="Source\Engine\Shaders\GLSL\control.vert" />
+    <None Include="Source\Engine\Shaders\GLSL\dungeon.frag" />
+    <None Include="Source\Engine\Shaders\GLSL\dungeon.vert" />
+    <None Include="Source\Engine\Shaders\GLSL\model_basic.frag" />
+    <None Include="Source\Engine\Shaders\GLSL\model_basic.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Source\Engine\Shaders\HLSL\HeightMapPixel.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\Engine\Shaders\HLSL\HeightMapVertex.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Source\Engine\Shaders\HLSL\ModelBoneAnimationVertex.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Source\Engine\Shaders\HLSL\PhongPixel.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Source\Engine\Shaders\HLSL\PhongVertex.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Source\Engine\Shaders\HLSL\FontBasicPixel.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Source\Engine\Shaders\HLSL\FontBasicVertex.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Source\Engine\Shaders\HLSL\ModelBasicPixel.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\Engine\Shaders\HLSL\ModelBasicVertex.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\Engine\Shaders\HLSL\SkyboxPixel.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Source\Engine\Shaders\HLSL\SkyboxVertex.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Source\Engine\Shaders\HLSL\SpriteColorPixel.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Source\Engine\Shaders\HLSL\SpriteColorVertex.hlsl">
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\Engine\Shaders\HLSL\SpriteTexturePixel.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\Engine\Shaders\HLSL\SpriteTextureVertex.hlsl">
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="Source\Engine\Config\effects.xml" />
+    <Xml Include="Source\Engine\Config\pipeline.xml" />
+    <Xml Include="Source\Engine\Config\shaders.xml" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{6B1418F0-AAF5-4925-8256-8BE1945338F1}</ProjectGuid>
+    <RootNamespace>Engine</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="ChallengeEngine-settings.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="ChallengeEngine-settings.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>Engine/Challenge.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <Lib>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
+    <FxCompile>
+      <ShaderModel>4.0</ShaderModel>
+      <ObjectFileOutput>C:\gamedev\engine-dev\Engine\Debug\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <FxCompile>
+      <ShaderModel>4.0</ShaderModel>
+    </FxCompile>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

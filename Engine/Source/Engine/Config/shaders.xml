@@ -1,0 +1,57 @@
+<?xml version="1.0" standalone="yes" ?>
+<ShaderConfig>
+  <Shaders>
+    <Shader name="model_basic_vertex" filename="ModelBasicVertex.cso" type="vertex" />
+    <Shader name="model_basic_pixel" filename="ModelBasicPixel.cso" type="pixel" />
+    <Shader name="model_bone_animation_vertex" filename="ModelBoneAnimationVertex.cso" type="vertex" />
+    <Shader name="skybox_vertex" filename="SkyboxVertex.cso" type="vertex" />
+    <Shader name="skybox_pixel" filename="SkyboxPixel.cso" type="pixel" />
+    <Shader name="heightmap_vertex" filename="HeightMapVertex.cso" type="vertex" />
+    <Shader name="heightmap_pixel" filename="HeightMapPixel.cso" type="pixel" />
+  </Shaders>
+  <ShaderPrograms>
+    <ShaderProgram name="model_static">
+      <Shaders>
+        <Shader name="model_basic_vertex" />
+        <Shader name="model_basic_pixel" />
+      </Shaders>
+      <InputLayout>
+        <InputElement name="POSITION" size="3" offset="0" />
+        <InputElement name="NORMAL" size="3" offset="12" />
+        <InputElement name="TEXCOORD" size="2" offset="24" />
+      </InputLayout>
+    </ShaderProgram>
+    <ShaderProgram name="model_bone_animation">
+      <Shaders>
+        <Shader name="model_bone_animation_vertex" />
+        <Shader name="model_basic_pixel" />
+      </Shaders>
+      <InputLayout>
+        <InputElement name="POSITION" size="3" offset="0" />
+        <InputElement name="NORMAL" size="3" offset="12" />
+        <InputElement name="TEXCOORD" size="2" offset="24" />
+        <InputElement name="BONE_WEIGHTS" size="4" offset="32" />
+        <InputElement name="BONE_INDICES" size="4" offset="48" />
+      </InputLayout>
+    </ShaderProgram>
+    <ShaderProgram name="skybox">
+      <Shaders>
+        <Shader name="skybox_vertex" />
+        <Shader name="skybox_pixel" />
+      </Shaders>
+      <InputLayout>
+        <InputElement name="POSITION" size="3" offset="0" />
+      </InputLayout>
+    </ShaderProgram>
+    <ShaderProgram name="heightmap">
+      <Shaders>
+        <Shader name="heightmap_vertex" />
+        <Shader name="heightmap_pixel" />
+      </Shaders>
+      <InputLayout>
+        <InputElement name="POSITION" size="3" offset="0" />
+        <InputElement name="TEXCOORD" size="2" offset="12" />
+      </InputLayout>
+    </ShaderProgram>
+  </ShaderPrograms>
+</ShaderConfig>

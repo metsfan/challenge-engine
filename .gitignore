@@ -1,0 +1,13 @@
+*.opensdf
+*.sdf
+Debug/
+Engine/Debug/
+Engine/Release/
+ipch/
+ModelReader/Debug/
+ModelReader/Debug/*
+ModelReader/Release/
+ModelReader/Release/*
+Engine.v11.suo
+Engine/Engine.v11.suo
+Engine/Engine.vcxproj.user
