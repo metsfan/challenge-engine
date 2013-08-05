@@ -8,6 +8,10 @@
     <Shader name="skybox_pixel" filename="SkyboxPixel.cso" type="pixel" />
     <Shader name="heightmap_vertex" filename="HeightMapVertex.cso" type="vertex" />
     <Shader name="heightmap_pixel" filename="HeightMapPixel.cso" type="pixel" />
+    <Shader name="sprite_color_vertex" filename="SpriteColorVertex.cso" type="vertex" />
+    <Shader name="sprite_color_pixel" filename="SpriteColorPixel.cso" type="pixel" />
+    <Shader name="sprite_texture_vertex" filename="SpriteTextureVertex.cso" type="vertex" />
+    <Shader name="sprite_texture_pixel" filename="SpriteTexturePixel.cso" type="pixel" />
   </Shaders>
   <ShaderPrograms>
     <ShaderProgram name="model_static">
@@ -47,6 +51,26 @@
       <Shaders>
         <Shader name="heightmap_vertex" />
         <Shader name="heightmap_pixel" />
+      </Shaders>
+      <InputLayout>
+        <InputElement name="POSITION" size="3" offset="0" />
+        <InputElement name="TEXCOORD" size="2" offset="12" />
+      </InputLayout>
+    </ShaderProgram>
+    <ShaderProgram name="sprite_color">
+      <Shaders>
+        <Shader name="sprite_color_vertex" />
+        <Shader name="sprite_color_pixel" />
+      </Shaders>
+      <InputLayout>
+        <InputElement name="POSITION" size="3" offset="0" />
+        <InputElement name="TEXCOORD" size="2" offset="12" />
+      </InputLayout>
+    </ShaderProgram>
+    <ShaderProgram name="sprite_texture">
+      <Shaders>
+        <Shader name="sprite_texture_vertex" />
+        <Shader name="sprite_texture_pixel" />
       </Shaders>
       <InputLayout>
         <InputElement name="POSITION" size="3" offset="0" />

@@ -36,8 +36,8 @@ namespace challenge
 	class GameApplication
 	{
 	public:
-		GameApplication(void);
-		virtual ~GameApplication(void);
+		GameApplication(const Size &screenSize);
+		virtual ~GameApplication();
 
 		virtual bool Initialize();
 		IWindow* GetWindow() { return mWindow; }
@@ -57,6 +57,8 @@ namespace challenge
 		DatabaseManager *GetDatabaseManager() const { return mDatabaseManager; }
 		NetworkManager *GetNetworkManager() const { return mNetworkManager; }
 		AudioManager *GetAudioManager() const { return mAudioManager; }
+
+		const Size& GetScreenSize() { return mScreenSize; }
 
 		void SetMainCamera(CameraNode *camera) { mMainCamera = camera; }
 		CameraNode* GetMainCamera() { return mMainCamera; }
@@ -103,6 +105,8 @@ namespace challenge
 		PrimitiveGenerator *mPrimitiveGenerator;
 
 		CameraNode *mMainCamera;
+
+		Size mScreenSize;
 
 		bool mInitialized;
 		

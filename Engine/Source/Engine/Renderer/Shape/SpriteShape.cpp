@@ -8,15 +8,16 @@ namespace challenge
 
 	SpriteShape::SpriteShape(IGraphicsDevice *device) :
 		Shape(device, "sprite"),
-		mBackgroundImage(NULL)
+		mBackgroundImage(NULL),
+		mHasBackgroundImage(false)
 	{
 		if(!sSpriteVertexBuffer) {
 			// Create sprite vertex buffer, which all sprites will use
 			SpriteVertex verts[4] = {
-				0.0, 0.0, 0.0, 0.0,
-				0.0, 1.0, 0.0, 1.0,
-				1.0, 0.0, 0.0, 1.0,
-				1.0, 1.0, 1.0, 1.0,
+				0.0, 0.0, 0.0, 0.0, 0.0,
+				0.0, 1.0, 0.0, 0.0, 1.0,
+				1.0, 0.0, 0.0, 0.0, 1.0,
+				1.0, 1.0, 0.0, 1.0, 1.0,
 			};
 
 			VERTEX_BUFFER_DESC desc;
@@ -36,15 +37,20 @@ namespace challenge
 
 	void SpriteShape::SetBackgroundColor(const glm::vec4 &color)
 	{
-		mBackgroundColor = color;
+		mBackgroundColor = glm::vec4(color.r / 255.0f, color.g / 255.0f, color.b / 255.0f, color.a / 255.0f);
 	}
 
 	void SpriteShape::SetBackgroundImage(Image *backgroundImage)
 	{
-		TEXTURE_DESC desc;
-		mBackgroundImage = this->GetDevice()->CreateTexture2D(desc);
-		if(!mBackgroundImage->Initialize(backgroundImage)) {
-			throw "Failed to load texture";
+		if(backgroundImage) {
+			TEXTURE_DESC desc;
+			mBackgroundImage = this->GetDevice()->CreateTexture2D(desc);
+			if(!mBackgroundImage->Initialize(backgroundImage)) {
+				throw "Failed to load texture";
+			}
+			mHasBackgroundImage = true;
+		} else {
+			mHasBackgroundImage = false;
 		}
 	}
 
@@ -53,7 +59,7 @@ namespace challenge
 		IGraphicsContext *context = device->GetContext();
 		
 		Effect *effect = context->GetEffect("Sprite");
-		if(mBackgroundImage) {
+		if(mHasBackgroundImage) {
 			effect->SetActiveTechnique("SpriteTexture");
 		} else {
 			effect->SetActiveTechnique("SpriteColor");

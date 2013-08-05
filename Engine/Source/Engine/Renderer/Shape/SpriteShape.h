@@ -8,7 +8,7 @@ namespace challenge
 {
 	struct SpriteVertex
 	{
-		float position[2];
+		float position[3];
 		float texCoord[2];
 	};
 
@@ -26,6 +26,7 @@ namespace challenge
 	private:
 		glm::vec4 mBackgroundColor;
 		ITexture *mBackgroundImage;
+		bool mHasBackgroundImage;
 	};
 
 };

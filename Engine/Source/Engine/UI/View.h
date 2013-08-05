@@ -41,7 +41,7 @@ namespace challenge
 	};
 
 	class View;
-	typedef std::vector<View *> TControlList;
+	typedef std::vector<View *> TViewList;
 
 	__declspec(align(16))
 	struct ControlMatrices {
@@ -67,33 +67,27 @@ namespace challenge
 		virtual void Update(int deltaMillis);
 		virtual void Render(IGraphicsDevice *device, RenderState &state);
 
-		void SetFrame(Frame frame) 
-		{ 
-			mFrame = frame; 
-			UpdateAdjustedFrame();
-		}
-		const Frame& GetFrame() const { return mFrame; }
-		void SetSize(Size size) { mFrame.size = size; }
-		void SetPosition(Point point) { mFrame.origin = point; }
+		virtual void SetFrame(Frame frame) { mFrame = frame; }
 
-		void SetVisible(bool visible) { mVisible = visible; }
-		bool IsVisible() { return mVisible; }
+		const virtual Frame& GetFrame() const { return mFrame; }
+		virtual void SetSize(Size size) { mFrame.size = size; }
+		virtual void SetPosition(Point point) { mFrame.origin = point; }
 
-		void SetBackgroundColor(Color color) { mBackgroundColor = color; }
-		const Color& GetBackgroundColor() const { return mBackgroundColor; }
+		virtual void SetVisible(bool visible) { mVisible = visible; }
+		virtual bool IsVisible() { return mVisible; }
 
-		void SetBackgroundImage(std::string imageName);
+		virtual void SetBackgroundColor(const glm::vec4 &color) { mBackgroundColor = color; }
+		const virtual glm::vec4& GetBackgroundColor() const { return mBackgroundColor; }
 
-		void AddSubcontrol(View *control);
+		virtual void SetBackgroundImage(std::string imageName);
 
-		void SetZPosition(float zPosition) { mZPosition = zPosition; }
-		float GetZPosition() { return mZPosition; }
+		virtual void AddSubview(View *view);
 
-		void SetParent(View *parent) 
-		{ 
-			mParent = parent; 
-			UpdateAdjustedFrame();
-		}
+		virtual void SetZPosition(float zPosition) { mZPosition = zPosition; }
+		virtual float GetZPosition() { return mZPosition; }
+
+		virtual void SetParent(View *parent) { mParent = parent; }
+
 		View *GetParent() const { return mParent; }
 
 		bool ContainsPoint(Point point) { return mAdjustedFrame.Contains(point); }
@@ -106,16 +100,20 @@ namespace challenge
 		void AddKeyDownDelegate(KeyboardEventDelegate eventDelegate);
 		void AddKeyUpDelegate(KeyboardEventDelegate eventDelegate);
 
+	protected:
+		SpriteShape* GetSprite() { return mSprite; }
+
 	private:
 		Frame mFrame;
 		Frame mAdjustedFrame;
-		Color mBackgroundColor;
-		ITexture *mBackgroundImage;
+		glm::vec4 mBackgroundColor;
+		Image *mBackgroundImage;
 		ControlType mType;
 		bool mVisible;
-		TControlList mSubcontrols; 
+		TViewList mSubviews; 
 		float mZPosition;
 		View *mParent;
+		SpriteShape *mSprite;
 
 		TUIEventDelegateMap mDelegates;
 		TMouseEventDelegateMap mMouseDelegates;
@@ -123,19 +121,6 @@ namespace challenge
 
 		ControlMatrices mMatrices;
 		ControlData mControlData;
-
-		void UpdateAdjustedFrame() 
-		{
-			if(mParent) {
-				Frame parentFrame = mParent->mAdjustedFrame;
-				mAdjustedFrame = Frame(parentFrame.origin.x + mFrame.origin.x,
-										parentFrame.origin.y + mFrame.origin.y,
-										mFrame.size.width,
-										mFrame.size.height);
-			} else {
-				mAdjustedFrame = mFrame; 
-			}
-		}
 
 		void OnKeyDown(const KeyboardEvent &e);
 		void OnKeyUp(const KeyboardEvent &e);

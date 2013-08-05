@@ -1,13 +1,11 @@
 #pragma once
 
-#pragma once
-
 #include <Engine/Challenge.h>
 #include <Engine/View/GameView.h>
 
 namespace challenge
 {
-	typedef std::vector<GameView *> TViewList;
+	//typedef std::vector<GameView *> TViewList;
 
 	class GameController
 	{

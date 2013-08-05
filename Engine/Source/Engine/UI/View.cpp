@@ -33,84 +33,53 @@ namespace challenge
 	{
 	}
 
-	void View::AddSubcontrol(View *control)
+	void View::AddSubview(View *view)
 	{
 		bool found = false;
-		for(int i = 0; i < mSubcontrols.size(); i++) {
-			if(mSubcontrols[i] == control) {
+		for(int i = 0; i < mSubviews.size(); i++) {
+			if(mSubviews[i] == view) {
 				found = true;
 			}
 		}
 
 		if(!found) {
-			mSubcontrols.push_back(control);
-			control->SetParent(this);
-			control->SetZPosition(mZPosition + 1);
-			UIManager *uiManager = UIManager::GetDefaultManager();
-			uiManager->AddControl(control);
+			mSubviews.push_back(view);
+			view->SetParent(this);
+			view->SetZPosition(mZPosition + 1);
 		}
 	}
 
 	void View::Update(int deltaMillis)
 	{
-		for(int j = 0; j < mSubcontrols.size(); j++) {
-			mSubcontrols[j]->Update(deltaMillis);
+		for(int j = 0; j < mSubviews.size(); j++) {
+			mSubviews[j]->Update(deltaMillis);
 		}
 	}
 
 	void View::Render(IGraphicsDevice *device, RenderState &state)
 	{
 		if(mVisible) {
-			/*Frame adjustedFrame = mFrame;
-			adjustedFrame.origin.x += origin.x;
-			adjustedFrame.origin.y += origin.y;
+			if(!mSprite) {
+				mSprite = new SpriteShape(device);
+			}
 
-			glm::mat4 modelViewMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(adjustedFrame.origin.x, adjustedFrame.origin.y, 0.0f));
-			modelViewMatrix = glm::scale(modelViewMatrix, glm::vec3(adjustedFrame.size.width, adjustedFrame.size.height, 1.0f));
-			//modelViewMatrix = glm::transpose(modelViewMatrix);
+			glm::mat4 transform = glm::translate(glm::mat4(1.0f), glm::vec3(mFrame.origin.x, mFrame.origin.y, 0.0f));
+			transform = glm::scale(transform, glm::vec3(mFrame.size.width, mFrame.size.height, 1.0f));
 
-			glm::mat4 modelViewProjectionMatrix = manager->mProjectionMatrix * modelViewMatrix;
-			mMatrices.gWVPMatrix = modelViewProjectionMatrix;
-			//manager->mShader->setUniform("ModelViewProjectionMatrix", modelViewProjectionMatrix);
+			state.PushTransform(transform);
 
-			glm::vec4 bgColorVec = glm::vec4(mBackgroundColor.red, mBackgroundColor.green, mBackgroundColor.blue, mBackgroundColor.alpha);
-			mControlData.gBackgroundColor = bgColorVec;
-			//manager->mShader->setUniform("BackgroundColor", bgColorVec);
+			mSprite->SetBackgroundColor(mBackgroundColor);
 
-			if(mBackgroundImage != NULL) {
-				mControlData.gHasTexture = 1;
-				//mBackgroundImage->Activate(GL_TEXTURE0);
-				//manager->mShader->setUniform("BackgroundImage", 0);
-				//manager->mShader->setUniform("HasTexture", 1);
+			if(mBackgroundImage) {
+				mSprite->SetBackgroundImage(mBackgroundImage);
 			} else {
-				mControlData.gHasTexture = 0;
-				//manager->mShader->setUniform("HasTexture", 0);
-			}
-			//manager->mShader->setUniform("HasText", 0);
-
-			//glDrawArrays(GL_QUADS, 0, 4);
-
-			RendererType rendererType = GameApplication::GetInstance()->GetRendererType();*/
-
-			/*if(rendererType == RendererTypeDX11) {
-				HLSLProgram *shader = manager->GetShader();
-
-				shader->SetConstantBuffer(&mMatrices, sizeof(ControlMatrices), 0, HLSLShaderTypeVertex);
-				shader->SetConstantBuffer(&mControlData, sizeof(ControlData), 0, HLSLShaderTypePixel);
-
-				if(mControlData.gHasTexture) {
-					TextureDX11 *dxTexture = reinterpret_cast<TextureDX11 *>(mBackgroundImage);
-					shader->SetResource(dxTexture->GetTextureResource(), 0, 1, HLSLShaderTypePixel);
-				}
+				mSprite->SetBackgroundImage(NULL);
 			}
 
-			Renderer *renderer = GameApplication::GetInstance()->GetWindow()->GetRenderer();
-			renderer->Draw(PrimitiveTypeTriangleStrip, 0, 4);
+			mSprite->Draw(device, state);
 
-			origin = adjustedFrame.origin;*/
-
-			for(int i = 0; i < mSubcontrols.size(); i++) {
-				View *child = mSubcontrols[i];
+			for(int i = 0; i < mSubviews.size(); i++) {
+				View *child = mSubviews[i];
 				child->Render(device, state);
 			}
 		}
@@ -118,15 +87,7 @@ namespace challenge
 
 	void View::SetBackgroundImage(std::string imageName)
 	{
-		//mBackgroundImage = imageName;
-
-		Image *image = new Image(imageName);
-		//UIManager::GetDefaultManager()->AddImageToAtlas(image);
-		//mBackgroundImage = new Texture();
-		//TextureInfo texInfo = Texture::DefaultTextureInfo();
-		//texInfo.format = GL_BGR;
-		//texInfo.internalFormat = GL_RGB;
-		//mBackgroundImage->Initialize(image->GetBits(), image->GetWidth(), image->GetHeight());
+		mBackgroundImage = new Image(imageName);
 	}
 
 	/* Event Delegates */
@@ -164,10 +125,10 @@ namespace challenge
 	bool View::OnMouseEvent(const MouseEvent &e)
 	{
 		bool handled = false;
-		if(mSubcontrols.size() > 0) {
+		if(mSubviews.size() > 0) {
 			View *topControl = NULL;
-			for(int i = mSubcontrols.size() - 1; i >= 0; i--) {
-				View *next = mSubcontrols[i];
+			for(int i = mSubviews.size() - 1; i >= 0; i--) {
+				View *next = mSubviews[i];
 				if(next->ProcessMouseEvent(e)) {
 					if(topControl == NULL ||
 						topControl->mZPosition < next->mZPosition) {
@@ -214,8 +175,8 @@ namespace challenge
 			return true;
 		}
 
-		for(int i = 0; i < mSubcontrols.size(); i++) {
-			if(mSubcontrols[i]->OnKeyboardEvent(e)) {
+		for(int i = 0; i < mSubviews.size(); i++) {
+			if(mSubviews[i]->OnKeyboardEvent(e)) {
 				return true;
 			}
 		}

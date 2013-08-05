@@ -11,7 +11,8 @@
 
 namespace challenge
 {
-	GameApplicationWindows::GameApplicationWindows(HINSTANCE instance) : GameApplication()
+	GameApplicationWindows::GameApplicationWindows(const Size &screenSize, HINSTANCE instance) : 
+		GameApplication(screenSize)
 	{
 		mInstance = instance;
 	}
@@ -42,7 +43,9 @@ namespace challenge
 			return false;
 		}*/
 
-		mWindow = new Window<PlatformTypeWindows>(mInstance, "Dungeon Raider v0.1", Size(800, 600));
+		const Size &screenSize = this->GetScreenSize();
+
+		mWindow = new Window<PlatformTypeWindows>(mInstance, "Dungeon Raider v0.1", screenSize);
 		if(!mWindow->Initialize()) {
 			return false;
 		}

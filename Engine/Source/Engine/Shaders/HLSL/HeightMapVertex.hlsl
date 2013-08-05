@@ -16,13 +16,9 @@ struct VS_OUT
 
 Texture2D gHeightMapTexture;
 
-cbuffer matrices
-{
-	float4x4 gWVPMatrix;
-};
-
 cbuffer heightmapData
 {
+	float4x4 gWVPMatrix;
 	float2 gSize;
 };
 

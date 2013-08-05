@@ -815,15 +815,6 @@
     <ClInclude Include="Source\Engine\Core\BasicTypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Users\Adam\Documents\vectormap\vectormap\CityMapsEngine\Lib\font-engine\FontEngine\Source\Font\Types.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Users\Adam\Documents\vectormap\vectormap\CityMapsEngine\Lib\font-engine\FontEngine\Source\Font\UnicodeRanges.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Users\Adam\Documents\vectormap\vectormap\CityMapsEngine\Lib\font-engine\FontEngine\Source\Font\Util.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Engine\Font\GlyphAtlas.inl">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -872,11 +863,11 @@
     <FxCompile Include="Source\Engine\Shaders\HLSL\SkyboxVertex.hlsl" />
     <FxCompile Include="Source\Engine\Shaders\HLSL\SkyboxPixel.hlsl" />
     <FxCompile Include="Source\Engine\Shaders\HLSL\SpriteColorVertex.hlsl" />
-    <FxCompile Include="Source\Engine\Shaders\HLSL\SpriteTexturePixel.hlsl" />
-    <FxCompile Include="Source\Engine\Shaders\HLSL\SpriteTextureVertex.hlsl" />
     <FxCompile Include="Source\Engine\Shaders\HLSL\SpriteColorPixel.hlsl" />
     <FxCompile Include="Source\Engine\Shaders\HLSL\HeightMapVertex.hlsl" />
     <FxCompile Include="Source\Engine\Shaders\HLSL\HeightMapPixel.hlsl" />
+    <FxCompile Include="Source\Engine\Shaders\HLSL\SpriteTexturePixel.hlsl" />
+    <FxCompile Include="Source\Engine\Shaders\HLSL\SpriteTextureVertex.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="Source\Engine\Config\shaders.xml" />

@@ -1,6 +1,7 @@
+
 struct VS_IN
 {
-	float4 pos : POSITION;
+	float3 pos : POSITION;
 	float2 texCoord : TEXCOORD;
 };
 
@@ -19,7 +20,7 @@ VS_OUT main( VS_IN vsIn )
 {
 	VS_OUT vsOut;
 
-	vsOut.pos = mul(vsIn.pos, gWVPMatrix);
+	vsOut.pos = mul(float4(vsIn.pos, 1.0), gWVPMatrix);
 	vsOut.texCoord = vsIn.texCoord;
 
 	return vsOut;

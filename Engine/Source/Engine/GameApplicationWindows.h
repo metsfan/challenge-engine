@@ -10,7 +10,7 @@ namespace challenge
 	class GameApplicationWindows : public GameApplication
 	{
 	public:
-		GameApplicationWindows(HINSTANCE instance);
+		GameApplicationWindows(const Size &screenSize, HINSTANCE instance);
 		virtual ~GameApplicationWindows(void);
 
 		virtual bool Initialize();

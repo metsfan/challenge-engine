@@ -6,7 +6,7 @@ using namespace challenge;
 GameView::GameView()
 {
 	mRootControl = new View();
-	UIManager::GetDefaultManager()->AddRootControl(mRootControl);
+	//UIManager::GetDefaultManager()->AddRootControl(mRootControl);
 }
 
 GameView::~GameView()
@@ -30,7 +30,7 @@ void GameView::OnRender()
 
 void GameView::AddControl(View *control)
 {
-	mRootControl->AddSubcontrol(control);
+	//mRootControl->AddSubcontrol(control);
 }
 
 void GameView::AddActor(IActor *actor)

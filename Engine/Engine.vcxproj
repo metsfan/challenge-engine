@@ -140,9 +140,6 @@
     <ClCompile Include="Source\Engine\View\GameView.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\Users\Adam\Documents\vectormap\vectormap\CityMapsEngine\Lib\font-engine\FontEngine\Source\Font\Types.h" />
-    <ClInclude Include="..\..\..\..\Users\Adam\Documents\vectormap\vectormap\CityMapsEngine\Lib\font-engine\FontEngine\Source\Font\UnicodeRanges.h" />
-    <ClInclude Include="..\..\..\..\Users\Adam\Documents\vectormap\vectormap\CityMapsEngine\Lib\font-engine\FontEngine\Source\Font\Util.h" />
     <ClInclude Include="Source\Engine\Challenge.h" />
     <ClInclude Include="Source\Engine\Core\BasicTypes.h" />
     <ClInclude Include="Source\Engine\Font\UnicodeRanges.h" />
@@ -374,6 +371,7 @@
     <FxCompile Include="Source\Engine\Shaders\HLSL\SpriteColorVertex.hlsl">
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="Source\Engine\Shaders\HLSL\SpriteTexturePixel.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
@@ -383,6 +381,7 @@
     <FxCompile Include="Source\Engine\Shaders\HLSL\SpriteTextureVertex.hlsl">
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>

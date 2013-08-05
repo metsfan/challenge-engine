@@ -20,19 +20,20 @@ namespace challenge
 	GameApplication* GameApplication::mGameInstance = NULL;
 	Font* GameApplication::sDefaultFont = NULL;
 
-	GameApplication::GameApplication(void)
+	GameApplication::GameApplication(const Size &screenSize) :
+		mScreenSize(screenSize),
+		mInitialized(false),
+		mEventManager(NULL),
+		mNetworkManager(NULL),
+		mDatabaseManager(NULL),
+		mInputManager(NULL),
+		mModelManager(NULL),
+		mPrimitiveGenerator(NULL)
 	{
-		mInitialized =  false;
 		mGameInstance = NULL;
-		mEventManager = NULL;
-		mNetworkManager = NULL;
-		mDatabaseManager = NULL;
-		mInputManager = NULL;
-		mModelManager = NULL;
-		mPrimitiveGenerator = NULL;
 	}
 
-	GameApplication::~GameApplication(void)
+	GameApplication::~GameApplication()
 	{
 		delete mWindow;
 	}
@@ -55,7 +56,7 @@ namespace challenge
 
 		mInputManager = new InputManager();
 
-		mUIManager = new UIManager();
+		mUIManager = new UIManager(mScreenSize);
 
 		mPrimitiveGenerator = new PrimitiveGenerator(this);
 		//mInputManager->AddKeyboardListener(mUIManager);
@@ -68,7 +69,7 @@ namespace challenge
 	{
 		//mPhysicsManager->OnUpdate();
 		mInputManager->Update();
-		//mUIManager->Update(0);
+		mUIManager->Update(0);
 	}
 
 	void GameApplication::PreRender()
@@ -78,11 +79,7 @@ namespace challenge
 
 	void GameApplication::Render()
 	{
-		this->PreRender();
-
-		//mUIManager->Render();
-
-		this->PostRender();
+		mUIManager->Render(mGraphicsDevice);
 	}
 
 	void GameApplication::PostRender()
@@ -290,7 +287,7 @@ namespace challenge
 	/* GUI Methods */
 	void GameApplication::SetRootView(View *view)
 	{
-		mUIManager->AddControl(view);
+		mUIManager->SetRootView(view);
 	}
 
 	RendererType GameApplication::GetRendererType()

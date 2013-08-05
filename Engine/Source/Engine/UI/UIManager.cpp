@@ -6,7 +6,8 @@
 
 namespace challenge
 {
-	UIManager::UIManager(const Size &screenSize)
+	UIManager::UIManager(const Size &screenSize) :
+		mRootView(NULL)
 	{
 		mCamera = new OrthoCamera(0, screenSize.width, screenSize.height, 0.0f, 0.0f, 1000.0f, screenSize);
 	}
@@ -21,13 +22,21 @@ namespace challenge
 
 	void UIManager::Update(int deltaMillis)
 	{
-		mRootView->Update(deltaMillis);
+		if(mRootView) {
+			mRootView->Update(deltaMillis);
+		}
 	}
 
 	void UIManager::Render(IGraphicsDevice *device)
 	{
-		RenderState state;
-		mRootView->Render(device, state);
+		if(mRootView) {
+			RenderState state;
+
+			state.SetProjection(mCamera->GetProjectionMatrix());
+
+			state.PushTransform(mCamera->GetViewMatrix());
+			mRootView->Render(device, state);
+		}
 	}
 
 	void UIManager::AddImageToAtlas(Image *image)
