@@ -348,9 +348,6 @@
     <ClCompile Include="Source\Engine\UI\Controls\PanelView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Engine\Challenge.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Engine\Font\FontFace.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -361,6 +358,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Engine\Font\FontCache.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Challenge.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -862,12 +862,11 @@
     <FxCompile Include="Source\Engine\Shaders\HLSL\ModelBoneAnimationVertex.hlsl" />
     <FxCompile Include="Source\Engine\Shaders\HLSL\SkyboxVertex.hlsl" />
     <FxCompile Include="Source\Engine\Shaders\HLSL\SkyboxPixel.hlsl" />
-    <FxCompile Include="Source\Engine\Shaders\HLSL\SpriteColorVertex.hlsl" />
     <FxCompile Include="Source\Engine\Shaders\HLSL\SpriteColorPixel.hlsl" />
     <FxCompile Include="Source\Engine\Shaders\HLSL\HeightMapVertex.hlsl" />
     <FxCompile Include="Source\Engine\Shaders\HLSL\HeightMapPixel.hlsl" />
     <FxCompile Include="Source\Engine\Shaders\HLSL\SpriteTexturePixel.hlsl" />
-    <FxCompile Include="Source\Engine\Shaders\HLSL\SpriteTextureVertex.hlsl" />
+    <FxCompile Include="Source\Engine\Shaders\HLSL\SpriteVertex.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="Source\Engine\Config\shaders.xml" />

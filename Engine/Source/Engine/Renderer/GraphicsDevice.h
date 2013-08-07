@@ -9,11 +9,56 @@
 
 namespace challenge
 {
+	enum BlendParam
+	{
+		BlendZero,
+		BlendOne,
+		BlendSrcColor,
+		BlendOneMinusSrcColor,
+		BlendSrcAlpha,
+		BlendOneMinusSrcAlpha,
+		BlendDstAlpha,
+		BlendOneMinusDstAlpha,
+		BlendDstColor,
+		BlendOneMinusDstColor,
+		BlendSrcAlphaSaturate,
+		BlendBlendFactor,
+		BlendOneMinusBlendFactor,
+		BlendSrc1Color,
+		BlendOneMinusSrc1Color,
+		BlendSrc1Alpha,
+		BlendOneMinusSrc1Alpha
+	};
+
+	enum DepthFunc
+	{
+		DepthFuncAlways,
+		DepthFuncNever,
+		DepthFuncLess,
+		DepthFuncLessEqual,
+		DpethFuncGreater,
+		DepthFuncGreaterEqual,
+		DepthFuncEqual,
+		DepthFuncNotEqual,
+	};
+
+
+	enum GraphicsState
+	{
+		AlphaBlending,
+		DepthTest
+	};
+
 	class IGraphicsDevice
 	{
 	public:
 		virtual IGraphicsContext* GetContext() = 0;
 		virtual IWindow* GetWindow() = 0;
+
+		virtual void EnableState(GraphicsState state) = 0;
+		virtual void DisableState(GraphicsState state) = 0;
+		virtual void SetBlendingFunction(BlendParam source, BlendParam destination) = 0;
+		virtual void SetDepthFunction(DepthFunc function) = 0;
 
 		virtual IShader* CreateShader(std::string filename, ShaderType type) = 0;
 		virtual IShaderProgram* CreateShaderProgram() = 0;
@@ -42,6 +87,9 @@ namespace challenge
 		IGraphicsContext* GetContext() { return mContext; }
 		IWindow* GetWindow() { return mWindow; }
 
+		void EnableState(GraphicsState state);
+		void DisableState(GraphicsState state);
+
 	protected:
 		GRAPHICS_DEVICE_DESC& GetDesc() { return mDesc; }
 
@@ -51,6 +99,9 @@ namespace challenge
 		GRAPHICS_DEVICE_DESC mDesc;
 		IWindow *mWindow;
 		IGraphicsContext *mContext;
+
+		virtual void SetAlphaBlending(bool state) = 0;
+		virtual void SetDepthTest(bool state) = 0;
 	};
 
 	template <typename Renderer>

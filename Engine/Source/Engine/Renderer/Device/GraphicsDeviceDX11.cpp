@@ -96,13 +96,34 @@ namespace challenge
 				throw "Failed to initialize DirectX!";
 			}
 
-			/*D3D11_DEPTH_STENCIL_DESC dsDesc;
-			dsDesc.DepthEnable = true;
-			dsDesc.DepthFunc = D3D11_COMPARISON_GREATER;
-			mDevice->CreateDepthStencilState(&dsDesc, &mDepthStencilState);*/
+			ZeroMemory(&mDepthStencilDesc, sizeof(D3D11_DEPTH_STENCIL_DESC));
+			mDepthStencilDesc.DepthEnable = true;
+			mDepthStencilDesc.DepthFunc = D3D11_COMPARISON_LESS;
+			mDepthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+			mDepthStencilDesc.StencilEnable = false;
+			mDevice->CreateDepthStencilState(&mDepthStencilDesc, &mDepthStencilState);
+			mContext->OMSetDepthStencilState(mDepthStencilState, 0);
+
+			ZeroMemory(&mBlendDesc, sizeof(D3D11_BLEND_DESC));
+			mBlendDesc.RenderTarget[0].BlendEnable = true;
+			mBlendDesc.RenderTarget[0].SrcBlend = kD3D11BlendParams[BlendSrcAlpha];
+			mBlendDesc.RenderTarget[0].SrcBlendAlpha = kD3D11BlendParams[BlendSrcAlpha];
+			mBlendDesc.RenderTarget[0].DestBlend = kD3D11BlendParams[BlendOneMinusSrcAlpha];
+			mBlendDesc.RenderTarget[0].DestBlendAlpha = kD3D11BlendParams[BlendOneMinusSrcAlpha];
+			mBlendDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+			mBlendDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+			mBlendDesc.RenderTarget[0].RenderTargetWriteMask = D3D10_COLOR_WRITE_ENABLE_ALL;
+
+			mDevice->CreateBlendState(&mBlendDesc, &mBlendState);
+
+			FLOAT blendFactor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
+			UINT sampleMask = 0xFFFFFFFF;
+			mContext->OMSetBlendState(mBlendState, NULL, sampleMask);
 
 			mContext->OMSetRenderTargets(1, &mRenderTargetView, mDepthStencilView);
 			backBuffer->Release();
+
+			
 
 			D3D11_VIEWPORT vp;
 			vp.Width = size.width;
@@ -132,6 +153,56 @@ namespace challenge
 		mDevice->Release();
 		mRenderTargetView->Release();
 		mDepthStencilView->Release();
+	}
+
+	void GraphicsDevice<RendererTypeDX11>::SetAlphaBlending(bool blending)
+	{
+		if(mBlendDesc.RenderTarget[0].BlendEnable != blending) {
+			mBlendDesc.RenderTarget[0].BlendEnable = blending;
+
+			mBlendState->Release();
+			mDevice->CreateBlendState(&mBlendDesc, &mBlendState);
+			UINT sampleMask = 0xFFFFFFFF;
+			mContext->OMSetBlendState(mBlendState, NULL, sampleMask);
+		}
+	}
+
+	void GraphicsDevice<RendererTypeDX11>::SetDepthTest(bool state)
+	{
+		if(mDepthStencilDesc.DepthEnable != state) {
+			mDepthStencilDesc.DepthEnable = state;
+
+			mDepthStencilState->Release();
+			mDevice->CreateDepthStencilState(&mDepthStencilDesc, &mDepthStencilState);
+			mContext->OMSetDepthStencilState(mDepthStencilState, 0);
+		}
+	}
+
+	void GraphicsDevice<RendererTypeDX11>::SetDepthFunction(DepthFunc function)
+	{
+		if(mDepthStencilDesc.DepthFunc != kD3D11DepthFuncs[function]) {
+			mDepthStencilDesc.DepthFunc = kD3D11DepthFuncs[function];
+
+			mDepthStencilState->Release();
+			mDevice->CreateDepthStencilState(&mDepthStencilDesc, &mDepthStencilState);
+			mContext->OMSetDepthStencilState(mDepthStencilState, 0);
+		}
+	}
+
+	void GraphicsDevice<RendererTypeDX11>::SetBlendingFunction(BlendParam source, BlendParam destination)
+	{
+		if(mBlendDesc.RenderTarget[0].SrcBlend != kD3D11BlendParams[source] &&
+			mBlendDesc.RenderTarget[0].DestBlend != kD3D11BlendParams[destination]) {
+
+			mBlendDesc.RenderTarget[0].SrcBlend = kD3D11BlendParams[source];
+			mBlendDesc.RenderTarget[0].SrcBlendAlpha = kD3D11BlendParams[source];
+			mBlendDesc.RenderTarget[0].DestBlend = kD3D11BlendParams[destination];
+			mBlendDesc.RenderTarget[0].DestBlendAlpha = kD3D11BlendParams[destination];
+
+			mBlendState->Release();
+			mDevice->CreateBlendState(&mBlendDesc, &mBlendState);
+			mContext->OMSetBlendState(mBlendState, NULL, 0);
+		}
 	}
 
 	IShader* GraphicsDevice<RendererTypeDX11>::CreateShader(std::string filename, ShaderType type)

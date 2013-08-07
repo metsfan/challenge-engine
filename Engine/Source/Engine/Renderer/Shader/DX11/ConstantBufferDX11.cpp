@@ -78,6 +78,8 @@ namespace challenge
 				dxContext->CSSetConstantBuffers(mBindIndex, mBindCount, &mD3DBuffer);
 				break;
 			}
+		} else {
+			throw "Error";
 		}
 	}
 

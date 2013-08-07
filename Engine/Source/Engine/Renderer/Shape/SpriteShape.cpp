@@ -14,10 +14,10 @@ namespace challenge
 		if(!sSpriteVertexBuffer) {
 			// Create sprite vertex buffer, which all sprites will use
 			SpriteVertex verts[4] = {
-				0.0, 0.0, 0.0, 0.0, 0.0,
-				0.0, 1.0, 0.0, 0.0, 1.0,
-				1.0, 0.0, 0.0, 0.0, 1.0,
-				1.0, 1.0, 0.0, 1.0, 1.0,
+				0.0, 0.0,
+				1.0, 0.0,
+				0.0, 1.0,
+				1.0, 1.0
 			};
 
 			VERTEX_BUFFER_DESC desc;
@@ -69,6 +69,9 @@ namespace challenge
 		ShaderDataMatrix4 wvpData(&wvp, 1);
 		state.SetShaderData("WORLDVIEWPROJ_MATRIX", &wvpData);
 
+		ShaderDataVector4 frameData(&mFrame, 1);
+		state.SetShaderData("FRAME", &frameData);
+
 		ShaderDataVector4 colorData(&mBackgroundColor, 1);
 		state.SetShaderData("BACKGROUND_COLOR", &colorData);
 
@@ -79,6 +82,7 @@ namespace challenge
 
 		if(sSpriteVertexBuffer) {
 			Technique *technique = effect->GetActiveTechnique();
+			technique->Begin();
 			while(technique->HasNextPass()) {
 				sSpriteVertexBuffer->Activate();
 				technique->ProcessNextPass(device, state);

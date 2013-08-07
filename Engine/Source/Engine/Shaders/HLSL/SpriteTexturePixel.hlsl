@@ -1,6 +1,6 @@
 Texture2D gBackgroundImage : register(t0);
 
-cbuffer cbControlData
+cbuffer cbControlData : register(b6)
 {
 	float4 gColor;
 };

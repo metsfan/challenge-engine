@@ -12,9 +12,9 @@
 namespace challenge
 {
 	GameApplicationWindows::GameApplicationWindows(const Size &screenSize, HINSTANCE instance) : 
-		GameApplication(screenSize)
+		GameApplication(screenSize),
+		mInstance(instance)
 	{
-		mInstance = instance;
 	}
 
 	GameApplicationWindows::~GameApplicationWindows(void)
@@ -115,6 +115,7 @@ namespace challenge
 			this->PreRender();
 			//this->Render();
 			renderCallback(deltaMillis);
+			mUIManager->Render(mGraphicsDevice);
 			this->PostRender();
 			QueryPerformanceCounter(&time2);
 			int dif = frameTime - (time2.QuadPart - time1.QuadPart);

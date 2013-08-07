@@ -58,16 +58,19 @@ namespace challenge
 
 	void View::Render(IGraphicsDevice *device, RenderState &state)
 	{
+		
+
 		if(mVisible) {
+			for(int i = 0; i < mSubviews.size(); i++) {
+				View *child = mSubviews[i];
+				child->Render(device, state);
+			}
+
 			if(!mSprite) {
 				mSprite = new SpriteShape(device);
 			}
 
-			glm::mat4 transform = glm::translate(glm::mat4(1.0f), glm::vec3(mFrame.origin.x, mFrame.origin.y, 0.0f));
-			transform = glm::scale(transform, glm::vec3(mFrame.size.width, mFrame.size.height, 1.0f));
-
-			state.PushTransform(transform);
-
+			mSprite->SetFrame(mFrame);
 			mSprite->SetBackgroundColor(mBackgroundColor);
 
 			if(mBackgroundImage) {
@@ -78,10 +81,7 @@ namespace challenge
 
 			mSprite->Draw(device, state);
 
-			for(int i = 0; i < mSubviews.size(); i++) {
-				View *child = mSubviews[i];
-				child->Render(device, state);
-			}
+			
 		}
 	}
 

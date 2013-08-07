@@ -9,7 +9,7 @@ namespace challenge
 	UIManager::UIManager(const Size &screenSize) :
 		mRootView(NULL)
 	{
-		mCamera = new OrthoCamera(0, screenSize.width, screenSize.height, 0.0f, 0.0f, 1000.0f, screenSize);
+		mCamera = new OrthoCamera(0.0f, screenSize.width, screenSize.height, 0.0f, -1000.0f, 1000.0f, screenSize);
 	}
 	UIManager::~UIManager()
 	{
@@ -34,7 +34,7 @@ namespace challenge
 
 			state.SetProjection(mCamera->GetProjectionMatrix());
 
-			state.PushTransform(mCamera->GetViewMatrix());
+			//state.PushTransform(mCamera->GetViewMatrix());
 			mRootView->Render(device, state);
 		}
 	}

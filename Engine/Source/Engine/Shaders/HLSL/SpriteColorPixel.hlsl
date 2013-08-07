@@ -1,9 +1,10 @@
-struct VS_OUT
-{
-	float4 pos : SV_POSITION;
-};
+ struct VS_OUT
+ {
+	 float4 position : SV_POSITION;
+	 float2 texCoord : TEXCOORD;
+ };
 
-cbuffer colorBuffer
+cbuffer colorBuffer : register(b5)
 {
 	float4 gColor;
 }

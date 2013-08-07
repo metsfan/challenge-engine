@@ -33,6 +33,7 @@
       <Pass>
         <ShaderProgram name="sprite_color" />
         <Global name="gWVPMatrix" semantic="WORLDVIEWPROJ_MATRIX" shader="vertex" />
+        <Global name="gFrame" semantic="FRAME" shader="vertex" />
         <Global name="gColor" semantic="BACKGROUND_COLOR" shader="pixel" />
       </Pass>
     </Technique>
@@ -40,6 +41,7 @@
       <Pass>
         <ShaderProgram name="sprite_texture" />
         <Global name="gWVPMatrix" semantic="WORLDVIEWPROJ_MATRIX" shader="vertex" />
+        <Global name="gFrame" semantic="FRAME" shader="vertex" />
         <Global name="gColor" semantic="BACKGROUND_COLOR" shader="pixel" />
         <Global name="gBackgroundImage" semantic="BACKGROUND_IMAGE" shader="pixel" />
       </Pass>
