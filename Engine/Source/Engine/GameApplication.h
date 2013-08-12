@@ -5,7 +5,7 @@
 #include <Engine/Scene/Nodes/CameraNode.h>
 #include <Engine/Renderer/VertexBuffer.h>
 #include <Engine/Renderer/GraphicsDevice.h>
-#include <Engine/Resource/ResourceCache.h>
+#include <Engine/Disk/ResourceCache.h>
 #include <Engine/Util/PrimitiveGenerator.h>
 #include <Engine/Font/FontTypes.h>
 

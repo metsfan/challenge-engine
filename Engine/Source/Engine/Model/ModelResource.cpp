@@ -5,7 +5,7 @@
 #include <Engine/Model/ModelMaterial.h>
 #include <Engine/Util/Util.h>
 
-#include <rapidxml.hpp>
+#include <rapidxml/rapidxml.hpp>
 
 namespace challenge
 {

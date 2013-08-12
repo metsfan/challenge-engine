@@ -22,7 +22,7 @@ namespace challenge
         FT_Error error;
         StringBuffer stringBuffer;
         
-        int lineHeight = mMaxHeight+ kBottomBuffer;
+        int lineHeight = mMaxHeight + kBottomBuffer;
         int width = 0;
         int height = lineHeight;
         std::basic_string<CharType> string = fontStringDesc.Text;
@@ -107,7 +107,7 @@ namespace challenge
 						//int x = pass.x;
 						//int y = pass.y;
 						offset.x = strX + pass.x;
-						offset.y = strY + pass.y;
+						offset.y = strY + pass.y + (lineHeight - glyph->mBearing.y);
                 
 						bool newLine = false;
 						

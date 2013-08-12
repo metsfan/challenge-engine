@@ -23,7 +23,7 @@ namespace challenge
 		void SetFont(Font *font) { mFont = font; }
 
 		virtual void Update(int deltaMillis);
-		virtual void Render(IGraphicsDevice *device, RenderState &state);
+		virtual void Render(IGraphicsDevice *device, RenderState &state, const Frame &parentFrame);
 
 	private:
 		std::string mText;
@@ -31,6 +31,7 @@ namespace challenge
 		Color mTextColor;
 		ITexture *mLabelTexture;
 		bool mTextChanged;
+		SpriteShape *mLabelSprite;
 
 
 		//static HLSLProgram *sFontShader;

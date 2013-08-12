@@ -4,6 +4,31 @@
 
 namespace challenge
 {
+
+	class PlatformType {};
+	class PlatformTypeWindows : public PlatformType {};
+
+	class RendererType {};
+	class RendererTypeDX11 : public RendererType {};
+	class RendererTypeOpenGL : public RendererType {};
+
+#ifdef WINDOWS
+	typedef PlatformTypeWindows CurrentPlatform;
+#endif
+
+#ifndef BYTE
+	typedef unsigned char BYTE;
+#endif
+
+	enum ImageType
+	{
+		ImageTypeUnknown,
+		ImageTypePNG,
+		ImageTypeJPEG
+	};
+
+	typedef std::vector<BYTE> TByteArray;
+
 	class Size
 	{
 	public:

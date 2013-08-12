@@ -16,6 +16,10 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Engine/Challenge.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="Source\Engine\Core\BasicTypes.cpp" />
+    <ClCompile Include="Source\Engine\Disk\Asset.cpp" />
+    <ClCompile Include="Source\Engine\Disk\File.cpp" />
+    <ClCompile Include="Source\Engine\Disk\Platform\Windows\AssetLoaderWindows.cpp" />
+    <ClCompile Include="Source\Engine\Disk\Resource.cpp" />
     <ClCompile Include="Source\Engine\Font\Font.cpp" />
     <ClCompile Include="Source\Engine\Font\FontFace.cpp" />
     <ClCompile Include="Source\Engine\Font\Glyph.cpp" />
@@ -23,6 +27,7 @@
     <ClCompile Include="Source\Engine\Math\MathUtil.cpp" />
     <ClCompile Include="Source\Engine\Model\ModelBone.cpp" />
     <ClCompile Include="Source\Engine\Model\ModelResource.cpp" />
+    <ClCompile Include="Source\Engine\Physics\BVH\Octree.cpp" />
     <ClCompile Include="Source\Engine\Renderer\Camera\Camera.cpp" />
     <ClCompile Include="Source\Engine\Renderer\Camera\OrthoCamera.cpp" />
     <ClCompile Include="Source\Engine\Renderer\Camera\PerspectiveCamera.cpp" />
@@ -37,6 +42,12 @@
     <ClCompile Include="Source\Engine\Database\DatabaseRecord.cpp" />
     <ClCompile Include="Source\Engine\Event\EventData.cpp" />
     <ClCompile Include="Source\Engine\Event\EventManager.cpp" />
+    <ClInclude Include="Source\Engine\Core\PlatformIncludes.h" />
+    <ClInclude Include="Source\Engine\Disk\Asset.h" />
+    <ClInclude Include="Source\Engine\Disk\AssetLoader.h" />
+    <ClInclude Include="Source\Engine\Disk\File.h" />
+    <ClInclude Include="Source\Engine\Disk\Platform\Windows\AssetLoaderWindows.h" />
+    <ClInclude Include="Source\Engine\Disk\Resource.h" />
     <ClInclude Include="Source\Engine\Font\Font.inl">
       <FileType>CppCode</FileType>
     </ClInclude>
@@ -63,7 +74,6 @@
     <ClCompile Include="Source\Engine\Network\NetworkServer.cpp" />
     <ClCompile Include="Source\Engine\Network\NetworkSocket.cpp" />
     <ClCompile Include="Source\Engine\Physics\BVH\Grid.cpp" />
-    <ClCompile Include="Source\Engine\Physics\BVH\Octree.cpp" />
     <ClCompile Include="Source\Engine\Physics\BVH\QuadTree.cpp" />
     <ClCompile Include="Source\Engine\Physics\Collision\CollisionData.cpp" />
     <ClCompile Include="Source\Engine\Physics\Collision\CollisionDetector.cpp" />
@@ -127,8 +137,8 @@
     <ClCompile Include="Source\Engine\UI\UIManager.cpp" />
     <ClCompile Include="Source\Engine\Util\CubeMapReader.cpp" />
     <ClCompile Include="Source\Engine\Util\Image.cpp" />
+    <ClCompile Include="Source\Engine\Util\ImageParser.cpp" />
     <ClCompile Include="Source\Engine\Util\Logger.cpp" />
-    <ClCompile Include="Source\Engine\Util\Octree.cpp" />
     <ClCompile Include="Source\Engine\Util\PrimitiveGenerator.cpp" />
     <ClCompile Include="Source\Engine\Util\Timer.cpp" />
     <ClCompile Include="Source\Engine\Util\Util.cpp" />
@@ -262,7 +272,7 @@
     <ClInclude Include="Source\Engine\Renderer\VertexBuffer\VertexBufferDX11.h" />
     <ClInclude Include="Source\Engine\Renderer\Window.h" />
     <ClInclude Include="Source\Engine\Renderer\Window\WindowWindows.h" />
-    <ClInclude Include="Source\Engine\Resource\ResourceCache.h" />
+    <ClInclude Include="Source\Engine\Disk\ResourceCache.h" />
     <ClInclude Include="Source\Engine\Scene\Frustum.h" />
     <ClInclude Include="Source\Engine\Scene\Nodes\CameraNode.h" />
     <ClInclude Include="Source\Engine\Scene\Nodes\LevelNode.h" />
@@ -280,8 +290,8 @@
     <ClInclude Include="Source\Engine\UI\UIManager.h" />
     <ClInclude Include="Source\Engine\Util\CubeMapReader.h" />
     <ClInclude Include="Source\Engine\Util\Image.h" />
+    <ClInclude Include="Source\Engine\Util\ImageParser.h" />
     <ClInclude Include="Source\Engine\Util\Logger.h" />
-    <ClInclude Include="Source\Engine\Util\Octree.h" />
     <ClInclude Include="Source\Engine\Util\PrimitiveGenerator.h" />
     <ClInclude Include="Source\Engine\Util\Timer.h" />
     <ClInclude Include="Source\Engine\Util\Util.h" />
@@ -297,7 +307,7 @@
     <None Include="Source\Engine\Renderer\Technique\BasicColorTechnique.inl" />
     <None Include="Source\Engine\Renderer\Technique\BasicModelTechnique.inl" />
     <None Include="Source\Engine\Renderer\Technique\PhongTechnique.inl" />
-    <ClInclude Include="Source\Engine\Resource\ResourceCache.inl">
+    <ClInclude Include="Source\Engine\Disk\ResourceCache.inl">
       <FileType>Document</FileType>
     </ClInclude>
     <None Include="Source\Engine\Shaders\GLSL\control.frag" />
@@ -414,7 +424,9 @@
     <Import Project="ChallengeEngine-settings.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <TargetName>Challenge</TargetName>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -422,6 +434,7 @@
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>Engine/Challenge.h</PrecompiledHeaderFile>
+      <PreprocessorDefinitions>WINDOWS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

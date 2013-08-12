@@ -1,6 +1,6 @@
 #pragma once
 
-#include <rapidxml.hpp>
+#include <rapidxml/rapidxml.hpp>
 
 #include <Engine/Challenge.h>
 #include <Engine/Util/XML/XMLNode.h>

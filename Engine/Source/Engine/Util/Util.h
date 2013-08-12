@@ -1,7 +1,6 @@
 #pragma once
 
 #include <Engine/Challenge.h>
-#include <FreeImage.h>
 
 namespace challenge
 {

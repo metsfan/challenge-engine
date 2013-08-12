@@ -21,7 +21,7 @@ bool ConcaveTriangleMeshShape::Intersects(IPhysicsShape *other, CollisionData *c
 		if(type == kShapeTypeAABB) {
 			AABBShape *aabb = reinterpret_cast<AABBShape *>(other);
 
-			TPhysicsShapeLinkedList shapes = mDataTree->FindNearestShapesToShape(aabb);
+			/*TPhysicsShapeLinkedList shapes = mDataTree->FindNearestShapesToShape(aabb);
 			TPhysicsShapeLinkedList::iterator it = shapes.begin();
 			TPhysicsShapeLinkedList::iterator end = shapes.end();
 			while(it != end) {
@@ -34,7 +34,7 @@ bool ConcaveTriangleMeshShape::Intersects(IPhysicsShape *other, CollisionData *c
 				}
 
 				++it;
-			}
+			}*/
 		}
 	}
 
@@ -55,7 +55,7 @@ void ConcaveTriangleMeshShape::CalculateDerivedData()
 		for(int i = 0; i < mTriangles.size(); i++) {
 			list.push_back(mTriangles[i]);
 		}
-		mDataTree->BuildTree(list);
+		//mDataTree->BuildTree(list);
 		mTreeSet = true;
 	}
 }

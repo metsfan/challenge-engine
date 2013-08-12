@@ -15,5 +15,5 @@ SamplerState gTriLinearSam : register(s0);
 
 float4 main(VS_OUT vOut) : SV_TARGET
 {             
-	return gBackgroundImage.Sample(gTriLinearSam, vOut.texCoord) * gColor;
+	return gBackgroundImage.Sample(gTriLinearSam, vOut.texCoord);
 }

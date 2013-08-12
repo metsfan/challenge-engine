@@ -1,6 +1,7 @@
 #include <Engine/Challenge.h>
 #include <Engine/Font/Font.h>
 #include <Engine/Font/FontCache.h>
+#include <Engine/Font/UnicodeRanges.h>
 
 namespace challenge
 {
@@ -12,7 +13,8 @@ namespace challenge
 	static const std::string kTrueTypeExtension = ".ttf";
 
 	Font::Font(FONT_DESC &fontDesc) :
-		mFontDesc(fontDesc)
+		mFontDesc(fontDesc),
+		mMaxHeight(15)
 	{
 
 		FT_Error error;
@@ -120,6 +122,11 @@ namespace challenge
 		FONT_DESC fontDesc;
 		fontDesc.FontFamily = name;
 		fontDesc.FontSize = size;
+		
+		FontFile file(kDefaultFontPath + fontDesc.FontFamily + kTrueTypeExtension);
+		file.AddRange(LATIN_RANGE);
+		fontDesc.Files.push_back(file);
+
 		return sGlobalFontCache.GetFont(fontDesc);
 	}
 

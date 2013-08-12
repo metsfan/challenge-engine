@@ -11,13 +11,6 @@ namespace challenge
 		float texCoord[2];
 	};
 
-	class RendererType {};
-	class RendererTypeDX11 : public RendererType {};
-	class RendererTypeOpenGL : public RendererType {};
-
-	class PlatformType {};
-	class PlatformTypeWindows : public PlatformType {};
-
 	enum MultisampleLevel
 	{
 		MultisampleLevelNone,

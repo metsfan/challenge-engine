@@ -4,7 +4,7 @@
 #include <Engine/Model/ModelMesh.h>
 #include <Engine/Model/ModelMaterial.h>
 #include <Engine/Model/ModelBone.h>
-#include <rapidxml.hpp>
+#include <rapidxml/rapidxml.hpp>
 #include "Model.h"
 
 namespace challenge

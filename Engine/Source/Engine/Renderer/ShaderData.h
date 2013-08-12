@@ -13,7 +13,7 @@ namespace challenge
 		{
 		}
 
-		~ShaderData()
+		virtual ~ShaderData()
 		{
 		}
 

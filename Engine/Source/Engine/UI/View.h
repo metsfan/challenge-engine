@@ -65,13 +65,23 @@ namespace challenge
 		virtual ~View(void);
 
 		virtual void Update(int deltaMillis);
-		virtual void Render(IGraphicsDevice *device, RenderState &state);
+		virtual void Render(IGraphicsDevice *device, RenderState &state, const Frame &parentFrame);
 
 		virtual void SetFrame(Frame frame) { mFrame = frame; }
 
 		const virtual Frame& GetFrame() const { return mFrame; }
 		virtual void SetSize(Size size) { mFrame.size = size; }
+		virtual void SetSize(int width, int height) 
+		{
+			mFrame.size.width = width;
+			mFrame.size.height = height;
+		}
 		virtual void SetPosition(Point point) { mFrame.origin = point; }
+		virtual void SetPosition(real x, real y)
+		{
+			mFrame.origin.x = x;
+			mFrame.origin.y = y;
+		}
 
 		virtual void SetVisible(bool visible) { mVisible = visible; }
 		virtual bool IsVisible() { return mVisible; }
@@ -80,6 +90,7 @@ namespace challenge
 		const virtual glm::vec4& GetBackgroundColor() const { return mBackgroundColor; }
 
 		virtual void SetBackgroundImage(std::string imageName);
+		virtual void SetBackgroundImage(std::shared_ptr<Image> image);
 
 		virtual void AddSubview(View *view);
 
@@ -107,7 +118,8 @@ namespace challenge
 		Frame mFrame;
 		Frame mAdjustedFrame;
 		glm::vec4 mBackgroundColor;
-		Image *mBackgroundImage;
+		std::shared_ptr<Image> mBackgroundImage;
+		bool mBackgroundImageChanged;
 		ControlType mType;
 		bool mVisible;
 		TViewList mSubviews; 

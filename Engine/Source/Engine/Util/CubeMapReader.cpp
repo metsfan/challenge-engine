@@ -12,7 +12,7 @@ namespace challenge
 		mFaceSize.width = width / 4;
 		mFaceSize.height = height / 3;
 
-		BYTE *imageData = cubeMap->GetBits();
+		const TByteArray &imageData = cubeMap->GetBits();
 
 		int faceBytes = mFaceSize.width * mFaceSize.height * 4;
 		mBuffer = new BYTE[faceBytes * 6];
@@ -21,27 +21,27 @@ namespace challenge
 		Size imageSize(width, height);
 
 		// Right face
-		this->WriteFace(mFaceSize.width * 2, mFaceSize.height, imageData, imageSize, &mBuffer[0]);
+		this->WriteFace(mFaceSize.width * 2, mFaceSize.height, &imageData[0], imageSize, &mBuffer[0]);
 
 		// Left face
-		this->WriteFace(0, mFaceSize.height, imageData, imageSize, &mBuffer[faceBytes]);
+		this->WriteFace(0, mFaceSize.height, &imageData[0], imageSize, &mBuffer[faceBytes]);
 
 		// Bottom face
-		this->WriteFace(mFaceSize.width, mFaceSize.height * 2, imageData, imageSize, &mBuffer[faceBytes * 2]);
+		this->WriteFace(mFaceSize.width, mFaceSize.height * 2, &imageData[0], imageSize, &mBuffer[faceBytes * 2]);
 
 		// Top face
-		this->WriteFace(mFaceSize.width, 0, imageData, imageSize, &mBuffer[faceBytes * 3]);
+		this->WriteFace(mFaceSize.width, 0, &imageData[0], imageSize, &mBuffer[faceBytes * 3]);
 
 		// Front face
-		this->WriteFace(mFaceSize.width, mFaceSize.height, imageData, imageSize, &mBuffer[faceBytes * 4]);
+		this->WriteFace(mFaceSize.width, mFaceSize.height, &imageData[0], imageSize, &mBuffer[faceBytes * 4]);
 
 		// Back face
-		this->WriteFace(mFaceSize.width * 3, mFaceSize.height, imageData, imageSize, &mBuffer[faceBytes * 5]);
+		this->WriteFace(mFaceSize.width * 3, mFaceSize.height, &imageData[0], imageSize, &mBuffer[faceBytes * 5]);
 
 		
 	}
 
-	void CubeMapReader::WriteFace(int startX, int startY, BYTE *imageData, Size &imageSize, BYTE *cubeData)
+	void CubeMapReader::WriteFace(int startX, int startY, const BYTE *imageData, Size &imageSize, BYTE *cubeData)
 	{
 		int endX = startX + mFaceSize.width;
 		int endY = startY + mFaceSize.height;

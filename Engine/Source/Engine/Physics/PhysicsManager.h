@@ -6,7 +6,6 @@
 #include <Engine/Model/Model.h>
 #include <Engine/Event/EventManager.h>
 #include <Engine/View/Actor.h>
-#include <boost/thread.hpp>
 
 namespace challenge
 {

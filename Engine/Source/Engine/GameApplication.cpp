@@ -6,7 +6,7 @@
 #include <Engine/Network/NetworkManager.h>
 #include <Engine/Audio/AudioManager.h>
 #include <Engine/Renderer/VertexBuffer/VertexBufferDX11.h>
-#include <Engine/Resource/ResourceCache.h>
+#include <Engine/Disk/ResourceCache.h>
 #include <Engine/Model/Model.h>
 #include <Engine/Util/XML/XMLDocument.h>
 #include <Engine/Renderer/Effect.h>

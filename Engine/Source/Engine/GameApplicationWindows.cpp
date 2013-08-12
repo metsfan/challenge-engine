@@ -1,3 +1,5 @@
+#include <chrono>
+
 #include <Engine/Challenge.h>
 #include "GameApplicationWindows.h"
 #include <Engine/Renderer/Window/WindowWindows.h>
@@ -91,11 +93,12 @@ namespace challenge
 		MSG msg;
 
 		int desiredFPS = 60;
-		int frameTime = 1000000000 / desiredFPS;
+		int frameTime = 1000000 / desiredFPS;
 
 		int deltaMillis = 0;
-		LARGE_INTEGER time1, time2;
+		LARGE_INTEGER time1, time2, freq;
 		QueryPerformanceCounter(&time2);
+		QueryPerformanceFrequency(&freq);
 
 		this->StartRunning();
 
@@ -118,9 +121,10 @@ namespace challenge
 			mUIManager->Render(mGraphicsDevice);
 			this->PostRender();
 			QueryPerformanceCounter(&time2);
-			int dif = frameTime - (time2.QuadPart - time1.QuadPart);
+			LONG64 time = ((time2.QuadPart - time1.QuadPart) * 1000000) / freq.QuadPart;
+			int dif = frameTime - time;
 			if (dif > 0) {
-				Sleep(dif * 0.000001);
+				std::this_thread::sleep_for(std::chrono::microseconds(dif));
 			}
 
 			time2 = time1;

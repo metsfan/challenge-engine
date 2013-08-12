@@ -1,6 +1,5 @@
 #include <Engine/Challenge.h>
 #include <Engine/Util/XML/XMLNode.h>
-#include <boost/lexical_cast.hpp>
 
 namespace challenge
 {
@@ -59,7 +58,7 @@ namespace challenge
 	{
 		std::string strval = this->GetAttributeString(name);
 		if(strval.length() > 0) {
-			return boost::lexical_cast<short>(strval);
+			return (short)atoi(strval.c_str());
 		}
 		return 0;
 	}
@@ -68,7 +67,7 @@ namespace challenge
 	{
 		std::string strval = this->GetAttributeString(name);
 		if(strval.length() > 0) {
-			return boost::lexical_cast<int>(strval);
+			return atoi(strval.c_str());
 		}
 		return 0;
 	}
@@ -77,7 +76,7 @@ namespace challenge
 	{
 		std::string strval = this->GetAttributeString(name);
 		if(strval.length() > 0) {
-			return boost::lexical_cast<float>(strval);
+			return (float)atof(strval.c_str());
 		}
 		return 0;
 	}
@@ -86,7 +85,7 @@ namespace challenge
 	{
 		std::string strval = this->GetAttributeString(name);
 		if(strval.length() > 0) {
-			return boost::lexical_cast<double>(strval);
+			return atof(strval.c_str());
 		}
 		return 0;
 	}

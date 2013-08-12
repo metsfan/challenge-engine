@@ -31,7 +31,8 @@ namespace challenge
 			if(image) {
 				TEXTURE_DESC desc;
 				ITexture *texture = device->CreateTexture2D(desc);
-				texture->Initialize(image->GetBits(), Size(image->GetWidth(), image->GetHeight()));
+				const TByteArray &bits = image->GetBits();
+				texture->Initialize(&bits[0], Size(image->GetWidth(), image->GetHeight()));
 
 				mTextures.push_back(texture);
 			}

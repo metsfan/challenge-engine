@@ -14,7 +14,7 @@ namespace challenge
 	class SpriteShape : public Shape
 	{
 	public:
-		SpriteShape(IGraphicsDevice *device);
+		SpriteShape(IGraphicsDevice *device, ITexture *texture = NULL);
 		~SpriteShape();
 
 		void SetBackgroundColor(const glm::vec4 &color);

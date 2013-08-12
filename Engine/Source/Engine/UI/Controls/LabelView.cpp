@@ -15,7 +15,8 @@ namespace challenge
 		View(),
 		mLabelTexture(NULL),
 		mFont(NULL),
-		mTextChanged(false)
+		mTextChanged(false),
+		mLabelSprite(NULL)
 	{
 		this->SetFont(Font::GetFont(kDefaultFont, kDefaultFontSize));
 	}
@@ -24,7 +25,8 @@ namespace challenge
 		View(frame),
 		mLabelTexture(NULL),
 		mFont(NULL),
-		mTextChanged(false)
+		mTextChanged(false),
+		mLabelSprite(NULL)
 	{
 		this->SetFont(Font::GetFont(kDefaultFont, kDefaultFontSize));
 	}
@@ -33,40 +35,6 @@ namespace challenge
 	{ 
 		mText = text; 
 		mTextChanged = true;
-		/*if(text == "Metsfan") {
-			text = "eeeeee";
-		}*/
-		//text = "Skeletal Archer";
-		//text = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcefghijklmnopqrstuvwxyz1234567890!@#$%^&*()_+-=[]{}\|;:'\"/?.>,<`~ ";
-		
-
-		
-		//CStringBuffer stringBuffer = mFont-(fontString);
-		/*if(!mLabelTexture) {
-			RendererType rendererType = GameApplication::GetInstance()->GetRendererType();
-			if(rendererType == RendererTypeDX11) {
-				D3D11_TEXTURE2D_DESC texDesc;
-				ZeroMemory(&texDesc, sizeof(D3D11_TEXTURE2D_DESC));
-				texDesc.MipLevels = 1;
-				texDesc.ArraySize = 1;
-				texDesc.Format = DXGI_FORMAT_A8_UNORM;
-				texDesc.Usage = D3D11_USAGE_DEFAULT;
-				texDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
-				texDesc.SampleDesc.Count = 1;
-				texDesc.SampleDesc.Quality = 0;
-				texDesc.CPUAccessFlags = 0;
-				texDesc.MiscFlags = D3D11_RESOURCE_MISC_GENERATE_MIPS;
-				mLabelTexture = new TextureDX11(texDesc);
-			}
-		}*/
-
-		//mLabelTexture->Initialize((unsigned char *)stringBuffer.buffer, stringBuffer.texSize.width, stringBuffer.texSize.height);
-		/*if(outline) {
-			stringBuffer.texSize.width = 54;
-		}*/
-		//SetSize(Size(stringBuffer.texSize.width, stringBuffer.texSize.height));
-
-		//delete stringBuffer.buffer;
 	}
 
 	void LabelView::Update(int deltaMillis)
@@ -74,16 +42,22 @@ namespace challenge
 		View::Update(deltaMillis);
 	}
 
-	void LabelView::Render(IGraphicsDevice *device, RenderState &state)
+	void LabelView::Render(IGraphicsDevice *device, RenderState &state, const Frame &parentFrame)
 	{
+		//this->SetBackgroundColor(glm::vec4(0, 255, 255, 255));
+		//this->SetSize(50, 50);
+		//this->SetPosition(0, 0);
+		View::Render(device, state, parentFrame);
+
+		const Frame &frame = this->GetFrame();
+
 		if(!mLabelTexture) {
-			//shader->setUniform("HasText", 1);
-			//mLabelTexture->Activate(GL_TEXTURE1);
-			//shader->setUniform("FontTexture", 1);
-			//glm::vec4 textColorVec = glm::vec4(mTextColor.red, mTextColor.green, mTextColor.blue, mTextColor.alpha);
-			//shader->setUniform("Color", textColorVec);
 			TEXTURE_DESC desc;
 			mLabelTexture = device->CreateTexture2D(desc);
+		}
+
+		if(!mLabelSprite) {
+			mLabelSprite = new SpriteShape(device, mLabelTexture);
 		}
 
 		if(mTextChanged) {
@@ -94,33 +68,12 @@ namespace challenge
 			mLabelTexture->Initialize(stringBuffer.GetBuffer(), stringBuffer.GetSize());
 
 			mTextChanged = false;
+
+			mLabelSprite->SetSize(stringBuffer.GetSize().width, stringBuffer.GetSize().height);
 		}
+
+		mLabelSprite->SetPosition(frame.origin.x + parentFrame.origin.x,
+									frame.origin.y + parentFrame.origin.y);
+		mLabelSprite->Draw(device, state);
 	}
-
-	/*void LabelView::OnRender(GLSLProgram *shader)
-	{
-		View::OnRender(shader);
-		mLabelTexture->Activate(GL_TEXTURE0);
-		shader->setUniform("FontTexture", 0);
-	
-		float *texCoords = new float[8];
-		texCoords[0] = 0.0f;
-		texCoords[1] = 0.0f;
-
-		texCoords[2] = 1.0f;
-		texCoords[3] = 0.0f;
-
-		texCoords[4] = 1.0f;
-		texCoords[5] = 1.0f;
-
-		texCoords[6] = 0.0f;
-		texCoords[7] = 1.0f;
-
-		shader->setAttribData("VertexTexCoord", texCoords, sizeof(float) * 8, 2, 0, GL_FLOAT, GL_DYNAMIC_DRAW, GL_FALSE);
-
-		int hasText = 1;
-		shader->setAttribData("HasText", &hasText, sizeof(int), 1, 0, GL_INT, GL_DYNAMIC_DRAW, GL_FALSE);
-
-		delete texCoords;
-	}*/
 };

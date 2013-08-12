@@ -15,7 +15,9 @@ namespace challenge
 		mVisible(true),
 		mZPosition(0),
 		mBackgroundImage(NULL),
-		mParent(NULL)
+		mParent(NULL),
+		mSprite(NULL),
+		mBackgroundImageChanged(false)
 	{
 	}
 
@@ -25,7 +27,9 @@ namespace challenge
 		mVisible(true),
 		mZPosition(0),
 		mBackgroundImage(NULL),
-		mParent(NULL)
+		mParent(NULL),
+		mSprite(NULL),
+		mBackgroundImageChanged(false)
 	{
 	}
 
@@ -56,38 +60,54 @@ namespace challenge
 		}
 	}
 
-	void View::Render(IGraphicsDevice *device, RenderState &state)
+	void View::Render(IGraphicsDevice *device, RenderState &state, const Frame &parentFrame)
 	{
-		
-
 		if(mVisible) {
-			for(int i = 0; i < mSubviews.size(); i++) {
-				View *child = mSubviews[i];
-				child->Render(device, state);
-			}
-
 			if(!mSprite) {
 				mSprite = new SpriteShape(device);
 			}
 
-			mSprite->SetFrame(mFrame);
+			Frame adjustedFrame(
+				mFrame.origin.x + parentFrame.origin.x,
+				mFrame.origin.y + parentFrame.origin.y,
+				mFrame.size.width,
+				mFrame.size.height
+			);
+
+			mSprite->SetFrame(adjustedFrame);
 			mSprite->SetBackgroundColor(mBackgroundColor);
 
 			if(mBackgroundImage) {
-				mSprite->SetBackgroundImage(mBackgroundImage);
+				if(mBackgroundImageChanged) {
+					mSprite->SetBackgroundImage(mBackgroundImage.get());
+					mBackgroundImageChanged = false;
+				}
 			} else {
 				mSprite->SetBackgroundImage(NULL);
 			}
 
 			mSprite->Draw(device, state);
 
-			
+			for(int i = 0; i < mSubviews.size(); i++) {
+				View *child = mSubviews[i];
+				child->Render(device, state, adjustedFrame);
+			}
 		}
 	}
 
 	void View::SetBackgroundImage(std::string imageName)
 	{
-		mBackgroundImage = new Image(imageName);
+		mBackgroundImage = std::shared_ptr<Image>(new Image(imageName));
+		mBackgroundImageChanged = true;
+	}
+
+	void View::SetBackgroundImage(std::shared_ptr<Image> image)
+	{
+		mBackgroundImage = image;
+		if(mFrame.size.width == 0 || mFrame.size.height == 0) {
+			mFrame.size = image->GetSize();
+		}
+		mBackgroundImageChanged = true;
 	}
 
 	/* Event Delegates */

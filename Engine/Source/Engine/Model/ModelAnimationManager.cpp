@@ -15,7 +15,7 @@ ModelAnimationManager::~ModelAnimationManager()
 
 void ModelAnimationManager::StartAnimations()
 {
-	mAnimationThread = new boost::thread(ModelAnimationManager::AnimationThreadCallback, this);
+	mAnimationThread = new std::thread(ModelAnimationManager::AnimationThreadCallback, this);
 }
 
 void ModelAnimationManager::AnimationThreadCallback(ModelAnimationManager *animManager)

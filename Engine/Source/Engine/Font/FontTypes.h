@@ -44,8 +44,10 @@ namespace challenge
 	{
 		friend class FontCache;
 
-		FONT_DESC() {
-			memset(this, 0, sizeof(*this));
+		FONT_DESC() :
+			FontSize(0),
+			OutlineWidth(0)
+		{
 		}
         
         std::vector<FontFile> Files;
@@ -137,8 +139,11 @@ namespace challenge
     template <typename CharType = char>
 	struct FONT_STRING_DESC
 	{
-		FONT_STRING_DESC() {
-			memset(this, 0, sizeof(*this)); 
+		FONT_STRING_DESC() :
+			LineWidth(kInfinity),
+			ShadowSize(0),
+			TextColor(0, 0, 0, 1)
+		{
 		}
 
 		std::basic_string<CharType> Text;

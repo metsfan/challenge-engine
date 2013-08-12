@@ -1,5 +1,4 @@
 #include <Engine/Challenge.h>
-#include <boost/thread/thread.hpp>
 #include <Engine/Network/NetworkServer.h>
 #include <Engine/Network/NetworkClient.h>
 #include <Engine/Network/NetworkSocket.h>
@@ -25,7 +24,7 @@ bool NetworkManager::Initialize()
 	}
 	mIsServer = true;
 
-	boost::thread *thread = new boost::thread(NetworkManager::NetworkThreadCallback, this);
+	std::thread *thread = new std::thread(NetworkManager::NetworkThreadCallback, this);
 
 	return true;
 }

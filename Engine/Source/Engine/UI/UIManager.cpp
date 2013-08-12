@@ -35,7 +35,9 @@ namespace challenge
 			state.SetProjection(mCamera->GetProjectionMatrix());
 
 			//state.PushTransform(mCamera->GetViewMatrix());
-			mRootView->Render(device, state);
+			device->DisableState(DepthTest);
+			device->EnableState(AlphaBlending);
+			mRootView->Render(device, state, Frame());
 		}
 	}
 

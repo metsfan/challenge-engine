@@ -1,7 +1,6 @@
 #pragma once
 
 #include <Engine/Challenge.h>
-#include <boost/thread/thread.hpp>
 
 namespace challenge
 {
@@ -20,7 +19,7 @@ namespace challenge
 		static void AnimationThreadCallback(ModelAnimationManager *animManager);
 
 	private:
-		boost::thread *mAnimationThread;
+		std::thread *mAnimationThread;
 		ModelManager *mManager;
 	};
 };

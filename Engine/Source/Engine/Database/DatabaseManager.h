@@ -1,14 +1,14 @@
 #pragma once
 
 #include <Engine/Challenge.h>
-#include <mysql_connection.h>
-#include <mysql_driver.h>
+#include <mysql/mysql_connection.h>
+#include <mysql/mysql_driver.h>
 
-#include <cppconn/driver.h>
-#include <cppconn/exception.h>
-#include <cppconn/resultset.h>
-#include <cppconn/statement.h>
-#include <cppconn/prepared_statement.h>
+#include <mysql/cppconn/driver.h>
+#include <mysql/cppconn/exception.h>
+#include <mysql/cppconn/resultset.h>
+#include <mysql/cppconn/statement.h>
+#include <mysql/cppconn/prepared_statement.h>
 
 #define DB_HOST "tcp://127.0.0.1:3306";
 

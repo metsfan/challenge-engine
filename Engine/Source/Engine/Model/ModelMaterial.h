@@ -1,7 +1,6 @@
 #pragma once
 
 #include <Engine/Challenge.h>
-#include <aiScene.h>
 #include <Engine/Renderer/Texture.h>
 #include <Engine/Util/Image.h>
 

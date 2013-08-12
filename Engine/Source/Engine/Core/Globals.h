@@ -1,18 +1,6 @@
 #pragma once
 
 #define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
-// Windows Header Files:
-#include <windows.h>
-#include <WinSock2.h>
-#pragma comment(lib,"Ws2_32.lib")
-
-// DirectX Header Files
-#include <D3D11.h>
-#include <D3DX11.h>
-#pragma comment(lib,"d3d11.lib")
-#pragma comment(lib,"d3dx11.lib")
-#pragma comment(lib,"d3dx9.lib")
-#pragma comment(lib,"d3dcompiler.lib")
 
 // C RunTime Header Files
 #include <stdlib.h>
@@ -37,9 +25,6 @@
 #include <set>
 #include <unordered_set>
 #include <mutex>
-
-// Boost libraries
-#include <boost/optional/optional.hpp>
 
 // GLM Libraries
 #include <glm/glm.hpp>

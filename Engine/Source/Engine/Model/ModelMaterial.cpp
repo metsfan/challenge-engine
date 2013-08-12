@@ -33,7 +33,7 @@ namespace challenge
 				in.read(&filename[0], filenameLength);
 
 				std::string texFilePath = basePath + filename;
-				mMaterialImages[nType].push_back(new Image(texFilePath, true));
+				mMaterialImages[nType].push_back(new Image(texFilePath));
 			}
 		}
 	}

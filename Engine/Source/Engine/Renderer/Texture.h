@@ -1,7 +1,6 @@
 #pragma once
 
 #include <Engine/Challenge.h>
-#include <gl/glew.h>
 #include <Engine/Util/Image.h>
 
 namespace challenge
@@ -39,8 +38,8 @@ namespace challenge
 	struct TEXTURE_DESC
 	{
 		TEXTURE_DESC() :
-			Format(TextureFormatBGRA),
-			InternalFormat(TextureFormatBGRA),
+			Format(TextureFormatRGBA),
+			InternalFormat(TextureFormatRGBA),
 			Min(TextureFilterLinear),
 			Mag(TextureFilterLinear),
 			ClampS(TextureClampEdge),

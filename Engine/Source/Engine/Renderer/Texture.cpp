@@ -13,7 +13,8 @@ namespace challenge
 
 	bool BaseTexture::Initialize(Image *image)
 	{
-		return this->Initialize(image->GetBits(), image->GetSize());
+		const TByteArray &bits = image->GetBits();
+		return this->Initialize(&bits[0], image->GetSize());
 	}
 
 	bool BaseTexture::Initialize(const BYTE *buffer, const Size &size)

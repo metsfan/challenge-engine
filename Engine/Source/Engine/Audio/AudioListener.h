@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Engine/Challenge.h>
-#include <fmod.hpp>
+#include <FMOD/fmod.hpp>
 
 namespace challenge
 {

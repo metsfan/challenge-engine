@@ -7,7 +7,8 @@ namespace challenge
 	{
 		mState = ButtonStateDefault;
 		mTitleLabel = new LabelView();
-		//AddSubcontrol(mTitleLabel);
+		mTitleLabel->SetTextColor(Color(0,0,0,1));
+		this->AddSubview(mTitleLabel);
 	}
 
 	ButtonView::ButtonView(Frame frame) : View(frame)
@@ -16,7 +17,7 @@ namespace challenge
 		mTitleLabel = new LabelView();
 		mTitleLabel->SetFrame(frame);
 		mTitleLabel->SetTextColor(Color(0,0,0,1));
-		//AddSubcontrol(mTitleLabel);
+		this->AddSubview(mTitleLabel);
 	}
 
 	void ButtonView::SetTitleText(std::string text)

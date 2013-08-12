@@ -59,7 +59,7 @@ void RigidBody::Integrate(real duration)
 	mRotation *= pow(mAngularDamping, duration);
 
 	mPosition += mVelocity * duration;
-	mOrientation = mOrientation + (mRotation * duration);
+	//mOrientation = mOrientation + (mRotation * duration);
 
 	this->CalculateDerivedData();
 	this->ClearAccumulators();

@@ -18,6 +18,6 @@ namespace challenge
 		BYTE *mBuffer;
 		Size mFaceSize;
 
-		void WriteFace(int startX, int startY, BYTE *imageData, Size &imageSize, BYTE *cubeData);
+		void WriteFace(int startX, int startY, const BYTE *imageData, Size &imageSize, BYTE *cubeData);
 	};
 };

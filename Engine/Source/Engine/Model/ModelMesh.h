@@ -1,7 +1,6 @@
 #pragma once
 
 #include <Engine/Challenge.h>
-#include <aiScene.h>
 #include <Engine/Model/Model.h>
 #include <Engine/Model/ModelMaterial.h>
 
@@ -18,14 +17,7 @@ namespace challenge
 
 		ModelVertex * GetBuffer() { return mMeshVertices; }
 		int GetTotalFaces() { return mNumVertices; }
-		
-
-		aiVector3D GetVertexAtIndex(int index);
-		void SetVertexAtIndex(int index, float x, float y, float z);
-
-		aiVector3D GetNormalAtIndex(int index);
-		void SetNormalAtIndex(int index, float x, float y, float z);
-
+	
 		void Transform(const glm::mat4 &transform);
 
 		void Unserialize(std::istream &in);
