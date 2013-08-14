@@ -378,6 +378,9 @@
     <ClCompile Include="Source\Engine\UI\Controls\TextFieldView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Engine\UI\Controls\SelectListView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine\Audio\AudioListener.h">
@@ -867,6 +870,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Engine\UI\Controls\TextFieldView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\UI\Controls\SelectListView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
