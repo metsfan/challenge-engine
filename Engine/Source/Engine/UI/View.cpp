@@ -9,18 +9,6 @@
 
 namespace challenge
 {
-	View::View() :
-		mFrame(Frame(0, 0, 0, 0)),
-		mAdjustedFrame(mFrame),
-		mVisible(true),
-		mZPosition(0),
-		mBackgroundImage(NULL),
-		mParent(NULL),
-		mSprite(NULL),
-		mBackgroundImageChanged(false)
-	{
-	}
-
 	View::View(Frame frame) :
 		mFrame(frame),
 		mAdjustedFrame(frame),
@@ -80,6 +68,7 @@ namespace challenge
 			if(mBackgroundImage) {
 				if(mBackgroundImageChanged) {
 					mSprite->SetBackgroundImage(mBackgroundImage.get());
+					//mSprite->SetTextureFrame(0.0, 9, 1.0, 0.5);
 					mBackgroundImageChanged = false;
 				}
 			} else {
@@ -185,15 +174,15 @@ namespace challenge
 
 	bool View::OnKeyboardEvent(const KeyboardEvent &e)
 	{
-		if(mKeyboardDelegates.size() > 0 && ProcessKeyboardEvent(e)) {
+		//if(mKeyboardDelegates.size() > 0 && ProcessKeyboardEvent(e)) {
 			std::vector<KeyboardEventDelegate> delegates = mKeyboardDelegates[e.type];
 
 			for(int i = 0; i < delegates.size(); i++) {
 				delegates[i](this, e);
 			}
 
-			return true;
-		}
+			//return true;
+		//}
 
 		for(int i = 0; i < mSubviews.size(); i++) {
 			if(mSubviews[i]->OnKeyboardEvent(e)) {

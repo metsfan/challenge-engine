@@ -44,6 +44,21 @@ namespace challenge
 			this->SetFrame(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
 		}
 
+		void SetTextureFrame(real x, real y, real width, real height)
+		{
+			mTexFrame.x = x;
+			mTexFrame.y = y;
+			mTexFrame.z = width;
+			mTexFrame.w = height;
+		}
+
+		void SetTextureFrame(const Frame &frame)
+		{
+			this->SetTextureFrame(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
+		}
+
+
+
 		void Draw(IGraphicsDevice *device, RenderState &state);
 
 	private:
@@ -51,6 +66,7 @@ namespace challenge
 		ITexture *mBackgroundImage;
 		bool mHasBackgroundImage;
 		glm::vec4 mFrame;
+		glm::vec4 mTexFrame;
 	};
 
 };

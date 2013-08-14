@@ -12,6 +12,7 @@
 
 namespace challenge
 {
+	static const Range ASCII_RANGE(0x0020, 0x007E);
     static const Range LATIN_RANGE(0x0000, 0x007F);
     static const Range LATIN1_SUPPLEMENT_RANGE(0x0080, 0x00FF);
     static const Range LATIN_EXTENDED_A_RANGE(0x0100, 0x017F);

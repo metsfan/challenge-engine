@@ -14,9 +14,22 @@ namespace challenge
 	struct KeyboardEvent
 	{
 		KeyboardEvent() :
-			type(KeyboardEventKeyDown), keyCode(0) {}
+			type(KeyboardEventKeyDown), 
+			keyCode(0),
+			shiftDown(false),
+			ctrlDown(false),
+			altDown(false),
+			capslockOn(false)
+		{}
+
 		KeyboardEvent(KeyboardEventType _type, unsigned int _keyCode) :
-			type(_type), keyCode(_keyCode) {}
+			type(_type), 
+			keyCode(_keyCode),
+			shiftDown(false),
+			ctrlDown(false),
+			altDown(false),
+			capslockOn(false)
+		{}
 
 
 		unsigned int keyCode; 
@@ -24,6 +37,7 @@ namespace challenge
 		bool shiftDown;
 		bool ctrlDown;
 		bool altDown;
+		bool capslockOn;
 	};
 
 	class IKeyboardListener

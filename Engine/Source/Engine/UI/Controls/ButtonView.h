@@ -19,13 +19,12 @@ namespace challenge
 		void Initialize();
 
 	public:
-		ButtonView();
-		ButtonView(Frame frame);
+		ButtonView(Frame frame = Frame());
 
 		void SetState(ButtonState state) { mState = state; }
 		ButtonState GetState() { return mState; }
 
-		void SetTitleText(std::string text);
+		void SetTitleText(const std::string &text);
 
 	protected:
 		ButtonState mState;

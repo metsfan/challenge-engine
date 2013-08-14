@@ -60,7 +60,7 @@ void CTimer::ExecuteCallback()
 
 VOID CALLBACK CTimer::TimerProc(PVOID lpParameter, BOOLEAN TimerOrWaitFired)
 {
-	CTimer *timer = static_cast<CTimer *>(lpParameter);
+	CTimer *timer = reinterpret_cast<CTimer *>(lpParameter);
 	timer->ExecuteCallback();
 }
 

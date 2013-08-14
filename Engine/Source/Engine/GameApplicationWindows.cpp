@@ -102,6 +102,9 @@ namespace challenge
 
 		this->StartRunning();
 
+		int totalTime = 0;
+		int frames = 0;
+
 		while (this->IsRunning())
 		{
 			if(PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE)) {
@@ -122,6 +125,7 @@ namespace challenge
 			this->PostRender();
 			QueryPerformanceCounter(&time2);
 			LONG64 time = ((time2.QuadPart - time1.QuadPart) * 1000000) / freq.QuadPart;
+
 			int dif = frameTime - time;
 			if (dif > 0) {
 				std::this_thread::sleep_for(std::chrono::microseconds(dif));

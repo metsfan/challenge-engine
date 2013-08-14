@@ -3,10 +3,6 @@
 
 namespace challenge
 {
-	PanelView::PanelView(void) : View()
-	{
-	}
-
 	PanelView::PanelView(Frame frame) : View(frame)
 	{
 		mScrollable = false;
@@ -14,12 +10,6 @@ namespace challenge
 
 	PanelView::~PanelView(void)
 	{
-	}
-
-
-	void PanelView::SetScrollable(bool scrollable)
-	{
-		mScrollable = true;
 	}
 
 	void PanelView::PreRender(UIManager *manager, Point origin)

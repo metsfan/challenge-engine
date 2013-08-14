@@ -132,6 +132,7 @@
     <ClCompile Include="Source\Engine\UI\Controls\ButtonView.cpp" />
     <ClCompile Include="Source\Engine\UI\Controls\LabelView.cpp" />
     <ClCompile Include="Source\Engine\UI\Controls\PanelView.cpp" />
+    <ClCompile Include="Source\Engine\UI\Controls\TextFieldView.cpp" />
     <ClCompile Include="Source\Engine\UI\Events\UIEventArgs.cpp" />
     <ClCompile Include="Source\Engine\UI\View.cpp" />
     <ClCompile Include="Source\Engine\UI\UIManager.cpp" />
@@ -284,6 +285,7 @@
     <ClInclude Include="Source\Engine\UI\Controls\ButtonView.h" />
     <ClInclude Include="Source\Engine\UI\Controls\LabelView.h" />
     <ClInclude Include="Source\Engine\UI\Controls\PanelView.h" />
+    <ClInclude Include="Source\Engine\UI\Controls\TextFieldView.h" />
     <ClInclude Include="Source\Engine\UI\Events\UIEventArgs.h" />
     <ClInclude Include="Source\Engine\UI\UI.h" />
     <ClInclude Include="Source\Engine\UI\View.h" />

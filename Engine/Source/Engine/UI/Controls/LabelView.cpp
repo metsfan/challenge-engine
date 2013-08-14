@@ -11,16 +11,6 @@ namespace challenge
 	static const std::string kDefaultFont = "arial";
 	static const int kDefaultFontSize = 15;
 
-	LabelView::LabelView() : 
-		View(),
-		mLabelTexture(NULL),
-		mFont(NULL),
-		mTextChanged(false),
-		mLabelSprite(NULL)
-	{
-		this->SetFont(Font::GetFont(kDefaultFont, kDefaultFontSize));
-	}
-
 	LabelView::LabelView(Frame frame) : 
 		View(frame),
 		mLabelTexture(NULL),
@@ -31,7 +21,7 @@ namespace challenge
 		this->SetFont(Font::GetFont(kDefaultFont, kDefaultFontSize));
 	}
 
-	void LabelView::SetText(std::string text, bool outline) 
+	void LabelView::SetText(const std::string &text) 
 	{ 
 		mText = text; 
 		mTextChanged = true;
@@ -61,19 +51,36 @@ namespace challenge
 		}
 
 		if(mTextChanged) {
-			FONT_UTF8STRING_DESC fontString;
-			fontString.Text = mText;
-			StringBuffer stringBuffer = mFont->CreateStringBitmap<char>(fontString);
+			if(mText.length() > 0) {
+				FONT_UTF8STRING_DESC fontString;
+				fontString.Text = mText;
+				StringBuffer stringBuffer = mFont->CreateStringBitmap<char>(fontString);
 
-			mLabelTexture->Initialize(stringBuffer.GetBuffer(), stringBuffer.GetSize());
+				mLabelTexture->Initialize(stringBuffer.GetBuffer(), stringBuffer.GetSize());
+				//mLabelSprite->SetSize(stringBuffer.GetSize().width, stringBuffer.GetSize().height);
+				Size stringDims = mFont->GetStringDimensions(mText);
+				if(frame.size.width < stringDims.width) {
+					real dif = stringDims.width - frame.size.width;
+					real texX = dif / stringBuffer.GetSize().width;
 
+					mLabelSprite->SetTextureFrame(texX, 0, 1 - texX, 1);
+					mLabelSprite->SetSize(stringBuffer.GetSize().width * (1 - texX), stringBuffer.GetSize().height);
+				} else {
+					mLabelSprite->SetTextureFrame(0, 0, 1, 1);
+					mLabelSprite->SetSize(stringBuffer.GetSize().width, stringBuffer.GetSize().height);
+				}
+				
+				
+			}
+			
 			mTextChanged = false;
-
-			mLabelSprite->SetSize(stringBuffer.GetSize().width, stringBuffer.GetSize().height);
 		}
 
-		mLabelSprite->SetPosition(frame.origin.x + parentFrame.origin.x,
+		if(mText.length() > 0) {
+			mLabelSprite->SetPosition(frame.origin.x + parentFrame.origin.x,
 									frame.origin.y + parentFrame.origin.y);
-		mLabelSprite->Draw(device, state);
+			
+			mLabelSprite->Draw(device, state);
+		}
 	}
 };

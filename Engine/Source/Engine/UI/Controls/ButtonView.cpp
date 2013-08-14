@@ -3,14 +3,6 @@
 
 namespace challenge
 {
-	ButtonView::ButtonView(void) : View()
-	{
-		mState = ButtonStateDefault;
-		mTitleLabel = new LabelView();
-		mTitleLabel->SetTextColor(Color(0,0,0,1));
-		this->AddSubview(mTitleLabel);
-	}
-
 	ButtonView::ButtonView(Frame frame) : View(frame)
 	{
 		mState = ButtonStateDefault;
@@ -20,10 +12,10 @@ namespace challenge
 		this->AddSubview(mTitleLabel);
 	}
 
-	void ButtonView::SetTitleText(std::string text)
+	void ButtonView::SetTitleText(const std::string &text)
 	{
 		if (mTitleLabel) {
-			mTitleLabel->SetText(text, false);
+			mTitleLabel->SetText(text);
 		}
 	}
 

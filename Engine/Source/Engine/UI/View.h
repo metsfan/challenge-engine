@@ -60,14 +60,13 @@ namespace challenge
 		friend class UIManager;
 
 	public:
-		View();
-		View(Frame frame);
+		View(Frame frame = Frame());
 		virtual ~View(void);
 
 		virtual void Update(int deltaMillis);
 		virtual void Render(IGraphicsDevice *device, RenderState &state, const Frame &parentFrame);
 
-		virtual void SetFrame(Frame frame) { mFrame = frame; }
+		virtual void SetFrame(const Frame &frame) { mFrame = frame; }
 
 		const virtual Frame& GetFrame() const { return mFrame; }
 		virtual void SetSize(Size size) { mFrame.size = size; }

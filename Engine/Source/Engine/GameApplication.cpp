@@ -59,8 +59,8 @@ namespace challenge
 		mUIManager = new UIManager(mScreenSize);
 
 		mPrimitiveGenerator = new PrimitiveGenerator(this);
-		//mInputManager->AddKeyboardListener(mUIManager);
-		//mInputManager->AddMouseListener(mUIManager);
+		mInputManager->AddKeyboardListener(mUIManager);
+		mInputManager->AddMouseListener(mUIManager);
 
 		return true;
 	}

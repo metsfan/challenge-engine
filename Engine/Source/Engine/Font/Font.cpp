@@ -134,4 +134,17 @@ namespace challenge
 	{
 		return sGlobalFontCache.GetFont(fontDesc);
 	}
+
+	Size Font::GetStringDimensions(const std::string &str)
+	{
+		Size dims;
+
+		for(int i = 0; i < str.length(); i++) {
+			Glyph *glyph = this->GetGlyph(str[i]);
+			dims.width += glyph->GetAdvance().x;
+			dims.height = std::max(dims.height, glyph->GetSize().height);
+		}
+
+		return dims;
+	}
 };

@@ -9,7 +9,8 @@ namespace challenge
 	SpriteShape::SpriteShape(IGraphicsDevice *device, ITexture *texture) :
 		Shape(device, "sprite"),
 		mBackgroundImage(texture),
-		mHasBackgroundImage(texture != NULL)
+		mHasBackgroundImage(texture != NULL),
+		mTexFrame(0, 0, 1, 1)
 	{
 		if(!sSpriteVertexBuffer) {
 			// Create sprite vertex buffer, which all sprites will use
@@ -71,6 +72,9 @@ namespace challenge
 
 		ShaderDataVector4 frameData(&mFrame, 1);
 		state.SetShaderData("FRAME", &frameData);
+
+		ShaderDataVector4 texFrameData(&mTexFrame, 1);
+		state.SetShaderData("TEXTURE_FRAME", &texFrameData);
 
 		ShaderDataVector4 colorData(&mBackgroundColor, 1);
 		state.SetShaderData("BACKGROUND_COLOR", &colorData);

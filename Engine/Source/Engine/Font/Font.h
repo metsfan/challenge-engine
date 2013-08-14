@@ -64,6 +64,7 @@ namespace challenge
 
 		int GetMaxCharHeight() { return mFaces[0]->GetMaxCharHeight(); }
         int GetLineHeight() { return mFaces[0]->GetLineHeight(); }
+		Size GetStringDimensions(const std::string &str);
 		
 		static FT_Library sFTLibrary;
 

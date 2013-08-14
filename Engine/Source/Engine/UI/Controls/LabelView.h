@@ -12,15 +12,15 @@ namespace challenge
 	class LabelView : public View
 	{
 	public:
-		LabelView();
-		LabelView(Frame frame);
+		LabelView(Frame frame = Frame());
 
-		void SetText(std::string text, bool outline);
-		std::string GetText() { return mText; }
+		void SetText(const std::string &text);
+		const std::string& GetText() { return mText; }
 
 		void SetTextColor(Color color) { mTextColor = color; }
 
 		void SetFont(Font *font) { mFont = font; }
+		Font* GetFont() { return mFont; }
 
 		virtual void Update(int deltaMillis);
 		virtual void Render(IGraphicsDevice *device, RenderState &state, const Frame &parentFrame);

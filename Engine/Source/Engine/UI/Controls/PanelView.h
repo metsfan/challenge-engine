@@ -6,11 +6,10 @@ namespace challenge
 	class PanelView : public View
 	{
 	public:
-		PanelView();
-		PanelView(Frame frame);
+		PanelView(Frame frame = Frame());
 		virtual ~PanelView(void);
 
-		void SetScrollable(bool scrollable);
+		void SetScrollable(bool scrollable) { mScrollable = scrollable; }
 		
 		void SetContentSize(Size size) { mContentSize = size; }
 		Size GetContentSize() { return mContentSize; }

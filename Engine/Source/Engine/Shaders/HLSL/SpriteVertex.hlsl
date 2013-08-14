@@ -14,6 +14,7 @@
  {
 	 float4x4 gWVPMatrix;
 	 float4 gFrame;
+	 float4 gTexFrame;
  };
 
 
@@ -24,7 +25,7 @@ VS_OUT main( VS_IN vIn )
 	float2 position = gFrame.xy + (vIn.position * gFrame.zw);
 
 	vsOut.position = mul(gWVPMatrix, float4(position, 0.0, 1.0));
-	vsOut.texCoord = vIn.position;
+	vsOut.texCoord = gTexFrame.xy + (vIn.position * gTexFrame.zw);
 
 	return vsOut;
 }

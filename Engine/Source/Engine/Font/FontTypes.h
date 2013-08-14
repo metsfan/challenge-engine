@@ -25,7 +25,7 @@ namespace challenge
         Range() : min(0), max(0) {}
         Range(int _min, int _max) : min(_min), max(_max) {}
         
-        bool Contains(int n) { return min <= n && n <= max; }
+        bool Contains(int n) const { return min <= n && n <= max; }
     };
     
     struct FontFile
