@@ -55,14 +55,14 @@ namespace challenge
 				mSprite = new SpriteShape(device);
 			}
 
-			Frame adjustedFrame(
+			mAdjustedFrame = Frame(
 				mFrame.origin.x + parentFrame.origin.x,
 				mFrame.origin.y + parentFrame.origin.y,
 				mFrame.size.width,
 				mFrame.size.height
 			);
 
-			mSprite->SetFrame(adjustedFrame);
+			mSprite->SetFrame(mAdjustedFrame);
 			mSprite->SetBackgroundColor(mBackgroundColor);
 
 			if(mBackgroundImage) {
@@ -79,7 +79,7 @@ namespace challenge
 
 			for(int i = 0; i < mSubviews.size(); i++) {
 				View *child = mSubviews[i];
-				child->Render(device, state, adjustedFrame);
+				child->Render(device, state, mAdjustedFrame);
 			}
 		}
 	}
@@ -131,66 +131,32 @@ namespace challenge
 		mKeyboardDelegates[KeyboardEventKeyUp].push_back(eventDelegate);
 	}
 
-	bool View::OnMouseEvent(const MouseEvent &e)
-	{
-		bool handled = false;
-		if(mSubviews.size() > 0) {
-			View *topControl = NULL;
-			for(int i = mSubviews.size() - 1; i >= 0; i--) {
-				View *next = mSubviews[i];
-				if(next->ProcessMouseEvent(e)) {
-					if(topControl == NULL ||
-						topControl->mZPosition < next->mZPosition) {
-						topControl = next;
-					}
-				}
-			}
-
-			if(topControl != NULL) {
-				topControl->OnMouseEvent(e);
-				handled = true;
-			}
-		}
-	
-		if(!handled) {
-			if(mMouseDelegates.size() > 0 && ProcessMouseEvent(e)) {
-				std::vector<MouseEventDelegate> delegates = mMouseDelegates[e.type];
-
-				for(int i = 0; i < delegates.size(); i++) {
-					delegates[i](this, e);
-				}
-
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	bool View::ProcessMouseEvent(const MouseEvent &e)
 	{
 		return ContainsPoint(e.position);
 	}
 
-	bool View::OnKeyboardEvent(const KeyboardEvent &e)
+	View* View::GetSelectedView(const Point &p)
 	{
-		//if(mKeyboardDelegates.size() > 0 && ProcessKeyboardEvent(e)) {
-			std::vector<KeyboardEventDelegate> delegates = mKeyboardDelegates[e.type];
+		View *selectedView = NULL;
 
-			for(int i = 0; i < delegates.size(); i++) {
-				delegates[i](this, e);
+		if(mVisible) {
+			for(int i = mSubviews.size() - 1; i >= 0; i--) {
+				View *next = mSubviews[i];
+				selectedView = next->GetSelectedView(p);
+				if(selectedView) {
+					break;
+				}
 			}
 
-			//return true;
-		//}
-
-		for(int i = 0; i < mSubviews.size(); i++) {
-			if(mSubviews[i]->OnKeyboardEvent(e)) {
-				return true;
+			if(this->ContainsPoint(p)) {
+				if(!selectedView) {
+					selectedView = this;
+				}
 			}
 		}
 
-		return false;
+		return selectedView;
 	}
 
 	bool View::ProcessKeyboardEvent(const KeyboardEvent &e)

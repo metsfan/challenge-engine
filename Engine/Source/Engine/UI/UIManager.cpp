@@ -56,54 +56,48 @@ namespace challenge
 		return gApp->GetUIManager();
 	}
 
-	void UIManager::ProcessKeyboardEvent(const KeyboardEvent &e)
+	bool UIManager::ProcessKeyboardEvent(const KeyboardEvent &e)
 	{
-		mRootView->OnKeyboardEvent(e);
+		if(mFocusedView &&
+			mFocusedView->mKeyboardDelegates.size() > 0 &&
+			mFocusedView->mKeyboardDelegates[e.type].size() > 0) {
+			std::vector<KeyboardEventDelegate> delegates = mFocusedView->mKeyboardDelegates[e.type];
+
+			for(int i = 0; i < delegates.size(); i++) {
+				delegates[i](mFocusedView, e);
+			}
+
+			return true;
+		}
+
+		return false;
 	}
 
-	void UIManager::ProcessMouseEvent(const MouseEvent &e)
+	bool UIManager::ProcessMouseEvent(const MouseEvent &e)
 	{
-		mRootView->OnMouseEvent(e);
-	}
+		View *selectedView = mRootView->GetSelectedView(e.position);
 
-	/* IKeyboardListener methods */
-	void UIManager::OnKeyDown(const KeyboardEvent &e)
-	{
-		ProcessKeyboardEvent(e);
-	}
+		while (selectedView) {
+			if(selectedView->mMouseDelegates.size() > 0 &&
+				selectedView->mMouseDelegates[e.type].size() > 0) {
+				std::vector<MouseEventDelegate> delegates = selectedView->mMouseDelegates[e.type];
 
-	void UIManager::OnKeyUp(const KeyboardEvent &e)
-	{
-		ProcessKeyboardEvent(e);
-	}
+				for(int i = 0; i < delegates.size(); i++) {
+					delegates[i](selectedView, e);
+				}
 
-	void UIManager::OnKeyPress(const KeyboardEvent &e)
-	{
-	}
+				if(e.type == MouseEventMouseDown) {
+					mFocusedView = selectedView;
+				}
 
-	/* IMouseListener methods */
-	void UIManager::OnMouseDown(const MouseEvent &e)
-	{
-		ProcessMouseEvent(e);
-	}
+				return true;
+			} 
 
-	void UIManager::OnMouseUp(const MouseEvent &e)
-	{
-		ProcessMouseEvent(e);
-	}
+			selectedView = selectedView->GetParent();
+		}
 
-	void UIManager::OnMouseMove(const MouseEvent &e)
-	{
-		ProcessMouseEvent(e);
-	}
+		mFocusedView = NULL;
 
-	void UIManager::OnMouseClick(const MouseEvent &e)
-	{
-		ProcessMouseEvent(e);
-	}
-
-	void UIManager::OnMouseDblClick(const MouseEvent &e)
-	{
-		ProcessMouseEvent(e);
+		return false;
 	}
 };

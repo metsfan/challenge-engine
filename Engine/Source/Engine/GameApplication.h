@@ -8,6 +8,8 @@
 #include <Engine/Disk/ResourceCache.h>
 #include <Engine/Util/PrimitiveGenerator.h>
 #include <Engine/Font/FontTypes.h>
+#include <Engine/Input/KeyboardListener.h>
+#include <Engine/Input/MouseListener.h>
 
 namespace challenge 
 {
@@ -20,9 +22,6 @@ namespace challenge
 	class NetworkManager;
 	class AudioManager;
 
-	class IKeyboardListener;
-	class IMouseListener;
-
 	class Model;
 	class ModelMesh;
 	class ModelResource;
@@ -33,7 +32,8 @@ namespace challenge
 
 	typedef std::function<void(int)> AppCallback;
 
-	class GameApplication
+	class GameApplication : public IKeyboardListener,
+							public IMouseListener
 	{
 	public:
 		GameApplication(const Size &screenSize);
@@ -78,8 +78,8 @@ namespace challenge
 		void LoadEffectsConfig(const std::string &filepath);
 
 		/* Input methods */
-		void AddKeyboardListener(IKeyboardListener *pListener);
-		void AddMouseListener(IMouseListener *pListener);
+		void AddKeyboardListener(std::shared_ptr<IKeyboardListener> listener);
+		void AddMouseListener(std::shared_ptr<IMouseListener> listener);
 
 		/* Factory methods */
 		Model* CreateModel(const std::string &filename);
@@ -88,6 +88,18 @@ namespace challenge
 
 		/* GUI Methods */
 		void SetRootView(View *view);
+
+		/* IKeyboardListener methods */
+		void OnKeyDown(const KeyboardEvent &e);
+		void OnKeyUp(const KeyboardEvent &e);
+		void OnKeyPress(const KeyboardEvent &e);
+
+		/* IMouseListener methods */
+		void OnMouseDown(const MouseEvent &e);
+		void OnMouseUp(const MouseEvent &e);
+		void OnMouseMove(const MouseEvent &e);
+		void OnMouseClick(const MouseEvent &e);
+		void OnMouseDblClick(const MouseEvent &e);
 
 	protected:
 		IGraphicsDevice *mGraphicsDevice;
@@ -117,5 +129,10 @@ namespace challenge
 
 	private:
 		bool mApplicationRunning;
+		std::vector<std::weak_ptr<IKeyboardListener>> mKeyboardListeners;
+		std::vector<std::weak_ptr<IMouseListener>> mMouseListeners;
+
+		void ProcessMouseEvent(const MouseEvent &e);
+		void ProcessKeyboardEvent(const KeyboardEvent &e);
 	};
 };

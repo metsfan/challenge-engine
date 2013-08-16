@@ -55,12 +55,12 @@ namespace challenge
 		}*/
 
 		mInputManager = new InputManager();
+		mInputManager->AddKeyboardListener(this);
+		mInputManager->AddMouseListener(this);
 
 		mUIManager = new UIManager(mScreenSize);
 
 		mPrimitiveGenerator = new PrimitiveGenerator(this);
-		mInputManager->AddKeyboardListener(mUIManager);
-		mInputManager->AddMouseListener(mUIManager);
 
 		return true;
 	}
@@ -221,18 +221,14 @@ namespace challenge
 
 	/* Input Methods */
 
-	void GameApplication::AddKeyboardListener(IKeyboardListener *pListener)
+	void GameApplication::AddKeyboardListener(std::shared_ptr<IKeyboardListener> listener)
 	{
-		if(mInputManager) {
-			mInputManager->AddKeyboardListener(pListener);
-		}
+		mKeyboardListeners.push_back(std::weak_ptr<IKeyboardListener>(listener));
 	}
 
-	void GameApplication::AddMouseListener(IMouseListener *pListener)
+	void GameApplication::AddMouseListener(std::shared_ptr<IMouseListener> listener)
 	{
-		if(mInputManager) {
-			mInputManager->AddMouseListener(pListener);
-		}
+		mMouseListeners.push_back(std::weak_ptr<IMouseListener>(listener));
 	}
 
 	/* Factory Methods */
@@ -305,6 +301,108 @@ namespace challenge
 			}
 		}*/
 		return mGameInstance;
+	}
+
+	/* IKeyboardListener methods */
+	void GameApplication::OnKeyDown(const KeyboardEvent &e)
+	{
+		this->ProcessKeyboardEvent(e);
+	}
+
+	void GameApplication::OnKeyUp(const KeyboardEvent &e)
+	{
+		this->ProcessKeyboardEvent(e);
+	}
+
+	void GameApplication::OnKeyPress(const KeyboardEvent &e)
+	{
+		this->ProcessKeyboardEvent(e);
+	}
+
+	/* IMouseListener methods */
+	void GameApplication::OnMouseDown(const MouseEvent &e)
+	{
+		this->ProcessMouseEvent(e);
+	}
+
+	void GameApplication::OnMouseUp(const MouseEvent &e)
+	{
+		this->ProcessMouseEvent(e);
+	}
+
+	void GameApplication::OnMouseMove(const MouseEvent &e)
+	{
+		this->ProcessMouseEvent(e);
+	}
+
+	void GameApplication::OnMouseClick(const MouseEvent &e)
+	{
+		this->ProcessMouseEvent(e);
+	}
+
+	void GameApplication::OnMouseDblClick(const MouseEvent &e)
+	{
+		this->ProcessMouseEvent(e);
+	}
+
+	void GameApplication::ProcessMouseEvent(const MouseEvent &e)
+	{
+		bool handled = mUIManager->ProcessMouseEvent(e);
+		if(!handled) {
+			for(int i = 0; i < mMouseListeners.size(); i++) {
+				std::shared_ptr<IMouseListener> listener = mMouseListeners[i].lock();
+				if(listener) {
+					switch(e.type)
+					{
+					case MouseEventMouseDown:
+						listener->OnMouseDown(e);
+						break;
+
+					case MouseEventMouseMove:
+						listener->OnMouseMove(e);
+						break;
+
+					case MouseEventMouseUp:
+						listener->OnMouseUp(e);
+						break;
+
+					case MouseEventMouseClick:
+						listener->OnMouseClick(e);
+						break;
+
+					case MouseEventMouseDblClick:
+						listener->OnMouseDblClick(e);
+						break;
+					}
+				}
+			}
+		}
+	}
+
+	void GameApplication::ProcessKeyboardEvent(const KeyboardEvent &e)
+	{
+		bool handled = mUIManager->ProcessKeyboardEvent(e);
+		if(!handled) {
+			for(int i = 0; i < mKeyboardListeners.size(); i++) {
+				std::shared_ptr<IKeyboardListener> listener = mKeyboardListeners[i].lock();
+				if(listener) {
+					switch(e.type)
+					{
+					case KeyboardEventKeyDown:
+						listener->OnKeyDown(e);
+						break;
+
+					case KeyboardEventKeyPress:
+						listener->OnKeyPress(e);
+						break;
+
+					case KeyboardEventKeyUp:
+						listener->OnKeyUp(e);
+						break;
+					}
+				}
+			}
+		}
 	}
 }
 

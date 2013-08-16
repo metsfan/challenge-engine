@@ -102,6 +102,12 @@ namespace challenge
 
 		bool ContainsPoint(Point point) { return mAdjustedFrame.Contains(point); }
 
+		void SetTag(int tag) { mTag = tag; }
+		int GetTag() { return mTag; }
+
+		void SetFocused(bool focused) { mFocused = focused; }
+		bool IsFocused() { return mFocused; }
+
 		/* Event Delegates */
 		void AddMouseDownDelegate(MouseEventDelegate eventDelegate);
 		void AddMouseUpDelegate(MouseEventDelegate eventDelegate);
@@ -125,6 +131,8 @@ namespace challenge
 		float mZPosition;
 		View *mParent;
 		SpriteShape *mSprite;
+		int mTag;
+		bool mFocused;
 
 		TUIEventDelegateMap mDelegates;
 		TMouseEventDelegateMap mMouseDelegates;
@@ -142,9 +150,9 @@ namespace challenge
 		void OnMouseClick(const MouseEvent &e);
 		void OnMouseDblClick(const MouseEvent &e);
 
-		bool OnMouseEvent(const MouseEvent &e);
 		virtual bool ProcessMouseEvent(const MouseEvent &e);
-		bool OnKeyboardEvent(const KeyboardEvent &e);
 		virtual bool ProcessKeyboardEvent(const KeyboardEvent &e);
+
+		View* GetSelectedView(const Point &p);
 	};
 };

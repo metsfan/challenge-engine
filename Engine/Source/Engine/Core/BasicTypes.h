@@ -93,9 +93,12 @@ namespace challenge
 			return other.size == size && other.origin == origin;
 		}
 
-		bool Contains(const Point &point) const
+		bool Contains(const Point &other) const
 		{
-			return true;
+			return !(origin.x > other.x ||
+				origin.y > other.y ||
+				origin.x + size.width < other.x ||
+				origin.y + size.height < other.y);
 		}
 
 		Point origin;

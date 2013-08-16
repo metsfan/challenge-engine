@@ -17,11 +17,12 @@ namespace challenge
 		this->AddSubview(mSelectedLabel);
 		this->AddSubview(mSelectButton);
 		this->AddSubview(mOptionsPanel);
-		//mOptionsPanel->SetVisible(false);
+		mOptionsPanel->SetVisible(false);
 
-		mSelectButton->AddMouseUpDelegate([this](View *sender, const MouseEvent &e) {
-
+		mSelectButton->AddMouseDownDelegate([this](View *sender, const MouseEvent &e) {
+			mOptionsPanel->SetVisible(true);
 		});
+		mSelectButton->SetBackgroundColor(glm::vec4(0, 0, 0, 255));
 	}
 
 	SelectListView::~SelectListView()
@@ -37,6 +38,24 @@ namespace challenge
 		int index = mItems.size();
 		
 		ButtonView *itemButton = new ButtonView(Frame(0, index * kItemHeight, frame.size.width, kItemHeight));
+		itemButton->SetTitleText(text);
+		itemButton->SetTag(index);
+		itemButton->AddMouseUpDelegate([this](View *sender, const MouseEvent &e) {
+			this->SetSelectedIndex(sender->GetTag());
+			this->mOptionsPanel->SetVisible(false);
+		});
+		if(index == 0) {
+			itemButton->SetBackgroundColor(glm::vec4(255, 0, 0, 255)); 
+		}
+		if(index == 1) {
+			itemButton->SetBackgroundColor(glm::vec4(255, 0, 255, 255)); 
+		}
+		if(index == 2) {
+			itemButton->SetBackgroundColor(glm::vec4(0, 0, 255, 255)); 
+		}
+		if(index == 3) {
+			itemButton->SetBackgroundColor(glm::vec4(0, 255, 0, 255)); 
+		}
 		mButtons.push_back(itemButton);
 
 		mOptionsPanel->AddSubview(itemButton);

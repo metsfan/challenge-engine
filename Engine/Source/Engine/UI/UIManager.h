@@ -19,7 +19,7 @@ namespace challenge
 		float padding[3];
 	};
 
-	class UIManager : public IKeyboardListener, public IMouseListener
+	class UIManager
 	{
 		friend class View;
 
@@ -39,23 +39,12 @@ namespace challenge
 		//GLSLProgram* GetShader() { return mShader; }
 		//HLSLProgram* GetShader() { return mShader; }
 
-		void ProcessKeyboardEvent(const KeyboardEvent &e);
-		void ProcessMouseEvent(const MouseEvent &e);
-
-		/* IKeyboardListener methods */
-		void OnKeyDown(const KeyboardEvent &e);
-		void OnKeyUp(const KeyboardEvent &e);
-		void OnKeyPress(const KeyboardEvent &e);
-
-		/* IMouseListener methods */
-		void OnMouseDown(const MouseEvent &e);
-		void OnMouseUp(const MouseEvent &e);
-		void OnMouseMove(const MouseEvent &e);
-		void OnMouseClick(const MouseEvent &e);
-		void OnMouseDblClick(const MouseEvent &e);
+		bool ProcessKeyboardEvent(const KeyboardEvent &e);
+		bool ProcessMouseEvent(const MouseEvent &e);
 
 	private:
-		View  *mRootView;
+		View *mRootView;
+		View *mFocusedView;
 		OrthoCamera *mCamera;
 		IVertexBuffer *mVertexBuffer;
 
