@@ -22,6 +22,7 @@ namespace challenge
 		/* IWindowInputReader methods */
 		void ProcessKeyboardEvent(KeyboardEventType type, unsigned int keyCode);
 		void ProcessMouseEvent(MouseEventType type, unsigned int button, Point position);
+		void ProcessMouseWheelEvent(MouseEventType type, int delta);
 
 		std::vector<unsigned int> GetActiveKeys() { return mActiveKeys; }
 		bool IsKeyDown() { return mKeyDown; }
@@ -43,6 +44,7 @@ namespace challenge
 		void MouseMove(const MouseEvent &e);
 		void MouseClick(const MouseEvent &e);
 		void MouseDblClick(const MouseEvent &e);
+		void MouseWheelMove(const MouseEvent &e);
 
 	private:
 		CTimer *mKeyboardHoldTimer;

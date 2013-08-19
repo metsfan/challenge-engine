@@ -100,6 +100,7 @@ namespace challenge
 		void OnMouseMove(const MouseEvent &e);
 		void OnMouseClick(const MouseEvent &e);
 		void OnMouseDblClick(const MouseEvent &e);
+		void OnMouseWheelMove(const MouseEvent &e);
 
 	protected:
 		IGraphicsDevice *mGraphicsDevice;

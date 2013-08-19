@@ -130,8 +130,11 @@
     <ClCompile Include="Source\Engine\Scene\Scene.cpp" />
     <ClCompile Include="Source\Engine\Scene\SceneNode.cpp" />
     <ClCompile Include="Source\Engine\UI\Controls\ButtonView.cpp" />
+    <ClCompile Include="Source\Engine\UI\Controls\CheckboxView.cpp" />
     <ClCompile Include="Source\Engine\UI\Controls\LabelView.cpp" />
+    <ClCompile Include="Source\Engine\UI\Controls\OptionsView.cpp" />
     <ClCompile Include="Source\Engine\UI\Controls\PanelView.cpp" />
+    <ClCompile Include="Source\Engine\UI\Controls\ScrollbarView.cpp" />
     <ClCompile Include="Source\Engine\UI\Controls\SelectListView.cpp" />
     <ClCompile Include="Source\Engine\UI\Controls\TextFieldView.cpp" />
     <ClCompile Include="Source\Engine\UI\Events\UIEventArgs.cpp" />
@@ -284,11 +287,15 @@
     <ClInclude Include="Source\Engine\Scene\Scene.h" />
     <ClInclude Include="Source\Engine\Scene\SceneNode.h" />
     <ClInclude Include="Source\Engine\UI\Controls\ButtonView.h" />
+    <ClInclude Include="Source\Engine\UI\Controls\CheckboxView.h" />
     <ClInclude Include="Source\Engine\UI\Controls\LabelView.h" />
+    <ClInclude Include="Source\Engine\UI\Controls\OptionsView.h" />
     <ClInclude Include="Source\Engine\UI\Controls\PanelView.h" />
+    <ClInclude Include="Source\Engine\UI\Controls\ScrollbarView.h" />
     <ClInclude Include="Source\Engine\UI\Controls\SelectListView.h" />
     <ClInclude Include="Source\Engine\UI\Controls\TextFieldView.h" />
     <ClInclude Include="Source\Engine\UI\Events\UIEventArgs.h" />
+    <ClInclude Include="Source\Engine\UI\Types.h" />
     <ClInclude Include="Source\Engine\UI\UI.h" />
     <ClInclude Include="Source\Engine\UI\View.h" />
     <ClInclude Include="Source\Engine\UI\UIManager.h" />

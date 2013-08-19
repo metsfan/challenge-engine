@@ -7,12 +7,6 @@
 
 namespace challenge
 {
-	struct ListItem
-	{
-		std::string text;
-		std::string value;
-	};
-
 	class SelectListView : public View
 	{
 	public:

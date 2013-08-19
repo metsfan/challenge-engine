@@ -77,6 +77,7 @@ namespace challenge
 		}
 
 		if(mText.length() > 0) {
+			mLabelSprite->SetTextureFrame(this->GetTextureFrame());
 			mLabelSprite->SetPosition(frame.origin.x + parentFrame.origin.x,
 									frame.origin.y + parentFrame.origin.y);
 			

@@ -24,6 +24,10 @@ namespace challenge
 		case AlphaBlending:
 			this->SetAlphaBlending(true);
 			break;
+
+		case ScissorTest:
+			this->SetScissorTest(true);
+			break;
 		};
 	}
 
@@ -37,6 +41,10 @@ namespace challenge
 
 		case AlphaBlending:
 			this->SetAlphaBlending(false);
+			break;
+
+		case ScissorTest:
+			this->SetScissorTest(false);
 			break;
 		};
 	}

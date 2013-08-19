@@ -22,6 +22,7 @@ namespace challenge
 	public:
 		virtual void ProcessKeyboardEvent(KeyboardEventType type, unsigned int keyCode) = 0;
 		virtual void ProcessMouseEvent(MouseEventType type, unsigned int button, Point position) = 0;
+		virtual void ProcessMouseWheelEvent(MouseEventType type, int delta) = 0;
 	};
 
 	class IWindow

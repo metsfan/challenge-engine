@@ -12,15 +12,19 @@ namespace challenge
 		mDefaultOption(0),
 		mOptionsPanel(new PanelView(Frame(0, kItemHeight, frame.size.width, kOptionsPanelHeight))),
 		mSelectedLabel(new LabelView(Frame(0, 0, frame.size.width - 50, kItemHeight))),
-		mSelectButton(new ButtonView(Frame(frame.size.width - 50, 0, 50, kItemHeight)))
+		mSelectButton(new ButtonView(Frame(frame.size.width - 30, 0, 30, kItemHeight)))
 	{
 		this->AddSubview(mSelectedLabel);
 		this->AddSubview(mSelectButton);
 		this->AddSubview(mOptionsPanel);
 		mOptionsPanel->SetVisible(false);
+		mOptionsPanel->SetScrollable(true);
 
 		mSelectButton->AddMouseDownDelegate([this](View *sender, const MouseEvent &e) {
-			mOptionsPanel->SetVisible(true);
+			mOptionsPanel->SetVisible(!mOptionsPanel->IsVisible()); 
+			if(mOptionsPanel->IsVisible()) {
+				mOptionsPanel->SetFocused(true);
+			}
 		});
 		mSelectButton->SetBackgroundColor(glm::vec4(0, 0, 0, 255));
 	}
@@ -44,20 +48,8 @@ namespace challenge
 			this->SetSelectedIndex(sender->GetTag());
 			this->mOptionsPanel->SetVisible(false);
 		});
-		if(index == 0) {
-			itemButton->SetBackgroundColor(glm::vec4(255, 0, 0, 255)); 
-		}
-		if(index == 1) {
-			itemButton->SetBackgroundColor(glm::vec4(255, 0, 255, 255)); 
-		}
-		if(index == 2) {
-			itemButton->SetBackgroundColor(glm::vec4(0, 0, 255, 255)); 
-		}
-		if(index == 3) {
-			itemButton->SetBackgroundColor(glm::vec4(0, 255, 0, 255)); 
-		}
-		mButtons.push_back(itemButton);
 
+		mButtons.push_back(itemButton);
 		mOptionsPanel->AddSubview(itemButton);
 
 		ListItem item;

@@ -123,8 +123,6 @@ namespace challenge
 			mContext->OMSetRenderTargets(1, &mRenderTargetView, mDepthStencilView);
 			backBuffer->Release();
 
-			
-
 			D3D11_VIEWPORT vp;
 			vp.Width = size.width;
 			vp.Height = size.height;
@@ -134,16 +132,13 @@ namespace challenge
 			vp.TopLeftY = 0;
 			mContext->RSSetViewports(1, &vp);
 
-			D3D11_RASTERIZER_DESC rsDesc;
-			ZeroMemory(&rsDesc, sizeof(D3D11_RASTERIZER_DESC));
-			rsDesc.FillMode = D3D11_FILL_SOLID;
-			rsDesc.CullMode = D3D11_CULL_NONE;
-			rsDesc.FrontCounterClockwise = true;
+			ZeroMemory(&mRasterizerDesc, sizeof(D3D11_RASTERIZER_DESC));
+			mRasterizerDesc.FillMode = D3D11_FILL_SOLID;
+			mRasterizerDesc.CullMode = D3D11_CULL_NONE;
+			mRasterizerDesc.FrontCounterClockwise = true;
 
-			ID3D11RasterizerState *rsState;
-
-			mDevice->CreateRasterizerState(&rsDesc, &rsState);
-			mContext->RSSetState(rsState);
+			mDevice->CreateRasterizerState(&mRasterizerDesc, &mRasterizerState);
+			mContext->RSSetState(mRasterizerState);
 		}
 	}
 
@@ -178,6 +173,17 @@ namespace challenge
 		}
 	}
 
+	void GraphicsDevice<RendererTypeDX11>::SetScissorTest(bool state)
+	{
+		if(mRasterizerDesc.ScissorEnable != state) {
+			mRasterizerDesc.ScissorEnable = state;
+
+			mRasterizerState->Release();
+			mDevice->CreateRasterizerState(&mRasterizerDesc, &mRasterizerState);
+			mContext->RSSetState(mRasterizerState);
+		}
+	}
+
 	void GraphicsDevice<RendererTypeDX11>::SetDepthFunction(DepthFunc function)
 	{
 		if(mDepthStencilDesc.DepthFunc != kD3D11DepthFuncs[function]) {
@@ -203,6 +209,15 @@ namespace challenge
 			mDevice->CreateBlendState(&mBlendDesc, &mBlendState);
 			mContext->OMSetBlendState(mBlendState, NULL, 0);
 		}
+	}
+
+	void GraphicsDevice<RendererTypeDX11>::SetScissorRect(int x, int y, int width, int height)
+	{
+		mScissorRect.left = x;
+		mScissorRect.right = x + width;
+		mScissorRect.top = y;
+		mScissorRect.bottom = y + height;
+		mContext->RSSetScissorRects(1, &mScissorRect);
 	}
 
 	IShader* GraphicsDevice<RendererTypeDX11>::CreateShader(std::string filename, ShaderType type)

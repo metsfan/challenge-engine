@@ -11,15 +11,24 @@ namespace challenge
 		PanelView(Frame frame = Frame());
 		virtual ~PanelView(void);
 
-		void SetScrollable(bool scrollable) { mScrollable = scrollable; }
+		void SetScrollable(bool scrollable);
 		
 		void SetContentSize(Size size) { mContentSize = size; }
 		Size GetContentSize() { return mContentSize; }
 
+		virtual void Update(int deltaMillis);
+		virtual void Render(IGraphicsDevice *device, RenderState &state, const Frame &parentFrame);
+
 	private:
 		Size mContentSize;
 		bool mScrollable;
+		Point mScrollPosition;
+		PanelView *mHorizontalScrollbar;
+		PanelView *mHorizontalScroller;
+		PanelView *mVerticalScrollbar;
+		PanelView *mVerticalScroller;
+		bool mVertScrollPressed;
 
-		virtual void PreRender(UIManager *manager, Point origin);
+		virtual Frame CalculateChildFrame();
 	};
 };

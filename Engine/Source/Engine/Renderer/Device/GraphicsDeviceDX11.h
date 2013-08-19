@@ -58,6 +58,7 @@ namespace challenge
 
 		void SetBlendingFunction(BlendParam source, BlendParam destination);
 		void SetDepthFunction(DepthFunc function);
+		void SetScissorRect(int x, int y, int width, int height);
 
 		IShader* CreateShader(std::string filename, ShaderType type);
 		IShaderProgram* CreateShaderProgram();
@@ -78,14 +79,18 @@ namespace challenge
 		ID3D11RenderTargetView *mRenderTargetView;
 		ID3D11DepthStencilView *mDepthStencilView;
 		ID3D11DepthStencilState *mDepthStencilState;
+		ID3D11RasterizerState *mRasterizerState;
 		ID3D11BlendState *mBlendState;
 		D3D_FEATURE_LEVEL mFeatureLevel;
+		D3D11_RECT mScissorRect;
 
 		D3D11_BLEND_DESC mBlendDesc;
 		D3D11_DEPTH_STENCIL_DESC mDepthStencilDesc;
+		D3D11_RASTERIZER_DESC mRasterizerDesc;
 
 		void SetAlphaBlending(bool state);
 		void SetDepthTest(bool state);
+		void SetScissorTest(bool state);
 	};
 
 	typedef GraphicsDevice<RendererTypeDX11> GraphicsDeviceDX11;

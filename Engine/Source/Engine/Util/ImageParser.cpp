@@ -97,7 +97,7 @@ namespace challenge
         byte *outPtr = &outData.data[0];
         int rgba_row_stride = outData.size.width * 4;
         
-		for (int i = intHeight - 1; i >= 0; i--)
+		for (int i = 0; i < intHeight; i++)
 		{
 			png_bytep row = row_pointers[i];
             

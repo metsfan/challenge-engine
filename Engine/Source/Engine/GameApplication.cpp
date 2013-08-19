@@ -345,6 +345,11 @@ namespace challenge
 		this->ProcessMouseEvent(e);
 	}
 
+	void GameApplication::OnMouseWheelMove(const MouseEvent &e)
+	{
+		this->ProcessMouseEvent(e);
+	}
+
 	void GameApplication::ProcessMouseEvent(const MouseEvent &e)
 	{
 		bool handled = mUIManager->ProcessMouseEvent(e);
@@ -372,6 +377,10 @@ namespace challenge
 
 					case MouseEventMouseDblClick:
 						listener->OnMouseDblClick(e);
+						break;
+
+					case MouseEventMouseWheelMove:
+						listener->OnMouseWheelMove(e);
 						break;
 					}
 				}

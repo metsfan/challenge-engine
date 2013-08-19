@@ -18,6 +18,7 @@ namespace challenge
 	void UIManager::SetRootView(View *view)
 	{
 		mRootView = view;
+		mRootView->mUIManager = this;
 	}
 
 	void UIManager::Update(int deltaMillis)
@@ -75,29 +76,47 @@ namespace challenge
 
 	bool UIManager::ProcessMouseEvent(const MouseEvent &e)
 	{
-		View *selectedView = mRootView->GetSelectedView(e.position);
+		bool handled = false;
 
-		while (selectedView) {
-			if(selectedView->mMouseDelegates.size() > 0 &&
-				selectedView->mMouseDelegates[e.type].size() > 0) {
-				std::vector<MouseEventDelegate> delegates = selectedView->mMouseDelegates[e.type];
+		if(e.type == MouseEventMouseWheelMove) {
+			View *selectedView = mFocusedView;
+			while(selectedView) {
+				if(selectedView->mMouseDelegates.size() > 0 &&
+					selectedView->mMouseDelegates[e.type].size() > 0) {
+					std::vector<MouseEventDelegate> delegates = selectedView->mMouseDelegates[e.type];
 
-				for(int i = 0; i < delegates.size(); i++) {
-					delegates[i](selectedView, e);
-				}
+					for(int i = 0; i < delegates.size(); i++) {
+						delegates[i](selectedView, e);
+					}
 
-				if(e.type == MouseEventMouseDown) {
-					mFocusedView = selectedView;
-				}
+					handled = true;
+				} 
 
-				return true;
-			} 
+				selectedView = selectedView->GetParent();
+			}
+		} else {
+			View *selectedView = mRootView->GetSelectedView(e.position);
+			if(e.type == MouseEventMouseDown) {
+				mFocusedView = selectedView;
+			}
 
-			selectedView = selectedView->GetParent();
+			
+			while (selectedView) {
+				if(selectedView->mMouseDelegates.size() > 0 &&
+					selectedView->mMouseDelegates[e.type].size() > 0) {
+					std::vector<MouseEventDelegate> delegates = selectedView->mMouseDelegates[e.type];
+
+					for(int i = 0; i < delegates.size(); i++) {
+						delegates[i](selectedView, e);
+					}
+
+					handled = true;
+				} 
+
+				selectedView = selectedView->GetParent();
+			}
 		}
-
-		mFocusedView = NULL;
-
-		return false;
+		
+		return handled;
 	}
 };

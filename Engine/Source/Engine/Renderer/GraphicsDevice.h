@@ -46,7 +46,8 @@ namespace challenge
 	enum GraphicsState
 	{
 		AlphaBlending,
-		DepthTest
+		DepthTest,
+		ScissorTest
 	};
 
 	class IGraphicsDevice
@@ -59,6 +60,7 @@ namespace challenge
 		virtual void DisableState(GraphicsState state) = 0;
 		virtual void SetBlendingFunction(BlendParam source, BlendParam destination) = 0;
 		virtual void SetDepthFunction(DepthFunc function) = 0;
+		virtual void SetScissorRect(int x, int y, int width, int height) = 0;
 
 		virtual IShader* CreateShader(std::string filename, ShaderType type) = 0;
 		virtual IShaderProgram* CreateShaderProgram() = 0;
@@ -102,6 +104,7 @@ namespace challenge
 
 		virtual void SetAlphaBlending(bool state) = 0;
 		virtual void SetDepthTest(bool state) = 0;
+		virtual void SetScissorTest(bool state) = 0;
 	};
 
 	template <typename Renderer>

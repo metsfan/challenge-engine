@@ -150,7 +150,14 @@ namespace challenge
 
 				case WM_MOUSEMOVE:
 					inputReader->ProcessMouseEvent(MouseEventMouseMove, 0, mousePos);
+					break;
 
+				case WM_MOUSEWHEEL:
+					{
+						int wheelDelta = GET_WHEEL_DELTA_WPARAM(wParam);
+						inputReader->ProcessMouseWheelEvent(MouseEventMouseWheelMove, wheelDelta);
+					}
+					break;
 				}
 			}
 		}

@@ -4,6 +4,7 @@
 #include <Engine/Renderer/Renderer.h>
 #include <Engine/Input/InputManager.h>
 #include <Engine/UI/Events/UIEventArgs.h>
+#include <Engine/UI/Types.h>
 
 namespace challenge
 {
@@ -67,8 +68,9 @@ namespace challenge
 		virtual void Render(IGraphicsDevice *device, RenderState &state, const Frame &parentFrame);
 
 		virtual void SetFrame(const Frame &frame) { mFrame = frame; }
-
+		const Frame& GetAdjustedFrame() { return mAdjustedFrame; }
 		const virtual Frame& GetFrame() const { return mFrame; }
+
 		virtual void SetSize(Size size) { mFrame.size = size; }
 		virtual void SetSize(int width, int height) 
 		{
@@ -82,6 +84,16 @@ namespace challenge
 			mFrame.origin.y = y;
 		}
 
+		virtual void SetX(real x) { mFrame.origin.x = x; }
+		virtual void SetY(real y) { mFrame.origin.y = y; }
+		virtual void SetWidth(real width) { mFrame.size.width = width; }
+		virtual void SetHeight(real height) { mFrame.size.height = height; }
+
+		real GetX() { return mFrame.origin.x; }
+		real GetY() { return mFrame.origin.y; }
+		real GetWidth() { return mFrame.size.width; }
+		real GetHeight() { return mFrame.size.height; }
+
 		virtual void SetVisible(bool visible) { mVisible = visible; }
 		virtual bool IsVisible() { return mVisible; }
 
@@ -92,6 +104,7 @@ namespace challenge
 		virtual void SetBackgroundImage(std::shared_ptr<Image> image);
 
 		virtual void AddSubview(View *view);
+		const TViewList& GetSubviews() { return mSubviews; }
 
 		virtual void SetZPosition(float zPosition) { mZPosition = zPosition; }
 		virtual float GetZPosition() { return mZPosition; }
@@ -105,7 +118,7 @@ namespace challenge
 		void SetTag(int tag) { mTag = tag; }
 		int GetTag() { return mTag; }
 
-		void SetFocused(bool focused) { mFocused = focused; }
+		void SetFocused(bool focused);
 		bool IsFocused() { return mFocused; }
 
 		/* Event Delegates */
@@ -113,26 +126,36 @@ namespace challenge
 		void AddMouseUpDelegate(MouseEventDelegate eventDelegate);
 		void AddMouseClickDelegate(MouseEventDelegate eventDelegate);
 		void AddMouseMoveDelegate(MouseEventDelegate eventDelegate);
+		void AddMouseWheelMoveDelegate(MouseEventDelegate eventDelegate);
 		void AddKeyDownDelegate(KeyboardEventDelegate eventDelegate);
 		void AddKeyUpDelegate(KeyboardEventDelegate eventDelegate);
 
 	protected:
 		SpriteShape* GetSprite() { return mSprite; }
+		const Frame& GetTextureFrame() { return mTextureFrame; }
+		void ClipSubviews(bool clip) { mClipSubviews = clip; }
+		void AddInternalSubview(View *view);
 
 	private:
 		Frame mFrame;
 		Frame mAdjustedFrame;
+		Frame mTextureFrame;
 		glm::vec4 mBackgroundColor;
 		std::shared_ptr<Image> mBackgroundImage;
 		bool mBackgroundImageChanged;
 		ControlType mType;
 		bool mVisible;
 		TViewList mSubviews; 
+		TViewList mInternalSubviews;
 		float mZPosition;
 		View *mParent;
 		SpriteShape *mSprite;
 		int mTag;
 		bool mFocused;
+		bool mClipSubviews;
+
+		View *mRootView;
+		UIManager *mUIManager;
 
 		TUIEventDelegateMap mDelegates;
 		TMouseEventDelegateMap mMouseDelegates;
@@ -154,5 +177,7 @@ namespace challenge
 		virtual bool ProcessKeyboardEvent(const KeyboardEvent &e);
 
 		View* GetSelectedView(const Point &p);
+
+		virtual Frame CalculateChildFrame() { return mAdjustedFrame; }
 	};
 };
