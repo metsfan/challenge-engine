@@ -131,6 +131,7 @@
     <ClCompile Include="Source\Engine\Scene\SceneNode.cpp" />
     <ClCompile Include="Source\Engine\UI\Controls\ButtonView.cpp" />
     <ClCompile Include="Source\Engine\UI\Controls\CheckboxView.cpp" />
+    <ClCompile Include="Source\Engine\UI\Controls\FileSelectView.cpp" />
     <ClCompile Include="Source\Engine\UI\Controls\LabelView.cpp" />
     <ClCompile Include="Source\Engine\UI\Controls\OptionsView.cpp" />
     <ClCompile Include="Source\Engine\UI\Controls\PanelView.cpp" />
@@ -288,6 +289,7 @@
     <ClInclude Include="Source\Engine\Scene\SceneNode.h" />
     <ClInclude Include="Source\Engine\UI\Controls\ButtonView.h" />
     <ClInclude Include="Source\Engine\UI\Controls\CheckboxView.h" />
+    <ClInclude Include="Source\Engine\UI\Controls\FileSelectView.h" />
     <ClInclude Include="Source\Engine\UI\Controls\LabelView.h" />
     <ClInclude Include="Source\Engine\UI\Controls\OptionsView.h" />
     <ClInclude Include="Source\Engine\UI\Controls\PanelView.h" />

@@ -2,7 +2,7 @@
 
 #include <Engine/Challenge.h>
 #include <Engine/UI/Controls/LabelView.h>
-#include <Engine/UI/Controls/PanelView.h>
+#include <Engine/UI/Controls/ButtonView.h>
 
 namespace challenge
 {
@@ -22,8 +22,8 @@ namespace challenge
 		bool IsSelected() { return mSelected; }
 	
 	private:
-		PanelView *mUncheckedImage;
-		PanelView *mCheckedImage;
+		ButtonView *mUncheckedImage;
+		ButtonView *mCheckedImage;
 		LabelView *mTextLabel;
 		bool mSelected;
 	};

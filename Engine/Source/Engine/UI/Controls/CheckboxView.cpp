@@ -9,27 +9,27 @@ namespace challenge
 
 	CheckboxView::CheckboxView(Frame frame) :
 		View(frame),
-		mCheckedImage(new PanelView()),
-		mUncheckedImage(new PanelView()),
+		mCheckedImage(new ButtonView()),
+		mUncheckedImage(new ButtonView()),
 		mTextLabel(new LabelView()),
 		mSelected(false)
 	{
 		mCheckedImage->SetBackgroundImage(sDefaultCheckedImage);
 		mCheckedImage->SetVisible(false);
-		mCheckedImage->SetSize(sDefaultCheckedImage->GetSize().width, sDefaultCheckedImage->GetSize().height);
+		mCheckedImage->SetSize(sDefaultCheckedImage->GetSize());
 		this->AddInternalSubview(mCheckedImage);
 
 		mUncheckedImage->SetBackgroundImage(sDefaultUncheckedImage);
-		mUncheckedImage->SetSize(sDefaultUncheckedImage->GetSize().width, sDefaultUncheckedImage->GetSize().height);
+		mUncheckedImage->SetSize(sDefaultUncheckedImage->GetSize());
 		this->AddInternalSubview(mUncheckedImage);
 
-		this->AddMouseDownDelegate([this](View *sender, const MouseEvent &e) {
-			this->SetSelected(!mSelected);
+		mCheckedImage->AddMouseDownDelegate([this](View *sender, const MouseEvent &e) {
+			this->SetSelected(false);
 		});
 
-		/*mUncheckedImage->AddMouseDownDelegate([this](View *sender, const MouseEvent &e) {
+		mUncheckedImage->AddMouseDownDelegate([this](View *sender, const MouseEvent &e) {
 			this->SetSelected(true);
-		});*/
+		});
 
 		this->AddInternalSubview(mTextLabel);
 	}

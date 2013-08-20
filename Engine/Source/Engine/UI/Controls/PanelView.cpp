@@ -56,17 +56,21 @@ namespace challenge
 			mVerticalScrollbar->AddInternalSubview(mVerticalScroller);
 			
 			mVertScrollPressed = false;
-			mVerticalScrollbar->AddMouseDownDelegate([this](View *sender, const MouseEvent &e) {
-				this->mVertScrollPressed = true;
-			});
 
-			mVerticalScrollbar->AddMouseMoveDelegate([this](View *sender, const MouseEvent &e) {
+			auto moveScroller = [this](View *sender, const MouseEvent &e) {
 				if(this->mVertScrollPressed) {
 					real relativeY = e.position.y - this->GetAdjustedFrame().origin.y;
 					real scrollerRatio = (mContentSize.height / this->GetFrame().size.height);
 					mScrollPosition.y = glm::clamp<real>(relativeY * scrollerRatio, 0, mContentSize.height - this->GetHeight());
 				}
+			};
+
+			mVerticalScrollbar->AddMouseDownDelegate([this, moveScroller](View *sender, const MouseEvent &e) {
+				this->mVertScrollPressed = true;
+				moveScroller(sender, e);
 			});
+
+			mVerticalScrollbar->AddMouseMoveDelegate(moveScroller);
 
 			this->AddMouseWheelMoveDelegate([this](View *sender, const MouseEvent &e) {
 				mScrollPosition.y = glm::clamp<real>(mScrollPosition.y - e.wheelDelta, 0, mContentSize.height - this->GetHeight());

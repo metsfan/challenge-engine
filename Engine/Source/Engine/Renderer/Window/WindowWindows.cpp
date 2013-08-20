@@ -26,6 +26,14 @@ namespace challenge
 											NULL, NULL, mInstance, NULL);
 				SetWindowLong(mWinHandle, GWL_USERDATA, (LONG)this); 
 
+				RECT winSize, actualSize;
+				GetWindowRect(mWinHandle, &winSize);
+				GetClientRect(mWinHandle, &actualSize);
+
+				int difX = winSize.right - actualSize.right;
+				int difY = winSize.bottom - actualSize.bottom;
+				MoveWindow(mWinHandle, 0, 0, size.width + difX, size.height + difY, TRUE);
+
 				if (mWinHandle != NULL) {
 					mDC = GetDC(mWinHandle);
 					return true;
