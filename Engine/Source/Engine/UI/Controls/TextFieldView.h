@@ -22,7 +22,7 @@ namespace challenge
 
 	private:
 		LabelView *mTextLabel;
-		SpriteShape *mCursorSprite;
+		View *mCursor;
 		std::vector<int> mLetterPositions;
 		bool mCursorActive;
 		int mCursorTime;

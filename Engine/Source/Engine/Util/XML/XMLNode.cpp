@@ -7,8 +7,9 @@ namespace challenge
 	{
 	}
 
-	XMLNode::XMLNode(const std::string &name) :
-		mName(name)
+	XMLNode::XMLNode(const std::string &name, const std::string &value) :
+		mName(name),
+		mValue(value)
 	{
 	}
 

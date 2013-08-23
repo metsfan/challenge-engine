@@ -101,26 +101,25 @@ namespace challenge
 			mSprite->SetFrame(mAdjustedFrame);
 			mSprite->Draw(device, state);
 
-			bool scissorEnabled = false;
-			if(mClipSubviews) {
-				device->EnableState(ScissorTest);
-				device->SetScissorRect(mAdjustedFrame.origin.x, 
-					mAdjustedFrame.origin.y, 
-					mAdjustedFrame.size.width, 
-					mAdjustedFrame.size.height);
-				scissorEnabled = true;
-			}
-
+			
+			
 			Frame inheritedFrame = this->CalculateChildFrame();
 			for(int i = 0; i < mSubviews.size(); i++) {
+				if(mClipSubviews) {
+					device->EnableState(ScissorTest);
+					device->SetScissorRect(mAdjustedFrame.origin.x, 
+						mAdjustedFrame.origin.y, 
+						mAdjustedFrame.size.width, 
+						mAdjustedFrame.size.height);
+				}
+
 				View *child = mSubviews[i];
 				child->Render(device, state, inheritedFrame);
-			}
 
-			if(scissorEnabled) {
-				device->DisableState(ScissorTest);
+				if(mClipSubviews) {
+					device->DisableState(ScissorTest);
+				}
 			}
-			
 		}
 	}
 

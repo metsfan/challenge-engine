@@ -9,8 +9,8 @@ namespace challenge
 
 	TextFieldView::TextFieldView(Frame frame) :
 		View(frame),
-		mTextLabel(new LabelView(frame)),
-		mCursorSprite(NULL),
+		mTextLabel(new LabelView(Frame(0, 0, frame.size.width, frame.size.height))),
+		mCursor(new View(Frame(0, 0, 1, frame.size.height - 2))),
 		mCursorActive(false),
 		mCursorTime(0),
 		mCursorPosition(1),
@@ -26,7 +26,14 @@ namespace challenge
 			this->JumpCursor(e);
 		});
 
+		this->AddInternalSubview(mTextLabel);
+
+		mCursor->SetBackgroundColor(glm::vec4(0, 0, 0, 255));
+		mTextLabel->AddSubview(mCursor);
+
 		mLetterPositions.push_back(mCursorPosition);
+		
+		this->ClipSubviews(true);
 	}
 
 	TextFieldView::~TextFieldView()
@@ -40,29 +47,23 @@ namespace challenge
 			mCursorActive = !mCursorActive;
 			mCursorTime = 0;
 		}
+
+		mCursor->SetVisible(mCursorActive);
+		mCursor->SetX(mCursorPosition-2);
+
+		Size textDims = mTextLabel->GetFont()->GetStringDimensions(mTextLabel->GetText());
+		if(textDims.width > this->GetWidth()) {
+			if(mCursorIndex == mLetterPositions.size() - 1) {
+				mTextLabel->SetX(this->GetWidth() - textDims.width);
+			}
+		} else {
+			mTextLabel->SetX(0);
+		}
 	}
 
 	void TextFieldView::Render(IGraphicsDevice *device, RenderState &state, const Frame &parentFrame)
 	{
 		View::Render(device, state, parentFrame);
-
-		const Frame &frame = this->GetFrame();
-
-		if(!mCursorSprite) {
-			mCursorSprite = new SpriteShape(device);
-			mCursorSprite->SetBackgroundColor(glm::vec4(0, 0, 0, 255));
-			mCursorSprite->SetSize(1, frame.size.height - 2);
-		}
-
-		if(mCursorActive) {
-			mCursorSprite->SetPosition(
-				mCursorPosition + parentFrame.origin.x + frame.origin.x, 
-				1 + parentFrame.origin.y + frame.origin.y
-			);
-			mCursorSprite->Draw(device, state);
-		}
-
-		mTextLabel->Render(device, state, parentFrame);
 	}
 
 	void TextFieldView::KeyPressed(const KeyboardEvent &e)
@@ -79,12 +80,12 @@ namespace challenge
 				mCursorIndex--;
 			
 				Size letterSize = mTextLabel->GetFont()->GetStringDimensions(std::string(1, text[mCursorIndex]));
-				Size textSize = mTextLabel->GetFont()->GetStringDimensions(text);
-				if(textSize.width <= frame.size.width) {
-					mCursorPosition = mLetterPositions[mCursorIndex];
-				} else {
-					mCursorPosition = frame.size.width - 1;
+
+				int newPosition = 0;
+				for(int i = 0; i < mCursorIndex; i++) {
+					newPosition += mLetterPositions[i];
 				}
+				mCursorPosition -= mLetterPositions[mCursorIndex];
 				
 				mLetterPositions.erase(mLetterPositions.begin() + mCursorIndex);
 				text.erase(text.begin() + mCursorIndex);
@@ -93,15 +94,10 @@ namespace challenge
 			text.insert(text.begin() + mCursorIndex, c);
 
 			Size letterSize = mTextLabel->GetFont()->GetStringDimensions(std::string(1, c));
-			Size textSize = mTextLabel->GetFont()->GetStringDimensions(text);
-			if(textSize.width <= frame.size.width) {
-				mCursorPosition += letterSize.width;
-			} else {
-				mCursorPosition = frame.size.width - 1;
-			}
+			mCursorPosition += letterSize.width;
 			
 			mCursorIndex++;
-			mLetterPositions.insert(mLetterPositions.begin() + mCursorIndex, mCursorPosition);
+			mLetterPositions.insert(mLetterPositions.begin() + mCursorIndex, letterSize.width);
 		}
 
 		mTextLabel->SetText(text);
@@ -113,14 +109,19 @@ namespace challenge
 			int minDif = kInfinity;
 			int minIndex = 0;
 
+			int position = 0;
 			for(int i = 0; i < mLetterPositions.size(); i++) {
-				if(mLetterPositions[i] > e.position.x) {
+				int positionInLabel = e.position.x - mTextLabel->GetX();
+
+				if(position + mLetterPositions[i] > positionInLabel) {
 					break;
 				}
+
+				position += mLetterPositions[i];
 				minIndex = i;
 			}
 
-			mCursorPosition = mLetterPositions[minIndex];
+			mCursorPosition = position;
 			mCursorIndex = minIndex;
 		}
 		

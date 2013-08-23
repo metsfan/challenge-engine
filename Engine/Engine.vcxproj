@@ -16,6 +16,7 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Engine/Challenge.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="Source\Engine\Core\BasicTypes.cpp" />
+    <ClCompile Include="Source\Engine\Core\Config.cpp" />
     <ClCompile Include="Source\Engine\Disk\Asset.cpp" />
     <ClCompile Include="Source\Engine\Disk\File.cpp" />
     <ClCompile Include="Source\Engine\Disk\Platform\Windows\AssetLoaderWindows.cpp" />
@@ -42,6 +43,7 @@
     <ClCompile Include="Source\Engine\Database\DatabaseRecord.cpp" />
     <ClCompile Include="Source\Engine\Event\EventData.cpp" />
     <ClCompile Include="Source\Engine\Event\EventManager.cpp" />
+    <ClInclude Include="Source\Engine\Core\Config.h" />
     <ClInclude Include="Source\Engine\Core\PlatformIncludes.h" />
     <ClInclude Include="Source\Engine\Disk\Asset.h" />
     <ClInclude Include="Source\Engine\Disk\AssetLoader.h" />

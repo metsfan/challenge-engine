@@ -59,13 +59,13 @@ namespace challenge
 				mLabelTexture->Initialize(stringBuffer.GetBuffer(), stringBuffer.GetSize());
 				//mLabelSprite->SetSize(stringBuffer.GetSize().width, stringBuffer.GetSize().height);
 				Size stringDims = mFont->GetStringDimensions(mText);
-				if(frame.size.width < stringDims.width) {
+				/*if(frame.size.width < stringDims.width) {
 					real dif = stringDims.width - frame.size.width;
 					real texX = dif / stringBuffer.GetSize().width;
 
 					mLabelSprite->SetTextureFrame(texX, 0, 1 - texX, 1);
 					mLabelSprite->SetSize(stringBuffer.GetSize().width * (1 - texX), stringBuffer.GetSize().height);
-				} else {
+				} else*/ {
 					mLabelSprite->SetTextureFrame(0, 0, 1, 1);
 					mLabelSprite->SetSize(stringBuffer.GetSize().width, stringBuffer.GetSize().height);
 				}

@@ -16,7 +16,10 @@ namespace challenge
 	{
 	public:
 		XMLDocument(const std::string &filepath, int options = 0);
+		XMLDocument(File *file, int options = 0);
 		~XMLDocument();
+
+		void LoadFile(File *file, int options = 0);
 
 		XMLNode& GetRootNode() { return mRootNode; }
 

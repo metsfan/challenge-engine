@@ -12,7 +12,7 @@ namespace challenge
 	{
 	public:
 		XMLNode();
-		XMLNode(const std::string &name);
+		XMLNode(const std::string &name, const std::string &value);
 		~XMLNode();
 
 		const std::string& GetName() { return mName; }
@@ -21,6 +21,8 @@ namespace challenge
 		TXMLNodeList GetChildrenByName(std::string name);
 		XMLNode& GetFirstChild(std::string name);
 		XMLNode& GetChild(int index);
+
+		std::string GetValue() { return mValue; }
 
 		void AddChild(XMLNode &node) { mChildren.push_back(node); }
 
@@ -38,6 +40,7 @@ namespace challenge
 
 	private:
 		std::string mName;
+		std::string mValue;
 		TXMLNodeList mChildren;
 		TXMLAttributeMap mAttributes;
 	};

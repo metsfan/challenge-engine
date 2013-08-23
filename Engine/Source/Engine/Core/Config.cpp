@@ -1,0 +1,20 @@
+#include <Engine/Challenge.h>
+#include "Config.h"
+#include <Engine/Util/XML/XMLDocument.h>
+
+namespace challenge
+{
+	void Config::LoadFile(const std::string &file)
+	{
+		Asset configFile(file);
+		XMLDocument doc(&configFile);
+
+		TXMLNodeList objects = doc.GetRootNode().GetChildrenByName("object");
+		for(XMLNode &node : objects) {
+			const std::string key = node.GetChildrenByName("key")[0].GetValue();
+			const std::string value = node.GetChildrenByName("value")[0].GetValue();
+
+			mConfigValues[key] = value;
+		}
+	}
+};
