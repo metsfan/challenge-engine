@@ -1,6 +1,13 @@
 Texture2D gTexture : register(t0); 
  
-SamplerState gTriLinearSam : register(s0);
+sampler gTriLinearSam = 
+sampler_state
+{
+    Texture = <gTexture>;
+    MipFilter = LINEAR;
+    MinFilter = LINEAR;
+    MagFilter = LINEAR;
+};
 
 cbuffer color
 {

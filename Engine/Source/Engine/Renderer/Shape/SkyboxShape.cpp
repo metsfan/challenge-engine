@@ -65,7 +65,7 @@ namespace challenge
 			-size, -size, -size, 0.0f, 0.0f, 5,
 		};*/
 
-		ModelMesh *mesh = mSkyboxModel->GetMeshes()[0];
+		/*ModelMesh *mesh = mSkyboxModel->GetMeshes()[0];
 
 		VERTEX_BUFFER_DESC vbDesc;
 		vbDesc.Usage = VertexBufferUsageStatic;
@@ -78,7 +78,7 @@ namespace challenge
 		SkyboxMaterialProperties *props = new SkyboxMaterialProperties();
 		props->SetTexture(mTexture);
 
-		mMaterial = new Material(device, props);
+		mMaterial = new Material(device, props);*/
 	}
 
 	void SkyboxShape::SetImage(std::shared_ptr<Image> image)

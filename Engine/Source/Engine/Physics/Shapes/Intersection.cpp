@@ -5,27 +5,27 @@
 using namespace challenge;
 
 
-bool IntersectionTests::SphereIntersectsSphere(SphereShape *sphere1, SphereShape *sphere2, CollisionData *collision)
+bool IntersectionTests::SphereIntersectsSphere(const SphereShape *sphere1, const SphereShape *sphere2, CollisionData *collision)
 {
 	return false;
 }
 
-bool IntersectionTests::AABBIntersectsSphere(AABBShape *aabb, SphereShape *sphere, CollisionData *collision)
+bool IntersectionTests::AABBIntersectsSphere(const AABBShape *aabb, const SphereShape *sphere, CollisionData *collision)
 {
 	return false;
 }
 
-bool IntersectionTests::AABBIntersectsAABB(AABBShape *aabb1, AABBShape *aabb2, CollisionData *collision)
+bool IntersectionTests::AABBIntersectsAABB(const AABBShape *aabb1, const AABBShape *aabb2, CollisionData *collision)
 {
 	return false;
 }
 
-bool IntersectionTests::AABBIntersectsPlane(AABBShape *aabb, PlaneShape *plane, CollisionData *collision)
+bool IntersectionTests::AABBIntersectsPlane(const AABBShape *aabb, const PlaneShape *plane, CollisionData *collision)
 {
 	glm::vec3 xAxis = glm::vec3(1.0, 0.0, 0.0);
 	glm::vec3 yAxis = glm::vec3(0.0, 1.0, 0.0);
 	glm::vec3 zAxis = glm::vec3(0.0, 0.0, 1.0);
-	glm::vec3 normal = plane->mNormal;
+	glm::vec3 normal = plane->GetNormal();
 
 	/*float xLen = glm::length(xAxis * normal);
 	float yLen = glm::length(yAxis * normal);
@@ -40,12 +40,12 @@ bool IntersectionTests::AABBIntersectsPlane(AABBShape *aabb, PlaneShape *plane, 
 	float r = glm::dot(plane1.mComponents, glm::vec4(center, 1.0));
 	bool intersects = abs(r) <= rEff;*/
 
-	glm::vec3 center = aabb->GetPosition();
-	glm::vec3 e = glm::vec3(aabb->mHalfX, aabb->mHalfY, aabb->mHalfZ);
+	const glm::vec3 &center = aabb->GetCenter();
+	const glm::vec3 &e = aabb->GetDimensions();
 
-	glm::vec3 n = plane->mNormal;
+	glm::vec3 n = plane->GetNormal();
 	float r = (e.x * abs(n.x)) + (e.y * abs(n.y)) + (e.z * abs(n.z));
-	float s = glm::dot(n, center) - plane->mDistance;
+	float s = glm::dot(n, center) - plane->GetD();
 
 	bool intersects = abs(s) <= r;
 
@@ -76,7 +76,7 @@ bool IntersectionTests::AABBIntersectsPlane(AABBShape *aabb, PlaneShape *plane, 
 			Contact *contact = new Contact();
 			glm::vec3 point = center - (0.5f * ((glm::sign(xDotN) * xAxis) + (glm::sign(yDotN) * yAxis) + (glm::sign(zDotN) * zAxis)));
 			contact->mContactPoint = point;
-			contact->mContactNormal = plane->mNormal;
+			contact->mContactNormal = plane->GetNormal();
 			contact->mPenetration = PhysicsMath::PointPlaneDistance(point, plane);
 			collision->mContacts.push_back(contact);
 		} else if(numZero == 1) {
@@ -100,14 +100,14 @@ bool IntersectionTests::AABBIntersectsPlane(AABBShape *aabb, PlaneShape *plane, 
 			Contact *contact = new Contact();
 			point = center - (0.5f * (M + zeroAxis));
 			contact->mContactPoint = point;
-			contact->mContactNormal = plane->mNormal;
+			contact->mContactNormal = plane->GetNormal();
 			contact->mPenetration = PhysicsMath::PointPlaneDistance(point, plane);
 			collision->mContacts.push_back(contact);
 
 			contact = new Contact();
 			point = center - (0.5f * (M - zeroAxis));
 			contact->mContactPoint = point;
-			contact->mContactNormal = plane->mNormal;
+			contact->mContactNormal = plane->GetNormal();
 			contact->mPenetration = PhysicsMath::PointPlaneDistance(point, plane);
 			collision->mContacts.push_back(contact);
 		} else if(numZero == 2) {
@@ -152,28 +152,28 @@ bool IntersectionTests::AABBIntersectsPlane(AABBShape *aabb, PlaneShape *plane, 
 			Contact *contact = new Contact();
 			point = center - (0.5f * (M + zeroAxis1 + zeroAxis2));
 			contact->mContactPoint = point;
-			contact->mContactNormal = plane->mNormal;
+			contact->mContactNormal = plane->GetNormal();
 			contact->mPenetration = PhysicsMath::PointPlaneDistance(point, plane);
 			collision->mContacts.push_back(contact);
 
 			contact = new Contact();
 			point = center - (0.5f * (M + zeroAxis1 - zeroAxis2));
 			contact->mContactPoint = point;
-			contact->mContactNormal = plane->mNormal;
+			contact->mContactNormal = plane->GetNormal();
 			contact->mPenetration = PhysicsMath::PointPlaneDistance(point, plane);
 			collision->mContacts.push_back(contact);
 
 			contact = new Contact();
 			point = center - (0.5f * (M - zeroAxis1 + zeroAxis2));
 			contact->mContactPoint = point;
-			contact->mContactNormal = plane->mNormal;
+			contact->mContactNormal = plane->GetNormal();
 			contact->mPenetration = PhysicsMath::PointPlaneDistance(point, plane);
 			collision->mContacts.push_back(contact);
 
 			contact = new Contact();
 			point = center - (0.5f * (M - zeroAxis1 - zeroAxis2));
 			contact->mContactPoint = point;
-			contact->mContactNormal = plane->mNormal;
+			contact->mContactNormal = plane->GetNormal();
 			contact->mPenetration = PhysicsMath::PointPlaneDistance(point, plane);
 			collision->mContacts.push_back(contact);
 		}
@@ -182,14 +182,14 @@ bool IntersectionTests::AABBIntersectsPlane(AABBShape *aabb, PlaneShape *plane, 
 	return intersects;
 }
 
-bool IntersectionTests::AABBIntersectsTriangle(AABBShape *aabb, TriangleShape *triangle, CollisionData *collision)
+bool IntersectionTests::AABBIntersectsTriangle(const AABBShape *aabb, const TriangleShape *triangle, CollisionData *collision)
 {
-	glm::vec3 c = aabb->GetPosition();
+	glm::vec3 c = aabb->GetCenter();
 
 	glm::vec3 v[3];
-	v[0] = triangle->mPoints[0] - c;
-	v[1] = triangle->mPoints[1] - c;
-	v[2] = triangle->mPoints[2] - c;
+	v[0] = triangle->GetPoint(0) - c;
+	v[1] = triangle->GetPoint(1) - c;
+	v[2] = triangle->GetPoint(2) - c;
 
 	glm::vec3 f[3] = { v[1] - v[0], v[2] - v[1], v[0] - v[2] };
 	glm::vec3 axes[3] = { 
@@ -209,9 +209,9 @@ bool IntersectionTests::AABBIntersectsTriangle(AABBShape *aabb, TriangleShape *t
 			p1 = glm::dot(v[1], axis);
 			p2 = glm::dot(v[2], axis);
 
-			r = (aabb->mHalfX * abs(glm::dot(axes[0], axis))) + 
-				(aabb->mHalfY * abs(glm::dot(axes[1], axis))) + 
-				(aabb->mHalfZ * abs(glm::dot(axes[2], axis)));
+			r = (aabb->GetHalfX() * abs(glm::dot(axes[0], axis))) + 
+				(aabb->GetHalfY() * abs(glm::dot(axes[1], axis))) + 
+				(aabb->GetHalfZ() * abs(glm::dot(axes[2], axis)));
 
 			min = MIN(p0, MIN(p1, p2));
 			max = MAX(p0, MAX(p1, p2));
@@ -228,19 +228,19 @@ bool IntersectionTests::AABBIntersectsTriangle(AABBShape *aabb, TriangleShape *t
 
 	min = MIN(v[0].x, MIN(v[1].x, v[2].x));
 	max = MAX(v[0].x, MAX(v[1].x, v[2].x));
-	if(max < -aabb->mHalfX || min > aabb->mHalfX) {
+	if(max < -aabb->GetHalfX() || min > aabb->GetHalfX()) {
 		return false;
 	}
 
 	min = MIN(v[0].y, MIN(v[1].y, v[2].y));
 	max = MAX(v[0].y, MAX(v[1].y, v[2].y));
-	if(max < -aabb->mHalfY || min > aabb->mHalfY) {
+	if(max < -aabb->GetHalfY() || min > aabb->GetHalfY()) {
 		return false;
 	}
 	
 	min = MIN(v[0].z, MIN(v[1].z, v[2].z));
 	max = MAX(v[0].z, MAX(v[1].z, v[2].z));
-	if(max < -aabb->mHalfZ || min > aabb->mHalfZ) {
+	if(max < -aabb->GetHalfZ() || min > aabb->GetHalfZ()) {
 		return false;
 	}
 
@@ -253,15 +253,15 @@ bool IntersectionTests::AABBIntersectsTriangle(AABBShape *aabb, TriangleShape *t
 	collision->mContacts.push_back(contact);*/
 
 	//return true;
-	bool intersects = IntersectionTests::AABBIntersectsPlane(aabb, &triangle->mNormalPlane, NULL);
+	bool intersects = IntersectionTests::AABBIntersectsPlane(aabb, &triangle->GetPlane(), NULL);
 
 	if(intersects && collision != NULL) {
-		contact->mContactNormal = triangle->mNormalPlane.mNormal;
+		contact->mContactNormal = triangle->GetPlane().GetNormal();
 
 		glm::vec3 normal = contact->mContactNormal;
 
 		//contact->mContactPoint = c;
-		Ray r(c, triangle->mNormalPlane.mNormal);
+		Ray r(c, triangle->GetPlane().GetNormal());
 
 		glm::vec3 intPoint;
 		if(!triangle->RayIntersects(r, &intPoint)) {
@@ -276,12 +276,12 @@ bool IntersectionTests::AABBIntersectsTriangle(AABBShape *aabb, TriangleShape *t
 		//aabb->RayIntersects(r, &intPoint);
 
 		glm::vec4 planes[6];
-		planes[0] = glm::vec4(1, 0, 0, aabb->mHalfX + c.x);
-		planes[1] = glm::vec4(1, 0, 0, -aabb->mHalfX + c.x);
-		planes[2] = glm::vec4(0, 1, 0, aabb->mHalfY + c.y);
-		planes[3] = glm::vec4(0, 1, 0, -aabb->mHalfY + c.y);
-		planes[4] = glm::vec4(0, 0, 1, aabb->mHalfZ + c.z);
-		planes[5] = glm::vec4(0, 0, 1, -aabb->mHalfZ + c.z);
+		planes[0] = glm::vec4(1, 0, 0, aabb->GetHalfX() + c.x);
+		planes[1] = glm::vec4(1, 0, 0, -aabb->GetHalfX() + c.x);
+		planes[2] = glm::vec4(0, 1, 0, aabb->GetHalfY() + c.y);
+		planes[3] = glm::vec4(0, 1, 0, -aabb->GetHalfY() + c.y);
+		planes[4] = glm::vec4(0, 0, 1, aabb->GetHalfZ() + c.z);
+		planes[5] = glm::vec4(0, 0, 1, -aabb->GetHalfZ() + c.z);
 
 		real minDist = FLT_MAX;
 		for(int i = 0; i < 3; i++) {
@@ -306,8 +306,8 @@ bool IntersectionTests::AABBIntersectsTriangle(AABBShape *aabb, TriangleShape *t
 		//Logger::log(LogDebug, "%f", minDist);
 
 		//contact->mPenetration = -minDist;
-		c.y -= aabb->mHalfY;
-		contact->mPenetration = -PhysicsMath::PointPlaneDistance(c, &triangle->mNormalPlane);
+		c.y -= aabb->GetHalfY();
+		contact->mPenetration = -PhysicsMath::PointPlaneDistance(c, &triangle->GetPlane());
 		//contact->mPenetration = 0.01;
 		collision->mContacts.push_back(contact);
 	}

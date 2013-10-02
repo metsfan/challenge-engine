@@ -4,17 +4,21 @@
 
 namespace challenge
 {
+	std::map<std::string, std::string> Config::mConfigValues;
+
 	void Config::LoadFile(const std::string &file)
 	{
 		Asset configFile(file);
-		XMLDocument doc(&configFile);
+		if(configFile.ReadData()) {
+			XMLDocument doc(&configFile);
 
-		TXMLNodeList objects = doc.GetRootNode().GetChildrenByName("object");
-		for(XMLNode &node : objects) {
-			const std::string key = node.GetChildrenByName("key")[0].GetValue();
-			const std::string value = node.GetChildrenByName("value")[0].GetValue();
+			TXMLNodeList objects = doc.GetRootNode().GetChildrenByName("object");
+			for(XMLNode &node : objects) {
+				const std::string key = node.GetChildrenByName("key")[0].GetValue();
+				const std::string value = node.GetChildrenByName("value")[0].GetValue();
 
-			mConfigValues[key] = value;
+				mConfigValues[key] = value;
+			}
 		}
 	}
 };

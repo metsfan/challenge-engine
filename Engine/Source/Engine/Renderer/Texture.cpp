@@ -3,7 +3,8 @@
 
 namespace challenge
 {
-	BaseTexture::BaseTexture()
+	BaseTexture::BaseTexture() :
+		mLoaded(false)
 	{
 	}
 

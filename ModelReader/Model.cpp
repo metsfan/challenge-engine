@@ -167,7 +167,9 @@ namespace model
 		out.write((char *)&nMeshes, sizeof(int));
 
 		for(int i = 0; i < nMeshes; i++) {
-			mMeshes[i]->Serialize(out, mNodes, mAnimData);
+			if(mMeshes[i]) {
+				mMeshes[i]->Serialize(out, mNodes, mAnimData);
+			}
 		}
 
 		bool animated = mAnimData != NULL;

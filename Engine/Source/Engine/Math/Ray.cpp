@@ -4,71 +4,98 @@
 
 namespace challenge
 {
-	static const float EPSILON = 0.00001;
-
-	bool Ray::GetIntersection(const Triangle &triangle, float &t) const
+	//static const float EPSILON = 0.00001;
+	bool Ray::GetIntersection(const BoundingBox &bounds, float &t) const
 	{
-		/*glm::vec3 ab = triangle[1] - triangle[0];
-		glm::vec3 ac = triangle[2] - triangle[0];
-		const glm::vec3 normal = triangle.GetNormal();
+		real tmin = 0;
+		real tmax = INFINITY;
 
-		float d = glm::dot(mDirection, normal);
-		if(d <= EPSILON) {
-			return false;
+		for(int i = 0; i < 2; i++) {
+			if(abs(mDirection[i]) < EPSILON) {
+				if(mOrigin[i] < bounds.mMin[i] || mOrigin[i] > bounds.mMax[i]) {
+					return false;
+				}
+			} else {
+				real ood = 1.0 / mDirection[i];
+				real t1 = (bounds.mMin[i] - mOrigin[i]) * ood;
+				real t2 = (bounds.mMax[i] - mOrigin[i]) * ood;
+
+				if(t1 > t2) {
+					real tmp = t1;
+					t1 = t2;
+					t2 = tmp;
+				}
+
+				tmin = std::max(tmin, t1);
+				tmax = std::min(tmax, t2);
+
+				if(tmin > tmax) {
+					return false;
+				}
+			}
 		}
 
-		glm::vec3 ap = mOrigin - triangle[0];
-		t = glm::dot(ap, normal);
+		t = tmin;
 		if(t < 0) {
 			return false;
 		}
 
-		glm::vec3 e = glm::cross(mDirection, ap);
-		float v = glm::dot(ac, e);
-		if(v < 0) {
-			return false;
-		}
+		return true;
+	}
 
-		float w = glm::dot(ab, e) * -1;
-		if(w < 0) {
-			return false;
-		}
-
-		t /= d;
-
-		return true;*/
+	bool Ray::GetIntersection(const Triangle &triangle, float &t) const
+	{
 		float u, v, w;
 
         glm::vec3 pa = triangle[0] - mOrigin;
         glm::vec3 pb = triangle[1] - mOrigin;
         glm::vec3 pc = triangle[2] - mOrigin;
 
-		u = MathUtil::ScalarTriple(mDirection, pc, pb);
-		if(u < 0) { return false; }
-        v = MathUtil::ScalarTriple(mDirection, pa, pc);
-		if(v < 0) { return false; }
+		glm::vec3 m = glm::cross(mDirection, pc);
+		u = glm::dot(pb, m);
+
+		v = -glm::dot(pa, m);
+		if(glm::sign(u) != glm::sign(v)) {
+			return false;
+		}
+
         w = MathUtil::ScalarTriple(mDirection, pb, pa);
-		if(w < 0) { return false; }
+		if(glm::sign(u) != glm::sign(w)) {
+			return false;
+		}
 
-        int signU = MathUtil::Sign(u);
-        int signV = MathUtil::Sign(v);
-        int signW = MathUtil::Sign(w);
+        float denom = 1.0f / (u + v + w);
+        u *= denom;
+        v *= denom;
+        w *= denom;
 
-        //if (signU == signV && signU == signW)
-        {
-            float denom = 1.0f / (u + v + w);
-            u *= denom;
-            v *= denom;
-            w *= denom;
+        glm::vec3 point = triangle.BarycentricPoint(u, v, w);
 
-            glm::vec3 point = triangle.BarycentricPoint(u, v, w);
+		t = glm::dot((point - mOrigin), mDirection);
 
-            t = glm::distance(point, mOrigin);
-
+		if(t >= 0) {
 			return true;
-        }
-
+		}
 
         return false;
+	}
+
+	bool Ray::GetIntersection(const Plane &plane, float &t) const
+	{
+		real denom = glm::dot(plane.GetNormal(), mDirection);
+
+		if(!denom) {
+			return false;
+		}
+
+		real numer = -(glm::dot(plane.GetNormal(), mOrigin) + plane.GetD());
+
+		t = numer / denom;
+
+		if(t >= 0) {
+			return true;
+		}
+
+		return false;
 	}
 };

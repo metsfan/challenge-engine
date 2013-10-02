@@ -13,8 +13,7 @@ namespace challenge
 
 		bool CollidesWith(IPhysicsObject *other, CollisionData *collision = NULL) { return false; }
 
-		glm::vec4 GetComponents() { return static_cast<PlaneShape *>(mShape)->mComponents; }
-		glm::vec3 GetNormal() { return static_cast<PlaneShape *>(mShape)->mNormal; }
-		real GetDistance() { return static_cast<PlaneShape *>(mShape)->mDistance; }
+		glm::vec3 GetNormal() { return static_cast<PlaneShape *>(mShape)->GetNormal(); }
+		real GetDistance() { return static_cast<PlaneShape *>(mShape)->GetD(); }
 	};
 };

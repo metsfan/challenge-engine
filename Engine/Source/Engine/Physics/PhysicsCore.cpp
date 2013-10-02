@@ -1,9 +1,9 @@
 #include <Engine/Challenge.h>
 #include "PhysicsCore.h"
-#include <Engine/Physics/Shapes/PhysicsShape.h>
+#include <Engine/Physics/Shapes/GeometricShape.h>
 using namespace challenge;
 
-IPhysicsShape* PhysicsObject::GetShape()
+IGeometricShape* PhysicsObject::GetShape()
 {
 	return mShape;
 }

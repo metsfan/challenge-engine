@@ -8,6 +8,6 @@ namespace challenge
 	class PhysicsMath
 	{
 	public:
-		static float PointPlaneDistance(glm::vec3 point, PlaneShape *plane);
+		static float PointPlaneDistance(const glm::vec3 &point, const PlaneShape *plane);
 	};
 };

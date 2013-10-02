@@ -10,19 +10,48 @@
 namespace challenge
 {
 	std::string Model::s_ModelDir = "C:/gamedev/dungeon-raider/DungeonRaider/DungeonRaider/Media/Models/";
+	std::map<std::string, std::shared_ptr<ModelResource>> Model::sResourceCache;
 
 	Model::Model(std::shared_ptr<ModelResource> resource) :
+		mActiveAnimFrame(0),
 		mResource(resource),
-		mActiveAnimFrame(0)
+		mBoundingVolume(NULL)
 	{
 	}
 
-	
-
-	void Model::Transform(glm::mat4 &transform)
+	Model::Model(const std::string &filepath) :
+		mActiveAnimFrame(0),
+		mBoundingVolume(NULL)
 	{
-		for(int i = 0; i < mResource->mMeshes.size(); i++) {
+		memset(&mActiveAnimation, 0, sizeof(ModelAnimation));
+
+		if(sResourceCache.count(filepath)) {
+			mResource = sResourceCache[filepath];	
+		} else {
+			std::shared_ptr<ModelResource> newResource(new ModelResource());
+			if(newResource->Initialize(filepath)) {
+				sResourceCache[filepath] = newResource;
+				mResource = newResource;
+			} else {
+				throw "Failed to initialize model resource";
+			}
+		}
+	}
+
+	IGeometricShape* Model::CreateBoundingVolume(GeometricShapeType type, const glm::mat4 &transform)
+	{
+		mBoundingVolume = mResource->CreateBoundingVolume(type, transform)->Clone();
+
+		return mBoundingVolume;
+	}
+
+	void Model::Transform(const glm::mat4 &transform)
+	{
+		/*for(int i = 0; i < mResource->mMeshes.size(); i++) {
 			mResource->mMeshes[i]->Transform(transform);
+		}*/
+		if(mBoundingVolume) {
+			mBoundingVolume->SetTransform(transform);
 		}
 	}
 
@@ -197,8 +226,29 @@ namespace challenge
 		}
 	}
 
-	const std::vector<glm::mat4>& Model::GetBonesForKeyframe(int keyframe)
+	void Model::Render(IGraphicsDevice *device, RenderState &state)
 	{
-		return mResource->mBoneMatrices[keyframe];
+		mResource->Render(device, state, mActiveAnimation.currentFrame, 0);
+	}
+
+	bool Model::GetIntersection(const Ray &ray, float &t)
+	{
+		//if(mBoundingVolume) {
+			//return mBoundingVolume->RayIntersects(ray, t);
+		//} else {
+		float minT = INFINITY;
+
+		const TMeshList &meshes = mResource->GetMeshes();
+		for(ModelMesh *mesh : meshes) {
+			if(mesh->GetIntersection(ray, t)) {
+				if(t < minT) {
+					minT = t;
+				}
+			}
+		}
+
+		t = minT;
+		return minT != INFINITY;
+		//}
 	}
 };

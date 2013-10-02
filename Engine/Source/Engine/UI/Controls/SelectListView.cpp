@@ -7,7 +7,7 @@ namespace challenge
 	static const int kOptionsPanelHeight = 150;
 
 	SelectListView::SelectListView(Frame frame) :
-		View(frame),
+		FormElement(frame),
 		mSelectedIndex(0),
 		mDefaultOption(0),
 		mOptionsPanel(new PanelView(Frame(0, kItemHeight, frame.size.width, kOptionsPanelHeight))),
@@ -74,6 +74,15 @@ namespace challenge
 
 		const ListItem &item = mItems[index];
 		mSelectedLabel->SetText(item.text);
+	}
+
+	void SelectListView::SetValue(const std::string &value)
+	{
+		for(int i = 0; i < mItems.size(); i++) {
+			if(mItems[i].value == value) {
+				this->SetSelectedIndex(i);
+			}
+		}
 	}
 
 	void SelectListView::Update(int deltaMillis)

@@ -2,7 +2,6 @@
 
 #include <Engine/Challenge.h>
 #include <Engine/View/ActorParams.h>
-#include <Engine/Scene/Scene.h>
 #include <Engine/Model/Model.h>
 #include <Engine/Network/NetworkManager.h>
 
@@ -26,8 +25,6 @@ namespace challenge
 
 		virtual void OnUpdate(int deltaMillis) = 0;
 		virtual void RotateY(float angle) = 0;
-
-		virtual void OnAdd(Scene *pScene) = 0;
 
 		virtual void SetPosition(glm::vec3 position) = 0;
 		virtual glm::vec3 GetPosition() = 0;
@@ -61,8 +58,6 @@ namespace challenge
 		virtual void OnUpdate(int deltaMillis);
 		virtual void RotateY(float angle);
 
-		virtual void OnAdd(Scene *pScene);
-
 		void SetPosition(glm::vec3 position);
 		glm::vec3 GetPosition() { return mPosition; }
 
@@ -84,7 +79,6 @@ namespace challenge
 		ActorType mType;
 		glm::mat4 mTransform;
 		ActorParams* mParams;
-		Scene *mScene;
 		float mXAngle;
 		float mYAngle;
 		float mScale;

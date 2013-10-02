@@ -8,7 +8,7 @@ namespace challenge
 	static const char kBackspaceKey = 8;
 
 	TextFieldView::TextFieldView(Frame frame) :
-		View(frame),
+		FormElement(frame),
 		mTextLabel(new LabelView(Frame(0, 0, frame.size.width, frame.size.height))),
 		mCursor(new View(Frame(0, 0, 1, frame.size.height - 2))),
 		mCursorActive(false),
@@ -40,16 +40,26 @@ namespace challenge
 	{
 	}
 
+	void TextFieldView::SetText(const std::string &text)
+	{
+		mTextLabel->SetText(text);
+	}
+
 	void TextFieldView::Update(int deltaMillis)
 	{
-		mCursorTime += 16;
-		if(mCursorTime > kCursorDuration) {
-			mCursorActive = !mCursorActive;
-			mCursorTime = 0;
-		}
+		if(this->IsFocused()) {
+			mCursorTime += 16;
+			if(mCursorTime > kCursorDuration) {
+				mCursorActive = !mCursorActive;
+				mCursorTime = 0;
+			}
 
-		mCursor->SetVisible(mCursorActive);
-		mCursor->SetX(mCursorPosition-2);
+			mCursor->SetVisible(mCursorActive);
+			mCursor->SetX(mCursorPosition-2);
+		} else {
+			mCursorTime = 0;
+			mCursor->SetVisible(false);
+		}
 
 		Size textDims = mTextLabel->GetFont()->GetStringDimensions(mTextLabel->GetText());
 		if(textDims.width > this->GetWidth()) {
@@ -124,7 +134,5 @@ namespace challenge
 			mCursorPosition = position;
 			mCursorIndex = minIndex;
 		}
-		
 	}
-
 };

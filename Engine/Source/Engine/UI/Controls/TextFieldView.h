@@ -1,12 +1,12 @@
 #pragma once
 
 #include <Engine/Challenge.h>
-#include <Engine/UI/View.h>
+#include <Engine/UI/Controls/FormElement.h>
 #include <Engine/UI/Controls/LabelView.h>
 
 namespace challenge
 {
-	class TextFieldView : public View
+	class TextFieldView : public FormElement
 	{
 	public:
 		TextFieldView(Frame frame = Frame());
@@ -19,6 +19,9 @@ namespace challenge
 
 		virtual void Update(int deltaMillis);
 		virtual void Render(IGraphicsDevice *device, RenderState &state, const Frame &parentFrame);
+
+		void SetValue(const std::string &value) { this->SetText(value); }
+		std::string GetValue() { return mTextLabel->GetText(); }
 
 	private:
 		LabelView *mTextLabel;

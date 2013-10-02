@@ -13,17 +13,14 @@ namespace challenge
 	{
 		int verticesSize = nVerts * sizeof(ModelVertex);
 
-		mMeshVertices = new ModelVertex[nVerts];
-		memcpy(mMeshVertices, verts, verticesSize);
+		mMeshVertices.resize(nVerts);
+		memcpy(&mMeshVertices[0], verts, verticesSize);
 
 		mNumVertices = nVerts;
 	}
 
 	ModelMesh::~ModelMesh()
 	{
-		if(mMeshVertices) {
-			delete[] mMeshVertices; 
-		}
 	}
 
 	void ModelMesh::Unserialize(std::istream &in)
@@ -31,8 +28,8 @@ namespace challenge
 		// Read mesh vertices
 		in.read((char *)&mNumVertices, sizeof(int));
 
-		mMeshVertices = new ModelVertex[mNumVertices];
-		in.read((char *)mMeshVertices, sizeof(ModelVertex) * mNumVertices);
+		mMeshVertices.resize(mNumVertices);
+		in.read((char *)&mMeshVertices[0], sizeof(ModelVertex) * mNumVertices);
 
 		// Read material
 		in.read((char *)&mMaterialId, sizeof(int));
@@ -63,5 +60,33 @@ namespace challenge
 			vert->normal[1] = normal.y;
 			vert->normal[2] = normal.z;
 		}
+	}
+
+	bool ModelMesh::GetIntersection(const Ray &ray, float &t)
+	{
+		Triangle tri;
+
+		float minT = INFINITY;
+
+		for(int i = 0; i < mMeshVertices.size(); i += 3) {
+			tri[0].x = mMeshVertices[i].position[0];
+			tri[0].y = mMeshVertices[i].position[1];
+			tri[0].z = mMeshVertices[i].position[2];
+			tri[1].x = mMeshVertices[i+1].position[0];
+			tri[1].y = mMeshVertices[i+1].position[1];
+			tri[1].z = mMeshVertices[i+1].position[2];
+			tri[2].x = mMeshVertices[i+2].position[0];
+			tri[2].y = mMeshVertices[i+2].position[1];
+			tri[2].z = mMeshVertices[i+2].position[2];
+
+			if(ray.GetIntersection(tri, t)) {
+				if(t < minT) {
+					minT = t;
+				}
+			}
+		}
+
+		t = minT;
+		return minT != INFINITY ;
 	}
 };

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Engine/Challenge.h>
-#include <Engine/UI/View.h>
+#include <Engine/UI/Controls/FormElement.h>
 #include <Engine/UI/Controls/LabelView.h>
 
 namespace challenge
@@ -13,7 +13,7 @@ namespace challenge
 		ButtonStateDisabled
 	} ButtonState;
 
-	class ButtonView : public View
+	class ButtonView : public FormElement
 	{
 	private:
 		void Initialize();
@@ -25,6 +25,9 @@ namespace challenge
 		ButtonState GetState() { return mState; }
 
 		void SetTitleText(const std::string &text);
+
+		void SetValue(const std::string &value) { this->SetTitleText(value); }
+		std::string GetValue() { return mTitleLabel->GetText(); }
 
 	protected:
 		ButtonState mState;

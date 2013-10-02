@@ -60,6 +60,10 @@ namespace challenge
 
 	bool UIManager::ProcessKeyboardEvent(const KeyboardEvent &e)
 	{
+		if(!mRootView) {
+			return false;
+		}
+
 		View *selectedView = mFocusedView;
 		bool handled = false;
 
@@ -83,6 +87,10 @@ namespace challenge
 
 	bool UIManager::ProcessMouseEvent(const MouseEvent &e)
 	{
+		if(!mRootView) {
+			return false;
+		}
+
 		bool handled = false;
 
 		if(e.type == MouseEventMouseWheelMove) {
@@ -104,7 +112,12 @@ namespace challenge
 		} else {
 			View *selectedView = mRootView->GetSelectedView(e.position);
 			if(e.type == MouseEventMouseDown) {
+				if(mFocusedView) {
+					mFocusedView->SetFocused(false);
+				}
+
 				mFocusedView = selectedView;
+				mFocusedView->SetFocused(true);
 			}
 
 			

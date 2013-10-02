@@ -2,7 +2,6 @@
 
 #include <Engine/Challenge.h>
 #include <Engine/Renderer/Window.h>
-#include <Engine/Scene/Nodes/CameraNode.h>
 #include <Engine/Renderer/VertexBuffer.h>
 #include <Engine/Renderer/GraphicsDevice.h>
 #include <Engine/Disk/ResourceCache.h>
@@ -60,9 +59,6 @@ namespace challenge
 
 		const Size& GetScreenSize() { return mScreenSize; }
 
-		void SetMainCamera(CameraNode *camera) { mMainCamera = camera; }
-		CameraNode* GetMainCamera() { return mMainCamera; }
-
 		void Update();
 		void PreRender();
 		void Render();
@@ -116,8 +112,6 @@ namespace challenge
 
 		ResourceCache<ModelResource> mModelCache;
 		PrimitiveGenerator *mPrimitiveGenerator;
-
-		CameraNode *mMainCamera;
 
 		Size mScreenSize;
 

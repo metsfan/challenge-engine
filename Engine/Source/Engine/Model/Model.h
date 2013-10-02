@@ -2,6 +2,9 @@
 
 #include <Engine/Challenge.h>
 #include <Engine/Model/ModelResource.h>
+#include <Engine/Renderer/Renderer.h>
+#include <Engine/Math/Ray.h>
+#include <Engine/Physics/Shapes/GeometricShape.h>
 
 namespace challenge
 {
@@ -21,24 +24,19 @@ namespace challenge
 	{
 	public:
 		Model(std::shared_ptr<ModelResource> resource);
+		Model(const std::string &filepath);
 		~Model();
 
-		void Transform(glm::mat4 &transform);
-
-		TMeshList& GetMeshes() { return mResource->mMeshes; }
-		int GetVertexCount() { return mResource->mNumVerts; }
-
-		const std::vector<glm::mat4>& GetBonesForKeyframe(int keyframe);
-
-		TMaterialList& GetMaterials() { return mResource->mMaterials; }
+		void Transform(const glm::mat4 &transform);
 
 		//void SetTexture(Texture *texture) { mTexture = texture; }
 		//Texture * GetTexture() { return mTexture; }
+		IGeometricShape* CreateBoundingVolume(GeometricShapeType type, const glm::mat4 &transform);
 
 		void SetIsStatic(bool isStatic) { mStatic = isStatic; }
 		bool IsStatic() { return mStatic; }
-		void Model::SetAnimFrame(int frame);
-		void Model::SetNextFrame(int deltaMillis);
+		void SetAnimFrame(int frame);
+		void SetNextFrame(int deltaMillis);
 
 		bool UpdateNextRender() { return mUpdateNextRender; }
 
@@ -55,7 +53,12 @@ namespace challenge
 
 		int GetCurrentAnimationFrame() { return mActiveAnimFrame; }
 
+		void Render(IGraphicsDevice *device, RenderState &state);
+
+		bool GetIntersection(const Ray &ray, float &t);
+
 	protected:
+		IGeometricShape *mBoundingVolume;
 		std::shared_ptr<ModelResource> mResource;
 
 		int mTotalFaces;
@@ -71,5 +74,7 @@ namespace challenge
 		void PopQueue();
 
 		static std::string s_ModelDir;
+
+		static std::map<std::string, std::shared_ptr<ModelResource>> sResourceCache;
 	};
 };

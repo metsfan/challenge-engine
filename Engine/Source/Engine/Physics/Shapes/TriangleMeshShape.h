@@ -7,21 +7,23 @@
 
 namespace challenge
 {
-	class TriangleMeshShape : public PhysicsShape
+	class TriangleMeshShape : public GeometricShape
 	{
 	public:
 		TriangleMeshShape();
 
-		virtual bool Intersects(IPhysicsShape *other, CollisionData *collision = NULL);
+		virtual bool Intersects(IGeometricShape *other, CollisionData *collision = NULL) const;
 
-		virtual void AddTriangle(glm::vec3 a, glm::vec3 b, glm::vec3 c);
+		virtual void AddTriangle(const glm::vec3 &a, const glm::vec3 &b, const glm::vec3 &c);
 
-		virtual PhysicsShapeType GetType() { return kShapeTypeTriangleMesh; }
+		virtual GeometricShapeType GetType() const { return kShapeTypeTriangleMesh; }
 
 		virtual void SetPosition(glm::vec3 position);
 		virtual glm::mat3 CalculateInertiaTensor(float mass);
 
 		virtual void CalculateDerivedData(); 
+
+		static IGeometricShape* CreateFromPointsList(const std::vector<glm::vec3> &points);
 
 	protected:
 		TTriangleList mTriangles;

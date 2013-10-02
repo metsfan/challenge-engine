@@ -14,7 +14,7 @@ namespace challenge
 	{
 	}
 
-	void ModelMaterial::Unserialize(std::istream &in)
+	void ModelMaterial::Unserialize(std::istream &in, const std::string &basePath)
 	{
 		for(int i = MaterialTextureNone; i <= kMaterialTextureMax; i++) {
 			MaterialTextureType nType = static_cast<MaterialTextureType>(i);

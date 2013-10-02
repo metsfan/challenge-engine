@@ -53,7 +53,7 @@ RigidBody* PhysicsManager::AddModel(Model *model, bool isStatic)
 		meshShape = new ConcaveTriangleMeshShape();
 	}
 
-	TMeshList meshes = model->GetMeshes();
+	/*TMeshList meshes = model->GetMeshes();
 	TMeshList::iterator it = meshes.begin();
 	while (it != meshes.end()) {
 		ModelVertex *verts = (*it)->GetBuffer();
@@ -66,7 +66,7 @@ RigidBody* PhysicsManager::AddModel(Model *model, bool isStatic)
 			meshShape->AddTriangle(p1, p2, p3);
 		}
 		++it;
-	}
+	}*/
 
 	meshShape->CalculateDerivedData();
 

@@ -2,8 +2,8 @@
 
 #include <Engine/Challenge.h>
 #include <Engine/Util/Util.h>
-#include <Engine/Physics/BoundingBox.h>
-#include <Engine/Physics/Shapes/PhysicsShape.h>
+#include <Engine/Math/BoundingBox.h>
+#include <Engine/Physics/Shapes/GeometricShape.h>
 
 namespace challenge
 {
@@ -27,7 +27,7 @@ namespace challenge
 		virtual bool CollidesWith(IPhysicsObject *other, CollisionData *collision = NULL) = 0;
 		virtual void SetPosition(glm::vec3 position) = 0;
 		virtual glm::vec3 GetPosition() = 0;
-		virtual IPhysicsShape* GetShape() = 0;
+		virtual IGeometricShape* GetShape() = 0;
 		virtual real GetMass() = 0;
 		virtual void SetMass(real mass) = 0;
 		virtual bool HasInfiniteMass() = 0;
@@ -51,7 +51,7 @@ namespace challenge
 		virtual void SetPosition(glm::vec3 position) { mPosition = position; }
 		glm::vec3 GetPosition() { return mPosition; }
 
-		IPhysicsShape* GetShape();
+		IGeometricShape* GetShape();
 
 		virtual real GetMass() { return mInverseMass; }
 		virtual void SetMass(real mass);
@@ -63,7 +63,7 @@ namespace challenge
 		PhysicsObjectType mType;
 		std::string mId;
 		glm::vec3 mPosition;
-		IPhysicsShape *mShape;
+		IGeometricShape *mShape;
 		real mInverseMass;
 		real mMass;
 		TCollisionCallbackList mCollisionCallbacks;

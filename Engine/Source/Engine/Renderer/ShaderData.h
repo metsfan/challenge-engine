@@ -24,6 +24,13 @@ namespace challenge
 	class ShaderDataPrimitive : public ShaderData
 	{
 	public:
+		ShaderDataPrimitive() :
+			ShaderData(),
+			mData(NULL),
+			mCount(0)
+		{
+		}
+
 		ShaderDataPrimitive(const T *data, int count) :
 			ShaderData(),
 			mData(data),
@@ -33,6 +40,12 @@ namespace challenge
 
 		~ShaderDataPrimitive() 
 		{
+		}
+
+		void SetData(const T *data, int count)
+		{
+			mData = data;
+			mCount = count;
 		}
 
 		void Apply(IShaderProgram *program, int index, ShaderType type)

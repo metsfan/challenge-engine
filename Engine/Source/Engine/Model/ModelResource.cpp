@@ -9,7 +9,8 @@
 
 namespace challenge
 {
-	ModelResource::ModelResource()
+	ModelResource::ModelResource() :
+		mShape(NULL)
 	{
 	}
 
@@ -45,9 +46,13 @@ namespace challenge
 		std::ifstream file(filename, std::ios::in | std::ios::binary);
 
 		if(file.good()) {
-			this->Unserialize(file);
+			
 			int lastSlash = filename.rfind('/');
 			mModelPath = filename.substr(0, lastSlash+1);
+
+			//Logger::log(LogDebug, "Model path: %s", mModelPath.c_str());
+			
+			this->Unserialize(file);
 			this->LoadAnimations();
 
 			return true;
@@ -102,7 +107,7 @@ namespace challenge
 		in.read((char *)&nMaterials, sizeof(int));
 		for(int i = 0; i < nMaterials; i++) {
 			ModelMaterial *material = new ModelMaterial();
-			material->Unserialize(in);
+			material->Unserialize(in, mModelPath);
 			mMaterials.push_back(material);
 		}
 
@@ -145,5 +150,54 @@ namespace challenge
 
 			printf("stop");
 		}
+	}
+
+	const std::vector<glm::mat4>& ModelResource::GetBonesForKeyframe(int keyframe)
+	{
+		return mBoneMatrices[keyframe];
+	}
+
+	void ModelResource::Render(IGraphicsDevice *device, RenderState &state, int animFrame, int materialId)
+	{
+		if(!mShape) {
+			mShape = new ModelShape(device, this);
+		}
+
+		mShape->SetCurrentAnimFrame(animFrame);
+		mShape->SetMaterialId(materialId);
+
+		mShape->Draw(device, state);
+	}
+
+	IGeometricShape* ModelResource::CreateBoundingVolume(const GeometricShapeType type, const glm::mat4 &transform)
+	{
+		// Check for a cached version
+		if(mBoundingVolumes.count(type)) {
+			return mBoundingVolumes[type];
+		}
+
+		// No cached version, so we must create it.  So let's aggregate a list of each mesh's points
+		int totalVerts = 0;
+		for(ModelMesh *mesh : mMeshes) {
+			int numVerts = mesh->GetTotalFaces();
+			totalVerts += numVerts;
+		}
+
+		std::vector<glm::vec3> pointsList;
+		pointsList.reserve(totalVerts);
+
+		for(ModelMesh *mesh : mMeshes) {
+			ModelVertex *verts = mesh->GetBuffer();
+			int numVerts = mesh->GetTotalFaces();
+
+			for(int i = 0; i < numVerts; i++) {
+				ModelVertex &vert = verts[i];
+				pointsList.push_back(glm::vec3(vert.position[0], vert.position[1], vert.position[2]));
+			}
+		}
+
+		mBoundingVolumes[type] = GeometricShapeFactory::CreateFromPointsList(type, pointsList, transform);
+
+		return mBoundingVolumes[type];
 	}
 };

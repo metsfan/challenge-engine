@@ -8,7 +8,7 @@ namespace challenge
 	static const int kCheckboxBuffer = 2;
 
 	CheckboxView::CheckboxView(Frame frame) :
-		View(frame),
+		FormElement(frame),
 		mCheckedImage(new ButtonView()),
 		mUncheckedImage(new ButtonView()),
 		mTextLabel(new LabelView()),

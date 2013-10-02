@@ -3,7 +3,8 @@
 
 namespace challenge
 {
-	ButtonView::ButtonView(Frame frame) : View(frame)
+	ButtonView::ButtonView(Frame frame) : 
+		FormElement(frame)
 	{
 		mState = ButtonStateDefault;
 		mTitleLabel = new LabelView();

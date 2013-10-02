@@ -4,7 +4,7 @@
 namespace challenge
 {
 	OptionsView::OptionsView(Frame frame) :
-		View(frame),
+		MultiFormElement(frame),
 		mMaxSelected(kInfinity)
 	{
 	}
@@ -81,5 +81,21 @@ namespace challenge
 		}
 
 		return values;
+	}
+
+	void OptionsView::SetValue(int index, const std::string &value)
+	{
+		if(index < mSelectedItems.size()) {
+			mItems[mSelectedItems[index]].value = value;
+		}
+	}
+
+	std::string OptionsView::GetValue(int index)
+	{
+		if(index < mSelectedItems.size()) {
+			return mItems[mSelectedItems[index]].value;
+		}
+
+		return std::string();
 	}
 };

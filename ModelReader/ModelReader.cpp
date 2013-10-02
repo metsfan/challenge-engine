@@ -20,9 +20,34 @@ void write_model(std::string &inFile, std::string &outFile)
 		std::cout << "ERROR: " << e << "\n";
 		std::cout << "\n";
 	}
-
-
 }
+
+void write_directory(const std::string &inDirectory, const std::string &outDirectory)
+{
+	std::vector<std::string> mFiles;
+
+	WIN32_FIND_DATAA fileData;
+	HANDLE hd = FindFirstFileA((inDirectory + "/*").c_str(), &fileData);
+
+	if(hd == INVALID_HANDLE_VALUE) {
+		return;
+	}
+
+	do {
+		if(strcmp(fileData.cFileName, ".") == 0 ||
+			strcmp(fileData.cFileName, "..") == 0) 
+		{
+			continue;
+		}
+
+		std::string inFilepath = inDirectory + "/" + fileData.cFileName;
+		int start = inFilepath.rfind('/');
+		int len = inFilepath.rfind('.') - start;
+		std::string outFilepath = outDirectory + inFilepath.substr(start, len) + ".model";
+		printf("Writing %s to %s\n", inFilepath.c_str(), outFilepath.c_str());
+		write_model(inFilepath, outFilepath);
+	} while(FindNextFileA(hd, &fileData));
+};
 
 int main(int argc, char* argv[])
 {
@@ -35,10 +60,13 @@ int main(int argc, char* argv[])
 	while(true) {
 		std::cout << "Please enter a command: \n";
 		std::cout << "1: Convert file\n";
-		std::cout << "2: Help\n";
-		std::cout << "3: Exit\n\n";
+		std::cout << "2: Convert Directory\n";
+		std::cout << "3: Help\n";
+		std::cout << "4: Exit\n\n";
+
 		int command = 4;
-		//std::cin >> command;
+		std::cin >> command;
+
 		std::cout << "\n";
 		if(command == 1) {
 			std::cout << "Enter input filepath: \n";
@@ -50,15 +78,23 @@ int main(int argc, char* argv[])
 			std::cout << "\n";
 
 			write_model(inFile, outFile);
-			break;
 		} else if(command == 2) {
 			std::cout << "Nothing here yet!\n\n";
 		} else if(command == 3) {
 			break;
 		} else if(command == 4) { // Debug mode
-			inFile = "C:/gamedev/engine-dev/Engine/ModelReader/Assets/dark_mage_maya.dae";
-			outFile = "C:/gamedev/engine-dev/Engine/ModelReader/Assets/dark_mage.model";
-			write_model(inFile, outFile);
+
+			write_directory(
+				"C:/gamedev/dungeon-raider/DungeonRaider/Common/Media/Models/molten_chasm/objects/_3ds",
+				"C:/gamedev/dungeon-raider/DungeonRaider/Common/Media/Models/molten_chasm/objects/challenge"
+			);
+			//inFile = "C:/gamedev/engine-dev/Engine/ModelReader/Assets/dark_mage_maya.dae";
+			//outFile = "C:/gamedev/engine-dev/Engine/ModelReader/Assets/dark_mage.model";
+
+			//inFile = "C:/gamedev/dungeon-raider/DungeonRaider/Common/Media/Models/molten_chasm/molten_chasm.DAE";
+			//outFile = "C:/gamedev/dungeon-raider/DungeonRaider/Common/Media/Models/molten_chasm/molten_chasm.model";
+
+			//write_model(inFile, outFile);
 			/*inFile = "C:/gamedev/engine-dev/Engine/ModelReader/Assets/sphere.dae";
 			outFile = "C:/gamedev/engine-dev/Engine/ModelReader/Assets/sphere.model";
 			write_model(inFile, outFile);

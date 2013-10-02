@@ -1,13 +1,14 @@
 #pragma once
 
 #include <Engine/Challenge.h>
+#include <Engine/UI/Controls/FormElement.h>
 #include <Engine/UI/Controls/LabelView.h>
 #include <Engine/UI/Controls/ButtonView.h>
 #include <Engine/UI/Controls/PanelView.h>
 
 namespace challenge
 {
-	class SelectListView : public View
+	class SelectListView : public FormElement
 	{
 	public:
 		SelectListView(Frame frame = Frame());
@@ -21,6 +22,9 @@ namespace challenge
 
 		virtual void Update(int deltaMillis);
 		virtual void Render(IGraphicsDevice *device, RenderState &state, const Frame &parentFrame);
+
+		void SetValue(const std::string &value);
+		std::string GetValue() { return mItems[mSelectedIndex].value; }
 
 	private:
 		std::vector<ListItem> mItems;

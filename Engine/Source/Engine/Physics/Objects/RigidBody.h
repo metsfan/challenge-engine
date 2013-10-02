@@ -2,7 +2,7 @@
 
 #include <Engine/Challenge.h>
 #include <Engine/Physics/PhysicsCore.h>
-#include <Engine/Physics/Shapes/PhysicsShape.h>
+#include <Engine/Physics/Shapes/GeometricShape.h>
 #include <glm/gtc/quaternion.hpp>
 
 namespace challenge
@@ -10,7 +10,7 @@ namespace challenge
 	class RigidBody : public PhysicsObject
 	{
 	public:
-		RigidBody(IPhysicsShape *shape);
+		RigidBody(IGeometricShape *shape);
 
 		bool CollidesWith(IPhysicsObject *other, CollisionData *collision = NULL);
 

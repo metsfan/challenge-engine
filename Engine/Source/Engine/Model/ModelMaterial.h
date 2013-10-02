@@ -26,7 +26,7 @@ namespace challenge
 	static const int kMaterialTextureMax = MaterialTextureUnknown;
 	static const int kNumMaterialTextureTypes = 13;
 
-	static std::string basePath = "C:/gamedev/engine-dev/Engine/ModelReader/Assets/";
+	//static std::string basePath = "C:/gamedev/dungeon-raider/DungeonRaider/Common/Media/Models/molten_chasm/";
 
 	class Image;
 
@@ -37,7 +37,7 @@ namespace challenge
 		ModelMaterial();
 		~ModelMaterial();
 
-		void Unserialize(std::istream &in);
+		void Unserialize(std::istream &in, const std::string &basePath);
 
 		Image* GetImage(MaterialTextureType type, int index) const 
 		{ 

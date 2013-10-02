@@ -122,10 +122,12 @@ namespace challenge
 
 			if(inputReader) {
 			switch (uMsg) {
+				case WM_SYSKEYUP:
 				case WM_KEYUP:
 					inputReader->ProcessKeyboardEvent(KeyboardEventKeyUp, wParam);
 					break;
 
+				case WM_SYSKEYDOWN:
 				case WM_KEYDOWN:
 					if(repeatCount <= 1) {
 						inputReader->ProcessKeyboardEvent(KeyboardEventKeyDown, wParam);

@@ -1,10 +1,10 @@
 #include <Engine/Challenge.h>
 #include "RigidBody.h"
 #include <Engine/Physics/Collision/CollisionData.h>
-#include <Engine/Physics/Shapes/PhysicsShape.h>
+#include <Engine/Physics/Shapes/GeometricShape.h>
 using namespace challenge;
 
-RigidBody::RigidBody(IPhysicsShape *shape) : PhysicsObject()
+RigidBody::RigidBody(IGeometricShape *shape) : PhysicsObject()
 {
 	mLinearDamping = 1;
 	mAngularDamping = 1;

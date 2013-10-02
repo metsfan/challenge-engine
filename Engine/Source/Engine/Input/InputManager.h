@@ -10,6 +10,10 @@ namespace challenge
 {
 	typedef std::vector<IKeyboardListener *> TKeyboardListenerList;
 	typedef std::vector<IMouseListener *> TMouseListenerList;
+	
+	static const int kShiftKey = 16;
+	static const int kCtrlKey = 17;
+	static const int kAltKey = 18;
 
 	class InputManager : public IWindowInputReader
 	{

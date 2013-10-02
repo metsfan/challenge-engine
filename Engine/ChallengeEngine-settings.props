@@ -7,7 +7,7 @@
   <PropertyGroup />
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir)\Source;$(ProjectDir)\Source\Engine\Lib\include;$(ProjectDir)\Source\Engine\Lib\include\mysql;$(ProjectDir)\Source\Engine\Lib\include\zlib;$(ProjectDir)\Source\Engine\Lib\include\freetype2;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include;C:\DownLoadedSdks\boost</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ChallengeDir)\Engine\Source;$(ChallengeDir)\Engine\Source\Engine\Lib\include;$(ChallengeDir)\Engine\Source\Engine\Lib\include\mysql;$(ChallengeDir)\Engine\Source\Engine\Lib\include\zlib;$(ChallengeDir)\Engine\Source\Engine\Lib\include\freetype2;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include;C:\DownLoadedSdks\boost</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WINDOWS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Lib>

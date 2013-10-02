@@ -1,12 +1,13 @@
 #pragma once
 
 #include <Engine/Challenge.h>
+#include <Engine/UI/Controls/FormElement.h>
 #include <Engine/UI/Controls/LabelView.h>
 #include <Engine/UI/Controls/ButtonView.h>
 
 namespace challenge
 {
-	class CheckboxView : public View
+	class CheckboxView : public FormElement
 	{
 	public:
 		CheckboxView(Frame frame = Frame());
@@ -20,6 +21,9 @@ namespace challenge
 		void SetCheckedImage(std::shared_ptr<Image> image);
 
 		bool IsSelected() { return mSelected; }
+
+		void SetValue(const std::string &value) { this->SetSelected(value == "1"); }
+		std::string GetValue() { return mSelected ? "1" : "0"; }
 	
 	private:
 		ButtonView *mUncheckedImage;

@@ -1,6 +1,8 @@
 #pragma once
 
 #include <Engine/Challenge.h>
+#include <Engine/Renderer/Shape/ModelShape.h>
+#include <Engine/Physics/Shapes/GeometricShape.h>
 
 namespace challenge
 {
@@ -44,7 +46,17 @@ namespace challenge
 		bool Initialize(const ModelVertex *verts, int nVerts);
 		bool Initialize(const std::string &filename);
 
+		const TMeshList& GetMeshes() { return mMeshes; }
+		int GetVertexCount() { return mNumVerts; }
+		TMaterialList& GetMaterials() { return mMaterials; }
+		const std::vector<glm::mat4>& GetBonesForKeyframe(int keyframe);
+
+		bool IsAnimated() { return mAnimations.size() > 0; }
+
+		void Render(IGraphicsDevice *device, RenderState &state, int animFrame, int materialId);
+
 	private:
+		ModelShape *mShape;
 		std::string mModelPath;
 		TMeshList mMeshes;
 		TAnimList mAnimations;
@@ -53,8 +65,12 @@ namespace challenge
 		std::vector<double> mAnimKeyframeTimes;
 		std::vector<std::vector<glm::mat4> > mBoneMatrices;
 		int mNumVerts;
+		int mActiveAnimFrame;
+		std::map<GeometricShapeType, IGeometricShape *> mBoundingVolumes;
 
 		bool Unserialize(std::ifstream &in);
 		void LoadAnimations();
+
+		IGeometricShape* CreateBoundingVolume(const GeometricShapeType type, const glm::mat4 &transform);
 	};
 };

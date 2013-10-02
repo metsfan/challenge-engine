@@ -42,13 +42,14 @@ namespace challenge
 
 		if(!mVerticalScrollbar) {
 			Frame verticalScrollbarFrame(
-				frame.origin.x + frame.size.width - kScrollbarSize, 
+				frame.size.width - kScrollbarSize, 
 				0,
 				kScrollbarSize,
 				frame.size.height - kScrollbarSize
 			);
 			mVerticalScrollbar = new PanelView(verticalScrollbarFrame);
 			mVerticalScrollbar->SetBackgroundColor(kScrollbarBackgroundColor);
+			mVerticalScrollbar->SetZPosition(100000);
 			this->AddInternalSubview(mVerticalScrollbar);
 
 			mVerticalScroller = new PanelView(verticalScrollbarFrame);

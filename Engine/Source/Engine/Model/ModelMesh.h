@@ -15,16 +15,18 @@ namespace challenge
 
 		int GetMaterial() { return mMaterialId; }
 
-		ModelVertex * GetBuffer() { return mMeshVertices; }
+		ModelVertex * GetBuffer() { return &mMeshVertices[0]; }
 		int GetTotalFaces() { return mNumVertices; }
 	
 		void Transform(const glm::mat4 &transform);
 
 		void Unserialize(std::istream &in);
 
+		bool GetIntersection(const Ray &ray, float &t);
+
 	private:
 		int mMaterialId;
-		ModelVertex *mMeshVertices;
+		std::vector<ModelVertex> mMeshVertices;
 		int mNumVertices;
 		glm::mat4 mNodeTransform;
 		bool mUpdateNextRender;

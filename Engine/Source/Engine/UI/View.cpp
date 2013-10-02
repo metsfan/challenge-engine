@@ -20,7 +20,8 @@ namespace challenge
 		mSprite(NULL),
 		mBackgroundImageChanged(false),
 		mClipSubviews(false),
-		mUIManager(NULL)
+		mUIManager(NULL),
+		mFocused(false)
 	{
 	}
 

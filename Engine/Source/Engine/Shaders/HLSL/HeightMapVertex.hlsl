@@ -16,7 +16,7 @@ struct VS_OUT
 
 Texture2D gHeightMapTexture;
 
-cbuffer heightmapData : register(b0)
+cbuffer heightmapData : register(b6)
 {
 	float4x4 gWVPMatrix;
 	float2 gSize;

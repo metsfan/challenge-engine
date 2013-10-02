@@ -14,7 +14,7 @@ struct VS_OUT
 	float3 lightDir : LIGHT_DIRECTION;
 };
 
-cbuffer matrices
+cbuffer matrices : register(b5)
 {
 	float4x4 gWVPMatrix;
 	float4x4 gWorldMatrix;
@@ -30,7 +30,7 @@ VS_OUT main( VS_IN vIn)
 	vOut.position = mul(gWVPMatrix, position); 
 	vOut.normal = mul((float3x3)gWorldMatrix, vIn.normal);
 	vOut.worldPosition = mul(gWorldMatrix, position);
-	vOut.texCoord = vIn.texCoord;
+	vOut.texCoord = float2(vIn.texCoord.x, 1.0 - vIn.texCoord.y);
 
 	float3 lightDir = normalize(float3(0, 0, 1));
 	vOut.lightDir = mul((float3x3)gWorldMatrix, lightDir);

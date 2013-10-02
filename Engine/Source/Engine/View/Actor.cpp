@@ -35,11 +35,6 @@ void Actor::RotateY(float angle)
 	mTransform = glm::translate(mTransform, glm::vec3(0, angle, 0));
 }
 
-void Actor::OnAdd(Scene *pScene)
-{
-	mScene = pScene;
-}
-
 void Actor::SetPosition(glm::vec3 position) 
 {
 	mPosition = position; 

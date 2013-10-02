@@ -16,7 +16,7 @@ struct VS_OUT
 	float3 lightDir : LIGHT_DIRECTION;
 };
 
-cbuffer matrices : register(b1)
+cbuffer matrices : register(b3)
 {
 	float4x4 gWVPMatrix;
 	float4x4 gWorldMatrix;
@@ -25,7 +25,7 @@ cbuffer matrices : register(b1)
 
 #define MAX_BONES 64
 
-cbuffer bones : register(b2)
+cbuffer bones : register(b4)
 {
 	float4x4 gBoneMatrices[MAX_BONES];
 };
@@ -65,8 +65,8 @@ VS_OUT main( VS_IN vsIn)
 	vOut.worldPosition = mul(gWorldMatrix, finalPosition);
 	vOut.texCoord = vsIn.texCoord;
 
-	float3 lightDir = normalize(float3(0, 0, 1));
-	vOut.lightDir = normalize(mul((float3x3)gWorldMatrix, lightDir));
+	//float3 lightDir = normalize(float3(0, 0, 1));
+	//vOut.lightDir = normalize(mul((float3x3)gWorldMatrix, lightDir));
 
 
 	return vOut;

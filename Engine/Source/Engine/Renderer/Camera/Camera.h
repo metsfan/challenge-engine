@@ -30,16 +30,19 @@ namespace challenge
         virtual void Update();
         
         const glm::mat4 GetProjectionMatrix() const { return mProjectionMatrix; }
-        const glm::mat4 GetViewMatrix() const { return mInverseViewMatrix; }
+        const glm::mat4 GetViewMatrix() const { return mViewMatrix; }
+		const glm::mat4& GetInverseViewMatrix() const { return mInverseViewMatrix; }
         
         const glm::vec3& GetPosition() const { return mPosition; }
         const glm::vec3& GetRotation() const { return mRotation; }
-        
+
+		float GetAspect() { return mAspect; }
+        const Size& GetScreenSize() const { return mScreenSize; }
+
     protected:
         const real GetScale() const { return mScale; }
         const real GetShear() const { return mShear; }
-        const Size& GetScreenSize() const { return mScreenSize; }
-        const glm::mat4& GetInverseViewMatrix() const { return mInverseViewMatrix; }
+        
         
         void SetProjectionMatrix(glm::mat4 m) { mProjectionMatrix = m; }
 
@@ -54,6 +57,7 @@ namespace challenge
 		glm::vec4 mViewport;
 		real mScale;
 		real mShear;
+		real mAspect;
 		Frame mBounds;
 		Size mScreenSize;
         bool mViewChanged;
