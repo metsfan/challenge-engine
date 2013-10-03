@@ -21,7 +21,7 @@ namespace challenge
 	}
 
 	/* IVertexBuffer methods */
-	void VertexBuffer<RendererTypeDX11>::SetData(void *buffer, int size)
+	void VertexBuffer<RendererTypeDX11>::SetData(const void *buffer, int size)
 	{
 		D3D11_USAGE usage;
 		switch(mDesc.Usage) 
@@ -84,7 +84,7 @@ namespace challenge
 		context->PSSetSamplers(0, 1, &samplerState);
 	}
 
-	void VertexBuffer<RendererTypeDX11>::UpdateData(void *buffer, int size, int offset)
+	void VertexBuffer<RendererTypeDX11>::UpdateData(const void *buffer, int size, int offset)
 	{
 		ID3D11DeviceContext *context = mDevice->GetD3D11DeviceContext();
 

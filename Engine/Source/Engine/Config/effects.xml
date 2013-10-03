@@ -60,4 +60,12 @@
       </Pass> 
     </Technique>
   </Effect>
+  <Effect name="DebugLines">
+    <Technique name="DebugLines">
+      <Pass>
+        <ShaderProgram name="debug_lines" />
+        <Global name="gWVPMatrix" semantic="WORLDVIEWPROJ_MATRIX" shader="vertex" />
+      </Pass>
+    </Technique>
+  </Effect>
 </Effects>

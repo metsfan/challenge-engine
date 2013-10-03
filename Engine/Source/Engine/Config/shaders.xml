@@ -1,6 +1,8 @@
 <?xml version="1.0" standalone="yes" ?>
 <ShaderConfig>
   <Shaders>
+    <Shader name="debug_lines_vertex" filename="DebugLinesVertex.cso" type="vertex" />
+    <Shader name="debug_lines_pixel" filename="DebugLinesPixel.cso" type="pixel" />
     <Shader name="model_basic_vertex" filename="ModelBasicVertex.cso" type="vertex" />
     <Shader name="model_basic_pixel" filename="ModelBasicPixel.cso" type="pixel" />
     <Shader name="model_bone_animation_vertex" filename="ModelBoneAnimationVertex.cso" type="vertex" />
@@ -72,6 +74,16 @@
       </Shaders>
       <InputLayout>
         <InputElement name="POSITION" size="2" offset="0" />
+      </InputLayout>
+    </ShaderProgram>
+    <ShaderProgram name="debug_lines">
+      <Shaders>
+        <Shader name="debug_lines_vertex" />
+        <Shader name="debug_lines_pixel" />
+      </Shaders>
+      <InputLayout>
+        <InputElement name="POSITION" size="3" offset="0" />
+        <InputElement name="COLOR" size="4" offset="12" />
       </InputLayout>
     </ShaderProgram>
   </ShaderPrograms>

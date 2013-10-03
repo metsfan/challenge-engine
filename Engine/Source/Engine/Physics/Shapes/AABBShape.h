@@ -84,18 +84,20 @@ namespace challenge
 		real GetY() const { return mCenter.y; }
 		real GetZ() const { return mCenter.z; }
 
+		void CreateDebugShape(MeshShape *shape);
+
 	private:
 		glm::vec3 mDimensions;
 		glm::vec3 mCenter;
 
 		void CalculateBoundingBox()
 		{
-			mBoundingBox.mMin.x = mDimensions.x - mCenter.x;
-			mBoundingBox.mMin.y = mDimensions.y - mCenter.y;
-			mBoundingBox.mMin.z = mDimensions.z - mCenter.z;
-			mBoundingBox.mMax.x = mDimensions.x + mCenter.x;
-			mBoundingBox.mMax.y = mDimensions.y + mCenter.y;
-			mBoundingBox.mMax.z = mDimensions.z + mCenter.z;
+			mBoundingBox.mMin.x = mCenter.x - mDimensions.x;
+			mBoundingBox.mMin.y = mCenter.y - mDimensions.y;
+			mBoundingBox.mMin.z = mCenter.z - mDimensions.z;
+			mBoundingBox.mMax.x = mCenter.x + mDimensions.x;
+			mBoundingBox.mMax.y = mCenter.y + mDimensions.y;
+			mBoundingBox.mMax.z = mCenter.z + mDimensions.z;
 		}
 	};
 };

@@ -10,7 +10,7 @@ namespace challenge
 		real tmin = 0;
 		real tmax = INFINITY;
 
-		for(int i = 0; i < 2; i++) {
+		for(int i = 0; i < 3; i++) {
 			if(abs(mDirection[i]) < EPSILON) {
 				if(mOrigin[i] < bounds.mMin[i] || mOrigin[i] > bounds.mMax[i]) {
 					return false;

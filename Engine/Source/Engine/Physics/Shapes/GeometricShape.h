@@ -4,6 +4,7 @@
 #include <Engine/Math/BoundingBox.h>
 #include <Engine/Physics/Collision/CollisionData.h>
 #include <Engine/Math/Ray.h>
+#include <Engine/Renderer/Shape/MeshShape.h>
 
 namespace challenge
 {
@@ -15,6 +16,12 @@ namespace challenge
 		kShapeTypeTriangleMesh,
 		kShapeTypeConcaveTriangleMesh
 	} GeometricShapeType;
+
+	struct DebugLinesVertex
+	{
+		float position[3];
+		float color[4];
+	};
 
 	typedef std::vector<Point> TPointsList;
 
@@ -35,6 +42,8 @@ namespace challenge
 		virtual bool RayIntersects(const Ray &ray, float &t) const = 0;
 		virtual bool Contains(const BoundingBox &bounds) const = 0;
 		virtual bool ContainedWithin(const BoundingBox &bounds) const = 0;
+
+		virtual void DrawDebug(IGraphicsDevice *device, RenderState &state) = 0;
 	};
 
 	typedef std::list<IGeometricShape *> TGeometricShapeLinkedList;
@@ -42,7 +51,7 @@ namespace challenge
 	class GeometricShape : public IGeometricShape
 	{
 	public:
-		GeometricShape() {}
+		GeometricShape();
 		GeometricShape(GeometricShape *other);
 		
 		virtual bool Intersects(const BoundingBox &bounds) const { return mBoundingBox.Intersects(bounds); }
@@ -60,10 +69,14 @@ namespace challenge
 
 		bool RayIntersects(const Ray &ray, float &t) const { return false; }
 
+		void DrawDebug(IGraphicsDevice *device, RenderState &state);
+		virtual void CreateDebugShape(MeshShape *shape) {}
+
 	protected:
 		glm::vec3 mPosition;
 		BoundingBox mBoundingBox;
 		glm::mat4 mTransform;
+		MeshShape *mDebugShape;
 
 	private:
 		void CalculateBoundingBox() {}

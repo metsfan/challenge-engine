@@ -15,8 +15,8 @@ namespace challenge
 		VertexBuffer(GraphicsDevice<RendererTypeDX11> *device, void *buffer, int size, D3D11_USAGE usage, int stride);
 
 		/* IVertexBuffer methods */
-		void SetData(void *buffer, int size);
-		void UpdateData(void *buffer, int size, int offset);
+		void SetData(const void *buffer, int size);
+		void UpdateData(const void *buffer, int size, int offset);
 		void Activate(int offset);
 		void Activate();
 

@@ -114,6 +114,7 @@
     <ClCompile Include="Source\Engine\Renderer\Shape.cpp" />
     <ClCompile Include="Source\Engine\Renderer\Shape\BoxShape.cpp" />
     <ClCompile Include="Source\Engine\Renderer\Shape\HeightMapShape.cpp" />
+    <ClCompile Include="Source\Engine\Renderer\Shape\MeshShape.cpp" />
     <ClCompile Include="Source\Engine\Renderer\Shape\ModelShape.cpp" />
     <ClCompile Include="Source\Engine\Renderer\Shape\SkyboxShape.cpp" />
     <ClCompile Include="Source\Engine\Renderer\Shape\SpriteShape.cpp" />
@@ -261,6 +262,7 @@
     <ClInclude Include="Source\Engine\Renderer\Shape.h" />
     <ClInclude Include="Source\Engine\Renderer\Shape\BoxShape.h" />
     <ClInclude Include="Source\Engine\Renderer\Shape\HeightMapShape.h" />
+    <ClInclude Include="Source\Engine\Renderer\Shape\MeshShape.h" />
     <ClInclude Include="Source\Engine\Renderer\Shape\ModelShape.h" />
     <ClInclude Include="Source\Engine\Renderer\Shape\SkyboxShape.h" />
     <ClInclude Include="Source\Engine\Renderer\Shape\SpriteShape.h" />
@@ -326,6 +328,14 @@
     <None Include="Source\Engine\Shaders\GLSL\model_basic.vert" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="Source\Engine\Shaders\HLSL\DebugLinesPixel.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\Engine\Shaders\HLSL\DebugLinesVertex.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+    </FxCompile>
     <FxCompile Include="Source\Engine\Shaders\HLSL\HeightMapPixel.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>

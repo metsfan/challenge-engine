@@ -24,7 +24,9 @@ namespace challenge
 	}
 
 	AABBShape::AABBShape(const glm::vec3 &center, real halfX, real halfY, real halfZ) :
-		mCenter(center), mDimensions(halfX, halfY, halfZ)
+		GeometricShape(),
+		mCenter(center), 
+		mDimensions(halfX, halfY, halfZ)
 	{
 	}
 
@@ -35,7 +37,8 @@ namespace challenge
 	{
 	}
 
-	AABBShape::AABBShape(const glm::vec3 &min, const glm::vec3 &max)
+	AABBShape::AABBShape(const glm::vec3 &min, const glm::vec3 &max) :
+		GeometricShape()
 	{
 		mDimensions = (max - min) * 0.5f;
 
@@ -89,10 +92,108 @@ namespace challenge
 	bool AABBShape::RayIntersects(const Ray &ray, float &t) const
 	{
 		//BoundingBox bbox = GetBoundingBox();
-		glm::vec3 transformedCenter = glm::vec3(mTransform * glm::vec4(mCenter, 1.0));
-		BoundingBox bbox(transformedCenter.x - mDimensions.x, transformedCenter.y - mDimensions.y, transformedCenter.z - mDimensions.z, 
-			transformedCenter.x + mDimensions.x, transformedCenter.y + mDimensions.y, transformedCenter.z + mDimensions.z);
+		//glm::vec3 transformedCenter = glm::vec3(mTransform * glm::vec4(mCenter, 1.0));
+		glm::vec3 transformedCenter = mPosition;
+		BoundingBox bbox(transformedCenter.x - mDimensions.x, transformedCenter.y, transformedCenter.z - mDimensions.z, 
+			transformedCenter.x + mDimensions.x, transformedCenter.y + (mDimensions.y * 2), transformedCenter.z + mDimensions.z);
 
 		return ray.GetIntersection(bbox, t);
+	}
+
+	void AABBShape::CreateDebugShape(MeshShape *shape)
+	{
+		this->CalculateBoundingBox();
+		/*BoundingBox bbox(mBoundingBox.mMin.x - mPosition.x, mBoundingBox.mMin.y - mPosition.y, mBoundingBox.mMin.z - mPosition.z,
+			mBoundingBox.mMin.x + mPosition.x, mBoundingBox.mMin.y + mPosition.y, mBoundingBox.mMin.z + mPosition.z);*/
+		//glm::vec3 transformedCenter = glm::vec3(mTransform * glm::vec4(mCenter, 1.0));
+		glm::vec3 transformedCenter = mPosition;
+		BoundingBox bbox(transformedCenter.x - mDimensions.x, transformedCenter.y, transformedCenter.z - mDimensions.z, 
+			transformedCenter.x + mDimensions.x, transformedCenter.y + (mDimensions.y * 2), transformedCenter.z + mDimensions.z);
+		glm::vec4 color(1, 0, 0, 1);
+		DebugLinesVertex verts[] = {
+			{ 
+				bbox.mMin.x, bbox.mMin.y, bbox.mMin.z,
+					color.x, color.y, color.z, color.w
+			},
+			{ 
+				bbox.mMin.x, bbox.mMin.y, bbox.mMax.z,
+					color.x, color.y, color.z, color.w
+			},
+			{ 
+				bbox.mMax.x, bbox.mMin.y, bbox.mMax.z,
+					color.x, color.y, color.z, color.w
+			},
+			{ 
+				bbox.mMax.x, bbox.mMin.y, bbox.mMin.z,
+					color.x, color.y, color.z, color.w
+			},
+
+			{ 
+				bbox.mMin.x, bbox.mMin.y, bbox.mMin.z,
+					color.x, color.y, color.z, color.w
+			},
+			{ 
+				bbox.mMin.x, bbox.mMax.y, bbox.mMin.z,
+					color.x, color.y, color.z, color.w
+			},
+			{ 
+				bbox.mMin.x, bbox.mMax.y, bbox.mMin.z,
+					color.x, color.y, color.z, color.w
+			},
+			{ 
+				bbox.mMin.x, bbox.mMin.y, bbox.mMin.z,
+					color.x, color.y, color.z, color.w
+			},
+			{ 
+				bbox.mMin.x, bbox.mMin.y, bbox.mMin.z,
+					color.x, color.y, color.z, color.w
+			},
+
+			{ 
+				bbox.mMin.x, bbox.mMin.y, bbox.mMin.z,
+					color.x, color.y, color.z, color.w
+			},
+			{ 
+				bbox.mMin.x, bbox.mMin.y, bbox.mMax.z,
+					color.x, color.y, color.z, color.w
+			},
+			{ 
+				bbox.mMin.x, bbox.mMax.y, bbox.mMax.z,
+					color.x, color.y, color.z, color.w
+			},
+			{ 
+				bbox.mMin.x, bbox.mMax.y, bbox.mMin.z,
+					color.x, color.y, color.z, color.w
+			},
+			{ 
+				bbox.mMin.x, bbox.mMin.y, bbox.mMin.z,
+					color.x, color.y, color.z, color.w
+			},
+
+			{ 
+				bbox.mMax.x, bbox.mMin.y, bbox.mMin.z,
+					color.x, color.y, color.z, color.w
+			},
+			{ 
+				bbox.mMax.x, bbox.mMin.y, bbox.mMax.z,
+					color.x, color.y, color.z, color.w
+			},
+			{ 
+				bbox.mMax.x, bbox.mMax.y, bbox.mMax.z,
+					color.x, color.y, color.z, color.w
+			},
+			{ 
+				bbox.mMax.x, bbox.mMax.y, bbox.mMin.z,
+					color.x, color.y, color.z, color.w
+			},
+			{ 
+				bbox.mMax.x, bbox.mMin.y, bbox.mMin.z,
+					color.x, color.y, color.z, color.w
+			},
+
+			
+		};
+
+		shape->SetData(verts, sizeof(verts), sizeof(verts) / sizeof(DebugLinesVertex), PrimitiveTypeLineStrip);
 	}
 }

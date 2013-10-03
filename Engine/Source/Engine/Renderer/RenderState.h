@@ -32,8 +32,11 @@ namespace challenge
 			mTopTransform = mTransformStack.top();
 			mWVP = mProjection * mTopTransform;
 		}
-		void PopTransform() 
+		
+		glm::mat4 PopTransform() 
 		{
+			glm::mat4 oldTop = mTopTransform;
+
 			if(mTransformStack.size() > 0) {
 				mTransformStack.pop();
 
@@ -45,6 +48,8 @@ namespace challenge
 					mWVP = mProjection;
 				}
 			}
+
+			return oldTop;
 		}
 
 		glm::mat4 GetTransform() 

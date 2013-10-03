@@ -384,6 +384,9 @@
     <ClCompile Include="Source\Engine\Physics\Shapes\GeometricShape.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Engine\Renderer\Shape\MeshShape.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine\Audio\AudioListener.h">
@@ -887,6 +890,9 @@
     <ClInclude Include="Source\Engine\Physics\Shapes\GeometricShape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Engine\Renderer\Shape\MeshShape.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ChallengeEngine-settings.props" />
@@ -921,6 +927,8 @@
     <FxCompile Include="Source\Engine\Shaders\HLSL\HeightMapPixel.hlsl" />
     <FxCompile Include="Source\Engine\Shaders\HLSL\SpriteTexturePixel.hlsl" />
     <FxCompile Include="Source\Engine\Shaders\HLSL\SpriteVertex.hlsl" />
+    <FxCompile Include="Source\Engine\Shaders\HLSL\DebugLinesVertex.hlsl" />
+    <FxCompile Include="Source\Engine\Shaders\HLSL\DebugLinesPixel.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="Source\Engine\Config\shaders.xml" />
