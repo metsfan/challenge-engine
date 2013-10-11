@@ -12,6 +12,9 @@ namespace challenge
 	{
 		mMouseDown = false;
 		mKeyDown = false;
+		mShiftDown = false;
+		mCtrlDown = false;
+		mAltDown = false;
 	}
 
 	void InputManager::AddKeyboardListener(IKeyboardListener *pListener)
@@ -30,25 +33,33 @@ namespace challenge
 
 	void InputManager::ProcessKeyboardEvent(KeyboardEventType type, unsigned int keyCode)
 	{
-		KeyboardEvent evt(type, keyCode);
+		if(keyCode == kShiftKey) {
+			mShiftDown = type == KeyboardEventKeyUp ? false : true;
+		} else if(keyCode == kCtrlKey) {
+			mCtrlDown = type == KeyboardEventKeyUp ? false : true;
+		} else if(keyCode == kAltKey) {
+			mAltDown = type == KeyboardEventKeyUp ? false : true;
+		} else {
+			KeyboardEvent evt(type, keyCode);
 
-		bool found = false;
-		auto key = std::find(mActiveKeys.begin(), mActiveKeys.end(), keyCode);
+			bool found = false;
+			auto key = std::find(mActiveKeys.begin(), mActiveKeys.end(), keyCode);
 
-		switch (type)
-		{
-		case KeyboardEventKeyDown:
-			if(key == mActiveKeys.end()) {
-				mKeyboardEventQueue.push_back(evt);
+			switch (type)
+			{
+			case KeyboardEventKeyDown:
+				if(key == mActiveKeys.end()) {
+					mKeyboardEventQueue.push_back(evt);
+				}
+				break;
+
+			case KeyboardEventKeyUp:
+				if(key != mActiveKeys.end()) {
+					mKeyboardEventQueue.push_back(evt);
+				}
+
+				break;
 			}
-			break;
-
-		case KeyboardEventKeyUp:
-			if(key != mActiveKeys.end()) {
-				mKeyboardEventQueue.push_back(evt);
-			}
-
-			break;
 		}
 	}
 
@@ -136,6 +147,9 @@ namespace challenge
 
 				for(KeyboardEvent &evt : keyboardEvents) {
 					auto key = std::find(mActiveKeys.begin(), mActiveKeys.end(), evt.keyCode);
+					evt.shiftDown = mShiftDown;
+					evt.ctrlDown = mCtrlDown;
+					evt.altDown = mAltDown;
 					switch(evt.type) {
 					case KeyboardEventKeyDown:
 						if(key == mActiveKeys.end()) {
@@ -175,6 +189,9 @@ namespace challenge
 
 			std::vector<MouseEvent>::iterator mouseIt =  mouseEvents.begin();
 			while(mouseIt != mouseEvents.end()) {
+				mouseIt->shiftDown = mShiftDown;
+				mouseIt->ctrlDown = mCtrlDown;
+				mouseIt->altDown = mAltDown;
 				switch((*mouseIt).type) {
 				case MouseEventMouseDown:
 					MouseDown((*mouseIt));

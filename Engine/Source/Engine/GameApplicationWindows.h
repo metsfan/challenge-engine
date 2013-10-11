@@ -5,8 +5,6 @@
 
 namespace challenge 
 {
-	
-
 	class GameApplicationWindows : public GameApplication
 	{
 	public:
@@ -17,7 +15,10 @@ namespace challenge
 
 		virtual void RunMainLoop(AppCallback updateCallback, AppCallback renderCallback);
 
+		HWND GetWinHandle() { return mWinHandle; }
+
 	private:
 		HINSTANCE mInstance;
+		HWND mWinHandle;
 	};
 };

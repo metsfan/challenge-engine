@@ -32,6 +32,17 @@ namespace challenge
 
 	struct OctreeObject
 	{
+		OctreeObject() :
+			shape(NULL),
+			object(NULL)
+		{
+		}
+
+		OctreeObject(IGeometricShape *_shape, void *_object) :
+			shape(_shape), object(_object)
+		{
+		}
+
 		IGeometricShape *shape;
 		void *object;
 	};
@@ -47,6 +58,7 @@ namespace challenge
 		bool Contains(const glm::vec3 &point);
 		bool IntersectsShape(IGeometricShape *shape);
 		void AddShape(IGeometricShape *shape, void *object);
+		OctreeObject RemoveShape(IGeometricShape *shape);
 
 	private:
 		BoundingBox mBounds;
@@ -76,12 +88,15 @@ namespace challenge
 		const OctreeObject* RayIntersection(Ray ray, int queryType = RayCastClosest);
 		void AddShape(IGeometricShape *shape, void *object);
 
+		void UpdateObject(IGeometricShape *object);
+
 	private:
 		OctreeNode *mHead;
 		int mMaxDepth;
 		int mFlags;
 		BoundingBox mMaxBounds;
-		
+		std::map<IGeometricShape *, OctreeNode *> mObjectLookup;
+
 		OctreeObject* FindRayIntersection(OctreeNode *node, const Ray &ray, const Ray &original, int offset,
 			real t0x, real t0y, real t0z, real t1x, real t1y, real t1z, real &minT);
 		OctreeNode* FindContainingNode(OctreeNode *node, IGeometricShape *shape);

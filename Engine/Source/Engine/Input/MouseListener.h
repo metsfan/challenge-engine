@@ -35,7 +35,8 @@ namespace challenge
 	
 	typedef enum {
 		MouseButtonLeft,
-		MouseButtonRight
+		MouseButtonRight,
+		MouseButtonMiddle
 	} MouseButton;
 
 	class IMouseListener

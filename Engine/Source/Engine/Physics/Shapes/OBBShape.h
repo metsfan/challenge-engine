@@ -1,29 +1,26 @@
 #pragma once
 
 #include <Engine/Challenge.h>
-#include "GeometricShape.h"
-#include <Engine/Math/Ray.h>
-
-#define EPSILON 0.001
+#include <Engine/Physics/Shapes/GeometricShape.h>
 
 namespace challenge
 {
-	class AABBShape : public GeometricShape
+	class OBBShape : public GeometricShape
 	{
 	public:
-		AABBShape() : GeometricShape() {}
-		AABBShape(AABBShape *other);
-		AABBShape(const glm::vec3 &center, const glm::vec3 &dimensions);
-		AABBShape(const BoundingBox &box);
-		IGeometricShape* Clone() { return new AABBShape(*this); }
+		OBBShape() : GeometricShape() {}
+		OBBShape(const glm::vec3 &center, const glm::vec3 &dimensions, const glm::mat3 &axes);
+		OBBShape(const BoundingBox &box, const glm::mat3 &axes);
+		OBBShape(OBBShape *other);
+		virtual ~OBBShape() {}
+		IGeometricShape* Clone() { return new OBBShape(*this); }
 
 		virtual bool Intersects(IGeometricShape *other, CollisionData *collision = NULL) const;
 		bool RayIntersects(const Ray &ray, float &t) const;
-		virtual glm::mat3 CalculateInertiaTensor(float mass);
 
 		static IGeometricShape* CreateFromPointsList(const std::vector<glm::vec3> &points, const glm::mat4 &transform);
 
-		GeometricShapeType GetType() const { return kShapeTypeAABB; }
+		GeometricShapeType GetType() const { return kShapeTypeOBB; }
 		glm::vec3 GetPosition() const { return mCenter + mPosition; }
 
 		void SetDimensions(const glm::vec3 &dims)
@@ -84,11 +81,19 @@ namespace challenge
 		real GetY() const { return mCenter.y; }
 		real GetZ() const { return mCenter.z; }
 
+		const glm::mat3& GetAxes() { return mAxes; }
+		void SetAxes(const glm::mat3 &axes) { mAxes = axes; }
+
+		virtual void SetTransform(const glm::mat4 &transform);
+
 		void DrawDebug(IGraphicsDevice *device, RenderState &state);
 
 	private:
-		glm::vec3 mDimensions;
 		glm::vec3 mCenter;
+		glm::vec3 mBaseCenter;
+		glm::vec3 mDimensions;
+		glm::vec3 mBaseDimensions;
+		glm::mat3 mAxes;
 
 		void CalculateBoundingBox()
 		{

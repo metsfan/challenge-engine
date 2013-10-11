@@ -70,20 +70,35 @@ namespace challenge
 			effect->SetActiveTechnique("Static");
 		}
 
+		/*if(mTextures.size() == 0) {
+			ShaderDataVector4 colorData(&mColor, 1);
+			state.SetShaderData("COLOR", &colorData);
+		}*/
+
 		for(int i = 0; i < meshes.size(); i++) {
 			ModelMesh *mesh = meshes[i];
 
-			if(mTextures[mesh->GetMaterial()]->IsLoaded()) {
-				ShaderDataTexture diffuseTex(mTextures[mesh->GetMaterial()]);
-				state.SetShaderData("DIFFUSE_TEXTURE", &diffuseTex);
+			ShaderDataTexture diffuseTex;
+			ShaderDataVector4 colorData;
+			glm::vec4 clearColor(0);
 
-				Technique *technique = effect->GetActiveTechnique();
-				technique->Begin();
-				while(technique->HasNextPass()) {
-					technique->ProcessNextPass(device, state);
-					mMeshVertexBuffers[i]->Activate();
-					device->Draw(PrimitiveTypeTriangleList, mesh->GetTotalFaces(), 0);
-				}
+			if(mTextures[mesh->GetMaterial()]->IsLoaded()) {
+				diffuseTex = ShaderDataTexture(mTextures[mesh->GetMaterial()]);
+				state.SetShaderData("DIFFUSE_TEXTURE", &diffuseTex);
+				colorData = ShaderDataVector4(&clearColor, 1);
+				state.SetShaderData("COLOR", &colorData);
+			} else {
+				state.SetShaderData("DIFFUSE_TEXTURE", NULL);
+				//ShaderDataVector4 colorData(&mColor, 1);
+				//state.SetShaderData("COLOR", NULL);
+			}
+
+			Technique *technique = effect->GetActiveTechnique();
+			technique->Begin();
+			while(technique->HasNextPass()) {
+				technique->ProcessNextPass(device, state);
+				mMeshVertexBuffers[i]->Activate();
+				device->Draw(PrimitiveTypeTriangleList, mesh->GetTotalFaces(), 0);
 			}
 		}
 	}

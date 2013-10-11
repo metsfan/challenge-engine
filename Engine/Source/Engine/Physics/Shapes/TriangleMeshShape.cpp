@@ -215,7 +215,7 @@ namespace challenge
 		real halfY = center.y - minY.y;
 		real halfZ = center.z - minZ.z;
 
-		mBoundingBox = AABBShape(center, halfX, halfY, halfZ);
+		mBoundingBox = AABBShape(center, glm::vec3(halfX, halfY, halfZ));
 	}
 
 	glm::mat3 TriangleMeshShape::CalculateInertiaTensor(float mass)

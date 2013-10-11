@@ -19,10 +19,13 @@ namespace challenge
 		void SetCurrentAnimFrame(int frame) { mCurrentAnimFrame = frame; }
 		void SetMaterialId(int materialId) { mMaterialId = materialId; }
 
+		void SetColor(const glm::vec4 &color) { mColor = color; }
+
 	private:
 		ModelResource *mModel;
 		int mCurrentAnimFrame;
 		int mMaterialId;
+		glm::vec4 mColor;
 		std::vector<ITexture *> mTextures;
 		std::vector<Material *> mMeshMaterials;
 		std::vector<IVertexBuffer *> mMeshVertexBuffers;

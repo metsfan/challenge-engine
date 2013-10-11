@@ -96,6 +96,12 @@ namespace challenge
 	class ShaderDataTexture : public ShaderData
 	{
 	public:
+		ShaderDataTexture() :
+			ShaderData(),
+			mTexture(NULL)
+		{
+		}
+
 		ShaderDataTexture(ITexture *texture) :
 			ShaderData(),
 			mTexture(texture)

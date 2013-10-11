@@ -111,7 +111,7 @@ namespace challenge
 		AudioManager *mAudioManager;
 
 		ResourceCache<ModelResource> mModelCache;
-		PrimitiveGenerator *mPrimitiveGenerator;
+		//PrimitiveGenerator *mPrimitiveGenerator;
 
 		Size mScreenSize;
 

@@ -6,10 +6,12 @@
 #include <Engine/Math/Ray.h>
 #include <Engine/Renderer/Shape/MeshShape.h>
 
+
 namespace challenge
 {
 	typedef enum {
 		kShapeTypeAABB,
+		kShapeTypeOBB,
 		kShapeTypePlane,
 		kShapeTypeSphere,
 		kShapeTypeTriangle,
@@ -24,6 +26,8 @@ namespace challenge
 	};
 
 	typedef std::vector<Point> TPointsList;
+
+	class Model;
 
 	class IGeometricShape
 	{
@@ -53,6 +57,7 @@ namespace challenge
 	public:
 		GeometricShape();
 		GeometricShape(GeometricShape *other);
+		virtual ~GeometricShape();
 		
 		virtual bool Intersects(const BoundingBox &bounds) const { return mBoundingBox.Intersects(bounds); }
 		virtual bool Contains(const BoundingBox &bounds) const { return mBoundingBox.Contains(bounds); }
@@ -60,7 +65,12 @@ namespace challenge
 		//virtual TPointsList Intersection(IGeometricShape *other) = 0;
 
 		virtual glm::vec3 GetPosition() const { return mPosition; }
-		virtual void SetPosition(glm::vec3 position) { mPosition = position; }
+		virtual void SetPosition(glm::vec3 position) 
+		{ 
+			mPosition = position; 
+			this->CalculateBoundingBox();
+		}
+
 		virtual glm::mat3 CalculateInertiaTensor(float mass) { return glm::mat3(); }
 		virtual BoundingBox GetBoundingBox() const { return mBoundingBox; }
 
@@ -69,23 +79,23 @@ namespace challenge
 
 		bool RayIntersects(const Ray &ray, float &t) const { return false; }
 
-		void DrawDebug(IGraphicsDevice *device, RenderState &state);
-		virtual void CreateDebugShape(MeshShape *shape) {}
+		virtual void DrawDebug(IGraphicsDevice *device, RenderState &state) {}
 
 	protected:
 		glm::vec3 mPosition;
 		BoundingBox mBoundingBox;
 		glm::mat4 mTransform;
-		MeshShape *mDebugShape;
+		Model *mDebugShape;
 
 	private:
-		void CalculateBoundingBox() {}
+		virtual void CalculateBoundingBox() {}
 
 	};
 };
 
 #include <Engine/Physics/Shapes/AABBShape.h>
 #include <Engine/Physics/Shapes/ConcaveTriangleMeshShape.h>
+#include <Engine/Physics/Shapes/OBBShape.h>
 #include <Engine/Physics/Shapes/PlaneShape.h>
 #include <Engine/Physics/Shapes/SphereShape.h>
 #include <Engine/Physics/Shapes/TriangleMeshShape.h>
@@ -102,6 +112,9 @@ namespace challenge
 			{
 			case kShapeTypeAABB:
 				return AABBShape::CreateFromPointsList(points, transform);
+
+			case kShapeTypeOBB:
+				return OBBShape::CreateFromPointsList(points, transform);
 
 			case kShapeTypeTriangleMesh:
 				//return TriangleMeshShape::CreateFromPointsList(points);

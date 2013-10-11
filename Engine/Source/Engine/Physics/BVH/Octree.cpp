@@ -57,8 +57,22 @@ namespace challenge
 
 	void OctreeNode::AddShape(IGeometricShape *shape, void *object)
 	{
-		OctreeObject obj = { shape, object };
+		OctreeObject obj(shape, object);
 		mShapes.push_back(obj);	
+	}
+
+	OctreeObject OctreeNode::RemoveShape(IGeometricShape *shape)
+	{
+		OctreeObject obj;
+		for(auto it = mShapes.begin(); it != mShapes.end(); ++it) {
+			if((*it).shape == shape) {
+				obj = (*it);
+				mShapes.erase(it);
+				break;
+			}
+		}
+
+		return obj;
 	}
 
 	/*
@@ -142,6 +156,30 @@ namespace challenge
 		OctreeNode *node = this->FindContainingNode(mHead, shape);
 		if(node) {
 			node->AddShape(shape, object);
+			mObjectLookup[shape] = node;
+		}
+	}
+
+	void Octree::UpdateObject(IGeometricShape *object)
+	{
+		if(!object) {
+			return;
+		}
+
+		auto it = mObjectLookup.find(object);
+		if(it != mObjectLookup.end()) {
+			OctreeNode *node = it->second;
+			if(!object->ContainedWithin(node->mBounds)) {
+				OctreeObject obj = node->RemoveShape(object);
+
+				if(obj.shape == object) {
+					OctreeNode *newNode = this->FindContainingNode(mHead, object);
+					if(newNode) {
+						newNode->AddShape(obj.shape, obj.object);
+						mObjectLookup[object] = newNode;
+					}
+				}
+			}
 		}
 	}
 

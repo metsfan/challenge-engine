@@ -24,6 +24,8 @@ namespace challenge
 
 		void AttachToDevice(GraphicsDevice<RendererTypeDX11> *device);
 
+		HWND GetWinHandle() { return mWinHandle; }
+
 	private:
 		HWND mWinHandle;
 		HDC mDC;

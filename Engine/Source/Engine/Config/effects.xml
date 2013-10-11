@@ -7,6 +7,7 @@
         <Global name="gWVPMatrix" semantic="WORLDVIEWPROJ_MATRIX" shader="vertex" />
         <Global name="gWorldMatrix" semantic="WORLD_MATRIX" shader="vertex" />
         <Global name="gTexture" semantic="DIFFUSE_TEXTURE" shader="pixel" />
+        <Global name="gColor" semantic="COLOR" shader="pixel" />
       </Pass>
     </Technique>
     <Technique name="BoneAnimation">

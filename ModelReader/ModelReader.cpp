@@ -4,12 +4,13 @@
 #include "Globals.h"
 #include "Model.h"
 
-void write_model(std::string &inFile, std::string &outFile)
+void write_model(std::string &inFile, std::string &outFile, const glm::mat4 &transform = glm::mat4())
 {
 	std::cout << "Reading model file.\n";
 	try {
-		glm::mat4 transform = glm::rotate(glm::mat4(), 90.0f, glm::vec3(1.0f, 0.0, 0.0f));
-		model::Model model(inFile, glm::mat4());
+		//glm::mat4 transform = glm::rotate(glm::mat4(), 90.0f, glm::vec3(1.0f, 0.0, 0.0f));
+		//transform = glm::scale(transform, glm::vec3(5));
+		model::Model model(inFile, transform);
 		
 		std::cout << "Writing to output file.\n";
 		std::ofstream outStream(outFile, std::ios::out | std::ios::binary);
@@ -22,7 +23,7 @@ void write_model(std::string &inFile, std::string &outFile)
 	}
 }
 
-void write_directory(const std::string &inDirectory, const std::string &outDirectory)
+void write_directory(const std::string &inDirectory, const std::string &outDirectory, const glm::mat4 &transform = glm::mat4())
 {
 	std::vector<std::string> mFiles;
 
@@ -45,7 +46,7 @@ void write_directory(const std::string &inDirectory, const std::string &outDirec
 		int len = inFilepath.rfind('.') - start;
 		std::string outFilepath = outDirectory + inFilepath.substr(start, len) + ".model";
 		printf("Writing %s to %s\n", inFilepath.c_str(), outFilepath.c_str());
-		write_model(inFilepath, outFilepath);
+		write_model(inFilepath, outFilepath, transform);
 	} while(FindNextFileA(hd, &fileData));
 };
 
@@ -84,17 +85,25 @@ int main(int argc, char* argv[])
 			break;
 		} else if(command == 4) { // Debug mode
 
-			write_directory(
+			glm::mat4 transform = glm::rotate(glm::mat4(), 90.0f, glm::vec3(1, 0, 0));
+			transform = glm::scale(transform, glm::vec3(5));
+			/*write_directory(
 				"C:/gamedev/dungeon-raider/DungeonRaider/Common/Media/Models/molten_chasm/objects/_3ds",
-				"C:/gamedev/dungeon-raider/DungeonRaider/Common/Media/Models/molten_chasm/objects/challenge"
+				"C:/gamedev/dungeon-raider/DungeonRaider/Common/Media/Models/molten_chasm/objects/challenge",
+				transform
+			);*/
+			write_directory(
+				"C:/gamedev/dungeon-raider/DungeonRaider/Common/Media/Models/skeletons/dae",
+				"C:/gamedev/dungeon-raider/DungeonRaider/Common/Assets/Characters"
 			);
-			//inFile = "C:/gamedev/engine-dev/Engine/ModelReader/Assets/dark_mage_maya.dae";
-			//outFile = "C:/gamedev/engine-dev/Engine/ModelReader/Assets/dark_mage.model";
+
+			//inFile = "C:/gamedev/dungeon-raider/DungeonRaider/Common/Media/Models/dark_mage/dark_mage_maya.dae";
+			//outFile = "C:/gamedev/dungeon-raider/DungeonRaider/Common/Assets/Characters/dark_mage.model";
 
 			//inFile = "C:/gamedev/dungeon-raider/DungeonRaider/Common/Media/Models/molten_chasm/molten_chasm.DAE";
 			//outFile = "C:/gamedev/dungeon-raider/DungeonRaider/Common/Media/Models/molten_chasm/molten_chasm.model";
 
-			//write_model(inFile, outFile);
+			//write_model(inFile, outFile, transform);
 			/*inFile = "C:/gamedev/engine-dev/Engine/ModelReader/Assets/sphere.dae";
 			outFile = "C:/gamedev/engine-dev/Engine/ModelReader/Assets/sphere.model";
 			write_model(inFile, outFile);

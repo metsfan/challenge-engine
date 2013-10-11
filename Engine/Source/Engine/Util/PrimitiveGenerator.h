@@ -5,8 +5,6 @@
 
 namespace challenge
 {
-	class GameApplication;
-
 	enum PrimitiveShape
 	{
 		PrimitiveShapeBox = 0,
@@ -31,12 +29,10 @@ namespace challenge
 	class PrimitiveGenerator
 	{
 	public:
-		PrimitiveGenerator(GameApplication *app);
-		~PrimitiveGenerator();
-
-		Model* CreatePrimitive(PrimitiveShape type);
-
-	private:
-		GameApplication *mApp;
+		static Model* CreatePrimitive(PrimitiveShape type)
+		{
+			std::string filepath = kPrimitiveBasePath + filenames[type];
+			return new Model(filepath);
+		}
 	};
 };

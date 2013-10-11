@@ -47,12 +47,15 @@ namespace challenge
 
 		const Size &screenSize = this->GetScreenSize();
 
-		mWindow = new Window<PlatformTypeWindows>(mInstance, "Dungeon Raider v0.1", screenSize);
-		if(!mWindow->Initialize()) {
+		auto window = new Window<PlatformTypeWindows>(mInstance, "Dungeon Raider v0.1", screenSize);
+		if(!window->Initialize()) {
 			return false;
 		}
-		mWindow->SetWindowVisibility(WindowVisible);
-		mWindow->SetInputReader(mInputManager);
+		window->SetWindowVisibility(WindowVisible);
+		window->SetInputReader(mInputManager);
+
+		mWinHandle = window->GetWinHandle();
+		mWindow = window;
 
 		GRAPHICS_DEVICE_DESC graphicsDesc;
 		graphicsDesc.MultiSampling = MultisampleLevelNone;

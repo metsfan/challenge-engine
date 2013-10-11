@@ -9,7 +9,7 @@ sampler_state
     MagFilter = LINEAR;
 };
 
-cbuffer color
+cbuffer color : register(b11)
 {
 	float4 gColor;
 }
@@ -26,7 +26,11 @@ struct VS_OUT
 const float4 lineColor = (0, 0, 0, 1);
 
 float4 main(VS_OUT vOut) : SV_TARGET
-{             
+{            
+	if(gColor.a != 0) {
+		return gColor;
+	}
+
 	float4 Kd = gTexture.Sample(gTriLinearSam, vOut.texCoord);
 	return Kd;
 }

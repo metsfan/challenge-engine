@@ -21,7 +21,8 @@ namespace challenge
 		mBackgroundImageChanged(false),
 		mClipSubviews(false),
 		mUIManager(NULL),
-		mFocused(false)
+		mFocused(false),
+		mWindow(NULL)
 	{
 	}
 
@@ -145,6 +146,17 @@ namespace challenge
 		if(mUIManager) {
 			mUIManager->mFocusedView = this;
 		}
+	}
+
+	IWindow* View::GetWindow()
+	{
+		if(mWindow) {
+			return mWindow;
+		} else if(mParent) {
+			return mParent->GetWindow();
+		}
+
+		return NULL;
 	}
 
 	/* Event Delegates */

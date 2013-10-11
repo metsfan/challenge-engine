@@ -121,6 +121,8 @@ namespace challenge
 		void SetFocused(bool focused);
 		bool IsFocused() { return mFocused; }
 
+		IWindow* GetWindow();
+
 		/* Event Delegates */
 		void AddMouseDownDelegate(MouseEventDelegate eventDelegate);
 		void AddMouseUpDelegate(MouseEventDelegate eventDelegate);
@@ -156,6 +158,7 @@ namespace challenge
 
 		View *mRootView;
 		UIManager *mUIManager;
+		IWindow *mWindow;
 
 		TUIEventDelegateMap mDelegates;
 		TMouseEventDelegateMap mMouseDelegates;

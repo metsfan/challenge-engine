@@ -27,8 +27,8 @@ namespace challenge
 		mNetworkManager(NULL),
 		mDatabaseManager(NULL),
 		mInputManager(NULL),
-		mModelManager(NULL),
-		mPrimitiveGenerator(NULL)
+		mModelManager(NULL)
+		//mPrimitiveGenerator(NULL)
 	{
 		mGameInstance = NULL;
 	}
@@ -60,7 +60,7 @@ namespace challenge
 
 		mUIManager = new UIManager(mScreenSize);
 
-		mPrimitiveGenerator = new PrimitiveGenerator(this);
+		//mPrimitiveGenerator = new PrimitiveGenerator(this);
 
 		return true;
 	}
@@ -273,9 +273,9 @@ namespace challenge
 
 	Model* GameApplication::CreatePrimitive(PrimitiveShape type)
 	{
-		if(mPrimitiveGenerator) {
-			return mPrimitiveGenerator->CreatePrimitive(type);
-		}
+		//if(mPrimitiveGenerator) {
+			//return mPrimitiveGenerator->CreatePrimitive(type);
+		//}
 
 		return NULL;
 	}

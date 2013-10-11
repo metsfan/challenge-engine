@@ -1,6 +1,7 @@
 #include <Engine/Challenge.h>
 #include <Engine/Physics/Shapes/Intersection.h>
 #include <Engine/Physics/Shapes/GeometricShape.h>
+#include <Engine/Model/Model.h>
 
 namespace challenge
 {
@@ -16,15 +17,14 @@ namespace challenge
 	{
 	}
 
-	void GeometricShape::DrawDebug(IGraphicsDevice *device, RenderState &state)
+	GeometricShape::~GeometricShape()
 	{
-		if(!mDebugShape) {
-			mDebugShape = new MeshShape(device, "DebugLines");
-			
-		}
-
-		this->CreateDebugShape(mDebugShape);
-		mDebugShape->Draw(device, state);
 	}
+
+	/*void GeometricShape::DrawDebug(IGraphicsDevice *device, RenderState &state)
+	{
+		this->CreateDebugShape(NULL);
+		mDebugShape->Render(device, state);
+	}*/
 };
 

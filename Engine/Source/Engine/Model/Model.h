@@ -27,6 +27,8 @@ namespace challenge
 		Model(const std::string &filepath);
 		~Model();
 
+		const std::string GetFilepath() { return mFilepath; }
+
 		void Transform(const glm::mat4 &transform);
 
 		//void SetTexture(Texture *texture) { mTexture = texture; }
@@ -69,6 +71,7 @@ namespace challenge
 		ModelAnimation mActiveAnimation;
 		ModelAnimParams mActiveAnimationData;
 		std::list<ModelAnimParams> mAnimationQueue;
+		std::string mFilepath;
 
 		void LoadAnimations();
 		void PopQueue();

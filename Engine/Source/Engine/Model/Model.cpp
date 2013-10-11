@@ -21,7 +21,8 @@ namespace challenge
 
 	Model::Model(const std::string &filepath) :
 		mActiveAnimFrame(0),
-		mBoundingVolume(NULL)
+		mBoundingVolume(NULL),
+		mFilepath(filepath)
 	{
 		memset(&mActiveAnimation, 0, sizeof(ModelAnimation));
 

@@ -142,12 +142,20 @@ namespace challenge
 					inputReader->ProcessMouseEvent(MouseEventMouseDown, MouseButtonRight, mousePos);
 					break;
 
+				case WM_MBUTTONDOWN:
+					inputReader->ProcessMouseEvent(MouseEventMouseDown, MouseButtonMiddle, mousePos);
+					break;
+
 				case WM_LBUTTONUP:
 					inputReader->ProcessMouseEvent(MouseEventMouseUp, MouseButtonLeft, mousePos);
 					break;
 
 				case WM_RBUTTONUP:
 					inputReader->ProcessMouseEvent(MouseEventMouseUp, MouseButtonRight, mousePos);
+					break;
+
+				case WM_MBUTTONUP:
+					inputReader->ProcessMouseEvent(MouseEventMouseUp, MouseButtonMiddle, mousePos);
 					break;
 
 				case WM_LBUTTONDBLCLK:
@@ -158,8 +166,21 @@ namespace challenge
 					inputReader->ProcessMouseEvent(MouseEventMouseDblClick, MouseButtonRight, mousePos);
 					break;
 
+				case WM_MBUTTONDBLCLK:
+					inputReader->ProcessMouseEvent(MouseEventMouseDblClick, MouseButtonMiddle, mousePos);
+					break;
+
 				case WM_MOUSEMOVE:
-					inputReader->ProcessMouseEvent(MouseEventMouseMove, 0, mousePos);
+					{
+						int button = MouseButtonLeft;
+						if(wParam & MK_RBUTTON) {
+							button = MouseButtonRight;
+						} else if(wParam & MK_MBUTTON) {
+							button = MouseButtonMiddle;
+						}
+						inputReader->ProcessMouseEvent(MouseEventMouseMove, button, mousePos);
+					}
+					
 					break;
 
 				case WM_MOUSEWHEEL:

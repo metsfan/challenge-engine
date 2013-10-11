@@ -20,13 +20,13 @@ namespace challenge
 			max.z = glm::max(pt.z, max.z);
 		}
 
-		return new AABBShape(min, max);
+		return new AABBShape(BoundingBox(min, max));
 	}
 
-	AABBShape::AABBShape(const glm::vec3 &center, real halfX, real halfY, real halfZ) :
+	AABBShape::AABBShape(const glm::vec3 &center, const glm::vec3 &dimensions) :
 		GeometricShape(),
 		mCenter(center), 
-		mDimensions(halfX, halfY, halfZ)
+		mDimensions(dimensions)
 	{
 	}
 
@@ -37,17 +37,12 @@ namespace challenge
 	{
 	}
 
-	AABBShape::AABBShape(const glm::vec3 &min, const glm::vec3 &max) :
+	AABBShape::AABBShape(const BoundingBox &box) :
 		GeometricShape()
 	{
-		mDimensions = (max - min) * 0.5f;
+		mDimensions = (box.mMax - box.mMin) * 0.5f;
 
-		mCenter = (min + max) * 0.5f;
-	}
-
-	IGeometricShape* AABBShape::Clone()
-	{
-		return new AABBShape(*this);
+		mCenter = (box.mMin + box.mMax) * 0.5f;
 	}
 
 	bool AABBShape::Intersects(IGeometricShape *other, CollisionData *collision) const
@@ -100,11 +95,32 @@ namespace challenge
 		return ray.GetIntersection(bbox, t);
 	}
 
-	void AABBShape::CreateDebugShape(MeshShape *shape)
+	//void AABBShape::CreateDebugShape(MeshShape *shape, RenderState &state)
+	void AABBShape::DrawDebug(IGraphicsDevice *device, RenderState &state)
 	{
-		this->CalculateBoundingBox();
-		/*BoundingBox bbox(mBoundingBox.mMin.x - mPosition.x, mBoundingBox.mMin.y - mPosition.y, mBoundingBox.mMin.z - mPosition.z,
-			mBoundingBox.mMin.x + mPosition.x, mBoundingBox.mMin.y + mPosition.y, mBoundingBox.mMin.z + mPosition.z);*/
+		if(!mDebugShape) {
+			mDebugShape = PrimitiveGenerator::CreatePrimitive(PrimitiveShapeBox);
+		}
+
+		glm::mat4 transform = glm::translate(glm::mat4(), this->GetPosition());
+		transform = glm::scale(transform, mDimensions * 2.0f);
+		state.PushTransform(transform);
+
+		glm::vec4 color(1, 0, 0, 0.5);
+		ShaderDataVector4 colorData(&color, 1);
+		state.SetShaderData("COLOR", &colorData);
+		device->EnableState(GraphicsState::AlphaBlending);
+
+		mDebugShape->Render(device, state);
+
+		glm::vec4 clearColor(0, 0, 0, 0);
+		ShaderDataVector4 clearColorData(&clearColor, 1);
+		state.SetShaderData("COLOR", &clearColorData);
+
+		state.PopTransform();
+		device->DisableState(GraphicsState::AlphaBlending);
+
+		/*this->CalculateBoundingBox();
 		//glm::vec3 transformedCenter = glm::vec3(mTransform * glm::vec4(mCenter, 1.0));
 		glm::vec3 transformedCenter = mPosition;
 		BoundingBox bbox(transformedCenter.x - mDimensions.x, transformedCenter.y, transformedCenter.z - mDimensions.z, 
@@ -116,23 +132,6 @@ namespace challenge
 					color.x, color.y, color.z, color.w
 			},
 			{ 
-				bbox.mMin.x, bbox.mMin.y, bbox.mMax.z,
-					color.x, color.y, color.z, color.w
-			},
-			{ 
-				bbox.mMax.x, bbox.mMin.y, bbox.mMax.z,
-					color.x, color.y, color.z, color.w
-			},
-			{ 
-				bbox.mMax.x, bbox.mMin.y, bbox.mMin.z,
-					color.x, color.y, color.z, color.w
-			},
-
-			{ 
-				bbox.mMin.x, bbox.mMin.y, bbox.mMin.z,
-					color.x, color.y, color.z, color.w
-			},
-			{ 
 				bbox.mMin.x, bbox.mMax.y, bbox.mMin.z,
 					color.x, color.y, color.z, color.w
 			},
@@ -141,45 +140,7 @@ namespace challenge
 					color.x, color.y, color.z, color.w
 			},
 			{ 
-				bbox.mMin.x, bbox.mMin.y, bbox.mMin.z,
-					color.x, color.y, color.z, color.w
-			},
-			{ 
-				bbox.mMin.x, bbox.mMin.y, bbox.mMin.z,
-					color.x, color.y, color.z, color.w
-			},
-
-			{ 
-				bbox.mMin.x, bbox.mMin.y, bbox.mMin.z,
-					color.x, color.y, color.z, color.w
-			},
-			{ 
-				bbox.mMin.x, bbox.mMin.y, bbox.mMax.z,
-					color.x, color.y, color.z, color.w
-			},
-			{ 
-				bbox.mMin.x, bbox.mMax.y, bbox.mMax.z,
-					color.x, color.y, color.z, color.w
-			},
-			{ 
-				bbox.mMin.x, bbox.mMax.y, bbox.mMin.z,
-					color.x, color.y, color.z, color.w
-			},
-			{ 
-				bbox.mMin.x, bbox.mMin.y, bbox.mMin.z,
-					color.x, color.y, color.z, color.w
-			},
-
-			{ 
-				bbox.mMax.x, bbox.mMin.y, bbox.mMin.z,
-					color.x, color.y, color.z, color.w
-			},
-			{ 
-				bbox.mMax.x, bbox.mMin.y, bbox.mMax.z,
-					color.x, color.y, color.z, color.w
-			},
-			{ 
-				bbox.mMax.x, bbox.mMax.y, bbox.mMax.z,
+				bbox.mMax.x, bbox.mMax.y, bbox.mMin.z,
 					color.x, color.y, color.z, color.w
 			},
 			{ 
@@ -190,10 +151,85 @@ namespace challenge
 				bbox.mMax.x, bbox.mMin.y, bbox.mMin.z,
 					color.x, color.y, color.z, color.w
 			},
-
+			{ 
+				bbox.mMax.x, bbox.mMin.y, bbox.mMin.z,
+					color.x, color.y, color.z, color.w
+			},
+			{ 
+				bbox.mMin.x, bbox.mMin.y, bbox.mMin.z,
+					color.x, color.y, color.z, color.w
+			},
 			
+			{ 
+				bbox.mMin.x, bbox.mMin.y, bbox.mMax.z,
+					color.x, color.y, color.z, color.w
+			},
+			{ 
+				bbox.mMin.x, bbox.mMax.y, bbox.mMax.z,
+					color.x, color.y, color.z, color.w
+			},
+			{ 
+				bbox.mMin.x, bbox.mMax.y, bbox.mMax.z,
+					color.x, color.y, color.z, color.w
+			},
+			{ 
+				bbox.mMax.x, bbox.mMax.y, bbox.mMax.z,
+					color.x, color.y, color.z, color.w
+			},
+			{ 
+				bbox.mMax.x, bbox.mMax.y, bbox.mMax.z,
+					color.x, color.y, color.z, color.w
+			},
+			{ 
+				bbox.mMax.x, bbox.mMin.y, bbox.mMax.z,
+					color.x, color.y, color.z, color.w
+			},
+			{ 
+				bbox.mMax.x, bbox.mMin.y, bbox.mMax.z,
+					color.x, color.y, color.z, color.w
+			},
+			{ 
+				bbox.mMin.x, bbox.mMin.y, bbox.mMax.z,
+					color.x, color.y, color.z, color.w
+			},
+
+			{ 
+				bbox.mMin.x, bbox.mMin.y, bbox.mMin.z,
+					color.x, color.y, color.z, color.w
+			},
+			{ 
+				bbox.mMin.x, bbox.mMin.y, bbox.mMax.z,
+					color.x, color.y, color.z, color.w
+			},
+
+			{ 
+				bbox.mMin.x, bbox.mMax.y, bbox.mMin.z,
+					color.x, color.y, color.z, color.w
+			},
+			{ 
+				bbox.mMin.x, bbox.mMax.y, bbox.mMax.z,
+					color.x, color.y, color.z, color.w
+			},
+
+			{ 
+				bbox.mMax.x, bbox.mMax.y, bbox.mMin.z,
+					color.x, color.y, color.z, color.w
+			},
+			{ 
+				bbox.mMax.x, bbox.mMax.y, bbox.mMax.z,
+					color.x, color.y, color.z, color.w
+			},
+
+			{ 
+				bbox.mMax.x, bbox.mMin.y, bbox.mMin.z,
+					color.x, color.y, color.z, color.w
+			},
+			{ 
+				bbox.mMax.x, bbox.mMin.y, bbox.mMax.z,
+					color.x, color.y, color.z, color.w
+			},
 		};
 
-		shape->SetData(verts, sizeof(verts), sizeof(verts) / sizeof(DebugLinesVertex), PrimitiveTypeLineStrip);
+		shape->SetData(verts, sizeof(verts), sizeof(verts) / sizeof(DebugLinesVertex), PrimitiveTypeLineList);*/
 	}
 }

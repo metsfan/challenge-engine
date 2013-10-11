@@ -61,6 +61,10 @@ namespace challenge
 		bool mMouseMoving;
 		bool mKeyDown;
 
+		bool mShiftDown;
+		bool mAltDown;
+		bool mCtrlDown;
+
 		std::vector<KeyboardEvent> mKeyboardEventQueue;
 		std::vector<MouseEvent> mMouseEventQueue;
 	};
