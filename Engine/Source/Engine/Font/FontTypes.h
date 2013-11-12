@@ -170,10 +170,10 @@ namespace challenge
 		int x, y, width, coverage;
 	};
 
-	struct Rect
+	struct Rect2
 	{
-		Rect() { }
-		Rect(float left, float top, float right, float bottom)
+		Rect2() { }
+		Rect2(float left, float top, float right, float bottom)
 		: xmin(left), xmax(right), ymin(top), ymax(bottom) { }
 
 		void Include(float x, float y)

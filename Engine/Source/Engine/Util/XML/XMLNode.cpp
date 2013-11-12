@@ -53,6 +53,8 @@ namespace challenge
 		if(mAttributes.count(name)) {
 			return mAttributes[name].GetValue();
 		}
+
+		return "";
 	}
 
 	short XMLNode::GetAttributeShort(std::string name)

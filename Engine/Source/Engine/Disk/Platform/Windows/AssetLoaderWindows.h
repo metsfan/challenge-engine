@@ -5,7 +5,7 @@
 namespace challenge
 {
 	template<>
-	class AssetLoader<PlatformTypeWindows>
+	class AssetLoader<PlatformTypeWin32>
 	{
 	public:
 		static std::string GetPathForAsset(const std::string &name);

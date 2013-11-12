@@ -3,9 +3,9 @@
 
 namespace challenge
 {
-	BaseGraphicsDevice::BaseGraphicsDevice(GRAPHICS_DEVICE_DESC graphicsDesc, IWindow *window) :
+	BaseGraphicsDevice::BaseGraphicsDevice(GRAPHICS_DEVICE_DESC graphicsDesc, const Size &screenSize) :
 		mDesc(graphicsDesc),
-		mWindow(window)
+		mScreenSize(screenSize)
 	{
 	}
 

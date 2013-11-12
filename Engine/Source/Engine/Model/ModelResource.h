@@ -55,6 +55,8 @@ namespace challenge
 
 		void Render(IGraphicsDevice *device, RenderState &state, int animFrame, int materialId);
 
+		void SetBlendColor(const glm::vec4 &color) { mBlendColor = color; }
+
 	private:
 		ModelShape *mShape;
 		std::string mModelPath;
@@ -67,6 +69,7 @@ namespace challenge
 		int mNumVerts;
 		int mActiveAnimFrame;
 		std::map<GeometricShapeType, IGeometricShape *> mBoundingVolumes;
+		glm::vec4 mBlendColor;
 
 		bool Unserialize(std::ifstream &in);
 		void LoadAnimations();

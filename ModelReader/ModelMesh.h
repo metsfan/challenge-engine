@@ -24,6 +24,8 @@ namespace model
 
 		void Serialize(std::ostream &out, TNodeList &nodes, aiAnimation *animData);
 
+		void MoveToOrigin(float miny);
+
 	private:
 		std::vector<int> mBones;
 		int mMaterial;

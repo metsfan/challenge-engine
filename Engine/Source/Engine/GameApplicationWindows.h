@@ -8,7 +8,7 @@ namespace challenge
 	class GameApplicationWindows : public GameApplication
 	{
 	public:
-		GameApplicationWindows(const Size &screenSize, HINSTANCE instance);
+		GameApplicationWindows(const Size &screenSize, HINSTANCE instance, HWND window);
 		virtual ~GameApplicationWindows(void);
 
 		virtual bool Initialize();

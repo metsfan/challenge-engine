@@ -12,7 +12,7 @@ namespace challenge
 		ButtonStateSelected,
 		ButtonStateDisabled
 	} ButtonState;
-
+	 
 	class ButtonView : public FormElement
 	{
 	private:
@@ -32,5 +32,7 @@ namespace challenge
 	protected:
 		ButtonState mState;
 		LabelView *mTitleLabel;
+
+		virtual void ParseFromXML(XMLNode &node);
 	};
 };

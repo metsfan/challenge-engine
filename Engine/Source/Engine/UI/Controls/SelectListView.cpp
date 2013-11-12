@@ -3,20 +3,23 @@
 
 namespace challenge
 {
-	static const int kItemHeight = 30;
+	static const int kButtonWidth = 18;
+	static const int kItemHeight = 20;
 	static const int kOptionsPanelHeight = 150;
+
+	static const std::shared_ptr<Image> sDefaultSelectImage(new Image("C:/gamedev/dungeon-raider/DungeonRaider/Debug/select_list_arrow.png"));
 
 	SelectListView::SelectListView(Frame frame) :
 		FormElement(frame),
 		mSelectedIndex(0),
 		mDefaultOption(0),
 		mOptionsPanel(new PanelView(Frame(0, kItemHeight, frame.size.width, kOptionsPanelHeight))),
-		mSelectedLabel(new LabelView(Frame(0, 0, frame.size.width - 50, kItemHeight))),
-		mSelectButton(new ButtonView(Frame(frame.size.width - 30, 0, 30, kItemHeight)))
+		mSelectedLabel(new LabelView(Frame(0, 0, frame.size.width - kButtonWidth, kItemHeight))),
+		mSelectButton(new ButtonView(Frame(frame.size.width - kButtonWidth, 0, kButtonWidth, kItemHeight)))
 	{
-		this->AddSubview(mSelectedLabel);
-		this->AddSubview(mSelectButton);
-		this->AddSubview(mOptionsPanel);
+		this->AddInternalSubview(mSelectedLabel);
+		this->AddInternalSubview(mSelectButton);
+		this->AddInternalSubview(mOptionsPanel);
 		mOptionsPanel->SetVisible(false);
 		mOptionsPanel->SetScrollable(true);
 
@@ -26,7 +29,9 @@ namespace challenge
 				mOptionsPanel->SetFocused(true);
 			}
 		});
-		mSelectButton->SetBackgroundColor(glm::vec4(0, 0, 0, 255));
+		mSelectButton->SetBackgroundImage(sDefaultSelectImage);
+
+		mSelectedLabel->SetBackgroundColor(Color(255, 255, 255, 255));
 	}
 
 	SelectListView::~SelectListView()
@@ -34,6 +39,15 @@ namespace challenge
 		delete mOptionsPanel;
 		delete mSelectedLabel;
 		delete mSelectButton;
+	}
+
+	void SelectListView::SetFrame(const Frame &frame)
+	{
+		View::SetFrame(frame);
+
+		mOptionsPanel->SetWidth(frame.size.width);
+		mSelectedLabel->SetWidth(frame.size.width - kButtonWidth);
+		mSelectButton->SetX(frame.size.width - kButtonWidth);
 	}
 
 	void SelectListView::AddOption(const std::string &value, const std::string &text)
@@ -93,5 +107,15 @@ namespace challenge
 	void SelectListView::Render(IGraphicsDevice *device, RenderState &state, const Frame &parentFrame)
 	{
 		View::Render(device, state, parentFrame);
+	}
+
+	void SelectListView::ParseFromXML(XMLNode &node)
+	{
+		View::ParseFromXML(node);
+
+		TXMLNodeList &options = node.GetChildrenByName("Option");
+		for(XMLNode &optionNode : options) {
+			this->AddOption(optionNode.GetAttributeString("value"), optionNode.GetAttributeString("text"));
+		}
 	}
 };

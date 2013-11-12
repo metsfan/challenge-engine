@@ -5,6 +5,7 @@
 #include <Engine/Input/InputManager.h>
 #include <Engine/UI/Events/UIEventArgs.h>
 #include <Engine/UI/Types.h>
+#include <Engine/Util/XML/XML.h>
 
 namespace challenge
 {
@@ -36,19 +37,30 @@ namespace challenge
 		}
 	};
 
-	typedef enum ControlType {
+	enum ControlType 
+	{
 		ControlTypeButton,
 		ControlTypePanel
 	};
 
+	enum LayoutType
+	{
+		LayoutTypeAbsolute,
+		LayoutTypeLinear,
+		LayoutTypeGrid
+	};
+
+	class ILayout;
 	class View;
+
+	typedef std::shared_ptr<View> ViewPtr;
 	typedef std::vector<View *> TViewList;
 
 	__declspec(align(16))
 	struct ControlMatrices {
 		glm::mat4 gWVPMatrix;
 	};
-
+	
 	__declspec(align(16))
 	struct ControlData {
 		glm::vec4 gBackgroundColor;
@@ -56,16 +68,24 @@ namespace challenge
 		int gHasTexture;
 	};
 
+	typedef std::function<View * (Frame)> TViewCreatorFunction;
+
 	class View
 	{
-		friend class UIManager;
+		friend class ViewManager;
+		friend class ViewXMLParser;
 
 	public:
-		View(Frame frame = Frame());
+		View(Frame frame = Frame(), LayoutType layout = LayoutTypeAbsolute);
 		virtual ~View(void);
 
 		virtual void Update(int deltaMillis);
 		virtual void Render(IGraphicsDevice *device, RenderState &state, const Frame &parentFrame);
+
+		void SetId(const std::string &id) { mId = id; }
+		const std::string& GetId() { return mId; }
+
+		View * FindViewById(const std::string &id);
 
 		virtual void SetFrame(const Frame &frame) { mFrame = frame; }
 		const Frame& GetAdjustedFrame() { return mAdjustedFrame; }
@@ -94,16 +114,28 @@ namespace challenge
 		real GetWidth() { return mFrame.size.width; }
 		real GetHeight() { return mFrame.size.height; }
 
+		virtual void SetPadding(const Rect &padding) { mPadding = padding; }
+		virtual void SetLeftPadding(real padding) { mPadding.left = padding; }
+		virtual void SetBottomPadding(real padding) { mPadding.bottom = padding; }
+		virtual void SetRightPadding(real padding) { mPadding.right = padding; }
+		virtual void SetTopPadding(real padding) { mPadding.top = padding; }
+
+		const Rect& GetPadding() { return mPadding; }
+		virtual real GetLeftPadding() { return mPadding.left; }
+		virtual real GetBottomPadding() { return mPadding.bottom; }
+		virtual real GetRightPadding() { return mPadding.right; }
+		virtual real GetTopPadding() { return mPadding.top; }
+
 		virtual void SetVisible(bool visible) { mVisible = visible; }
 		virtual bool IsVisible() { return mVisible; }
 
-		virtual void SetBackgroundColor(const glm::vec4 &color) { mBackgroundColor = color; }
-		const virtual glm::vec4& GetBackgroundColor() const { return mBackgroundColor; }
+		virtual void SetBackgroundColor(const Color &color) { mBackgroundColor = color; }
+		const virtual Color& GetBackgroundColor() const { return mBackgroundColor; }
 
 		virtual void SetBackgroundImage(std::string imageName);
 		virtual void SetBackgroundImage(std::shared_ptr<Image> image);
 
-		virtual void AddSubview(View *view);
+		virtual void AddSubview(View * view);
 		const TViewList& GetSubviews() { return mSubviews; }
 
 		virtual void SetZPosition(float zPosition) { mZPosition = zPosition; }
@@ -111,7 +143,7 @@ namespace challenge
 
 		virtual void SetParent(View *parent) { mParent = parent; }
 
-		View *GetParent() const { return mParent; }
+		View * GetParent() const { return mParent; }
 
 		bool ContainsPoint(Point point) { return mAdjustedFrame.Contains(point); }
 
@@ -122,6 +154,9 @@ namespace challenge
 		bool IsFocused() { return mFocused; }
 
 		IWindow* GetWindow();
+		void SetWindow(IWindow *window) { mWindow = window; }
+
+		void SetLayoutType(LayoutType layout);
 
 		/* Event Delegates */
 		void AddMouseDownDelegate(MouseEventDelegate eventDelegate);
@@ -132,17 +167,25 @@ namespace challenge
 		void AddKeyDownDelegate(KeyboardEventDelegate eventDelegate);
 		void AddKeyUpDelegate(KeyboardEventDelegate eventDelegate);
 
+		static View * CreateFromResource(const std::string &resource);
+		static void RegisterViewClass(const std::string &name, TViewCreatorFunction creator);
+
+
 	protected:
 		SpriteShape* GetSprite() { return mSprite; }
 		const Frame& GetTextureFrame() { return mTextureFrame; }
-		void ClipSubviews(bool clip) { mClipSubviews = clip; }
+		void ClipSubviews(bool clip);
 		void AddInternalSubview(View *view);
+		virtual void ParseFromXML(XMLNode &node);
+		virtual void CalculateChildFrames() {}
+		virtual void OnLoadComplete() {}
 
 	private:
 		Frame mFrame;
 		Frame mAdjustedFrame;
 		Frame mTextureFrame;
-		glm::vec4 mBackgroundColor;
+		Rect mPadding;
+		Color mBackgroundColor;
 		std::shared_ptr<Image> mBackgroundImage;
 		bool mBackgroundImageChanged;
 		ControlType mType;
@@ -150,15 +193,18 @@ namespace challenge
 		TViewList mSubviews; 
 		TViewList mInternalSubviews;
 		float mZPosition;
-		View *mParent;
+		View * mParent;
 		SpriteShape *mSprite;
+		std::string mId;
 		int mTag;
 		bool mFocused;
 		bool mClipSubviews;
+		Frame mClipRegion;
+		bool mFrameSet;
 
-		View *mRootView;
-		UIManager *mUIManager;
 		IWindow *mWindow;
+
+		std::unique_ptr<ILayout> mLayoutEngine;
 
 		TUIEventDelegateMap mDelegates;
 		TMouseEventDelegateMap mMouseDelegates;
@@ -166,6 +212,8 @@ namespace challenge
 
 		ControlMatrices mMatrices;
 		ControlData mControlData;
+
+		static std::map<std::string, TViewCreatorFunction> sViewCreatorRegistry;
 
 		void OnKeyDown(const KeyboardEvent &e);
 		void OnKeyUp(const KeyboardEvent &e);
@@ -179,8 +227,9 @@ namespace challenge
 		virtual bool ProcessMouseEvent(const MouseEvent &e);
 		virtual bool ProcessKeyboardEvent(const KeyboardEvent &e);
 
-		View* GetSelectedView(const Point &p);
+		View * GetSelectedView(const Point &p);
 
 		virtual Frame CalculateChildFrame() { return mAdjustedFrame; }
+		virtual void PositionSubviews();
 	};
 };

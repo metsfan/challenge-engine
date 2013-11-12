@@ -1,15 +1,21 @@
 #include <Engine/Challenge.h>
-#include <Engine/UI/UIManager.h>
+#include <Engine/UI/View.h>
+#include <Engine/UI/ViewManager.h>
 #include <Engine/Util/Image.h>
 //#include <Engine/Util/TextureAtlas.h>
 #include <Engine/Renderer/Texture/Texture2DDX11.h>
 #include <Engine/GameApplication.h>
-#include <Engine/Renderer/Window.h>
-#include "View.h"
+#include <Engine/UI/Window.h>
+#include <Engine/UI/ViewXMLParser.h>
+
+#include <Engine/UI/Layout/AbsoluteLayout.h>
+#include <Engine/UI/Layout/LinearLayout.h>
 
 namespace challenge
 {
-	View::View(Frame frame) :
+	std::map<std::string, TViewCreatorFunction> View::sViewCreatorRegistry;
+
+	View::View(Frame frame, LayoutType layout) :
 		mFrame(frame),
 		mAdjustedFrame(frame),
 		mTextureFrame(0, 0, 1, 1),
@@ -20,17 +26,20 @@ namespace challenge
 		mSprite(NULL),
 		mBackgroundImageChanged(false),
 		mClipSubviews(false),
-		mUIManager(NULL),
 		mFocused(false),
 		mWindow(NULL)
 	{
+		this->SetLayoutType(layout);
+
+		mFrameSet = (frame.origin.x != 0 || frame.origin.y != 0 ||
+			frame.size.width != 0 || frame.size.height != 0);
 	}
 
 	View::~View()
 	{
 	}
 
-	void View::AddSubview(View *view)
+	void View::AddSubview(View * view)
 	{
 		bool found = false;
 		for(int i = 0; i < mSubviews.size(); i++) {
@@ -45,12 +54,7 @@ namespace challenge
 			view->SetZPosition(mZPosition + 1);
 		}
 
-		View *rootView = this;
-		while(rootView->GetParent()) {
-			rootView = rootView->GetParent();
-		}
-		view->mRootView = rootView;
-		view->mUIManager = rootView->mUIManager;
+		this->PositionSubviews();
 	}
 
 	void View::Update(int deltaMillis)
@@ -60,7 +64,7 @@ namespace challenge
 		}
 
 		std::sort(mSubviews.begin(), mSubviews.end(), 
-		[](View *v1, View *v2) -> bool {
+		[](View * v1, View * v2) -> bool {
 			return v1->GetZPosition() < v2->GetZPosition();
 		});
 	}
@@ -78,7 +82,7 @@ namespace challenge
 				mFrame.size.height
 			);
 
-			mSprite->SetBackgroundColor(mBackgroundColor);
+			mSprite->SetBackgroundColor(glm::vec4(mBackgroundColor.red, mBackgroundColor.green, mBackgroundColor.blue, mBackgroundColor.alpha));
 
 			if(mBackgroundImage) {
 				if(mBackgroundImageChanged) {
@@ -103,22 +107,38 @@ namespace challenge
 			mSprite->SetFrame(mAdjustedFrame);
 			mSprite->Draw(device, state);
 
-			
+			bool clipSubviews = mClipSubviews;
+			Frame clipRegion;
+			if (clipSubviews) {
+				mClipRegion = mAdjustedFrame;
+			}
+			else {
+				View *parent = mParent;
+				while (parent) {
+					if (parent->mClipSubviews) {
+						clipSubviews = true;
+						clipRegion = parent->mAdjustedFrame;
+						break;
+					}
+
+					parent = parent->mParent;
+				}
+			}
 			
 			Frame inheritedFrame = this->CalculateChildFrame();
 			for(int i = 0; i < mSubviews.size(); i++) {
-				if(mClipSubviews) {
+				if (clipSubviews) {
 					device->EnableState(ScissorTest);
-					device->SetScissorRect(mAdjustedFrame.origin.x, 
-						mAdjustedFrame.origin.y, 
-						mAdjustedFrame.size.width, 
-						mAdjustedFrame.size.height);
+					device->SetScissorRect(clipRegion.origin.x,
+						clipRegion.origin.y,
+						clipRegion.size.width,
+						clipRegion.size.height);
 				}
 
-				View *child = mSubviews[i];
+				View * child = mSubviews[i];
 				child->Render(device, state, inheritedFrame);
 
-				if(mClipSubviews) {
+				if (clipSubviews) {
 					device->DisableState(ScissorTest);
 				}
 			}
@@ -142,9 +162,22 @@ namespace challenge
 
 	void View::SetFocused(bool focused)
 	{
+		if (focused) {
+			this->GetWindow()->SetFocusedView(this);
+		}
+		else if (mFocused) {
+			this->GetWindow()->UnfocusView(this);
+		}
+
 		mFocused = focused;
-		if(mUIManager) {
-			mUIManager->mFocusedView = this;
+	}
+
+	void View::ClipSubviews(bool clip)
+	{
+		mClipSubviews = clip;
+
+		for (View *view : mSubviews) {
+			view->ClipSubviews(clip);
 		}
 	}
 
@@ -203,7 +236,7 @@ namespace challenge
 
 	View* View::GetSelectedView(const Point &p)
 	{
-		View *selectedView = NULL;
+		View * selectedView = NULL;
 
 		if(mVisible) {
 			if(mClipSubviews && !this->ContainsPoint(p)) {
@@ -211,7 +244,7 @@ namespace challenge
 			}
 
 			for(int i = mSubviews.size() - 1; i >= 0; i--) {
-				View *next = mSubviews[i];
+				View * next = mSubviews[i];
 				selectedView = next->GetSelectedView(p);
 				if(selectedView) {
 					break;
@@ -233,10 +266,92 @@ namespace challenge
 		return false; // Keyboard events are undefined for default controls
 	}
 
-	void View::AddInternalSubview(View *view)
+	void View::AddInternalSubview(View * view)
 	{
 		this->AddSubview(view);
 		view->SetZPosition(view->mZPosition + 10000);
 		mInternalSubviews.push_back(view);
+	}
+
+	View *  View::FindViewById(const std::string &id)
+	{
+		for(View * subview : mSubviews) {
+			if(subview->mId == id) {
+				return subview;
+			}
+
+			View * subviewSearch = subview->FindViewById(id);
+			if(subviewSearch) {
+				return subviewSearch;
+			}
+		}
+
+		return NULL;
+	}
+
+	void View::ParseFromXML(XMLNode &node)
+	{
+		mFrameSet = node.GetAttributeString("frame") != "";
+
+		this->SetFrame(ViewXMLParser::ParseFrame(node.GetAttributeString("frame")));
+		this->SetPadding(ViewXMLParser::ParseRect(node.GetAttributeString("padding")));
+
+		const std::string &layout = node.GetAttributeString("layout");
+		if(layout == "linear") {
+			const std::string &orientationVal = node.GetAttributeString("orientation");
+			LinearLayoutOrientation orientation = LinearLayoutVertical;
+			if(orientationVal == "horizontal") {
+				orientation = LinearLayoutHorizontal;
+			}
+			mLayoutEngine = std::unique_ptr<ILayout>(new LinearLayout(orientation));
+		} else {
+			mLayoutEngine = std::unique_ptr<ILayout>(new AbsoluteLayout());
+		}
+
+		const std::string &bgColorText = node.GetAttributeString("background_color");
+		if(bgColorText.length() != 0) {
+			this->SetBackgroundColor(Color::FromHexString(bgColorText));
+		}
+		
+		this->SetId(node.GetAttributeString("id"));
+	}
+
+	void View::SetLayoutType(LayoutType layout)
+	{
+		switch(layout)
+		{
+		case LayoutTypeAbsolute:
+			mLayoutEngine = std::unique_ptr<ILayout>(new AbsoluteLayout());
+			break;
+
+		case LayoutTypeLinear:
+			mLayoutEngine = std::unique_ptr<ILayout>(new LinearLayout());
+			break;
+		};
+	}
+
+	void View::PositionSubviews()
+	{
+		mLayoutEngine->PositionSubviews(this, !mFrameSet);
+
+		if(mParent) {
+			mParent->PositionSubviews();
+		}
+	}
+
+	View * View::CreateFromResource(const std::string &resource)
+	{
+		Asset asset(resource);
+		View *view = ViewXMLParser::Parse(&asset);
+		if (view) {
+			view->OnLoadComplete();
+		}
+
+		return view;
+	}
+
+	void View::RegisterViewClass(const std::string &name, TViewCreatorFunction creator)
+	{
+		sViewCreatorRegistry[name] = creator;
 	}
 };

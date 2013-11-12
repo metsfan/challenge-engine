@@ -51,7 +51,14 @@ namespace model
 			globalTransform[3][0], globalTransform[3][1], globalTransform[3][2], globalTransform[3][3]
 		);
 
+		mMinY = INFINITE;
+
 		ReadModelData(mScene->mRootNode, aiGlobalTransform);
+
+		/*for(int i = 0; i < mMeshes.size(); i++) {
+			ModelMesh *mesh = mMeshes[i];
+			mesh->MoveToOrigin(mMinY);
+		}*/
 
 		for(int i = 0; i < mMeshes.size(); i++) {
 			mMeshes[i]->CalculateBoneWeights(mBones);
@@ -75,6 +82,7 @@ namespace model
 				for(int k = 0; k < face->mNumIndices; k++) {
 					int index = face->mIndices[k];
 					aiVector3D pos = mesh->mVertices[index];
+
 					aiMatrix4x4 xForm = globalTransform * node->mTransformation;
 					aiMatrix3x3 normalXForm = aiMatrix3x3(xForm);
 					aiTransformVecByMatrix4(&pos, &xForm);
@@ -82,6 +90,10 @@ namespace model
 					verts[m].position[0] = pos.x;
 					verts[m].position[1] = pos.y;
 					verts[m].position[2] = pos.z;
+
+					if(pos.y < mMinY) {
+						mMinY = pos.y;
+					}
 				
 					if(mesh->mNormals != NULL) {
 						aiVector3D normal = mesh->mNormals[index];

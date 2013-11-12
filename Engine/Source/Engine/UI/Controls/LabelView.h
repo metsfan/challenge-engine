@@ -25,6 +25,9 @@ namespace challenge
 		virtual void Update(int deltaMillis);
 		virtual void Render(IGraphicsDevice *device, RenderState &state, const Frame &parentFrame);
 
+	protected:
+		virtual void ParseFromXML(XMLNode &node);
+
 	private:
 		std::string mText;
 		Font *mFont;

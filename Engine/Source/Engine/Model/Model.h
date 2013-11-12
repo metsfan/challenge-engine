@@ -59,6 +59,8 @@ namespace challenge
 
 		bool GetIntersection(const Ray &ray, float &t);
 
+		void SetBlendColor(const glm::vec4 &color) { mBlendColor = color; }
+
 	protected:
 		IGeometricShape *mBoundingVolume;
 		std::shared_ptr<ModelResource> mResource;
@@ -72,6 +74,7 @@ namespace challenge
 		ModelAnimParams mActiveAnimationData;
 		std::list<ModelAnimParams> mAnimationQueue;
 		std::string mFilepath;
+		glm::vec4 mBlendColor;
 
 		void LoadAnimations();
 		void PopQueue();

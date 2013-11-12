@@ -1,5 +1,5 @@
 #include <Engine/Challenge.h>
-#include <Engine/UI/UIManager.h>
+#include <Engine/UI/ViewManager.h>
 #include <Engine/Font/FontEngine.h>
 #include <Engine/Font/Font.h>
 #include <Engine/GameApplication.h>
@@ -9,7 +9,7 @@
 namespace challenge
 {
 	static const std::string kDefaultFont = "arial";
-	static const int kDefaultFontSize = 15;
+	static const int kDefaultFontSize = 13;
 
 	LabelView::LabelView(Frame frame) : 
 		View(frame),
@@ -83,5 +83,13 @@ namespace challenge
 			
 			mLabelSprite->Draw(device, state);
 		}
+	}
+	
+	void LabelView::ParseFromXML(XMLNode &node)
+	{
+		View::ParseFromXML(node);
+
+		this->SetText(node.GetAttributeString("text"));
+		this->SetTextColor(Color::FromHexString(node.GetAttributeString("text_color")));
 	}
 };

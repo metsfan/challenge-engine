@@ -16,7 +16,7 @@ namespace challenge
 		mCursorPosition(1),
 		mCursorIndex(0)
 	{
-		this->SetBackgroundColor(glm::vec4(255));
+		this->SetBackgroundColor(Color(255, 255, 255, 255));
 
 		this->AddKeyDownDelegate([this](View *sender, const KeyboardEvent &e) {
 			this->KeyPressed(e);
@@ -28,7 +28,7 @@ namespace challenge
 
 		this->AddInternalSubview(mTextLabel);
 
-		mCursor->SetBackgroundColor(glm::vec4(0, 0, 0, 255));
+		mCursor->SetBackgroundColor(Color(0, 0, 0, 255));
 		mTextLabel->AddSubview(mCursor);
 
 		mLetterPositions.push_back(mCursorPosition);
@@ -47,7 +47,8 @@ namespace challenge
 
 	void TextFieldView::Update(int deltaMillis)
 	{
-		if(this->IsFocused()) {
+		mCursor->SetX(50);
+		if(this->IsFocused() || true) {
 			mCursorTime += 16;
 			if(mCursorTime > kCursorDuration) {
 				mCursorActive = !mCursorActive;
@@ -55,7 +56,7 @@ namespace challenge
 			}
 
 			mCursor->SetVisible(mCursorActive);
-			mCursor->SetX(mCursorPosition-2);
+			//mCursor->SetX(mCursorPosition-2);
 		} else {
 			mCursorTime = 0;
 			mCursor->SetVisible(false);
@@ -134,5 +135,12 @@ namespace challenge
 			mCursorPosition = position;
 			mCursorIndex = minIndex;
 		}
+	}
+
+	void TextFieldView::ParseFromXML(XMLNode &node)
+	{
+		View::ParseFromXML(node);
+
+		this->SetText(node.GetAttributeString("text"));
 	}
 };

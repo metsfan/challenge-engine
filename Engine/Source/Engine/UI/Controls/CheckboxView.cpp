@@ -3,8 +3,8 @@
 
 namespace challenge
 {
-	static const std::shared_ptr<Image> sDefaultCheckedImage(new Image("C:/gamedev/dungeon-raider/DungeonMaker/Debug/checkbox_checked.png"));
-	static const std::shared_ptr<Image> sDefaultUncheckedImage(new Image("C:/gamedev/dungeon-raider/DungeonMaker/Debug/checkbox_unchecked.png"));
+	static const std::shared_ptr<Image> sDefaultCheckedImage(new Image("C:/gamedev/dungeon-raider/DungeonRaider/Debug/checkbox_checked.png"));
+	static const std::shared_ptr<Image> sDefaultUncheckedImage(new Image("C:/gamedev/dungeon-raider/DungeonRaider/Debug/checkbox_unchecked.png"));
 	static const int kCheckboxBuffer = 2;
 
 	CheckboxView::CheckboxView(Frame frame) :

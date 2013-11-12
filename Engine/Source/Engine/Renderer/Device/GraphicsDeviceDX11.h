@@ -48,7 +48,7 @@ namespace challenge
 	class GraphicsDevice<RendererTypeDX11> : public BaseGraphicsDevice
 	{
 	public:
-		GraphicsDevice(GRAPHICS_DEVICE_DESC graphicsDesc, IWindow *window);
+		GraphicsDevice(GRAPHICS_DEVICE_DESC graphicsDesc, HWND window, const Size &screenSize);
 		~GraphicsDevice();
 
 		ID3D11Device* GetD3D11Device() { return mDevice; }

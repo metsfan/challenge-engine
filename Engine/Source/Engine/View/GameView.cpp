@@ -1,12 +1,12 @@
 #include <Engine/Challenge.h>
-#include <Engine/UI/UIManager.h>
+#include <Engine/UI/ViewManager.h>
 #include "GameView.h"
 using namespace challenge;
 
 GameView::GameView()
 {
 	mRootControl = new View();
-	//UIManager::GetDefaultManager()->AddRootControl(mRootControl);
+	//ViewManager::GetDefaultManager()->AddRootControl(mRootControl);
 }
 
 GameView::~GameView()

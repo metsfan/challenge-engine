@@ -2,9 +2,9 @@
 
 #include <Engine/Challenge.h>
 #include "GameApplicationWindows.h"
-#include <Engine/Renderer/Window/WindowWindows.h>
+#include <Engine/UI/Window/WindowWindows.h>
 #include <Engine/Renderer/Device/GraphicsDeviceDX11.h>
-#include <Engine/UI/UIManager.h>
+#include <Engine/UI/ViewManager.h>
 #include <Engine/Model/ModelManager.h>
 #include <Engine/Input/InputManager.h>
 #include <Engine/Physics/PhysicsManager.h>
@@ -13,9 +13,10 @@
 
 namespace challenge
 {
-	GameApplicationWindows::GameApplicationWindows(const Size &screenSize, HINSTANCE instance) : 
+	GameApplicationWindows::GameApplicationWindows(const Size &screenSize, HINSTANCE instance, HWND window) :
 		GameApplication(screenSize),
-		mInstance(instance)
+		mInstance(instance),
+		mWinHandle(window)
 	{
 	}
 
@@ -45,9 +46,9 @@ namespace challenge
 			return false;
 		}*/
 
-		const Size &screenSize = this->GetScreenSize();
+		/*const Size &screenSize = this->GetScreenSize();
 
-		auto window = new Window<PlatformTypeWindows>(mInstance, "Dungeon Raider v0.1", screenSize);
+		auto window = new Window<PlatformTypeWin32>(mInstance, "Dungeon Raider v0.1", screenSize);
 		if(!window->Initialize()) {
 			return false;
 		}
@@ -55,11 +56,11 @@ namespace challenge
 		window->SetInputReader(mInputManager);
 
 		mWinHandle = window->GetWinHandle();
-		mWindow = window;
+		mWindow = window;*/
 
 		GRAPHICS_DEVICE_DESC graphicsDesc;
 		graphicsDesc.MultiSampling = MultisampleLevelNone;
-		mGraphicsDevice = CreateGraphicsDevice<RendererTypeDX11>(graphicsDesc, mWindow);
+		mGraphicsDevice = CreateGraphicsDevice<RendererTypeDX11>(graphicsDesc, mWinHandle, mScreenSize);
 
 		this->LoadShaderConfig("C:/gamedev/engine-dev/Engine/Engine/Source/Engine/Config/shaders.xml");
 		this->LoadEffectsConfig("C:/gamedev/engine-dev/Engine/Engine/Source/Engine/Config/effects.xml");
@@ -77,8 +78,8 @@ namespace challenge
 		}
 
 		mInputManager = new InputManager();
-		mInputManager->AddKeyboardListener(mUIManager);
-		mInputManager->AddMouseListener(mUIManager);
+		mInputManager->AddKeyboardListener(mViewManager);
+		mInputManager->AddMouseListener(mViewManager);
 
 		mPhysicsManager = new PhysicsManager();
 		mEventManager->RegisterEvent("actor_added", mPhysicsManager);
@@ -124,7 +125,7 @@ namespace challenge
 			this->PreRender();
 			//this->Render();
 			renderCallback(deltaMillis);
-			mUIManager->Render(mGraphicsDevice);
+			mViewManager->Render(mGraphicsDevice);
 			this->PostRender();
 			QueryPerformanceCounter(&time2);
 			LONG64 time = ((time2.QuadPart - time1.QuadPart) * 1000000) / freq.QuadPart;

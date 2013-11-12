@@ -23,6 +23,9 @@ namespace challenge
 		void SetValue(const std::string &value) { this->SetText(value); }
 		std::string GetValue() { return mTextLabel->GetText(); }
 
+	protected:
+		virtual void ParseFromXML(XMLNode &node);
+
 	private:
 		LabelView *mTextLabel;
 		View *mCursor;

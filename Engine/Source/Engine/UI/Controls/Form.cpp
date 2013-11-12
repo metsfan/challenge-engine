@@ -71,4 +71,9 @@ namespace challenge
 
 		return values;
 	}
+
+	void Form::ParseFromXML(XMLNode &node)
+	{
+		View::ParseFromXML(node);
+	}
 };

@@ -34,6 +34,13 @@ namespace challenge
 			}
 
 			mRootNode = XMLNode(root->name(), root->value());
+			rapidxml::xml_attribute<> *attr = root->first_attribute(0);
+			while(attr) {
+				mRootNode.SetAttribute(std::string(attr->name()), std::string(attr->value()));
+
+				attr = attr->next_attribute();
+			}
+
 			this->ParseNodeTree(mRootNode, root->first_node(0));
 		}
 	}

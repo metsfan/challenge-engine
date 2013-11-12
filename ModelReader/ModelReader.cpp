@@ -87,15 +87,15 @@ int main(int argc, char* argv[])
 
 			glm::mat4 transform = glm::rotate(glm::mat4(), 90.0f, glm::vec3(1, 0, 0));
 			transform = glm::scale(transform, glm::vec3(5));
-			/*write_directory(
-				"C:/gamedev/dungeon-raider/DungeonRaider/Common/Media/Models/molten_chasm/objects/_3ds",
-				"C:/gamedev/dungeon-raider/DungeonRaider/Common/Media/Models/molten_chasm/objects/challenge",
-				transform
-			);*/
 			write_directory(
+				"C:/gamedev/dungeon-raider/DungeonRaider/Common/Media/Models/molten_chasm/objects/_3ds",
+				"C:/gamedev/dungeon-raider/DungeonRaider/Common/Assets/Objects",
+				transform
+			);
+			/*write_directory(
 				"C:/gamedev/dungeon-raider/DungeonRaider/Common/Media/Models/skeletons/dae",
 				"C:/gamedev/dungeon-raider/DungeonRaider/Common/Assets/Characters"
-			);
+			);*/
 
 			//inFile = "C:/gamedev/dungeon-raider/DungeonRaider/Common/Media/Models/dark_mage/dark_mage_maya.dae";
 			//outFile = "C:/gamedev/dungeon-raider/DungeonRaider/Common/Assets/Characters/dark_mage.model";

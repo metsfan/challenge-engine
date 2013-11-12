@@ -4,8 +4,8 @@
 namespace challenge
 {
 	static const int kScrollbarSize = 20;
-	static const glm::vec4 kScrollbarBackgroundColor(240, 240, 240, 255);
-	static const glm::vec4 kScrollbarFillColor(200, 200, 200, 255);
+	static const Color kScrollbarBackgroundColor(240, 240, 240, 255);
+	static const Color kScrollbarFillColor(200, 200, 200, 255);
 
 	PanelView::PanelView(Frame frame) : 
 		View(frame),
@@ -156,5 +156,12 @@ namespace challenge
 		} else {
 			return this->GetAdjustedFrame();
 		}
+	}
+
+	void PanelView::ParseFromXML(XMLNode &node)
+	{
+		View::ParseFromXML(node);
+
+		this->SetScrollable(node.GetAttributeString("scrollable") == "true");
 	}
 };

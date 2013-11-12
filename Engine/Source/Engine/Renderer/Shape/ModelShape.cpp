@@ -85,7 +85,7 @@ namespace challenge
 			if(mTextures[mesh->GetMaterial()]->IsLoaded()) {
 				diffuseTex = ShaderDataTexture(mTextures[mesh->GetMaterial()]);
 				state.SetShaderData("DIFFUSE_TEXTURE", &diffuseTex);
-				colorData = ShaderDataVector4(&clearColor, 1);
+				colorData = ShaderDataVector4(&mColor, 1);
 				state.SetShaderData("COLOR", &colorData);
 			} else {
 				state.SetShaderData("DIFFUSE_TEXTURE", NULL);

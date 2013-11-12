@@ -1,0 +1,23 @@
+__author__ = 'Adam'
+
+import sys
+import os
+import xml.etree.ElementTree as ET
+
+
+class VS2012Project:
+
+    def __init__(self, filename):
+        self.document = ET.parse(filename)
+
+    def addBuildScript(self):
+        root = self.document.getroot()
+
+        itemDefinitionGroup = root.iter("itemDefinitionGroups")
+
+        try:
+            while itemDefinitionGroup:
+                print(itemDefinitionGroup.tag)
+                next(itemDefinitionGroup)
+        except StopIteration:
+            print("Done")

@@ -8,24 +8,20 @@
 
 namespace challenge
 {
-	GraphicsDevice<RendererTypeDX11>::GraphicsDevice(GRAPHICS_DEVICE_DESC graphicsDesc, IWindow *window) :
-		BaseGraphicsDevice(graphicsDesc, window),
-		mWinHandle(NULL),
+	GraphicsDevice<RendererTypeDX11>::GraphicsDevice(GRAPHICS_DEVICE_DESC graphicsDesc, HWND window, const Size &screenSize) :
+		BaseGraphicsDevice(graphicsDesc, screenSize),
+		mWinHandle(window),
 		mDevice(NULL)
 	{
 		GraphicsContext<RendererTypeDX11> *context = new GraphicsContext<RendererTypeDX11>();
 		this->SetGraphicsContext(static_cast<IGraphicsContext *>(context));
 
-		window->AttachToDevice(this);
-
 		if(mWinHandle) {
-			const Size& size = window->GetSize();
-
 			DXGI_SWAP_CHAIN_DESC sd;
 			ZeroMemory( &sd, sizeof( sd ) );
 
-			sd.BufferDesc.Width = size.width;
-			sd.BufferDesc.Height = size.height;
+			sd.BufferDesc.Width = screenSize.width;
+			sd.BufferDesc.Height = screenSize.height;
 			sd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 			sd.BufferDesc.RefreshRate.Numerator = 60;
 			sd.BufferDesc.RefreshRate.Denominator = 1;
@@ -72,8 +68,8 @@ namespace challenge
 			mDevice->CreateRenderTargetView(backBuffer, NULL, &mRenderTargetView);
 	
 			D3D11_TEXTURE2D_DESC depthStencilDesc;
-			depthStencilDesc.Width = size.width;
-			depthStencilDesc.Height = size.height;
+			depthStencilDesc.Width = screenSize.width;
+			depthStencilDesc.Height = screenSize.height;
 			depthStencilDesc.MipLevels = 1;
 			depthStencilDesc.ArraySize = 1;
 			depthStencilDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
@@ -124,8 +120,8 @@ namespace challenge
 			backBuffer->Release();
 
 			D3D11_VIEWPORT vp;
-			vp.Width = size.width;
-			vp.Height = size.height;
+			vp.Width = screenSize.width;
+			vp.Height = screenSize.height;
 			vp.MinDepth = 0.0f;
 			vp.MaxDepth = 1.0f;
 			vp.TopLeftX = 0;

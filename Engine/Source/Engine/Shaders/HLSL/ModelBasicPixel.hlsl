@@ -27,10 +27,11 @@ const float4 lineColor = (0, 0, 0, 1);
 
 float4 main(VS_OUT vOut) : SV_TARGET
 {            
-	if(gColor.a != 0) {
+	/*if(gColor.a != 0) {
 		return gColor;
-	}
+	}*/
 
-	float4 Kd = gTexture.Sample(gTriLinearSam, vOut.texCoord);
+	float4 texColor = gTexture.Sample(gTriLinearSam, vOut.texCoord);
+	float4 Kd = 1 - ((1 - texColor) * (1 - gColor));
 	return Kd;
 }

@@ -25,6 +25,10 @@
     <ProjectReference>
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
     </ProjectReference>
+    <PostBuildEvent>
+      <Command>py $(ProjectDir)\Scripts\ChallengeBuild.py</Command>
+      <Message>Post Build Event</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <BuildMacro Include="ChallengeDir">

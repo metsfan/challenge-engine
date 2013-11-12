@@ -1,3 +1,5 @@
+#pragma once
+
 #include <Engine/Challenge.h>
 #include <Engine/Util/XML/XMLAttribute.h>
 

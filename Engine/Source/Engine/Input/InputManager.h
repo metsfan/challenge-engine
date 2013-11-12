@@ -4,7 +4,7 @@
 #include <Engine/Input/KeyboardListener.h>
 #include <Engine/Input/MouseListener.h>
 #include <Engine/Util/Timer.h>
-#include <Engine/Renderer/Window.h>
+#include <Engine/UI/Window.h>
 
 namespace challenge
 {

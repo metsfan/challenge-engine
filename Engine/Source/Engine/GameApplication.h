@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Engine/Challenge.h>
-#include <Engine/Renderer/Window.h>
+#include <Engine/UI/Window.h>
 #include <Engine/Renderer/VertexBuffer.h>
 #include <Engine/Renderer/GraphicsDevice.h>
 #include <Engine/Disk/ResourceCache.h>
@@ -12,7 +12,7 @@
 
 namespace challenge 
 {
-	class UIManager;
+	class ViewManager;
 	class ModelManager;
 	class InputManager;
 	class PhysicsManager;
@@ -48,7 +48,7 @@ namespace challenge
 		void Exit() { mApplicationRunning = false; }
 
 		IGraphicsDevice* GetGraphicsDevice() { return mGraphicsDevice; }
-		UIManager *GetUIManager() const { return mUIManager; }
+		ViewManager *GetViewManager() const { return mViewManager; }
 		ModelManager *GetModelManager() const { return mModelManager; }
 		InputManager *GetInputManager() const { return mInputManager; }
 		PhysicsManager *GetPhysicsManager() const { return mPhysicsManager; }
@@ -101,7 +101,7 @@ namespace challenge
 	protected:
 		IGraphicsDevice *mGraphicsDevice;
 		IWindow *mWindow;
-		UIManager *mUIManager;
+		ViewManager *mViewManager;
 		ModelManager *mModelManager;
 		InputManager *mInputManager;
 		PhysicsManager *mPhysicsManager;
@@ -129,5 +129,7 @@ namespace challenge
 
 		void ProcessMouseEvent(const MouseEvent &e);
 		void ProcessKeyboardEvent(const KeyboardEvent &e);
+
+		void LoadStrings();
 	};
 };

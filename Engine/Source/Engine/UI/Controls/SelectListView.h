@@ -14,6 +14,8 @@ namespace challenge
 		SelectListView(Frame frame = Frame());
 		~SelectListView();
 
+		virtual void SetFrame(const Frame &frame);
+
 		void AddOption(const std::string &value, const std::string &text);
 		void SetDefaultOption(int index);
 		void SetSelectedIndex(int index);
@@ -25,6 +27,9 @@ namespace challenge
 
 		void SetValue(const std::string &value);
 		std::string GetValue() { return mItems[mSelectedIndex].value; }
+
+	protected:
+		virtual void ParseFromXML(XMLNode &node);
 
 	private:
 		std::vector<ListItem> mItems;

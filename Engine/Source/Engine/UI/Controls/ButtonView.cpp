@@ -20,6 +20,13 @@ namespace challenge
 		}
 	}
 
+	void ButtonView::ParseFromXML(XMLNode &node)
+	{
+		View::ParseFromXML(node);
+
+		this->SetTitleText(node.GetAttributeString("text"));
+	}
+
 };
 
 /*void ButtonView::OnRender(GLSLProgram *program)

@@ -163,6 +163,7 @@ namespace challenge
 			mShape = new ModelShape(device, this);
 		}
 
+		mShape->SetColor(mBlendColor);
 		mShape->SetCurrentAnimFrame(animFrame);
 		mShape->SetMaterialId(materialId);
 

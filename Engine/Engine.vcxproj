@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -130,9 +130,9 @@
     <ClCompile Include="Source\Engine\Renderer\Texture\TextureDX11.cpp" />
     <ClCompile Include="Source\Engine\Renderer\VertexBuffer.cpp" />
     <ClCompile Include="Source\Engine\Renderer\VertexBuffer\VertexBufferDX11.cpp" />
-    <ClCompile Include="Source\Engine\Renderer\Window.cpp" />
+    <ClCompile Include="Source\Engine\UI\Window.cpp" />
     <ClCompile Include="Source\Engine\Renderer\GraphicsContext.cpp" />
-    <ClCompile Include="Source\Engine\Renderer\Window\WindowWindows.cpp" />
+    <ClCompile Include="Source\Engine\UI\Window\WindowWindows.cpp" />
     <ClCompile Include="Source\Engine\UI\Controls\ButtonView.cpp" />
     <ClCompile Include="Source\Engine\UI\Controls\CheckboxView.cpp" />
     <ClCompile Include="Source\Engine\UI\Controls\FileSelectView.cpp" />
@@ -144,13 +144,18 @@
     <ClCompile Include="Source\Engine\UI\Controls\SelectListView.cpp" />
     <ClCompile Include="Source\Engine\UI\Controls\TextFieldView.cpp" />
     <ClCompile Include="Source\Engine\UI\Events\UIEventArgs.cpp" />
+    <ClCompile Include="Source\Engine\UI\Layout\AbsoluteLayout.cpp" />
+    <ClCompile Include="Source\Engine\UI\Layout\Layout.cpp" />
+    <ClCompile Include="Source\Engine\UI\Layout\LinearLayout.cpp" />
     <ClCompile Include="Source\Engine\UI\View.cpp" />
-    <ClCompile Include="Source\Engine\UI\UIManager.cpp" />
+    <ClCompile Include="Source\Engine\UI\ViewManager.cpp" />
+    <ClCompile Include="Source\Engine\UI\ViewXMLParser.cpp" />
     <ClCompile Include="Source\Engine\Util\CubeMapReader.cpp" />
     <ClCompile Include="Source\Engine\Util\Image.cpp" />
     <ClCompile Include="Source\Engine\Util\ImageParser.cpp" />
     <ClCompile Include="Source\Engine\Util\Logger.cpp" />
     <ClCompile Include="Source\Engine\Util\PrimitiveGenerator.cpp" />
+    <ClCompile Include="Source\Engine\Util\StringUtil.cpp" />
     <ClCompile Include="Source\Engine\Util\Timer.cpp" />
     <ClCompile Include="Source\Engine\Util\Util.cpp" />
     <ClCompile Include="Source\Engine\Util\XML\XMLAttribute.cpp" />
@@ -285,8 +290,8 @@
     <ClInclude Include="Source\Engine\Renderer\Types.h" />
     <ClInclude Include="Source\Engine\Renderer\VertexBuffer.h" />
     <ClInclude Include="Source\Engine\Renderer\VertexBuffer\VertexBufferDX11.h" />
-    <ClInclude Include="Source\Engine\Renderer\Window.h" />
-    <ClInclude Include="Source\Engine\Renderer\Window\WindowWindows.h" />
+    <ClInclude Include="Source\Engine\UI\Window.h" />
+    <ClInclude Include="Source\Engine\UI\Window\WindowWindows.h" />
     <ClInclude Include="Source\Engine\Disk\ResourceCache.h" />
     <ClInclude Include="Source\Engine\UI\Controls\ButtonView.h" />
     <ClInclude Include="Source\Engine\UI\Controls\CheckboxView.h" />
@@ -300,17 +305,23 @@
     <ClInclude Include="Source\Engine\UI\Controls\SelectListView.h" />
     <ClInclude Include="Source\Engine\UI\Controls\TextFieldView.h" />
     <ClInclude Include="Source\Engine\UI\Events\UIEventArgs.h" />
+    <ClInclude Include="Source\Engine\UI\Layout\AbsoluteLayout.h" />
+    <ClInclude Include="Source\Engine\UI\Layout\Layout.h" />
+    <ClInclude Include="Source\Engine\UI\Layout\LinearLayout.h" />
     <ClInclude Include="Source\Engine\UI\Types.h" />
     <ClInclude Include="Source\Engine\UI\UI.h" />
     <ClInclude Include="Source\Engine\UI\View.h" />
-    <ClInclude Include="Source\Engine\UI\UIManager.h" />
+    <ClInclude Include="Source\Engine\UI\ViewManager.h" />
+    <ClInclude Include="Source\Engine\UI\ViewXMLParser.h" />
     <ClInclude Include="Source\Engine\Util\CubeMapReader.h" />
     <ClInclude Include="Source\Engine\Util\Image.h" />
     <ClInclude Include="Source\Engine\Util\ImageParser.h" />
     <ClInclude Include="Source\Engine\Util\Logger.h" />
     <ClInclude Include="Source\Engine\Util\PrimitiveGenerator.h" />
+    <ClInclude Include="Source\Engine\Util\StringUtil.h" />
     <ClInclude Include="Source\Engine\Util\Timer.h" />
     <ClInclude Include="Source\Engine\Util\Util.h" />
+    <ClInclude Include="Source\Engine\Util\XML\XML.h" />
     <ClInclude Include="Source\Engine\Util\XML\XMLAttribute.h" />
     <ClInclude Include="Source\Engine\Util\XML\XMLDocument.h" />
     <ClInclude Include="Source\Engine\Util\XML\XMLNode.h" />
@@ -426,13 +437,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -474,6 +485,14 @@
       <ShaderModel>4.0</ShaderModel>
       <ObjectFileOutput>C:\gamedev\engine-dev\Engine\Debug\%(Filename).cso</ObjectFileOutput>
     </FxCompile>
+    <CustomBuildStep>
+      <Command>
+      </Command>
+    </CustomBuildStep>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>

@@ -57,7 +57,7 @@ namespace challenge
 	
 		if(mSpans.size() > 0) {
 			GlyphSpan front = mSpans.front();
-			Rect bounds(front.x, front.y, front.x, front.y);
+			Rect2 bounds(front.x, front.y, front.x, front.y);
 			for(int i = 0; i < mSpans.size(); i++) {
 				bounds.Include(mSpans[i].x, mSpans[i].y);
 				bounds.Include(mSpans[i].x + mSpans[i].width - 1, mSpans[i].y);

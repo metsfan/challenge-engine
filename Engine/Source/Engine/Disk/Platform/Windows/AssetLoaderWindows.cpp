@@ -3,10 +3,10 @@
 
 namespace challenge
 {
-	HMODULE AssetLoader<PlatformTypeWindows>::sModule = NULL;
-	std::string AssetLoader<PlatformTypeWindows>::sBaseFilePath;
+	HMODULE AssetLoader<PlatformTypeWin32>::sModule = NULL;
+	std::string AssetLoader<PlatformTypeWin32>::sBaseFilePath;
 
-	std::string AssetLoader<PlatformTypeWindows>::GetPathForAsset(const std::string &name)
+	std::string AssetLoader<PlatformTypeWin32>::GetPathForAsset(const std::string &name)
 	{
 		if(!sModule) {
 			sModule = GetModuleHandle(NULL);
@@ -23,7 +23,7 @@ namespace challenge
 		return sBaseFilePath + "/" + name;
 	}
 
-	std::vector<std::string> AssetLoader<PlatformTypeWindows>::GetFilesInDirectory(const std::string &directory, const std::string &filter)
+	std::vector<std::string> AssetLoader<PlatformTypeWin32>::GetFilesInDirectory(const std::string &directory, const std::string &filter)
 	{
 		std::vector<std::string> mFiles;
 

@@ -1,5 +1,5 @@
 #include <Engine/Challenge.h>
-#include <Engine/UI/UIManager.h>
+#include <Engine/UI/ViewManager.h>
 #include <Engine/Model/ModelManager.h>
 #include <Engine/Input/InputManager.h>
 #include <Engine/Physics/PhysicsManager.h>
@@ -58,7 +58,7 @@ namespace challenge
 		mInputManager->AddKeyboardListener(this);
 		mInputManager->AddMouseListener(this);
 
-		mUIManager = new UIManager(mScreenSize);
+		mViewManager = new ViewManager(mScreenSize);
 
 		//mPrimitiveGenerator = new PrimitiveGenerator(this);
 
@@ -69,7 +69,7 @@ namespace challenge
 	{
 		//mPhysicsManager->OnUpdate();
 		mInputManager->Update();
-		mUIManager->Update(0);
+		mViewManager->Update(0);
 	}
 
 	void GameApplication::PreRender()
@@ -79,7 +79,7 @@ namespace challenge
 
 	void GameApplication::Render()
 	{
-		mUIManager->Render(mGraphicsDevice);
+		mViewManager->Render(mGraphicsDevice);
 	}
 
 	void GameApplication::PostRender()
@@ -283,7 +283,7 @@ namespace challenge
 	/* GUI Methods */
 	void GameApplication::SetRootView(View *view)
 	{
-		mUIManager->SetRootView(view);
+		mViewManager->SetRootView(view);
 	}
 
 	RendererType GameApplication::GetRendererType()
@@ -352,7 +352,7 @@ namespace challenge
 
 	void GameApplication::ProcessMouseEvent(const MouseEvent &e)
 	{
-		bool handled = mUIManager->ProcessMouseEvent(e);
+		bool handled = mViewManager->ProcessMouseEvent(e);
 		if(!handled) {
 			for(int i = 0; i < mMouseListeners.size(); i++) {
 				std::shared_ptr<IMouseListener> listener = mMouseListeners[i].lock();
@@ -390,7 +390,7 @@ namespace challenge
 
 	void GameApplication::ProcessKeyboardEvent(const KeyboardEvent &e)
 	{
-		bool handled = mUIManager->ProcessKeyboardEvent(e);
+		bool handled = mViewManager->ProcessKeyboardEvent(e);
 		if(!handled) {
 			for(int i = 0; i < mKeyboardListeners.size(); i++) {
 				std::shared_ptr<IKeyboardListener> listener = mKeyboardListeners[i].lock();

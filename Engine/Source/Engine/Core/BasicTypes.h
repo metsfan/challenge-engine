@@ -6,14 +6,14 @@ namespace challenge
 {
 
 	class PlatformType {};
-	class PlatformTypeWindows : public PlatformType {};
+	class PlatformTypeWin32 : public PlatformType {};
 
 	class RendererType {};
 	class RendererTypeDX11 : public RendererType {};
 	class RendererTypeOpenGL : public RendererType {};
 
 #ifdef WINDOWS
-	typedef PlatformTypeWindows CurrentPlatform;
+	typedef PlatformTypeWin32 CurrentPlatform;
 #endif
 
 #ifndef BYTE
@@ -157,6 +157,22 @@ namespace challenge
 		Size size;
 	};
 
+	class Rect
+	{
+	public:
+		Rect() :
+			left(0), bottom(0), right(0), top(0)
+		{
+		}
+
+		Rect(real _left, real _bottom, real _right, real _top) :
+			left(_left), bottom(_bottom), right(_right), top(_top)
+		{
+		}
+
+		real left, bottom, right, top;
+	};
+
 	class Color
 	{
 	public:
@@ -173,6 +189,22 @@ namespace challenge
 		Color(int _red, int _green, int _blue, int _alpha) :
 			red(_red), green(_green), blue(_blue), alpha(_alpha)
 		{
+		}
+
+		static Color FromHexString(const std::string &hex)
+		{
+			Color color;
+			if(hex.length() == 6) {
+				unsigned int hexInt;
+				std::stringstream ss;
+				ss << std::hex << hex;
+				ss >> hexInt;
+				color.red = hexInt >> 16;
+				color.green = (hexInt << 8) >> 24;
+				color.blue = (hexInt << 16) >> 24;
+				color.alpha = 255;
+			}
+			return color;
 		}
 
 		int red, green, blue, alpha;

@@ -24,6 +24,14 @@ namespace model
 		delete mMeshBuffer;
 	}
 
+	void ModelMesh::MoveToOrigin(float miny)
+	{
+		for(int i = 0; i < mTotalFaces; i++) {
+			ModelVertex &vert = mMeshBuffer[i];
+			vert.position[1] -= miny;
+		}
+	}
+
 	void ModelMesh::CalculateBoneWeights(TBoneList &bones)
 	{
 		typedef std::map<int, std::vector<std::tuple<int, float> > > TWeightsMap;

@@ -14,7 +14,7 @@ namespace challenge
 	class Form : public View
 	{
 	public:
-		Form(Frame frame);
+		Form(Frame frame = Frame());
 		~Form();
 
 		void AddElement(FormElement *formElement);
@@ -25,6 +25,9 @@ namespace challenge
 
 		const std::map<std::string, std::string> GetValues();
 		const std::map<std::string, std::vector<std::string>> GetMultiValues();
+
+	protected:
+		virtual void ParseFromXML(XMLNode &node);
 
 	private:
 		PanelView *mPanel;

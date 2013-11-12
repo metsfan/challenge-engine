@@ -4,7 +4,7 @@
 #include <Engine/Renderer/Shader/ShaderProgram.h>
 #include <Engine/Renderer/VertexBuffer.h>
 #include <Engine/Renderer/Texture.h>
-#include <Engine/Renderer/Window.h>
+#include <Engine/UI/Window.h>
 #include <Engine/Renderer/GraphicsContext.h>
 
 namespace challenge
@@ -54,7 +54,6 @@ namespace challenge
 	{
 	public:
 		virtual IGraphicsContext* GetContext() = 0;
-		virtual IWindow* GetWindow() = 0;
 
 		virtual void EnableState(GraphicsState state) = 0;
 		virtual void DisableState(GraphicsState state) = 0;
@@ -83,11 +82,10 @@ namespace challenge
 	class BaseGraphicsDevice : public IGraphicsDevice
 	{
 	public:
-		BaseGraphicsDevice(GRAPHICS_DEVICE_DESC graphicsDesc, IWindow *window);
+		BaseGraphicsDevice(GRAPHICS_DEVICE_DESC graphicsDesc, const Size &screenSize);
 		virtual ~BaseGraphicsDevice();
 
 		IGraphicsContext* GetContext() { return mContext; }
-		IWindow* GetWindow() { return mWindow; }
 
 		void EnableState(GraphicsState state);
 		void DisableState(GraphicsState state);
@@ -99,8 +97,8 @@ namespace challenge
 
 	private:
 		GRAPHICS_DEVICE_DESC mDesc;
-		IWindow *mWindow;
 		IGraphicsContext *mContext;
+		Size mScreenSize;
 
 		virtual void SetAlphaBlending(bool state) = 0;
 		virtual void SetDepthTest(bool state) = 0;
@@ -111,9 +109,9 @@ namespace challenge
 	class GraphicsDevice : public BaseGraphicsDevice {};
 
 	template <typename Renderer>
-	static IGraphicsDevice* CreateGraphicsDevice(GRAPHICS_DEVICE_DESC graphicsDesc, IWindow *window)
+	static IGraphicsDevice* CreateGraphicsDevice(GRAPHICS_DEVICE_DESC graphicsDesc, HWND window, const Size &screenSize)
 	{
-		return new GraphicsDevice<Renderer>(graphicsDesc, window);
+		return new GraphicsDevice<Renderer>(graphicsDesc, window, screenSize);
 	}
 };
 

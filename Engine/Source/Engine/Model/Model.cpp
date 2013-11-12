@@ -15,14 +15,16 @@ namespace challenge
 	Model::Model(std::shared_ptr<ModelResource> resource) :
 		mActiveAnimFrame(0),
 		mResource(resource),
-		mBoundingVolume(NULL)
+		mBoundingVolume(NULL),
+		mBlendColor(0)
 	{
 	}
 
 	Model::Model(const std::string &filepath) :
 		mActiveAnimFrame(0),
 		mBoundingVolume(NULL),
-		mFilepath(filepath)
+		mFilepath(filepath),
+		mBlendColor(0)
 	{
 		memset(&mActiveAnimation, 0, sizeof(ModelAnimation));
 
@@ -229,6 +231,7 @@ namespace challenge
 
 	void Model::Render(IGraphicsDevice *device, RenderState &state)
 	{
+		mResource->SetBlendColor(mBlendColor);
 		mResource->Render(device, state, mActiveAnimation.currentFrame, 0);
 	}
 
