@@ -8,12 +8,13 @@ namespace challenge
 	class GameApplicationWindows : public GameApplication
 	{
 	public:
-		GameApplicationWindows(const Size &screenSize, HINSTANCE instance, HWND window);
+		GameApplicationWindows(std::shared_ptr<Window> window, 
+								std::shared_ptr<IApplicationListener> listener,
+								HINSTANCE instance, 
+								HWND winHandle);
 		virtual ~GameApplicationWindows(void);
 
 		virtual bool Initialize();
-
-		virtual void RunMainLoop(AppCallback updateCallback, AppCallback renderCallback);
 
 		HWND GetWinHandle() { return mWinHandle; }
 

@@ -2,27 +2,28 @@
 
 #include <Engine/Challenge.h>
 #include <Engine/Renderer/Types.h>
-#include <Engine/Renderer/Window.h>
 
 namespace challenge
 {
 	static const int kDefaultWindowStyle = WS_OVERLAPPEDWINDOW;
 	static const int kWindowsFullscreenStyle = WS_EX_TOPMOST | WS_POPUP;
 
-	template<>
-	class Window<PlatformTypeWindows> : public BaseWindow
+	class CWindow
 	{
 	public:
-		Window(HINSTANCE hInstance, std::string title, Size size);
-		~Window();
+		CWindow(HINSTANCE hInstance, std::string title, Size size, std::shared_ptr<IApplicationListener> listener);
+		~CWindow();
 
 		bool Initialize();
+
+		void SetTitle(std::string title);
+		const std::string& GetTitle() const { return mTitle; }
 
 		void SetWindowVisibility(WindowVisibility visibility);
 
 		void SetSize(Size size);
 
-		void AttachToDevice(GraphicsDevice<RendererTypeDX11> *device);
+		int StartMainLoop();
 
 		HWND GetWinHandle() { return mWinHandle; }
 
@@ -32,8 +33,21 @@ namespace challenge
 		HINSTANCE mInstance;
 		LPCSTR mWindowClass;
 		ATOM mRegisterClass;
+		BOOL mRunning;
+		Size mSize;
+		std::string mTitle;
+		std::shared_ptr<IApplicationListener> mListener;
+
+		GameApplicationWindows *mApplication;
+
+		void AttachToDevice(GraphicsDevice<RendererTypeDX11> *device);
 
 		ATOM CreateRegisterClass(HINSTANCE instance);
 		static LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 	};
+
+	static int CreateGameWindow(_In_ HINSTANCE hInstance,
+		_In_opt_ HINSTANCE hPrevInstance,
+		_In_ LPTSTR    lpCmdLine,
+		_In_ int       nCmdShow);
 };

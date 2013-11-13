@@ -7,6 +7,7 @@
 #include <Engine/GameApplication.h>
 #include <Engine/UI/Window.h>
 #include <Engine/UI/ViewXMLParser.h>
+#include <Engine/Input/InputManager.h>
 
 #include <Engine/UI/Layout/AbsoluteLayout.h>
 #include <Engine/UI/Layout/LinearLayout.h>
@@ -162,14 +163,19 @@ namespace challenge
 
 	void View::SetFocused(bool focused)
 	{
-		if (focused) {
-			this->GetWindow()->SetFocusedView(this);
-		}
-		else if (mFocused) {
-			this->GetWindow()->UnfocusView(this);
-		}
+		auto window = this->GetWindow();
 
-		mFocused = focused;
+		if (window) {
+			if (focused) {
+				this->GetWindow()->SetFocusedView(this);
+			}
+
+			else if (mFocused) {
+				this->GetWindow()->UnfocusView(this);
+			}
+
+			mFocused = focused;
+		}
 	}
 
 	void View::ClipSubviews(bool clip)
@@ -181,7 +187,7 @@ namespace challenge
 		}
 	}
 
-	IWindow* View::GetWindow()
+	Window* View::GetWindow()
 	{
 		if(mWindow) {
 			return mWindow;
@@ -224,6 +230,11 @@ namespace challenge
 		mKeyboardDelegates[KeyboardEventKeyDown].push_back(eventDelegate);
 	}
 
+	void View::AddKeyPressDelegate(KeyboardEventDelegate eventDelegate)
+	{
+		mKeyboardDelegates[KeyboardEventKeyPress].push_back(eventDelegate);
+	}
+
 	void View::AddKeyUpDelegate(KeyboardEventDelegate eventDelegate)
 	{
 		mKeyboardDelegates[KeyboardEventKeyUp].push_back(eventDelegate);
@@ -233,6 +244,7 @@ namespace challenge
 	{
 		return ContainsPoint(e.position);
 	}
+
 
 	View* View::GetSelectedView(const Point &p)
 	{

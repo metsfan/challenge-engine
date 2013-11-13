@@ -2,7 +2,6 @@
 
 #include <Engine/Challenge.h>
 #include <Engine/Renderer/Renderer.h>
-#include <Engine/Input/InputManager.h>
 #include <Engine/UI/Events/UIEventArgs.h>
 #include <Engine/UI/Types.h>
 #include <Engine/Util/XML/XML.h>
@@ -72,6 +71,7 @@ namespace challenge
 
 	class View
 	{
+		friend class Window;
 		friend class ViewManager;
 		friend class ViewXMLParser;
 
@@ -114,6 +114,11 @@ namespace challenge
 		real GetWidth() { return mFrame.size.width; }
 		real GetHeight() { return mFrame.size.height; }
 
+		const Size& GetSize() { return mFrame.size;  }
+		const Point& GetPosition() { return mFrame.origin;  }
+
+		Point GetPositionInView(const Point &position, View *other);
+
 		virtual void SetPadding(const Rect &padding) { mPadding = padding; }
 		virtual void SetLeftPadding(real padding) { mPadding.left = padding; }
 		virtual void SetBottomPadding(real padding) { mPadding.bottom = padding; }
@@ -153,8 +158,8 @@ namespace challenge
 		void SetFocused(bool focused);
 		bool IsFocused() { return mFocused; }
 
-		IWindow* GetWindow();
-		void SetWindow(IWindow *window) { mWindow = window; }
+		Window* GetWindow();
+		void SetWindow(Window *window) { mWindow = window; }
 
 		void SetLayoutType(LayoutType layout);
 
@@ -164,7 +169,9 @@ namespace challenge
 		void AddMouseClickDelegate(MouseEventDelegate eventDelegate);
 		void AddMouseMoveDelegate(MouseEventDelegate eventDelegate);
 		void AddMouseWheelMoveDelegate(MouseEventDelegate eventDelegate);
+
 		void AddKeyDownDelegate(KeyboardEventDelegate eventDelegate);
+		void AddKeyPressDelegate(KeyboardEventDelegate eventDelegate);
 		void AddKeyUpDelegate(KeyboardEventDelegate eventDelegate);
 
 		static View * CreateFromResource(const std::string &resource);
@@ -179,6 +186,8 @@ namespace challenge
 		virtual void ParseFromXML(XMLNode &node);
 		virtual void CalculateChildFrames() {}
 		virtual void OnLoadComplete() {}
+
+		void SetFocusedInternal(bool focused) { mFocused = focused; }
 
 	private:
 		Frame mFrame;
@@ -202,7 +211,7 @@ namespace challenge
 		Frame mClipRegion;
 		bool mFrameSet;
 
-		IWindow *mWindow;
+		Window *mWindow;
 
 		std::unique_ptr<ILayout> mLayoutEngine;
 

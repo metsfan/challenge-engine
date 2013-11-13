@@ -5,77 +5,156 @@
 
 namespace challenge
 {
-	BaseWindow::BaseWindow(std::string title, Size size, IWindowListener *listener) :
-		mSize(size),
-		mTitle(title),
-		mInputReader(NULL),
-		mListener(listener),
-		mViewManager(new ViewManager(size))
+	Window::Window(Size size) :
+		View(Frame(0, 0, size.width, size.height)),
+		mFocusedView(NULL)
+	{
+		mCamera = new OrthoCamera(0.0f, size.width, size.height, 0.0f, -1000.0f, 1000.0f, size);
+
+		this->RegisterCoreUIClasses();
+	}
+
+	Window::~Window()
 	{
 	}
 
-	BaseWindow::~BaseWindow()
+	bool Window::Initialize()
 	{
-		this->WindowDestroyed();
-
-		delete mListener;
+		return true;
 	}
 
-	void BaseWindow::SetRootView(View *rootView)
+	void Window::SetFocusedView(View *focusedView)
 	{
-		mViewManager->SetRootView(rootView);
-		rootView->SetWindow(this);
+		if (mFocusedView) {
+			mFocusedView->mFocused = false;
+		}
+
+		mFocusedView = focusedView;
 	}
 
-	void BaseWindow::SetFocusedView(View *focusedView)
+	void Window::UnfocusView(View *view)
 	{
-		mViewManager->SetFocusedView(focusedView);
-	}
-
-	void BaseWindow::UnfocusView(View *view)
-	{
-		mViewManager->UnfocusView(view);
-	}
-
-	void BaseWindow::WindowInitialized(GameApplication *app)
-	{
-		mApplication = app;
-
-		if (mListener) {
-			mListener->OnWindowInitialized(this, app);
+		if (mFocusedView == view) {
+			mFocusedView = NULL;
+			view->mFocused = false;
 		}
 	}
 
-	void BaseWindow::WindowDestroyed()
+	void Window::Update(int deltaMillis)
 	{
-		if (mListener) {
-			mListener->OnWindowDestroyed(this, mApplication);
-		}
+		View::Update(deltaMillis);
 	}
 
-	void BaseWindow::WindowUpdate(uint32_t deltaMillis)
+	void Window::Render(IGraphicsDevice *device, RenderState &state, const Frame &parentFrame)
 	{
-		if (mListener) {
-			mListener->OnWindowUpdate(this, mApplication, deltaMillis);
-		}
+		state.SetProjection(mCamera->GetProjectionMatrix());
 
-		mViewManager->Update(deltaMillis);
+		//state.PushTransform(mCamera->GetViewMatrix());
+		device->DisableState(DepthTest);
+		device->EnableState(AlphaBlending);
+
+		View::Render(device, state, parentFrame);
 	}
 
-	void BaseWindow::WindowDraw()
+	void Window::RegisterCoreUIClasses()
 	{
-		// Render frame from listener
+		View::RegisterViewClass("View", [](Frame frame) { return new View(frame); });
+		View::RegisterViewClass("Button", [](Frame frame) { return new ButtonView(frame); });
+		View::RegisterViewClass("Checkbox", [](Frame frame) { return new CheckboxView(frame); });
+		View::RegisterViewClass("Form", [](Frame frame) { return new Form(frame); });
+		View::RegisterViewClass("Label", [](Frame frame) { return new LabelView(frame); });
+		View::RegisterViewClass("Options", [](Frame frame) { return new OptionsView(frame); });
+		View::RegisterViewClass("Panel", [](Frame frame) { return new PanelView(frame); });
+		View::RegisterViewClass("SelectList", [](Frame frame) { return new SelectListView(frame); });
+		View::RegisterViewClass("TextField", [](Frame frame) { return new TextFieldView(frame); });
+	}
 
-		mApplication->PreRender();
-
-		if (mListener) {
-			mListener->OnWindowDraw(this, mApplication, mApplication->GetGraphicsDevice());
+	/* IKeyboardListener methods */
+	bool Window::OnKeyboardEvent(const KeyboardEvent &e)
+	{
+		const TViewList &subviews = this->GetSubviews();
+		if (!subviews.size()) {
+			return false;
 		}
 
-		// Render GUI after
+		View *selectedView = mFocusedView;
+		bool handled = false;
 
-		mViewManager->Render(mApplication->GetGraphicsDevice());
+		while (selectedView) {
+			if (selectedView->mKeyboardDelegates.size() > 0 &&
+				selectedView->mKeyboardDelegates[e.type].size() > 0) {
+				std::vector<KeyboardEventDelegate> delegates = selectedView->mKeyboardDelegates[e.type];
 
-		mApplication->PostRender();
+				for (int i = 0; i < delegates.size(); i++) {
+					delegates[i](selectedView, e);
+				}
+
+				handled = true;
+			}
+
+			selectedView = selectedView->GetParent();
+		}
+
+		return handled;
+	}
+
+	/* IMouseListener methods */
+	bool Window::OnMouseEvent(const MouseEvent &e)
+	{
+		const TViewList &subviews = this->GetSubviews();
+		if (!subviews.size()) {
+			return false;
+		}
+
+		bool handled = false;
+
+		if (e.type == MouseEventMouseWheelMove) {
+			View *selectedView = mFocusedView;
+			while (selectedView) {
+				if (selectedView->mMouseDelegates.size() > 0 &&
+					selectedView->mMouseDelegates[e.type].size() > 0) {
+					std::vector<MouseEventDelegate> delegates = selectedView->mMouseDelegates[e.type];
+
+					for (int i = 0; i < delegates.size(); i++) {
+						delegates[i](selectedView, e);
+					}
+
+					handled = true;
+				}
+
+				selectedView = selectedView->GetParent();
+			}
+		}
+		else {
+			View *selectedView = this->GetSelectedView(e.position);
+			if (e.type == MouseEventMouseDown) {
+				if (mFocusedView) {
+					mFocusedView->SetFocused(false);
+				}
+
+				mFocusedView = selectedView;
+				mFocusedView->SetFocused(true);
+			}
+
+
+			while (selectedView) {
+				if (selectedView->mMouseDelegates.size() > 0 &&
+					selectedView->mMouseDelegates[e.type].size() > 0) {
+					std::vector<MouseEventDelegate> delegates = selectedView->mMouseDelegates[e.type];
+
+					for (int i = 0; i < delegates.size(); i++) {
+						delegates[i](selectedView, e);
+					}
+				}
+
+				selectedView = selectedView->GetParent();
+
+				if (selectedView != this) {
+					handled = true;
+				}
+			}
+		}
+
+		return handled;
 	}
 };

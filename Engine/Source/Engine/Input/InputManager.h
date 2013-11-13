@@ -15,15 +15,14 @@ namespace challenge
 	static const int kCtrlKey = 17;
 	static const int kAltKey = 18;
 
-	class InputManager : public IWindowInputReader
+	class InputManager
 	{
 	public:
 		InputManager();
 
-		void AddKeyboardListener(IKeyboardListener *pListener);
-		void AddMouseListener(IMouseListener *pListener);
+		void AddKeyboardListener(std::shared_ptr<IKeyboardListener> listener);
+		void AddMouseListener(std::shared_ptr<IMouseListener> listener);
 
-		/* IWindowInputReader methods */
 		void ProcessKeyboardEvent(KeyboardEventType type, unsigned int keyCode);
 		void ProcessMouseEvent(MouseEventType type, unsigned int button, Point position);
 		void ProcessMouseWheelEvent(MouseEventType type, int delta);
@@ -38,22 +37,16 @@ namespace challenge
 		void Update();
 
 		/* Keyboard Events */
-		void KeyDown(const KeyboardEvent &e);
-		void KeyUp(const KeyboardEvent &e);
-		void KeyPress(const KeyboardEvent &e);
+		void PostKeyboardEvent(const KeyboardEvent &e);
 
 		/* Mouse Events */
-		void MouseDown(const MouseEvent &e);
-		void MouseUp(const MouseEvent &e);
-		void MouseMove(const MouseEvent &e);
-		void MouseClick(const MouseEvent &e);
-		void MouseDblClick(const MouseEvent &e);
-		void MouseWheelMove(const MouseEvent &e);
+		void PostMouseEvent(const MouseEvent &e);
 
 	private:
 		CTimer *mKeyboardHoldTimer;
-		TKeyboardListenerList mKeyboardListeners;
-		TMouseListenerList mMouseListeners;
+		std::vector<std::weak_ptr<IKeyboardListener>> mKeyboardListeners;
+		std::vector<std::weak_ptr<IMouseListener>> mMouseListeners;
+
 		std::vector<unsigned int> mActiveMouseButtons;
 		std::vector<unsigned int> mActiveKeys;
 		Point mMousePosition;

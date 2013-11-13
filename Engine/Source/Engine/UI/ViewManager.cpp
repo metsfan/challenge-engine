@@ -25,19 +25,19 @@ namespace challenge
 
 	void ViewManager::SetFocusedView(View *view)
 	{
-		if (mFocusedView) {
+		/*if (mFocusedView) {
 			mFocusedView->mFocused = false;
 		}
 
-		mFocusedView = view;
+		mFocusedView = view;*/
 	}
 
 	void ViewManager::UnfocusView(View *view)
 	{
-		if (mFocusedView == view) {
+		/*if (mFocusedView == view) {
 			mFocusedView = NULL;
 			view->mFocused = false;
-		}
+		}*/
 	}
 
 	void ViewManager::Update(int deltaMillis)

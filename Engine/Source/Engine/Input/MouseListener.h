@@ -42,11 +42,6 @@ namespace challenge
 	class IMouseListener
 	{
 	public:
-		virtual void OnMouseDown(const MouseEvent &e) = 0;
-		virtual void OnMouseUp(const MouseEvent &e) = 0;
-		virtual void OnMouseMove(const MouseEvent &e) = 0;
-		virtual void OnMouseClick(const MouseEvent &e) = 0;
-		virtual void OnMouseDblClick(const MouseEvent &e) = 0;
-		virtual void OnMouseWheelMove(const MouseEvent &e) = 0;
+		virtual bool OnMouseEvent(const MouseEvent &e) = 0;
 	};
 };

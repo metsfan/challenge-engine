@@ -35,6 +35,7 @@
     <ClCompile Include="Source\Engine\Model\ModelResource.cpp" />
     <ClCompile Include="Source\Engine\Physics\BVH\Octree.cpp" />
     <ClCompile Include="Source\Engine\Physics\Shapes\OBBShape.cpp" />
+    <ClCompile Include="Source\Engine\Platform\Win32\CWindow.cpp" />
     <ClCompile Include="Source\Engine\Renderer\Camera\Camera.cpp" />
     <ClCompile Include="Source\Engine\Renderer\Camera\OrthoCamera.cpp" />
     <ClCompile Include="Source\Engine\Renderer\Camera\PerspectiveCamera.cpp" />
@@ -132,7 +133,6 @@
     <ClCompile Include="Source\Engine\Renderer\VertexBuffer\VertexBufferDX11.cpp" />
     <ClCompile Include="Source\Engine\UI\Window.cpp" />
     <ClCompile Include="Source\Engine\Renderer\GraphicsContext.cpp" />
-    <ClCompile Include="Source\Engine\UI\Window\WindowWindows.cpp" />
     <ClCompile Include="Source\Engine\UI\Controls\ButtonView.cpp" />
     <ClCompile Include="Source\Engine\UI\Controls\CheckboxView.cpp" />
     <ClCompile Include="Source\Engine\UI\Controls\FileSelectView.cpp" />
@@ -291,7 +291,7 @@
     <ClInclude Include="Source\Engine\Renderer\VertexBuffer.h" />
     <ClInclude Include="Source\Engine\Renderer\VertexBuffer\VertexBufferDX11.h" />
     <ClInclude Include="Source\Engine\UI\Window.h" />
-    <ClInclude Include="Source\Engine\UI\Window\WindowWindows.h" />
+    <ClInclude Include="Source\Engine\Platform\Win32\CWindow.h" />
     <ClInclude Include="Source\Engine\Disk\ResourceCache.h" />
     <ClInclude Include="Source\Engine\UI\Controls\ButtonView.h" />
     <ClInclude Include="Source\Engine\UI\Controls\CheckboxView.h" />

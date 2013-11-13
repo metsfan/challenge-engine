@@ -22,6 +22,14 @@ namespace challenge
 			this->KeyPressed(e);
 		});
 
+		this->AddKeyPressDelegate([this](View *sender, const KeyboardEvent &e) {
+			// Do nothing, just capture the event so others can't.
+		});
+
+		this->AddKeyUpDelegate([this](View *sender, const KeyboardEvent &e) {
+			// Do nothing, just capture the event so others can't.
+		});
+
 		this->AddMouseDownDelegate([this](View *sender, const MouseEvent &e) {
 			this->JumpCursor(e);
 		});

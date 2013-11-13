@@ -29,21 +29,30 @@ namespace challenge
 
 	class View;
 
-	typedef std::function<void(int)> AppCallback;
+	class GameApplication;
 
-	class GameApplication : public IKeyboardListener,
-							public IMouseListener
+	class IApplicationListener
 	{
 	public:
-		GameApplication(const Size &screenSize);
+		virtual void OnApplicationInitialized(GameApplication *app) = 0;
+		virtual void OnApplicationDestroyed(GameApplication *app) = 0;
+		virtual void OnApplicationUpdate(GameApplication *app, uint32_t deltaMillis) = 0;
+		virtual void OnApplicationRender(GameApplication *app, IGraphicsDevice *device) = 0;
+	};
+
+	typedef std::function<void(int)> AppCallback;
+
+	class GameApplication
+	{
+	public:
+		GameApplication(std::shared_ptr<Window> window, std::shared_ptr<IApplicationListener> listener);
 		virtual ~GameApplication();
 
 		virtual bool Initialize();
-		IWindow* GetWindow() { return mWindow; }
+		std::shared_ptr<Window> GetWindow() { return mWindow; }
 
 		bool IsInitialized() { return mInitialized; }
 		
-		virtual void RunMainLoop(AppCallback updateCallback, AppCallback renderCallback) = 0;
 		bool IsRunning() { return mApplicationRunning; }
 		void Exit() { mApplicationRunning = false; }
 
@@ -59,7 +68,8 @@ namespace challenge
 
 		const Size& GetScreenSize() { return mScreenSize; }
 
-		void Update();
+		void Update(uint32_t deltaMillis);
+
 		void PreRender();
 		void Render();
 		void PostRender();
@@ -77,30 +87,25 @@ namespace challenge
 		void AddKeyboardListener(std::shared_ptr<IKeyboardListener> listener);
 		void AddMouseListener(std::shared_ptr<IMouseListener> listener);
 
+		void ProcessKeyboardEvent(KeyboardEventType type, unsigned int keyCode);
+		void ProcessMouseEvent(MouseEventType type, unsigned int button, const Point &position);
+		void ProcessMouseWheelEvent(MouseEventType type, int delta);
+
 		/* Factory methods */
 		Model* CreateModel(const std::string &filename);
 		Model* CreateModel(const std::string &name, const std::vector<ModelMesh *> &meshes);
 		Model* CreatePrimitive(PrimitiveShape type);
 
 		/* GUI Methods */
-		void SetRootView(View *view);
 
-		/* IKeyboardListener methods */
-		void OnKeyDown(const KeyboardEvent &e);
-		void OnKeyUp(const KeyboardEvent &e);
-		void OnKeyPress(const KeyboardEvent &e);
-
-		/* IMouseListener methods */
-		void OnMouseDown(const MouseEvent &e);
-		void OnMouseUp(const MouseEvent &e);
-		void OnMouseMove(const MouseEvent &e);
-		void OnMouseClick(const MouseEvent &e);
-		void OnMouseDblClick(const MouseEvent &e);
-		void OnMouseWheelMove(const MouseEvent &e);
+		void ProcessMouseEvent(const MouseEvent &e);
+		void ProcessKeyboardEvent(const KeyboardEvent &e);
 
 	protected:
+		std::shared_ptr<Window> mWindow;
+		std::shared_ptr<IApplicationListener> mListener;
+
 		IGraphicsDevice *mGraphicsDevice;
-		IWindow *mWindow;
 		ViewManager *mViewManager;
 		ModelManager *mModelManager;
 		InputManager *mInputManager;
@@ -124,11 +129,6 @@ namespace challenge
 
 	private:
 		bool mApplicationRunning;
-		std::vector<std::weak_ptr<IKeyboardListener>> mKeyboardListeners;
-		std::vector<std::weak_ptr<IMouseListener>> mMouseListeners;
-
-		void ProcessMouseEvent(const MouseEvent &e);
-		void ProcessKeyboardEvent(const KeyboardEvent &e);
 
 		void LoadStrings();
 	};

@@ -1,5 +1,5 @@
 #include <Engine/Challenge.h>
-#include <Engine/UI/ViewManager.h>
+#include <Engine/UI/Window.h>
 #include <Engine/Model/ModelManager.h>
 #include <Engine/Input/InputManager.h>
 #include <Engine/Physics/PhysicsManager.h>
@@ -20,8 +20,9 @@ namespace challenge
 	GameApplication* GameApplication::mGameInstance = NULL;
 	Font* GameApplication::sDefaultFont = NULL;
 
-	GameApplication::GameApplication(const Size &screenSize) :
-		mScreenSize(screenSize),
+	GameApplication::GameApplication(std::shared_ptr<Window> window, std::shared_ptr<IApplicationListener> listener) :
+		mWindow(window),
+		mListener(listener),
 		mInitialized(false),
 		mEventManager(NULL),
 		mNetworkManager(NULL),
@@ -35,7 +36,9 @@ namespace challenge
 
 	GameApplication::~GameApplication()
 	{
-		delete mWindow;
+		if (mListener) {
+			mListener->OnApplicationDestroyed(this);
+		}
 	}
 
 	bool GameApplication::Initialize()
@@ -55,21 +58,25 @@ namespace challenge
 		}*/
 
 		mInputManager = new InputManager();
-		mInputManager->AddKeyboardListener(this);
-		mInputManager->AddMouseListener(this);
+		this->AddKeyboardListener(mWindow);
+		this->AddMouseListener(mWindow);
 
-		mViewManager = new ViewManager(mScreenSize);
-
-		//mPrimitiveGenerator = new PrimitiveGenerator(this);
+		if (mListener) {
+			mListener->OnApplicationInitialized(this);
+		}
 
 		return true;
 	}
 
-	void GameApplication::Update()
+	void GameApplication::Update(uint32_t deltaMillis)
 	{
-		//mPhysicsManager->OnUpdate();
 		mInputManager->Update();
-		mViewManager->Update(0);
+
+		mWindow->Update(deltaMillis);
+
+		if (mListener) {
+			mListener->OnApplicationUpdate(this, deltaMillis);
+		}
 	}
 
 	void GameApplication::PreRender()
@@ -79,7 +86,16 @@ namespace challenge
 
 	void GameApplication::Render()
 	{
-		mViewManager->Render(mGraphicsDevice);
+		this->PreRender();
+
+		if (mListener) {
+			mListener->OnApplicationRender(this, mGraphicsDevice);
+		}
+
+		RenderState windowState;
+		mWindow->Render(mGraphicsDevice, windowState, Frame());
+
+		this->PostRender();
 	}
 
 	void GameApplication::PostRender()
@@ -223,12 +239,27 @@ namespace challenge
 
 	void GameApplication::AddKeyboardListener(std::shared_ptr<IKeyboardListener> listener)
 	{
-		mKeyboardListeners.push_back(std::weak_ptr<IKeyboardListener>(listener));
+		mInputManager->AddKeyboardListener(listener);
 	}
 
 	void GameApplication::AddMouseListener(std::shared_ptr<IMouseListener> listener)
 	{
-		mMouseListeners.push_back(std::weak_ptr<IMouseListener>(listener));
+		mInputManager->AddMouseListener(listener);
+	}
+
+	void GameApplication::ProcessKeyboardEvent(KeyboardEventType type, unsigned int keyCode)
+	{
+		mInputManager->ProcessKeyboardEvent(type, keyCode);
+	}
+
+	void GameApplication::ProcessMouseEvent(MouseEventType type, unsigned int button, const Point &position)
+	{
+		mInputManager->ProcessMouseEvent(type, button, position);
+	}
+
+	void GameApplication::ProcessMouseWheelEvent(MouseEventType type, int delta)
+	{
+		mInputManager->ProcessMouseWheelEvent(type, delta);
 	}
 
 	/* Factory Methods */
@@ -281,10 +312,6 @@ namespace challenge
 	}
 
 	/* GUI Methods */
-	void GameApplication::SetRootView(View *view)
-	{
-		mViewManager->SetRootView(view);
-	}
 
 	RendererType GameApplication::GetRendererType()
 	{
@@ -303,86 +330,14 @@ namespace challenge
 		return mGameInstance;
 	}
 
-	/* IKeyboardListener methods */
-	void GameApplication::OnKeyDown(const KeyboardEvent &e)
-	{
-		this->ProcessKeyboardEvent(e);
-	}
-
-	void GameApplication::OnKeyUp(const KeyboardEvent &e)
-	{
-		this->ProcessKeyboardEvent(e);
-	}
-
-	void GameApplication::OnKeyPress(const KeyboardEvent &e)
-	{
-		this->ProcessKeyboardEvent(e);
-	}
-
-	/* IMouseListener methods */
-	void GameApplication::OnMouseDown(const MouseEvent &e)
-	{
-		this->ProcessMouseEvent(e);
-	}
-
-	void GameApplication::OnMouseUp(const MouseEvent &e)
-	{
-		this->ProcessMouseEvent(e);
-	}
-
-	void GameApplication::OnMouseMove(const MouseEvent &e)
-	{
-		this->ProcessMouseEvent(e);
-	}
-
-	void GameApplication::OnMouseClick(const MouseEvent &e)
-	{
-		this->ProcessMouseEvent(e);
-	}
-
-	void GameApplication::OnMouseDblClick(const MouseEvent &e)
-	{
-		this->ProcessMouseEvent(e);
-	}
-
-	void GameApplication::OnMouseWheelMove(const MouseEvent &e)
-	{
-		this->ProcessMouseEvent(e);
-	}
-
-	void GameApplication::ProcessMouseEvent(const MouseEvent &e)
+	/*void GameApplication::ProcessMouseEvent(const MouseEvent &e)
 	{
 		bool handled = mViewManager->ProcessMouseEvent(e);
 		if(!handled) {
 			for(int i = 0; i < mMouseListeners.size(); i++) {
 				std::shared_ptr<IMouseListener> listener = mMouseListeners[i].lock();
-				if(listener) {
-					switch(e.type)
-					{
-					case MouseEventMouseDown:
-						listener->OnMouseDown(e);
-						break;
-
-					case MouseEventMouseMove:
-						listener->OnMouseMove(e);
-						break;
-
-					case MouseEventMouseUp:
-						listener->OnMouseUp(e);
-						break;
-
-					case MouseEventMouseClick:
-						listener->OnMouseClick(e);
-						break;
-
-					case MouseEventMouseDblClick:
-						listener->OnMouseDblClick(e);
-						break;
-
-					case MouseEventMouseWheelMove:
-						listener->OnMouseWheelMove(e);
-						break;
-					}
+				if (listener) {
+					listener->OnMouseEvent(e);
 				}
 			}
 		}
@@ -395,24 +350,11 @@ namespace challenge
 			for(int i = 0; i < mKeyboardListeners.size(); i++) {
 				std::shared_ptr<IKeyboardListener> listener = mKeyboardListeners[i].lock();
 				if(listener) {
-					switch(e.type)
-					{
-					case KeyboardEventKeyDown:
-						listener->OnKeyDown(e);
-						break;
-
-					case KeyboardEventKeyPress:
-						listener->OnKeyPress(e);
-						break;
-
-					case KeyboardEventKeyUp:
-						listener->OnKeyUp(e);
-						break;
-					}
+					listener->OnKeyboardEvent(e);
 				}
 			}
 		}
-	}
+	}*/
 }
 
 

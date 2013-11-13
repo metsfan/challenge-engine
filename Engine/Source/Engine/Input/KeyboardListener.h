@@ -43,8 +43,6 @@ namespace challenge
 	class IKeyboardListener
 	{
 	public:
-		virtual void OnKeyDown(const KeyboardEvent &e) = 0;
-		virtual void OnKeyUp(const KeyboardEvent &e) = 0;
-		virtual void OnKeyPress(const KeyboardEvent &e) = 0;
+		virtual bool OnKeyboardEvent(const KeyboardEvent &e) = 0;
 	};
 };

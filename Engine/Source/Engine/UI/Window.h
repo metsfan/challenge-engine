@@ -4,6 +4,7 @@
 #include <Engine/Renderer/Types.h>
 #include <Engine/Input/KeyboardListener.h>
 #include <Engine/Input/MouseListener.h>
+#include <Engine/UI/View.h>
 
 namespace challenge
 {
@@ -31,16 +32,7 @@ namespace challenge
 	class IGraphicsDevice;
 	class ViewManager;
 
-	class IWindowListener
-	{
-	public:
-		virtual void OnWindowInitialized(IWindow *window, GameApplication *app) = 0;
-		virtual void OnWindowDestroyed(IWindow *window, GameApplication *app) = 0;
-		virtual void OnWindowUpdate(IWindow *window, GameApplication *app, uint32_t deltaMillis) = 0;
-		virtual void OnWindowDraw(IWindow *window, GameApplication *app, IGraphicsDevice *device) = 0;
-	};
-
-	class IWindow
+	/*class IWindow
 	{
 	public:
 		virtual bool Initialize() = 0;
@@ -59,47 +51,39 @@ namespace challenge
 
 		virtual void SetTitle(std::string title) = 0;
 		virtual const std::string& GetTitle() const = 0;
-	};
+	};*/
 
-	class BaseWindow : public IWindow
+	class Window : public View,
+					public IKeyboardListener,
+					public IMouseListener
 	{
 	public:
-		BaseWindow(std::string title, Size size, IWindowListener *listener);
-		virtual ~BaseWindow();
+		Window(Size size);
+		virtual ~Window();
 
-		void SetRootView(View *rootView);
+		virtual bool Initialize();
+
 		void SetFocusedView(View *focusedView);
 		void UnfocusView(View *view);
-
-		void SetInputReader(IWindowInputReader *reader) { mInputReader = reader; }
 
 		virtual void SetWindowVisibility(WindowVisibility visibility) { mVisibility = visibility; }
 		WindowVisibility GetWindowVisibility() { return mVisibility; }
 
-		virtual void SetSize(Size size) { mSize = size; }
-		const Size& GetSize() const { return mSize; }
+		virtual void Update(int deltaMillis);
+		virtual void Render(IGraphicsDevice *device, RenderState &state, const Frame &parentFrame);
 
-		virtual void SetTitle(std::string title) { mTitle = title; }
-		virtual const std::string& GetTitle() const { return mTitle; }
+		/* IKeyboardListener methods */
+		bool OnKeyboardEvent(const KeyboardEvent &e);
 
-	protected:
-		IWindowInputReader* GetInputReader() { return mInputReader; }
-
-		virtual void WindowInitialized(GameApplication *app);
-		virtual void WindowDestroyed();
-		virtual void WindowUpdate(uint32_t deltaMillis);
-		virtual void WindowDraw();
+		/* IMouseListener methods */
+		bool OnMouseEvent(const MouseEvent &e);
 
 	private:
-		Size mSize;
-		std::string mTitle;
 		WindowVisibility mVisibility;
-		IWindowInputReader *mInputReader;
-		ViewManager *mViewManager;
-		IWindowListener *mListener;
-		GameApplication *mApplication;
-	};
 
-	template <typename Platform>
-	class Window : public BaseWindow {};
+		View *mFocusedView;
+		OrthoCamera *mCamera;
+
+		void RegisterCoreUIClasses();
+	};
 };

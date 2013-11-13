@@ -17,17 +17,17 @@ namespace challenge
 		mAltDown = false;
 	}
 
-	void InputManager::AddKeyboardListener(IKeyboardListener *pListener)
+	void InputManager::AddKeyboardListener(std::shared_ptr<IKeyboardListener> listener)
 	{
-		if(pListener != NULL) {
-			mKeyboardListeners.push_back(pListener);
+		if(listener != NULL) {
+			mKeyboardListeners.push_back(listener);
 		}
 	}
 
-	void InputManager::AddMouseListener(IMouseListener *pListener)
+	void InputManager::AddMouseListener(std::shared_ptr<IMouseListener> listener)
 	{
-		if(pListener != NULL) {
-			mMouseListeners.push_back(pListener);
+		if (listener != NULL) {
+			mMouseListeners.push_back(listener);
 		}
 	}
 
@@ -154,7 +154,7 @@ namespace challenge
 					case KeyboardEventKeyDown:
 						if(key == mActiveKeys.end()) {
 							mActiveKeys.push_back(evt.keyCode);
-							this->KeyDown(evt);
+							this->PostKeyboardEvent(evt);
 						}
 				
 						break;
@@ -162,7 +162,7 @@ namespace challenge
 					case KeyboardEventKeyUp:
 						if(key != mActiveKeys.end()) {
 							mActiveKeys.erase(key);
-							this->KeyUp(evt);
+							this->PostKeyboardEvent(evt);
 						}
 
 						break;
@@ -178,7 +178,7 @@ namespace challenge
 
 				//Logger::log(LogDebug, "Key Press: %c", key);
 
-				this->KeyPress(evt);
+				this->PostKeyboardEvent(evt);
 			}
 		}
 
@@ -187,117 +187,35 @@ namespace challenge
 			std::copy(mMouseEventQueue.begin(), mMouseEventQueue.end(), mouseEvents.begin());
 			mMouseEventQueue.clear();
 
-			std::vector<MouseEvent>::iterator mouseIt =  mouseEvents.begin();
-			while(mouseIt != mouseEvents.end()) {
-				mouseIt->shiftDown = mShiftDown;
-				mouseIt->ctrlDown = mCtrlDown;
-				mouseIt->altDown = mAltDown;
-				switch((*mouseIt).type) {
-				case MouseEventMouseDown:
-					MouseDown((*mouseIt));
-					break;
-
-				case MouseEventMouseMove:
-					MouseMove((*mouseIt));
-					break;
-
-				case MouseEventMouseUp:
-					MouseUp((*mouseIt));
-					break;
-
-				case MouseEventMouseClick:
-					MouseClick((*mouseIt));
-					break;
-
-				case MouseEventMouseDblClick:
-					MouseDblClick((*mouseIt));
-					break;
-
-				case MouseEventMouseWheelMove:
-					MouseWheelMove((*mouseIt));
-					break;
-				}
-				mouseIt++;
+			for(MouseEvent &evt : mouseEvents) {
+				evt.shiftDown = mShiftDown;
+				evt.ctrlDown = mCtrlDown;
+				evt.altDown = mAltDown;
+				this->PostMouseEvent(evt);
 			}
 		}
 	}
 
 	/* Keyboard Events */
-
-	void InputManager::KeyDown(const KeyboardEvent &e)
+	void InputManager::PostKeyboardEvent(const KeyboardEvent &e)
 	{
-		for(IKeyboardListener *listener : mKeyboardListeners) {
-			listener->OnKeyDown(e);
+		for (auto listener : mKeyboardListeners) {
+			auto ptr = listener.lock();
+			if (ptr && ptr->OnKeyboardEvent(e)) {
+				return;
+			}
 		}
-	}
-
-	void InputManager::KeyUp(const KeyboardEvent &e)
-	{
-		for(IKeyboardListener *listener : mKeyboardListeners) {
-			listener->OnKeyUp(e);
-		}
-	}
-
-	void InputManager::KeyPress(const KeyboardEvent &e)
-	{
-		for(IKeyboardListener *listener : mKeyboardListeners) {
-			listener->OnKeyPress(e);
-		}
+		
 	}
 
 	/* Mouse Events */
-
-	void InputManager::MouseDown(const MouseEvent &e)
+	void InputManager::PostMouseEvent(const MouseEvent &e)
 	{
-		TMouseListenerList::iterator it = mMouseListeners.begin();
-		while(it != mMouseListeners.end()) {
-			(*it)->OnMouseDown(e);
-			it++;
-		}
-	}
-
-	void InputManager::MouseUp(const MouseEvent &e)
-	{
-		TMouseListenerList::iterator it = mMouseListeners.begin();
-		while(it != mMouseListeners.end()) {
-			(*it)->OnMouseUp(e);
-			it++;
-		}
-	}
-
-	void InputManager::MouseMove(const MouseEvent &e)
-	{
-		TMouseListenerList::iterator it = mMouseListeners.begin();
-		while(it != mMouseListeners.end()) {
-			(*it)->OnMouseMove(e);
-			it++;
-		}
-	}
-
-	void InputManager::MouseClick(const MouseEvent &e)
-	{
-		TMouseListenerList::iterator it = mMouseListeners.begin();
-		while(it != mMouseListeners.end()) {
-			(*it)->OnMouseClick(e);
-			it++;
-		}
-	}
-
-	void InputManager::MouseDblClick(const MouseEvent &e)
-	{
-		TMouseListenerList::iterator it = mMouseListeners.begin();
-		while(it != mMouseListeners.end()) {
-			(*it)->OnMouseDblClick(e);
-			it++;
-		}
-	}
-
-	void InputManager::MouseWheelMove(const MouseEvent &e)
-	{
-		TMouseListenerList::iterator it = mMouseListeners.begin();
-		while(it != mMouseListeners.end()) {
-			(*it)->OnMouseWheelMove(e);
-			it++;
+		for (auto listener : mMouseListeners) {
+			auto ptr = listener.lock();
+			if (ptr && ptr->OnMouseEvent(e)) {
+				return;
+			}
 		}
 	}
 }
