@@ -207,13 +207,32 @@ namespace challenge
 		}
 	}
 
-	void GraphicsDevice<RendererTypeDX11>::SetScissorRect(int x, int y, int width, int height)
+	void GraphicsDevice<RendererTypeDX11>::PushScissorRect(int x, int y, int width, int height)
 	{
-		mScissorRect.left = x;
-		mScissorRect.right = x + width;
-		mScissorRect.top = y;
-		mScissorRect.bottom = y + height;
-		mContext->RSSetScissorRects(1, &mScissorRect);
+		D3D11_RECT newRect;
+		newRect.left = x;
+		newRect.right = x + width;
+		newRect.top = y;
+		newRect.bottom = y + height;
+
+		mScissorRects.push(newRect);
+
+		mContext->RSSetScissorRects(1, &newRect);
+	}
+
+	void GraphicsDevice<RendererTypeDX11>::PopScissorRect()
+	{
+		if (mScissorRects.size()) {
+			mScissorRects.pop();
+
+			if (mScissorRects.size()) {
+				mContext->RSSetScissorRects(1, &mScissorRects.top());
+			}
+			else {
+				mContext->RSSetScissorRects(0, NULL);
+			}
+		}
+		
 	}
 
 	IShader* GraphicsDevice<RendererTypeDX11>::CreateShader(std::string filename, ShaderType type)

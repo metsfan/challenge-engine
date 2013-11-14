@@ -66,6 +66,9 @@ namespace challenge
 		void SetFocusedView(View *focusedView);
 		void UnfocusView(View *view);
 
+		void AddSubview(View *view);
+		void RemoveSubview(View *view);
+
 		virtual void SetWindowVisibility(WindowVisibility visibility) { mVisibility = visibility; }
 		WindowVisibility GetWindowVisibility() { return mVisibility; }
 
@@ -82,8 +85,10 @@ namespace challenge
 		WindowVisibility mVisibility;
 
 		View *mFocusedView;
+		View *mHoveredView;
 		OrthoCamera *mCamera;
 
 		void RegisterCoreUIClasses();
+		void PostMouseEvent(MouseEventType type, View *view);
 	};
 };

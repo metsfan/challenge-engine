@@ -207,6 +207,84 @@ namespace challenge
 			return color;
 		}
 
+		static Color White()
+		{
+			static Color whiteColor(255, 255, 255, 255);
+			return whiteColor;
+		}
+
+		static Color Black()
+		{
+			static Color whiteColor(0, 0, 0, 255);
+			return whiteColor;
+		}
+
+		static Color Red()
+		{
+			static Color redColor(255, 0, 0, 255);
+			return redColor;
+		}
+
+		static Color Green()
+		{
+			static Color redColor(0, 255, 0, 255);
+			return redColor;
+		}
+
+		static Color Blue()
+		{
+			static Color redColor(0, 0, 255, 255);
+			return redColor;
+		}
+
+		static Color Yellow()
+		{
+			static Color redColor(255, 255, 0, 255);
+			return redColor;
+		}
+
+		static Color Magenta()
+		{
+			static Color redColor(255, 0, 255, 255);
+			return redColor;
+		}
+
+		static Color Cyan()
+		{
+			static Color redColor(0, 255, 255, 255);
+			return redColor;
+		}
+
+		static Color Clear()
+		{
+			static Color redColor(0, 0, 0, 0);
+			return redColor;
+		}
+
+		static Color Orange()
+		{
+			static Color redColor(255, 127, 0, 255);
+			return redColor;
+		}
+
+		static Color Purple()
+		{
+			static Color redColor(128, 0, 128, 255);
+			return redColor;
+		}
+
+		static Color Brown()
+		{
+			static Color redColor(150, 75, 0, 255);
+			return redColor;
+		}
+
+		static Color Gray()
+		{
+			static Color redColor(128, 128, 128, 255);
+			return redColor;
+		}
+
 		int red, green, blue, alpha;
 	};
 };

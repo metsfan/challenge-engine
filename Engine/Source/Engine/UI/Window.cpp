@@ -7,11 +7,14 @@ namespace challenge
 {
 	Window::Window(Size size) :
 		View(Frame(0, 0, size.width, size.height)),
-		mFocusedView(NULL)
+		mFocusedView(NULL),
+		mHoveredView(NULL)
 	{
 		mCamera = new OrthoCamera(0.0f, size.width, size.height, 0.0f, -1000.0f, 1000.0f, size);
 
 		this->RegisterCoreUIClasses();
+
+		this->ClipSubviews(true);
 	}
 
 	Window::~Window()
@@ -52,8 +55,27 @@ namespace challenge
 		//state.PushTransform(mCamera->GetViewMatrix());
 		device->DisableState(DepthTest);
 		device->EnableState(AlphaBlending);
+		device->EnableState(ScissorTest);
 
 		View::Render(device, state, parentFrame);
+
+		device->DisableState(ScissorTest);
+		//device->DisableState(AlphaBlending);
+		//device->EnableState(DepthTest);
+	}
+
+	void Window::AddSubview(View *view)
+	{
+		View::AddSubview(view);
+
+		view->SetWindow(this);
+	}
+
+	void Window::RemoveSubview(View *view)
+	{
+		View::RemoveSubview(view);
+
+		view->SetWindow(NULL);
 	}
 
 	void Window::RegisterCoreUIClasses()
@@ -136,10 +158,53 @@ namespace challenge
 				mFocusedView->SetFocused(true);
 			}
 
+			if (e.type == MouseEventMouseMove) {
+				if (mHoveredView) {
+					/*if (!selectedView || selectedView == this) {
+						mHoveredView = NULL;
+					}*/
+
+					if (selectedView != mHoveredView) {
+						View *currentView = mHoveredView;
+
+						while (currentView) {
+							if (currentView->mMouseDelegates[MouseEventMouseLeave].size() > 0) {
+								std::vector<MouseEventDelegate> delegates = currentView->mMouseDelegates[MouseEventMouseLeave];
+
+								for (int i = 0; i < delegates.size(); i++) {
+									delegates[i](currentView, e);
+								}
+							}
+
+							currentView = currentView->GetParent();
+						}
+					}
+
+					mHoveredView = NULL;
+				}
+
+				if (selectedView) {
+					mHoveredView = selectedView;
+
+					View *currentView = selectedView;
+
+					while (currentView) {
+						if (currentView->mMouseDelegates[MouseEventMouseEnter].size() > 0) {
+							std::vector<MouseEventDelegate> delegates = currentView->mMouseDelegates[MouseEventMouseEnter];
+
+							for (int i = 0; i < delegates.size(); i++) {
+								delegates[i](currentView, e);
+							}
+						}
+
+						currentView = currentView->GetParent();
+					}
+				}
+			}
+
 
 			while (selectedView) {
-				if (selectedView->mMouseDelegates.size() > 0 &&
-					selectedView->mMouseDelegates[e.type].size() > 0) {
+				if (selectedView->mMouseDelegates[e.type].size() > 0) {
 					std::vector<MouseEventDelegate> delegates = selectedView->mMouseDelegates[e.type];
 
 					for (int i = 0; i < delegates.size(); i++) {
@@ -147,11 +212,11 @@ namespace challenge
 					}
 				}
 
-				selectedView = selectedView->GetParent();
-
-				if (selectedView != this) {
+				if (selectedView != this && selectedView->GetBackgroundColor().alpha > 0) {
 					handled = true;
 				}
+
+				selectedView = selectedView->GetParent();
 			}
 		}
 

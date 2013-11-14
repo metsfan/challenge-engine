@@ -10,7 +10,9 @@ namespace challenge
 		MouseEventMouseDrag,
 		MouseEventMouseClick,
 		MouseEventMouseDblClick,
-		MouseEventMouseWheelMove
+		MouseEventMouseWheelMove,
+		MouseEventMouseEnter,
+		MouseEventMouseLeave
 	};
 
 	struct MouseEvent 

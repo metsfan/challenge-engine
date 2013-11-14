@@ -58,7 +58,9 @@ namespace challenge
 
 		void SetBlendingFunction(BlendParam source, BlendParam destination);
 		void SetDepthFunction(DepthFunc function);
-		void SetScissorRect(int x, int y, int width, int height);
+
+		void PushScissorRect(int x, int y, int width, int height);
+		void PopScissorRect();
 
 		IShader* CreateShader(std::string filename, ShaderType type);
 		IShaderProgram* CreateShaderProgram();
@@ -82,7 +84,7 @@ namespace challenge
 		ID3D11RasterizerState *mRasterizerState;
 		ID3D11BlendState *mBlendState;
 		D3D_FEATURE_LEVEL mFeatureLevel;
-		D3D11_RECT mScissorRect;
+		std::stack<D3D11_RECT> mScissorRects;
 
 		D3D11_BLEND_DESC mBlendDesc;
 		D3D11_DEPTH_STENCIL_DESC mDepthStencilDesc;

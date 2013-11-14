@@ -10,7 +10,8 @@ namespace challenge
 		Shape(device, "sprite"),
 		mBackgroundImage(texture),
 		mHasBackgroundImage(texture != NULL),
-		mTexFrame(0, 0, 1, 1)
+		mTexFrame(0, 0, 1, 1),
+		mBorderWidth(0)
 	{
 		if(!sSpriteVertexBuffer) {
 			// Create sprite vertex buffer, which all sprites will use
@@ -83,6 +84,12 @@ namespace challenge
 		if(mBackgroundImage) {
 			state.SetShaderData("BACKGROUND_IMAGE", &bgImageData);
 		}
+
+		ShaderDataFloat borderWidthData(&mBorderWidth, 1);
+		state.SetShaderData("BORDER_WIDTH", &borderWidthData);
+
+		ShaderDataVector4 borderColorData(&mBorderColor, 1);
+		state.SetShaderData("BORDER_COLOR", &borderColorData);
 
 		if(sSpriteVertexBuffer) {
 			Technique *technique = effect->GetActiveTechnique();

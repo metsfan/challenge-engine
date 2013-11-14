@@ -37,6 +37,7 @@ namespace challenge
 		PanelView *mOptionsPanel;
 		LabelView *mSelectedLabel;
 		ButtonView *mSelectButton;
+		Point mOptionsPanelPosition;
 		int mSelectedIndex;
 		int mDefaultOption;
 	};

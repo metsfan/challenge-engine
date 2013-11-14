@@ -36,7 +36,9 @@
         <Global name="gWVPMatrix" semantic="WORLDVIEWPROJ_MATRIX" shader="vertex" />
         <Global name="gFrame" semantic="FRAME" shader="vertex" />
         <Global name="gTexFrame" semantic="TEXTURE_FRAME" shader="vertex" />
+        <Global name="gBorderWidth" semantic="BORDER_WIDTH" shader="vertex" />
         <Global name="gColor" semantic="BACKGROUND_COLOR" shader="pixel" />
+        <Global name="gBorderColor" semantic="BORDER_COLOR" shader="pixel" />
       </Pass>
     </Technique>
     <Technique name="SpriteTexture">

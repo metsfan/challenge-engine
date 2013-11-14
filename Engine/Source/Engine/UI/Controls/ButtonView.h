@@ -25,9 +25,12 @@ namespace challenge
 		ButtonState GetState() { return mState; }
 
 		void SetTitleText(const std::string &text);
+		void SetTitleColor(const Color &color);
 
 		void SetValue(const std::string &value) { this->SetTitleText(value); }
 		std::string GetValue() { return mTitleLabel->GetText(); }
+
+		virtual void SetBackgroundColor(const Color &color);
 
 	protected:
 		ButtonState mState;

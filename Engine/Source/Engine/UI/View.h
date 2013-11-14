@@ -117,7 +117,7 @@ namespace challenge
 		const Size& GetSize() { return mFrame.size;  }
 		const Point& GetPosition() { return mFrame.origin;  }
 
-		Point GetPositionInView(const Point &position, View *other);
+		virtual Point GetPositionInView(const Point &position, View *other);
 
 		virtual void SetPadding(const Rect &padding) { mPadding = padding; }
 		virtual void SetLeftPadding(real padding) { mPadding.left = padding; }
@@ -137,10 +137,15 @@ namespace challenge
 		virtual void SetBackgroundColor(const Color &color) { mBackgroundColor = color; }
 		const virtual Color& GetBackgroundColor() const { return mBackgroundColor; }
 
+		void SetBorderColor(const Color &color) { mBorderColor = color; }
+		void SetBorderWidth(float width) { mBorderWidth = width; }
+
 		virtual void SetBackgroundImage(std::string imageName);
 		virtual void SetBackgroundImage(std::shared_ptr<Image> image);
 
-		virtual void AddSubview(View * view);
+		virtual void AddSubview(View *view);
+		virtual void RemoveSubview(View *view);
+		virtual void RemoveFromSuperview();
 		const TViewList& GetSubviews() { return mSubviews; }
 
 		virtual void SetZPosition(float zPosition) { mZPosition = zPosition; }
@@ -150,7 +155,7 @@ namespace challenge
 
 		View * GetParent() const { return mParent; }
 
-		bool ContainsPoint(Point point) { return mAdjustedFrame.Contains(point); }
+		virtual bool ContainsPoint(const Point &point) { return mAdjustedFrame.Contains(point); }
 
 		void SetTag(int tag) { mTag = tag; }
 		int GetTag() { return mTag; }
@@ -164,15 +169,8 @@ namespace challenge
 		void SetLayoutType(LayoutType layout);
 
 		/* Event Delegates */
-		void AddMouseDownDelegate(MouseEventDelegate eventDelegate);
-		void AddMouseUpDelegate(MouseEventDelegate eventDelegate);
-		void AddMouseClickDelegate(MouseEventDelegate eventDelegate);
-		void AddMouseMoveDelegate(MouseEventDelegate eventDelegate);
-		void AddMouseWheelMoveDelegate(MouseEventDelegate eventDelegate);
-
-		void AddKeyDownDelegate(KeyboardEventDelegate eventDelegate);
-		void AddKeyPressDelegate(KeyboardEventDelegate eventDelegate);
-		void AddKeyUpDelegate(KeyboardEventDelegate eventDelegate);
+		void AddMouseEvent(MouseEventType type, MouseEventDelegate eventDelegate);
+		void AddKeyboardEvent(KeyboardEventType type, KeyboardEventDelegate eventDelegate);
 
 		static View * CreateFromResource(const std::string &resource);
 		static void RegisterViewClass(const std::string &name, TViewCreatorFunction creator);
@@ -210,6 +208,8 @@ namespace challenge
 		bool mClipSubviews;
 		Frame mClipRegion;
 		bool mFrameSet;
+		Color mBorderColor;
+		float mBorderWidth;
 
 		Window *mWindow;
 

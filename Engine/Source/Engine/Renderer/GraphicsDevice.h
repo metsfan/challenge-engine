@@ -59,7 +59,9 @@ namespace challenge
 		virtual void DisableState(GraphicsState state) = 0;
 		virtual void SetBlendingFunction(BlendParam source, BlendParam destination) = 0;
 		virtual void SetDepthFunction(DepthFunc function) = 0;
-		virtual void SetScissorRect(int x, int y, int width, int height) = 0;
+
+		virtual void PushScissorRect(int x, int y, int width, int height) = 0;
+		virtual void PopScissorRect() = 0;
 
 		virtual IShader* CreateShader(std::string filename, ShaderType type) = 0;
 		virtual IShaderProgram* CreateShaderProgram() = 0;

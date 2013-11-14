@@ -66,23 +66,33 @@ namespace challenge
 				}
 			};
 
-			mVerticalScrollbar->AddMouseDownDelegate([this, moveScroller](View *sender, const MouseEvent &e) {
+			mVerticalScrollbar->AddMouseEvent(MouseEventMouseDown, [this, moveScroller](View *sender, const MouseEvent &e) {
 				this->mVertScrollPressed = true;
 				moveScroller(sender, e);
 			});
 
-			mVerticalScrollbar->AddMouseMoveDelegate(moveScroller);
+			mVerticalScrollbar->AddMouseEvent(MouseEventMouseMove, moveScroller);
 
-			this->AddMouseWheelMoveDelegate([this](View *sender, const MouseEvent &e) {
+			this->AddMouseEvent(MouseEventMouseWheelMove, [this](View *sender, const MouseEvent &e) {
 				mScrollPosition.y = glm::clamp<real>(mScrollPosition.y - e.wheelDelta, 0, mContentSize.height - this->GetHeight());
 			});
 
 			//mVerticalScroller->SetPosition(0, 35);
 
-			mVerticalScrollbar->AddMouseUpDelegate([this](View *sender, const MouseEvent &e) {
+			mVerticalScrollbar->AddMouseEvent(MouseEventMouseUp, [this](View *sender, const MouseEvent &e) {
 				this->mVertScrollPressed = false;
 			});
 		}
+	}
+
+	Point PanelView::GetPositionInView(const Point &position, View *other)
+	{
+		Point relativePoint = View::GetPositionInView(position, other);
+
+		relativePoint.x -= mScrollPosition.x;
+		relativePoint.y -= mScrollPosition.y;
+
+		return relativePoint;
 	}
 
 	void PanelView::Update(int deltaMillis)

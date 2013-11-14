@@ -79,7 +79,7 @@ namespace challenge
 		if(mText.length() > 0) {
 			mLabelSprite->SetTextureFrame(this->GetTextureFrame());
 			mLabelSprite->SetPosition(frame.origin.x + parentFrame.origin.x,
-									frame.origin.y + parentFrame.origin.y);
+									frame.origin.y + parentFrame.origin.y - 5);
 			
 			mLabelSprite->Draw(device, state);
 		}

@@ -19,6 +19,8 @@ namespace challenge
 		virtual void Update(int deltaMillis);
 		virtual void Render(IGraphicsDevice *device, RenderState &state, const Frame &parentFrame);
 
+		virtual Point GetPositionInView(const Point &position, View *other);
+
 	protected:
 		virtual void ParseFromXML(XMLNode &node);
 

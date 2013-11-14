@@ -23,11 +23,11 @@ namespace challenge
 		mUncheckedImage->SetSize(sDefaultUncheckedImage->GetSize());
 		this->AddInternalSubview(mUncheckedImage);
 
-		mCheckedImage->AddMouseDownDelegate([this](View *sender, const MouseEvent &e) {
+		mCheckedImage->AddMouseEvent(MouseEventMouseDown, [this](View *sender, const MouseEvent &e) {
 			this->SetSelected(false);
 		});
 
-		mUncheckedImage->AddMouseDownDelegate([this](View *sender, const MouseEvent &e) {
+		mUncheckedImage->AddMouseEvent(MouseEventMouseDown, [this](View *sender, const MouseEvent &e) {
 			this->SetSelected(true);
 		});
 

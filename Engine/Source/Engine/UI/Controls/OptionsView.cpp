@@ -30,7 +30,7 @@ namespace challenge
 		real y = index * 30;
 		CheckboxView *checkbox = new CheckboxView(Frame(0, y, 200, 30));
 		checkbox->SetText(text);
-		checkbox->AddMouseDownDelegate([this, index, checkbox](View *sender, const MouseEvent &e) {
+		checkbox->AddMouseEvent(MouseEventMouseDown, [this, index, checkbox](View *sender, const MouseEvent &e) {
 			if(checkbox->IsSelected()) {
 				if(mMaxSelected == 1) {
 					if(mSelectedItems.size() > 0) {

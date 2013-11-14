@@ -28,7 +28,8 @@ namespace challenge
 		mBackgroundImageChanged(false),
 		mClipSubviews(false),
 		mFocused(false),
-		mWindow(NULL)
+		mWindow(NULL),
+		mBorderWidth(0)
 	{
 		this->SetLayoutType(layout);
 
@@ -58,8 +59,34 @@ namespace challenge
 		this->PositionSubviews();
 	}
 
+	void View::RemoveSubview(View *view)
+	{
+		for (auto it = mSubviews.begin(); it != mSubviews.end(); ++it) {
+			if (*it == view) {
+				mSubviews.erase(it);
+				return;
+			}
+		}
+	}
+
+	void View::RemoveFromSuperview()
+	{
+		auto parent = this->GetParent();
+		if (parent) {
+			parent->RemoveSubview(this);
+		}
+	}
+
 	void View::Update(int deltaMillis)
 	{
+		if (mFrame.size.width < 0) {
+			mFrame.size.width = 0;
+		}
+
+		if (mFrame.size.height < 0) {
+			mFrame.size.height = 0;
+		}
+
 		for(int j = 0; j < mSubviews.size(); j++) {
 			mSubviews[j]->Update(deltaMillis);
 		}
@@ -95,6 +122,11 @@ namespace challenge
 				mSprite->SetBackgroundImage(NULL);
 			}
 
+			if (mBorderWidth) {
+				mSprite->SetBorderColor(mBorderColor);
+				mSprite->SetBorderWidth(mBorderWidth);
+			}
+
 			/*mTextureFrame = Frame(0, 0, 1, 1);
 			if(parentFrame.origin.y < 0) {
 				real ratio = abs(mAdjustedFrame.origin.y) / mFrame.size.height;
@@ -107,41 +139,23 @@ namespace challenge
 
 			mSprite->SetFrame(mAdjustedFrame);
 			mSprite->Draw(device, state);
-
-			bool clipSubviews = mClipSubviews;
-			Frame clipRegion;
-			if (clipSubviews) {
-				mClipRegion = mAdjustedFrame;
-			}
-			else {
-				View *parent = mParent;
-				while (parent) {
-					if (parent->mClipSubviews) {
-						clipSubviews = true;
-						clipRegion = parent->mAdjustedFrame;
-						break;
-					}
-
-					parent = parent->mParent;
-				}
-			}
 			
 			Frame inheritedFrame = this->CalculateChildFrame();
-			for(int i = 0; i < mSubviews.size(); i++) {
-				if (clipSubviews) {
-					device->EnableState(ScissorTest);
-					device->SetScissorRect(clipRegion.origin.x,
-						clipRegion.origin.y,
-						clipRegion.size.width,
-						clipRegion.size.height);
-				}
 
+			if (mClipSubviews) {
+				device->PushScissorRect(mAdjustedFrame.origin.x,
+					mAdjustedFrame.origin.y,
+					mAdjustedFrame.size.width,
+					mAdjustedFrame.size.height);
+			}
+
+			for(int i = 0; i < mSubviews.size(); i++) {
 				View * child = mSubviews[i];
 				child->Render(device, state, inheritedFrame);
+			}
 
-				if (clipSubviews) {
-					device->DisableState(ScissorTest);
-				}
+			if (mClipSubviews) {
+				device->PopScissorRect();
 			}
 		}
 	}
@@ -199,45 +213,14 @@ namespace challenge
 	}
 
 	/* Event Delegates */
-
-	void View::AddMouseDownDelegate(MouseEventDelegate eventDelegate)
+	void View::AddMouseEvent(MouseEventType type, MouseEventDelegate eventDelegate)
 	{
-		mMouseDelegates[MouseEventMouseDown].push_back(eventDelegate);
+		mMouseDelegates[type].push_back(eventDelegate);
 	}
 
-	void View::AddMouseUpDelegate(MouseEventDelegate eventDelegate)
+	void View::AddKeyboardEvent(KeyboardEventType type, KeyboardEventDelegate eventDelegate)
 	{
-		mMouseDelegates[MouseEventMouseUp].push_back(eventDelegate);
-	}
-
-	void View::AddMouseClickDelegate(MouseEventDelegate eventDelegate)
-	{
-		mMouseDelegates[MouseEventMouseClick].push_back(eventDelegate);
-	}
-
-	void View::AddMouseMoveDelegate(MouseEventDelegate eventDelegate)
-	{
-		mMouseDelegates[MouseEventMouseMove].push_back(eventDelegate);
-	}
-
-	void View::AddMouseWheelMoveDelegate(MouseEventDelegate eventDelegate)
-	{
-		mMouseDelegates[MouseEventMouseWheelMove].push_back(eventDelegate);
-	}
-
-	void View::AddKeyDownDelegate(KeyboardEventDelegate eventDelegate)
-	{
-		mKeyboardDelegates[KeyboardEventKeyDown].push_back(eventDelegate);
-	}
-
-	void View::AddKeyPressDelegate(KeyboardEventDelegate eventDelegate)
-	{
-		mKeyboardDelegates[KeyboardEventKeyPress].push_back(eventDelegate);
-	}
-
-	void View::AddKeyUpDelegate(KeyboardEventDelegate eventDelegate)
-	{
-		mKeyboardDelegates[KeyboardEventKeyUp].push_back(eventDelegate);
+		mKeyboardDelegates[type].push_back(eventDelegate);
 	}
 
 	bool View::ProcessMouseEvent(const MouseEvent &e)
@@ -365,5 +348,16 @@ namespace challenge
 	void View::RegisterViewClass(const std::string &name, TViewCreatorFunction creator)
 	{
 		sViewCreatorRegistry[name] = creator;
+	}
+
+	Point View::GetPositionInView(const Point &position, View *other)
+	{
+		if (other == this) {
+			return position;
+		}
+
+		Point newPos(position.x + mFrame.origin.x, position.y + mFrame.origin.y);
+		
+		return mParent->GetPositionInView(newPos, other);
 	}
 };

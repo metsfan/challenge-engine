@@ -20,6 +20,14 @@ namespace challenge
 		}
 	}
 
+	void ButtonView::SetBackgroundColor(const Color &color)
+	{
+		View::SetBackgroundColor(color);
+
+		mTitleLabel->SetBackgroundColor(color);
+	}
+
+
 	void ButtonView::ParseFromXML(XMLNode &node)
 	{
 		View::ParseFromXML(node);
@@ -27,6 +35,10 @@ namespace challenge
 		this->SetTitleText(node.GetAttributeString("text"));
 	}
 
+	void ButtonView::SetTitleColor(const Color &color)
+	{
+		mTitleLabel->SetTextColor(color);
+	}
 };
 
 /*void ButtonView::OnRender(GLSLProgram *program)

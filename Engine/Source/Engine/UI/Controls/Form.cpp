@@ -36,7 +36,7 @@ namespace challenge
 	void Form::AddSubmitButton(ButtonView *button, const std::string &action)
 	{
 		if(!mSubmitButtons.count(action)) {
-			button->AddMouseDownDelegate([this, action](View *sender, const MouseEvent &e) {
+			button->AddMouseEvent(MouseEventMouseDown, [this, action](View *sender, const MouseEvent &e) {
 				if(mSubmitDelegate) {
 					mSubmitDelegate(this, action);
 				}

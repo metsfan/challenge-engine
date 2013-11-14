@@ -10,7 +10,7 @@ namespace challenge
 	TextFieldView::TextFieldView(Frame frame) :
 		FormElement(frame),
 		mTextLabel(new LabelView(Frame(0, 0, frame.size.width, frame.size.height))),
-		mCursor(new View(Frame(0, 0, 1, frame.size.height - 2))),
+		mCursor(new View(Frame(0, 1, 1, frame.size.height - 2))),
 		mCursorActive(false),
 		mCursorTime(0),
 		mCursorPosition(1),
@@ -18,19 +18,19 @@ namespace challenge
 	{
 		this->SetBackgroundColor(Color(255, 255, 255, 255));
 
-		this->AddKeyDownDelegate([this](View *sender, const KeyboardEvent &e) {
+		this->AddKeyboardEvent(KeyboardEventKeyDown, [this](View *sender, const KeyboardEvent &e) {
 			this->KeyPressed(e);
 		});
 
-		this->AddKeyPressDelegate([this](View *sender, const KeyboardEvent &e) {
+		this->AddKeyboardEvent(KeyboardEventKeyPress, [this](View *sender, const KeyboardEvent &e) {
 			// Do nothing, just capture the event so others can't.
 		});
 
-		this->AddKeyUpDelegate([this](View *sender, const KeyboardEvent &e) {
+		this->AddKeyboardEvent(KeyboardEventKeyUp, [this](View *sender, const KeyboardEvent &e) {
 			// Do nothing, just capture the event so others can't.
 		});
 
-		this->AddMouseDownDelegate([this](View *sender, const MouseEvent &e) {
+		this->AddMouseEvent(MouseEventMouseDown, [this](View *sender, const MouseEvent &e) {
 			this->JumpCursor(e);
 		});
 
@@ -55,29 +55,32 @@ namespace challenge
 
 	void TextFieldView::Update(int deltaMillis)
 	{
-		mCursor->SetX(50);
-		if(this->IsFocused() || true) {
-			mCursorTime += 16;
-			if(mCursorTime > kCursorDuration) {
+		if (this->IsFocused() || true) {
+			mCursorTime += deltaMillis;
+			if (mCursorTime > kCursorDuration) {
 				mCursorActive = !mCursorActive;
 				mCursorTime = 0;
 			}
 
 			mCursor->SetVisible(mCursorActive);
-			//mCursor->SetX(mCursorPosition-2);
-		} else {
+			mCursor->SetX(mCursorPosition-2);
+		}
+		else {
 			mCursorTime = 0;
 			mCursor->SetVisible(false);
 		}
 
 		Size textDims = mTextLabel->GetFont()->GetStringDimensions(mTextLabel->GetText());
-		if(textDims.width > this->GetWidth()) {
-			if(mCursorIndex == mLetterPositions.size() - 1) {
+		if (textDims.width > this->GetWidth()) {
+			if (mCursorIndex == mLetterPositions.size() - 1) {
 				mTextLabel->SetX(this->GetWidth() - textDims.width);
 			}
-		} else {
+		}
+		else {
 			mTextLabel->SetX(0);
 		}
+
+		View::Update(deltaMillis);
 	}
 
 	void TextFieldView::Render(IGraphicsDevice *device, RenderState &state, const Frame &parentFrame)

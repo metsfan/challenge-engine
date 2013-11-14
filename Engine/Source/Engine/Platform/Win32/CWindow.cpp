@@ -93,7 +93,7 @@ namespace challenge
 			}
 			else {
 				QueryPerformanceCounter(&time1);
-				deltaMillis = (time1.QuadPart - time2.QuadPart) * 0.000001;
+				deltaMillis = ((time1.QuadPart - time2.QuadPart) * 1000) / freq.QuadPart;
 
 				mApplication->Update(deltaMillis);
 

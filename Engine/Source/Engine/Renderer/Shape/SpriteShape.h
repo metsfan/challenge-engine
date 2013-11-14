@@ -57,7 +57,16 @@ namespace challenge
 			this->SetTextureFrame(frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
 		}
 
+		void SetBorderColor(const Color &color)
+		{
+			mBorderColor = glm::vec4(color.red / 255.0f, color.green / 255.0f,
+				color.blue / 255.0f, color.alpha / 255.0f);
+		}
 
+		void SetBorderWidth(float width)
+		{
+			mBorderWidth = width;
+		}
 
 		void Draw(IGraphicsDevice *device, RenderState &state);
 
@@ -67,6 +76,8 @@ namespace challenge
 		bool mHasBackgroundImage;
 		glm::vec4 mFrame;
 		glm::vec4 mTexFrame;
+		float mBorderWidth;
+		glm::vec4 mBorderColor;
 	};
 
 };
