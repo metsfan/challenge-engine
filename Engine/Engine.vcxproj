@@ -131,6 +131,7 @@
     <ClCompile Include="Source\Engine\Renderer\Texture\TextureDX11.cpp" />
     <ClCompile Include="Source\Engine\Renderer\VertexBuffer.cpp" />
     <ClCompile Include="Source\Engine\Renderer\VertexBuffer\VertexBufferDX11.cpp" />
+    <ClCompile Include="Source\Engine\UI\Platform\Win32\WindowWin32.cpp" />
     <ClCompile Include="Source\Engine\UI\Window.cpp" />
     <ClCompile Include="Source\Engine\Renderer\GraphicsContext.cpp" />
     <ClCompile Include="Source\Engine\UI\Controls\ButtonView.cpp" />
@@ -290,6 +291,7 @@
     <ClInclude Include="Source\Engine\Renderer\Types.h" />
     <ClInclude Include="Source\Engine\Renderer\VertexBuffer.h" />
     <ClInclude Include="Source\Engine\Renderer\VertexBuffer\VertexBufferDX11.h" />
+    <ClInclude Include="Source\Engine\UI\Platform\Win32\WindowWin32.h" />
     <ClInclude Include="Source\Engine\UI\Window.h" />
     <ClInclude Include="Source\Engine\Platform\Win32\CWindow.h" />
     <ClInclude Include="Source\Engine\Disk\ResourceCache.h" />

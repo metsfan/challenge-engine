@@ -53,6 +53,11 @@ namespace challenge
 		virtual const std::string& GetTitle() const = 0;
 	};*/
 
+	struct FILE_DIALOG_DESC
+	{
+
+	};
+
 	class Window : public View,
 					public IKeyboardListener,
 					public IMouseListener
@@ -74,6 +79,8 @@ namespace challenge
 
 		virtual void Update(int deltaMillis);
 		virtual void Render(IGraphicsDevice *device, RenderState &state, const Frame &parentFrame);
+
+		virtual void ShowNativeFileDialog(FILE_DIALOG_DESC *desc) { throw "No Default Implementation!";  }
 
 		/* IKeyboardListener methods */
 		bool OnKeyboardEvent(const KeyboardEvent &e);

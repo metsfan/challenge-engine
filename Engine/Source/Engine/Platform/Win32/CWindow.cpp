@@ -2,6 +2,7 @@
 #include <Engine/Platform/Win32/CWindow.h>
 #include <Engine/Renderer/Device/GraphicsDeviceDX11.h>
 #include <Engine/Input/InputManager.h>
+#include <Engine/UI/Platform/Win32/WindowWin32.h>
 
 namespace challenge
 {
@@ -50,7 +51,7 @@ namespace challenge
 				return false;
 			}
 
-			std::shared_ptr<Window> window(new Window(mSize));
+			std::shared_ptr<Window> window(new WindowWin32(mSize, mWinHandle));
 
 			mApplication = new GameApplicationWindows(window, mListener, mInstance, mWinHandle);
 			if (!mApplication->Initialize()) {

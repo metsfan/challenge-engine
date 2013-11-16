@@ -411,6 +411,9 @@
     <ClCompile Include="Source\Engine\Platform\Win32\CWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Engine\UI\Platform\Win32\WindowWin32.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine\Audio\AudioListener.h">
@@ -942,6 +945,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Engine\Platform\Win32\CWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\UI\Platform\Win32\WindowWin32.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
