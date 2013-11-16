@@ -4,27 +4,29 @@
 
 namespace challenge
 {
-	typedef std::function<void(void *)> TimerCallback;
+	class Timer;
 
-	class CTimer
+	typedef std::function<void(Timer *)> TTimerFunc;
+
+	class Timer
 	{
 	public:
-		CTimer(int interval, TimerCallback callback, void *callbackObj, bool autoStart);
-		void ExecuteCallback();
+		Timer(TTimerFunc callback, int millis, bool repeat = false, int accuracy = 100);
+		~Timer();
+
+		void SetAccuracy(int acc) { mAccuracy = acc; }
+
 		void Start();
 		void Stop();
 
-		~CTimer(void);
-
-		static VOID CALLBACK TimerProc(PVOID lpParameter, BOOLEAN TimerOrWaitFired);
-
 	private:
-		int mInterval;
-		TimerCallback mCallback;
-		void *mCallbackObj;
-		HANDLE mTimer;
+		UINT mTimerID;
+		TTimerFunc mCallback;
+		int mAccuracy;
+		int mMillis;
+		bool mRepeat;
 
-		static HANDLE s_TimerQueue;
+		static void CALLBACK TimerCallback(UINT uTimerID, UINT uMsg, DWORD_PTR dwUser, DWORD_PTR dw1, DWORD_PTR dw2);
 	};
-}
+};
 

@@ -3,6 +3,7 @@
 #include <Engine/Challenge.h>
 #include <Engine/UI/Controls/FormElement.h>
 #include <Engine/UI/Controls/LabelView.h>
+#include <Engine/Util/Timer.h>
 
 namespace challenge
 {
@@ -34,6 +35,10 @@ namespace challenge
 		int mCursorTime;
 		int mCursorIndex;
 		real mCursorPosition;
+
+		int mKeyPressTime;
+		int mKeyRepeatTime;
+		bool mKeyPressed;
 
 		void KeyPressed(const KeyboardEvent &e);
 		void JumpCursor(const MouseEvent &e);

@@ -43,7 +43,7 @@ namespace challenge
 		void PostMouseEvent(const MouseEvent &e);
 
 	private:
-		CTimer *mKeyboardHoldTimer;
+		Timer *mKeyboardHoldTimer;
 		std::vector<std::weak_ptr<IKeyboardListener>> mKeyboardListeners;
 		std::vector<std::weak_ptr<IMouseListener>> mMouseListeners;
 

@@ -183,19 +183,23 @@ namespace challenge
 		if (window) {
 			auto application = window->mApplication;
 
+			
+
+			
+
 			if (application) {
 				switch (uMsg) {
 				case WM_SYSKEYUP:
 				case WM_KEYUP:
-					application->ProcessKeyboardEvent(KeyboardEventKeyUp, wParam);
+					application->ProcessKeyboardEvent(KeyboardEventKeyUp, TranslateVirtualKeyCode(wParam, lParam));
 					break;
 
 				case WM_SYSKEYDOWN:
 				case WM_KEYDOWN:
-					if(repeatCount <= 1) {
-						application->ProcessKeyboardEvent(KeyboardEventKeyDown, wParam);
+					if (repeatCount <= 1) {					
+						application->ProcessKeyboardEvent(KeyboardEventKeyDown, TranslateVirtualKeyCode(wParam, lParam));
 					}
-					break;
+					break;	
 
 				case WM_LBUTTONDOWN:
 					application->ProcessMouseEvent(MouseEventMouseDown, MouseButtonLeft, mousePos);
@@ -257,5 +261,16 @@ namespace challenge
 		}
 
 		return DefWindowProc(hWnd, uMsg, wParam, lParam);
+	}
+
+	WCHAR CWindow::TranslateVirtualKeyCode(WPARAM wParam, LPARAM lParam)
+	{
+		BYTE kbstate[256];
+		GetKeyboardState(kbstate);
+
+		WCHAR outChar;
+		ToUnicode(wParam, lParam, kbstate, &outChar, 1, 0);
+
+		return outChar;
 	}
 };

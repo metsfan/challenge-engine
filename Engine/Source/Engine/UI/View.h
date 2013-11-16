@@ -161,7 +161,7 @@ namespace challenge
 		int GetTag() { return mTag; }
 
 		void SetFocused(bool focused);
-		bool IsFocused() { return mFocused; }
+		bool IsFocused();
 
 		Window* GetWindow();
 		void SetWindow(Window *window) { mWindow = window; }

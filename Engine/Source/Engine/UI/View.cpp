@@ -195,10 +195,6 @@ namespace challenge
 	void View::ClipSubviews(bool clip)
 	{
 		mClipSubviews = clip;
-
-		for (View *view : mSubviews) {
-			view->ClipSubviews(clip);
-		}
 	}
 
 	Window* View::GetWindow()
@@ -210,6 +206,17 @@ namespace challenge
 		}
 
 		return NULL;
+	}
+
+	bool View::IsFocused()
+	{
+		for (View *subview : mSubviews) {
+			if (subview->IsFocused()) {
+				return true;
+			}
+		}
+
+		return mFocused;
 	}
 
 	/* Event Delegates */
@@ -352,7 +359,7 @@ namespace challenge
 
 	Point View::GetPositionInView(const Point &position, View *other)
 	{
-		if (other == this) {
+		if (!other || other == this) {
 			return position;
 		}
 
