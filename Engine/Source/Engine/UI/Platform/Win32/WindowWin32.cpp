@@ -19,6 +19,7 @@ namespace challenge
 
 		HRESULT hr = CoCreateInstance(CLSID_FileOpenDialog, NULL, CLSCTX_ALL, IID_IFileOpenDialog, reinterpret_cast<LPVOID *>(&openDialog));
 		if (SUCCEEDED(hr)) {
+			openDialog->SetDefaultExtension(L"*.txt");
 			openDialog->Show(NULL);
 		}
 	}

@@ -1,7 +1,7 @@
 #include <Engine/Challenge.h>
 #include <Engine/UI/Window.h>
 #include <Engine/UI/View.h>
-#include <Engine/UI/ViewManager.h>
+#include <Engine/UI/UI.h>
 
 namespace challenge
 {
@@ -89,6 +89,7 @@ namespace challenge
 		View::RegisterViewClass("Panel", [](Frame frame) { return new PanelView(frame); });
 		View::RegisterViewClass("SelectList", [](Frame frame) { return new SelectListView(frame); });
 		View::RegisterViewClass("TextField", [](Frame frame) { return new TextFieldView(frame); });
+		View::RegisterViewClass("Hidden", [](Frame frame) { return new HiddenView(); });
 	}
 
 	/* IKeyboardListener methods */

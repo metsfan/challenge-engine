@@ -20,5 +20,11 @@ namespace challenge
 		static std::vector<int> SplitIP(std::string ip);
 		static std::string JoinIP(int *parts);
 		static int Util::NearestPow2(int v);
+
+		template <typename T>
+		static bool IsKindOfClass(void *object)
+		{
+			return dynamic_cast<T *>(object) != NULL;
+		}
 	};
 };

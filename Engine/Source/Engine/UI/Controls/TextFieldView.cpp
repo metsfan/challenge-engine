@@ -82,12 +82,12 @@ namespace challenge
 				mCursorTime = 0;
 			}
 
-			mCursor->SetVisible(mCursorActive);
+			mCursor->SetAlpha(mCursorActive);
 			mCursor->SetX(mCursorPosition-2);
 		}
 		else {
 			mCursorTime = 0;
-			mCursor->SetVisible(false);
+			mCursor->SetAlpha(0);
 		}
 
 		Size textDims = mTextLabel->GetFont()->GetStringDimensions(mTextLabel->GetText());
@@ -113,7 +113,13 @@ namespace challenge
 
 	void TextFieldView::Render(IGraphicsDevice *device, RenderState &state, const Frame &parentFrame)
 	{
-		View::Render(device, state, parentFrame);
+		FormElement::Render(device, state, parentFrame);
+	}
+
+	void TextFieldView::ResetCursor()
+	{
+		mCursorPosition = 0;
+		mTextLabel->SetX(0);
 	}
 
 	void TextFieldView::KeyPressed(const KeyboardEvent &e)
@@ -185,7 +191,7 @@ namespace challenge
 
 	void TextFieldView::ParseFromXML(XMLNode &node)
 	{
-		View::ParseFromXML(node);
+		FormElement::ParseFromXML(node);
 
 		this->SetText(node.GetAttributeString("text"));
 	}

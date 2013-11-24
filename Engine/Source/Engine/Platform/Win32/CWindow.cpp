@@ -51,7 +51,7 @@ namespace challenge
 				return false;
 			}
 
-			std::shared_ptr<Window> window(new WindowWin32(mSize, mWinHandle));
+			std::shared_ptr<Window> window(new Window(mSize));
 
 			mApplication = new GameApplicationWindows(window, mListener, mInstance, mWinHandle);
 			if (!mApplication->Initialize()) {

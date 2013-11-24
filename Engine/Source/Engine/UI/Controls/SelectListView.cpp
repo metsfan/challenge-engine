@@ -66,7 +66,7 @@ namespace challenge
 
 	void SelectListView::SetFrame(const Frame &frame)
 	{
-		View::SetFrame(frame);
+		FormElement::SetFrame(frame);
 
 		mOptionsPanel->SetWidth(frame.size.width);
 		mSelectedLabel->SetWidth(frame.size.width - kButtonWidth);
@@ -131,6 +131,10 @@ namespace challenge
 
 		const ListItem &item = mItems[index];
 		mSelectedLabel->SetText(item.text);
+
+		for (SelectListDelegate &nDelegate : mValueChangedDelegates) {
+			nDelegate(this);
+		}
 	}
 
 	void SelectListView::SetValue(const std::string &value)
@@ -144,17 +148,17 @@ namespace challenge
 
 	void SelectListView::Update(int deltaMillis)
 	{
-		View::Update(deltaMillis);
+		FormElement::Update(deltaMillis);
 	}
 
 	void SelectListView::Render(IGraphicsDevice *device, RenderState &state, const Frame &parentFrame)
 	{
-		View::Render(device, state, parentFrame);
+		FormElement::Render(device, state, parentFrame);
 	}
 
 	void SelectListView::ParseFromXML(XMLNode &node)
 	{
-		View::ParseFromXML(node);
+		FormElement::ParseFromXML(node);
 
 		TXMLNodeList &options = node.GetChildrenByName("Option");
 		for(XMLNode &optionNode : options) {

@@ -11,6 +11,8 @@ namespace challenge
 		WindowWin32(Size size, HWND winHandle);
 		~WindowWin32();
 
+		void ShowNativeFileDialog(FILE_DIALOG_DESC *desc);
+
 	private:
 		HWND mWinHandle;
 	};

@@ -13,5 +13,6 @@
 
 #include <Engine/GameApplicationWindows.h>
 #include <Engine/Disk/Platform/Windows/AssetLoaderWindows.h>
+#include <Engine/UI/Util/Platform/Win32/FileDialogWin32.h>
 
 #endif

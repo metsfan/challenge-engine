@@ -8,6 +8,10 @@
 
 namespace challenge
 {
+	class SelectListView;
+
+	typedef std::function<void(SelectListView *)> SelectListDelegate;
+
 	class SelectListView : public FormElement
 	{
 	public:
@@ -26,7 +30,16 @@ namespace challenge
 		virtual void Render(IGraphicsDevice *device, RenderState &state, const Frame &parentFrame);
 
 		void SetValue(const std::string &value);
-		std::string GetValue() { return mItems[mSelectedIndex].value; }
+		std::string GetValue() { 
+			if (mItems.size() > mSelectedIndex) {
+				return mItems[mSelectedIndex].value;
+			}
+		}
+
+		void AddValueChangedDelegate(SelectListDelegate changeDelegate)
+		{
+			mValueChangedDelegates.push_back(changeDelegate);
+		}
 
 	protected:
 		virtual void ParseFromXML(XMLNode &node);
@@ -38,6 +51,7 @@ namespace challenge
 		LabelView *mSelectedLabel;
 		ButtonView *mSelectButton;
 		Point mOptionsPanelPosition;
+		std::vector<SelectListDelegate> mValueChangedDelegates;
 		int mSelectedIndex;
 		int mDefaultOption;
 	};

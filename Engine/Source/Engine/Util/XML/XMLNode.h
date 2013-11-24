@@ -40,6 +40,8 @@ namespace challenge
 		void SetAttribute(std::string name, float value);
 		void SetAttribute(std::string name, double value);
 
+		const TXMLAttributeMap& GetAttributes() { return mAttributes; }
+
 	private:
 		std::string mName;
 		std::string mValue;

@@ -21,7 +21,7 @@ namespace challenge
 			mSelectedItems.pop_back();
 		}
 
-		View::Update(deltaMillis);
+		MultiFormElement::Update(deltaMillis);
 	}
 
 	void OptionsView::AddOption(const std::string &value, const std::string &text)

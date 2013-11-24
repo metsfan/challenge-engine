@@ -78,6 +78,6 @@ namespace challenge
 		mCheckedImage->SetPosition(kCheckboxBuffer, checkboxY);
 		mUncheckedImage->SetPosition(kCheckboxBuffer, checkboxY);
 
-		View::Update(deltaMillis);
+		FormElement::Update(deltaMillis);
 	}
 };

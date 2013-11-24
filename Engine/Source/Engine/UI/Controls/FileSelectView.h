@@ -2,7 +2,7 @@
 
 #include <Engine/Challenge.h>
 #include <Engine/UI/Controls/FormElement.h>
-#include <Engine/UI/Controls/LabelView.h>
+#include <Engine/UI/Controls/TextFieldView.h>
 
 namespace challenge
 {
@@ -19,8 +19,13 @@ namespace challenge
 		void SetValue(const std::string &value) { mCurrentFileLabel->SetText(value); }
 		std::string GetValue() { return this->GetFilepath(); }
 
+		void SetFileExtensions(const std::wstring &extensions);
+		void SetDefaultDirectory(const std::wstring &directory);
+
 	private:
-		LabelView *mCurrentFileLabel;
+		TextFieldView *mCurrentFileLabel;
 		ButtonView *mBrowseButton;
+
+		OPEN_FILE_DIALOG_DESC mCurrentDialogOptions;
 	};
 }

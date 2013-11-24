@@ -22,7 +22,7 @@ namespace challenge
 
 	void ButtonView::SetBackgroundColor(const Color &color)
 	{
-		View::SetBackgroundColor(color);
+		FormElement::SetBackgroundColor(color);
 
 		mTitleLabel->SetBackgroundColor(color);
 	}
@@ -30,7 +30,7 @@ namespace challenge
 
 	void ButtonView::ParseFromXML(XMLNode &node)
 	{
-		View::ParseFromXML(node);
+		FormElement::ParseFromXML(node);
 
 		this->SetTitleText(node.GetAttributeString("text"));
 	}

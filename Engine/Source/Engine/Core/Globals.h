@@ -28,6 +28,7 @@
 #include <unordered_set>
 #include <mutex>
 #include <algorithm>
+#include <locale>
 
 // GLM Libraries
 #include <glm/glm.hpp>

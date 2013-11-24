@@ -16,6 +16,9 @@ namespace challenge
 		virtual void SetValue(const std::string &value) = 0;
 		virtual std::string GetValue() = 0;
 
+	protected:
+		virtual void ParseFromXML(XMLNode &node);
+
 	private:
 		std::string mName;
 	};
@@ -31,6 +34,9 @@ namespace challenge
 		virtual int GetNumValues() = 0;
 		virtual void SetValue(int index, const std::string &value) = 0;
 		virtual std::string GetValue(int index) = 0;
+
+	protected:
+		virtual void ParseFromXML(XMLNode &node);
 
 	private:
 		std::string mName;

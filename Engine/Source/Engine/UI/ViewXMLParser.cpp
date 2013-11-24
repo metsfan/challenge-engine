@@ -18,7 +18,7 @@ namespace challenge
 
 	Frame ViewXMLParser::ParseFrame(const std::string &frameStr)
 	{
-		auto tokens = StringUtil::SplitString(frameStr, ',');
+		auto tokens = StringUtil::SplitString(frameStr, std::string(","));
 		
 		Frame frame;
 		if(tokens.size() == 4) {
@@ -33,7 +33,7 @@ namespace challenge
 
 	Rect ViewXMLParser::ParseRect(const std::string &rectStr)
 	{
-		auto tokens = StringUtil::SplitString(rectStr, ',');
+		auto tokens = StringUtil::SplitString(rectStr, std::string(","));
 		
 		Rect rect;
 		if(tokens.size() == 4) {
@@ -60,6 +60,8 @@ namespace challenge
 					view->AddSubview(child);
 				}
 			}
+
+			view->OnXMLParseComplete();
 		}
 
 		return view;

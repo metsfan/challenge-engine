@@ -29,7 +29,8 @@ namespace challenge
 		mClipSubviews(false),
 		mFocused(false),
 		mWindow(NULL),
-		mBorderWidth(0)
+		mBorderWidth(0),
+		mAlpha(1)
 	{
 		this->SetLayoutType(layout);
 
@@ -110,7 +111,8 @@ namespace challenge
 				mFrame.size.height
 			);
 
-			mSprite->SetBackgroundColor(glm::vec4(mBackgroundColor.red, mBackgroundColor.green, mBackgroundColor.blue, mBackgroundColor.alpha));
+			mSprite->SetBackgroundColor(glm::vec4(mBackgroundColor.red, mBackgroundColor.green, 
+				mBackgroundColor.blue, mBackgroundColor.alpha * mAlpha));
 
 			if(mBackgroundImage) {
 				if(mBackgroundImageChanged) {
@@ -190,6 +192,13 @@ namespace challenge
 
 			mFocused = focused;
 		}
+	}
+
+	void View::SetVisible(bool visible)
+	{
+		mVisible = visible;
+
+		this->PositionSubviews();
 	}
 
 	void View::ClipSubviews(bool clip)
@@ -291,6 +300,21 @@ namespace challenge
 		return NULL;
 	}
 
+	void View::SetAttribute(const std::string &name, const std::string &value)
+	{
+		mAttributes[name] = value;
+	}
+
+	std::string View::GetAttribute(const std::string &name)
+	{
+		auto it = mAttributes.find(name);
+		if (it != mAttributes.end()) {
+			return mAttributes[name];
+		}
+
+		return std::string();
+	}
+
 	void View::ParseFromXML(XMLNode &node)
 	{
 		mFrameSet = node.GetAttributeString("frame") != "";
@@ -316,6 +340,18 @@ namespace challenge
 		}
 		
 		this->SetId(node.GetAttributeString("id"));
+
+		bool visible = node.GetAttributeString("visible") != "false";
+		this->SetVisible(visible); 
+
+		const TXMLAttributeMap &attrs = node.GetAttributes();
+		for (auto &pair : attrs) {
+			this->SetAttribute(pair.second.GetName(), pair.second.GetValue());
+		}
+	}
+
+	void View::OnXMLParseComplete()
+	{
 	}
 
 	void View::SetLayoutType(LayoutType layout)
@@ -339,6 +375,8 @@ namespace challenge
 		if(mParent) {
 			mParent->PositionSubviews();
 		}
+
+		Logger::log(LogDebug, "Position subviews");
 	}
 
 	View * View::CreateFromResource(const std::string &resource)

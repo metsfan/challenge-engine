@@ -112,9 +112,9 @@ namespace challenge
 			if(mScrollable) {
 				if(childFrame.origin.y > mScrollPosition.y + frame.size.height ||
 					childFrame.origin.y + childFrame.size.height < mScrollPosition.y) {
-					view->SetVisible(false);
+					view->SetAlpha(0);
 				} else {
-					view->SetVisible(true);
+					view->SetAlpha(1);
 				}
 			}
 		}

@@ -131,7 +131,7 @@ namespace challenge
 		virtual real GetRightPadding() { return mPadding.right; }
 		virtual real GetTopPadding() { return mPadding.top; }
 
-		virtual void SetVisible(bool visible) { mVisible = visible; }
+		virtual void SetVisible(bool visible);
 		virtual bool IsVisible() { return mVisible; }
 
 		virtual void SetBackgroundColor(const Color &color) { mBackgroundColor = color; }
@@ -163,10 +163,16 @@ namespace challenge
 		void SetFocused(bool focused);
 		bool IsFocused();
 
+		void SetAlpha(real alpha) { mAlpha = alpha; }
+		real GetAlpha() { return mAlpha; }
+
 		Window* GetWindow();
 		void SetWindow(Window *window) { mWindow = window; }
 
 		void SetLayoutType(LayoutType layout);
+
+		void SetAttribute(const std::string &name, const std::string &value);
+		std::string GetAttribute(const std::string &name);
 
 		/* Event Delegates */
 		void AddMouseEvent(MouseEventType type, MouseEventDelegate eventDelegate);
@@ -181,17 +187,23 @@ namespace challenge
 		const Frame& GetTextureFrame() { return mTextureFrame; }
 		void ClipSubviews(bool clip);
 		void AddInternalSubview(View *view);
+
 		virtual void ParseFromXML(XMLNode &node);
+		virtual void OnXMLParseComplete();
+
 		virtual void CalculateChildFrames() {}
 		virtual void OnLoadComplete() {}
 
 		void SetFocusedInternal(bool focused) { mFocused = focused; }
+
+		virtual void PositionSubviews();
 
 	private:
 		Frame mFrame;
 		Frame mAdjustedFrame;
 		Frame mTextureFrame;
 		Rect mPadding;
+		real mAlpha;
 		Color mBackgroundColor;
 		std::shared_ptr<Image> mBackgroundImage;
 		bool mBackgroundImageChanged;
@@ -210,6 +222,7 @@ namespace challenge
 		bool mFrameSet;
 		Color mBorderColor;
 		float mBorderWidth;
+		std::map<std::string, std::string> mAttributes;
 
 		Window *mWindow;
 
@@ -239,6 +252,5 @@ namespace challenge
 		View * GetSelectedView(const Point &p);
 
 		virtual Frame CalculateChildFrame() { return mAdjustedFrame; }
-		virtual void PositionSubviews();
 	};
 };

@@ -10,6 +10,7 @@ namespace challenge
 	class Form;
 
 	typedef std::function<void(Form *form, const std::string &action)> SubmitDelegate;
+	typedef std::map<std::string, std::vector<std::string>> TFormValuesList;
 
 	class Form : public View
 	{
@@ -17,17 +18,24 @@ namespace challenge
 		Form(Frame frame = Frame());
 		~Form();
 
-		void AddElement(FormElement *formElement);
-		void AddMultiFormElement(MultiFormElement *formElement);
 		void AddSubmitButton(ButtonView *button, const std::string &action);
+
+		void AddSubmitDelegate(const std::string &action, SubmitDelegate submitDelegate);
 
 		void SetSubmitDelegate(SubmitDelegate submitDelegate) { mSubmitDelegate = submitDelegate; }
 
-		const std::map<std::string, std::string> GetValues();
-		const std::map<std::string, std::vector<std::string>> GetMultiValues();
+		const TFormValuesList GetValues();
 
 	protected:
 		virtual void ParseFromXML(XMLNode &node);
+		virtual void OnXMLParseComplete();
+
+		virtual void FindFormElements(View *view);
+
+		virtual void PositionSubviews();
+
+		void AddElement(FormElement *formElement);
+		void AddMultiFormElement(MultiFormElement *formElement);
 
 	private:
 		PanelView *mPanel;
