@@ -70,6 +70,8 @@ namespace challenge
 
 	void GameApplication::Update(uint32_t deltaMillis)
 	{
+		Dispatch::ExecuteQueue(Dispatch::MainQueue);
+
 		mInputManager->Update();
 
 		mWindow->Update(deltaMillis);

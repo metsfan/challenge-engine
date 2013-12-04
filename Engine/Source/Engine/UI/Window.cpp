@@ -15,10 +15,13 @@ namespace challenge
 		this->RegisterCoreUIClasses();
 
 		this->ClipSubviews(true);
+
+		mWindow = this;
 	}
 
 	Window::~Window()
 	{
+		delete mCamera;
 	}
 
 	bool Window::Initialize()
@@ -71,11 +74,19 @@ namespace challenge
 		view->SetWindow(this);
 	}
 
-	void Window::RemoveSubview(View *view)
+	View * Window::RemoveSubview(View *view)
 	{
-		View::RemoveSubview(view);
-
 		view->SetWindow(NULL);
+
+		if (view->FindView(mHoveredView)) {
+			mHoveredView = NULL;
+		}
+
+		if (view->FindView(mFocusedView)) {
+			mFocusedView = NULL;
+		}
+
+		return View::RemoveSubview(view);
 	}
 
 	void Window::RegisterCoreUIClasses()
@@ -216,8 +227,8 @@ namespace challenge
 				if (selectedView != this && selectedView->GetBackgroundColor().alpha > 0) {
 					handled = true;
 				}
-
-				selectedView = selectedView->GetParent();
+				
+				selectedView = selectedView->GetParent();	
 			}
 		}
 

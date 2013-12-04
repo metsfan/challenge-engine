@@ -16,7 +16,7 @@ namespace challenge
 	{
 	public:
 		Form(Frame frame = Frame());
-		~Form();
+		virtual ~Form();
 
 		void AddSubmitButton(ButtonView *button, const std::string &action);
 

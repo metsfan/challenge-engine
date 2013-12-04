@@ -15,6 +15,13 @@ namespace challenge
 		DXGI_FORMAT_A8_UNORM		//TextureFormatAlpha
 	};
 
+	static const DXGI_FORMAT DX11DepthStencilFormats [] = {
+		DXGI_FORMAT_UNKNOWN,			// DepthStencilFormatNone
+		DXGI_FORMAT_D24_UNORM_S8_UINT,  // DepthStencilFormatD24S8
+		DXGI_FORMAT_D16_UNORM,			// DepthStencilFormatD16
+		DXGI_FORMAT_D32_FLOAT			// DepthStencilFormatD32
+	};
+
 	template<>
 	class Texture<RendererTypeDX11> : public BaseTexture
 	{
@@ -22,7 +29,8 @@ namespace challenge
 		Texture(GraphicsDeviceDX11 *device, TEXTURE_DESC &desc);
 		virtual ~Texture();
 
-		ID3D11ShaderResourceView *GetTextureResource() { return mDXResourceView; }
+
+		ID3D11ShaderResourceView * GetTextureResource() { return mDXResourceView; }
 
 	protected:
 		void SetTextureResource(ID3D11ShaderResourceView *resource)

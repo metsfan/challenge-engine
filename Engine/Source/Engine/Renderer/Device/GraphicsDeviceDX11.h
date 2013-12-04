@@ -53,6 +53,7 @@ namespace challenge
 
 		ID3D11Device* GetD3D11Device() { return mDevice; }
 		ID3D11DeviceContext* GetD3D11DeviceContext() { return mContext; }
+		IDXGISwapChain* GetSwapChain() { return mSwapChain; }
 
 		void SetWindowHandle(HWND window) { mWinHandle = window; }
 
@@ -62,11 +63,12 @@ namespace challenge
 		void PushScissorRect(int x, int y, int width, int height);
 		void PopScissorRect();
 
-		IShader* CreateShader(std::string filename, ShaderType type);
-		IShaderProgram* CreateShaderProgram();
-		IVertexBuffer* CreateVertexBuffer(VERTEX_BUFFER_DESC desc);
-		ITexture* CreateTexture2D(TEXTURE_DESC &desc);
-		ITexture* CreateTextureCube(TEXTURE_DESC &desc);
+		IShader * CreateShader(std::string filename, ShaderType type);
+		IShaderProgram * CreateShaderProgram();
+		IVertexBuffer * CreateVertexBuffer(VERTEX_BUFFER_DESC desc);
+		ITexture * CreateTexture2D(TEXTURE_DESC &desc);
+		ITexture * CreateTextureCube(TEXTURE_DESC &desc);
+		IRenderTarget * CreateRenderTarget(RENDER_TARGET_DESC &desc);
 
 		void PreRender();
 		void PostRender();

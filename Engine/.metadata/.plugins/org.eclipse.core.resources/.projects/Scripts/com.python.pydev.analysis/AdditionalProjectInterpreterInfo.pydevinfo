@@ -2,27 +2,43 @@
 -- START DISKCACHE
 C:\gamedev\engine-dev\Engine\Engine\.metadata\.plugins\org.eclipse.core.resources\.projects\Scripts\com.python.pydev.analysis\v1_indexcache
 .v1_indexcache
+help|0|C:\gamedev\engine-dev\Engine\Engine\Scripts\help.py
+application|0|C:\gamedev\engine-dev\Engine\Engine\Scripts\application.py
 challenge|0|C:\gamedev\engine-dev\Engine\Engine\Scripts\challenge.py
 build|0|C:\gamedev\engine-dev\Engine\Engine\Scripts\build.py
+create|0|C:\gamedev\engine-dev\Engine\Engine\Scripts\create.py
 vs2012|0|C:\gamedev\engine-dev\Engine\Engine\Scripts\vs2012.py
 -- END DISKCACHE
 -- START DICTIONARY
-5
-2=challenge
-4=VS2012Project
-3=build
-5=VS2012Project.__init__
+11
+6=application
+5=help
+3=challenge
+11=Application.loadStrings
+7=Application
+8=VS2012Project
+10=Application.__init__
+4=build
+2=create
+9=VS2012Project.__init__
 1=vs2012
 -- END DICTIONARY
 -- START TREE 1
-3
-__a|3|__author__!11@__author__!19@__author__!27@
-mai|2|main!18@main!26@
+4
+__a|6|__author__!11@__author__!19@__author__!27@__author__!35@__author__!43@__author__!51@
+app|1|Application!49@
+mai|4|main!26@main!42@main!18@main!34@
 vs2|1|VS2012Project!9@
 -- END TREE
 -- START TREE 2
-3
-__i|1|__init__!4&10@
-add|1|addBuildScript!4&10@
-doc|1|document!5&11@
+9
+__i|2|__init__!7&50@__init__!8&10@
+add|2|addBuildScript!8&10@addIncludeDirectory!8&10@
+doc|1|document!9&11@
+fil|1|filename!9&11@
+loa|1|loadStrings!7&50@
+pro|3|processLayout!7&50@process!7&50@projectDir!10&51@
+roo|1|root!9&11@
+str|1|strings!11&51@
+wri|1|write!8&10@
 -- END TREE

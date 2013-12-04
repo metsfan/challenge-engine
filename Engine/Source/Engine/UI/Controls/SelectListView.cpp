@@ -18,7 +18,8 @@ namespace challenge
 		mDefaultOption(0),
 		mOptionsPanel(new PanelView(Frame(0, 0, frame.size.width, 0))),
 		mSelectedLabel(new LabelView(Frame(0, 0, frame.size.width - kButtonWidth, kItemHeight))),
-		mSelectButton(new ButtonView(Frame(frame.size.width - kButtonWidth, 0, kButtonWidth, kItemHeight)))
+		mSelectButton(new ButtonView(Frame(frame.size.width - kButtonWidth, 0, kButtonWidth, kItemHeight))),
+		mActiveItem(NULL)
 	{
 		this->AddInternalSubview(mSelectedLabel);
 		this->AddInternalSubview(mSelectButton);
@@ -59,9 +60,9 @@ namespace challenge
 
 	SelectListView::~SelectListView()
 	{
+		mOptionsPanel->RemoveFromSuperview();
+
 		delete mOptionsPanel;
-		delete mSelectedLabel;
-		delete mSelectButton;
 	}
 
 	void SelectListView::SetFrame(const Frame &frame)
@@ -88,14 +89,27 @@ namespace challenge
 		});
 
 		itemButton->AddMouseEvent(MouseEventMouseEnter, [this, itemButton](View *sender, const MouseEvent &e) {
-			itemButton->SetBackgroundColor(kOptionHighlightColor);
-			itemButton->SetTitleColor(Color::White());
+			//itemButton->SetBackgroundColor(kOptionHighlightColor);
+			//itemButton->SetTitleColor(Color::White());
+			if (mActiveItem) {
+				mActiveItem->SetBackgroundColor(Color::White());
+				mActiveItem->SetTitleColor(Color::Black());
+			}
+
+			mActiveItem = itemButton;
+			mActiveItem->SetBackgroundColor(kOptionHighlightColor);
+			mActiveItem->SetTitleColor(Color::White());
 		});
 
-		itemButton->AddMouseEvent(MouseEventMouseLeave, [this, itemButton](View *sender, const MouseEvent &e) {
+		if (index == mSelectedIndex) {
+			itemButton->SetBackgroundColor(kOptionHighlightColor);
+			itemButton->SetTitleColor(Color::White());
+		}
+
+		/*itemButton->AddMouseEvent(MouseEventMouseLeave, [this, itemButton](View *sender, const MouseEvent &e) {
 			itemButton->SetBackgroundColor(Color::White());
 			itemButton->SetTitleColor(Color::Black());
-		});
+		});*/
 
 		mButtons.push_back(itemButton);
 		mOptionsPanel->AddSubview(itemButton);

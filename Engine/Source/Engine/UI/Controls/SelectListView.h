@@ -16,7 +16,7 @@ namespace challenge
 	{
 	public:
 		SelectListView(Frame frame = Frame());
-		~SelectListView();
+		virtual ~SelectListView();
 
 		virtual void SetFrame(const Frame &frame);
 
@@ -34,6 +34,8 @@ namespace challenge
 			if (mItems.size() > mSelectedIndex) {
 				return mItems[mSelectedIndex].value;
 			}
+
+			return "";
 		}
 
 		void AddValueChangedDelegate(SelectListDelegate changeDelegate)
@@ -51,6 +53,7 @@ namespace challenge
 		LabelView *mSelectedLabel;
 		ButtonView *mSelectButton;
 		Point mOptionsPanelPosition;
+		ButtonView *mActiveItem;
 		std::vector<SelectListDelegate> mValueChangedDelegates;
 		int mSelectedIndex;
 		int mDefaultOption;

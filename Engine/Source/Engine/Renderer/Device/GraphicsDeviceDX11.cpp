@@ -5,6 +5,7 @@
 #include <Engine/Renderer/Texture/Texture2DDX11.h>
 #include <Engine/Renderer/Texture/TextureCubeDX11.h>
 #include <Engine/Renderer/VertexBuffer/VertexBufferDX11.h>
+#include <Engine/Renderer/Device/RenderTargetDX11.h>
 
 namespace challenge
 {
@@ -235,31 +236,36 @@ namespace challenge
 		
 	}
 
-	IShader* GraphicsDevice<RendererTypeDX11>::CreateShader(std::string filename, ShaderType type)
+	IShader * GraphicsDevice<RendererTypeDX11>::CreateShader(std::string filename, ShaderType type)
 	{
 		Shader<RendererTypeDX11> *shader = new Shader<RendererTypeDX11>(this, filename, type);
 		return static_cast<IShader *>(shader);
 	}
 
-	IShaderProgram* GraphicsDevice<RendererTypeDX11>::CreateShaderProgram()
+	IShaderProgram * GraphicsDevice<RendererTypeDX11>::CreateShaderProgram()
 	{
 		ShaderProgram<RendererTypeDX11> *shaderProgram = new ShaderProgram<RendererTypeDX11>(this);
 		return static_cast<IShaderProgram *>(shaderProgram);
 	}
 
-	IVertexBuffer* GraphicsDevice<RendererTypeDX11>::CreateVertexBuffer(VERTEX_BUFFER_DESC desc)
+	IVertexBuffer * GraphicsDevice<RendererTypeDX11>::CreateVertexBuffer(VERTEX_BUFFER_DESC desc)
 	{
 		return new VertexBuffer<RendererTypeDX11>(this, desc);
 	}
 
-	ITexture* GraphicsDevice<RendererTypeDX11>::CreateTexture2D(TEXTURE_DESC &desc)
+	ITexture * GraphicsDevice<RendererTypeDX11>::CreateTexture2D(TEXTURE_DESC &desc)
 	{
 		return new Texture2D<RendererTypeDX11>(this, desc);
 	}
 
-	ITexture* GraphicsDevice<RendererTypeDX11>::CreateTextureCube(TEXTURE_DESC &desc)
+	ITexture * GraphicsDevice<RendererTypeDX11>::CreateTextureCube(TEXTURE_DESC &desc)
 	{
 		return new TextureCube<RendererTypeDX11>(this, desc);
+	}
+
+	IRenderTarget * GraphicsDevice<RendererTypeDX11>::CreateRenderTarget(RENDER_TARGET_DESC &desc)
+	{
+		return new RenderTarget<RendererTypeDX11>(this, desc);
 	}
 
 	void GraphicsDevice<RendererTypeDX11>::PreRender()

@@ -12,7 +12,7 @@ namespace challenge
 	{
 	public:
 		FileSelectView(Frame frame = Frame());
-		~FileSelectView();
+		virtual ~FileSelectView();
 
 		const std::string& GetFilepath() { return mCurrentFileLabel->GetText(); }
 

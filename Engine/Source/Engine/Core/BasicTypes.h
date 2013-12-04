@@ -207,6 +207,12 @@ namespace challenge
 			return color;
 		}
 
+		operator glm::vec4()
+		{
+			return glm::vec4(red / 255.0f, green / 255.0f, 
+				blue / 255.0f, alpha / 255.0f);
+		}
+
 		static Color White()
 		{
 			static Color whiteColor(255, 255, 255, 255);

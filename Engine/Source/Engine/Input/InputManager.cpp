@@ -33,11 +33,11 @@ namespace challenge
 
 	void InputManager::ProcessKeyboardEvent(KeyboardEventType type, unsigned int keyCode)
 	{
-		if(keyCode == kShiftKey) {
+		if(keyCode == SpecialKeyShift) {
 			mShiftDown = type == KeyboardEventKeyUp ? false : true;
-		} else if(keyCode == kCtrlKey) {
+		} else if(keyCode == SpecialKeyCtrl) {
 			mCtrlDown = type == KeyboardEventKeyUp ? false : true;
-		} else if(keyCode == kAltKey) {
+		} else if(keyCode == SpecialKeyAlt) {
 			mAltDown = type == KeyboardEventKeyUp ? false : true;
 		} else {
 			KeyboardEvent evt(type, keyCode);

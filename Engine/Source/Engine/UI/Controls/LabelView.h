@@ -13,6 +13,7 @@ namespace challenge
 	{
 	public:
 		LabelView(Frame frame = Frame());
+		virtual ~LabelView();
 
 		void SetText(const std::string &text);
 		const std::string& GetText() { return mText; }

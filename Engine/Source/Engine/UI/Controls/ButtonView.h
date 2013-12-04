@@ -20,6 +20,7 @@ namespace challenge
 
 	public:
 		ButtonView(Frame frame = Frame());
+		virtual ~ButtonView() {}
 
 		void SetState(ButtonState state) { mState = state; }
 		ButtonState GetState() { return mState; }

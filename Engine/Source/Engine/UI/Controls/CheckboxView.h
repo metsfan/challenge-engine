@@ -11,7 +11,7 @@ namespace challenge
 	{
 	public:
 		CheckboxView(Frame frame = Frame());
-		~CheckboxView();
+		virtual ~CheckboxView();
 
 		virtual void Update(int deltaMillis);
 

@@ -11,7 +11,7 @@ namespace challenge
 	{
 	public:
 		TextFieldView(Frame frame = Frame());
-		~TextFieldView();
+		virtual ~TextFieldView();
 
 		void SetText(const std::string &text);
 		const std::string& GetText() { return mTextLabel->GetText(); }

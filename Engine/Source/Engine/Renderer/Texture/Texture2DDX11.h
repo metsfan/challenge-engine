@@ -15,6 +15,8 @@ namespace challenge
 		Texture2D(GraphicsDeviceDX11 *device, TEXTURE_DESC &desc);
 		virtual ~Texture2D();
 
+		ID3D11Texture2D * GetDXTexture() { return mDXTexture; }
+
 	private:
 		ID3D11Texture2D *mDXTexture;
 		D3D11_TEXTURE2D_DESC mTextureParams;

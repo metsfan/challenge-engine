@@ -40,6 +40,22 @@ namespace challenge
 
 	View::~View()
 	{
+		TViewList subviews = this->RemoveAllSubviews();
+		for (View *subview : subviews) {
+			delete subview;
+		}
+
+		this->SetFocused(false);
+		if (this->GetParent()) {
+			this->RemoveFromSuperview();
+		}
+	}
+
+	void View::SafeDelete()
+	{
+		Dispatch::PushTask(Dispatch::MainQueue, [this]() {
+			delete this;
+		});
 	}
 
 	void View::AddSubview(View * view)
@@ -60,18 +76,35 @@ namespace challenge
 		this->PositionSubviews();
 	}
 
-	void View::RemoveSubview(View *view)
+	View * View::RemoveSubview(View *view)
 	{
 		for (auto it = mSubviews.begin(); it != mSubviews.end(); ++it) {
 			if (*it == view) {
+				view->SetParent(NULL);
 				mSubviews.erase(it);
-				return;
+				return view;
 			}
 		}
+
+		return NULL;
+	}
+
+	TViewList View::RemoveAllSubviews()
+	{
+		auto subviews = mSubviews;
+		for (View *subview : subviews) {
+			this->RemoveSubview(subview);
+		}
+
+		mSubviews.clear();
+
+		return subviews;
 	}
 
 	void View::RemoveFromSuperview()
 	{
+		this->SetFocused(false);
+
 		auto parent = this->GetParent();
 		if (parent) {
 			parent->RemoveSubview(this);
@@ -100,16 +133,18 @@ namespace challenge
 
 	void View::Render(IGraphicsDevice *device, RenderState &state, const Frame &parentFrame)
 	{
+		mAdjustedFrame = Frame(
+			mFrame.origin.x + parentFrame.origin.x,
+			mFrame.origin.y + parentFrame.origin.y,
+			mFrame.size.width,
+			mFrame.size.height
+		);
+
 		if(mVisible) {
 			if(!mSprite) {
 				mSprite = new SpriteShape(device);
 			}
-			mAdjustedFrame = Frame(
-				mFrame.origin.x + parentFrame.origin.x,
-				mFrame.origin.y + parentFrame.origin.y,
-				mFrame.size.width,
-				mFrame.size.height
-			);
+			
 
 			mSprite->SetBackgroundColor(glm::vec4(mBackgroundColor.red, mBackgroundColor.green, 
 				mBackgroundColor.blue, mBackgroundColor.alpha * mAlpha));
@@ -139,25 +174,28 @@ namespace challenge
 
 			mSprite->SetTextureFrame(mTextureFrame);*/
 
-			mSprite->SetFrame(mAdjustedFrame);
-			mSprite->Draw(device, state);
-			
-			Frame inheritedFrame = this->CalculateChildFrame();
+			if (this->GetWindow() &&
+				this->GetWindow()->GetFrame().Contains(mAdjustedFrame.origin)) {
+				mSprite->SetFrame(mAdjustedFrame);
+				mSprite->Draw(device, state);
 
-			if (mClipSubviews) {
-				device->PushScissorRect(mAdjustedFrame.origin.x,
-					mAdjustedFrame.origin.y,
-					mAdjustedFrame.size.width,
-					mAdjustedFrame.size.height);
-			}
+				Frame inheritedFrame = this->CalculateChildFrame();
 
-			for(int i = 0; i < mSubviews.size(); i++) {
-				View * child = mSubviews[i];
-				child->Render(device, state, inheritedFrame);
-			}
+				if (mClipSubviews) {
+					device->PushScissorRect(mAdjustedFrame.origin.x,
+						mAdjustedFrame.origin.y,
+						mAdjustedFrame.size.width,
+						mAdjustedFrame.size.height);
+				}
 
-			if (mClipSubviews) {
-				device->PopScissorRect();
+				for (int i = 0; i < mSubviews.size(); i++) {
+					View * child = mSubviews[i];
+					child->Render(device, state, inheritedFrame);
+				}
+
+				if (mClipSubviews) {
+					device->PopScissorRect();
+				}
 			}
 		}
 	}
@@ -186,8 +224,8 @@ namespace challenge
 				this->GetWindow()->SetFocusedView(this);
 			}
 
-			else if (mFocused) {
-				this->GetWindow()->UnfocusView(this);
+			else {
+				this->GetWindow()->SetFocusedView(NULL);
 			}
 
 			mFocused = focused;
@@ -284,7 +322,7 @@ namespace challenge
 		mInternalSubviews.push_back(view);
 	}
 
-	View *  View::FindViewById(const std::string &id)
+	View * View::FindViewById(const std::string &id)
 	{
 		for(View * subview : mSubviews) {
 			if(subview->mId == id) {
@@ -294,6 +332,26 @@ namespace challenge
 			View * subviewSearch = subview->FindViewById(id);
 			if(subviewSearch) {
 				return subviewSearch;
+			}
+		}
+
+		return NULL;
+	}
+
+	View * View::FindView(View *view)
+	{
+		if (view == this) {
+			return this;
+		}
+
+		for (View *subview : mSubviews) {
+			if (subview == view) {
+				return subview;
+			}
+
+			View *subsubview = subview->FindView(subview);
+			if (subsubview) {
+				return subsubview;
 			}
 		}
 

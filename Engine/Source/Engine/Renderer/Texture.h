@@ -14,6 +14,14 @@ namespace challenge
 		TextureFormatAlpha
 	};
 
+	enum DepthStencilFormat
+	{
+		DepthStencilFormatNone,
+		DepthStencilFormatD24S8,
+		DepthStencilFormatD16,
+		DepthStencilFormatD32
+	};
+
 	static const int TextureFormatNumComponents[] = 
 	{
 		1, //TextureFormatInt32,
@@ -62,7 +70,7 @@ namespace challenge
 		virtual bool Initialize(const BYTE *buffer, const Size &size) = 0;
 		virtual bool Initialize(std::vector<const BYTE *> &buffers, const Size &size) = 0;
 
-		virtual const Size& GetSize() = 0;
+		virtual const Size & GetSize() = 0;
 		virtual bool IsLoaded() = 0;
 	};
 

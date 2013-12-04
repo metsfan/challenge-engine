@@ -1,4 +1,7 @@
 MODULES_MANAGER_V2
+application|C:\gamedev\engine-dev\Engine\Engine\Scripts\application.py
 build|C:\gamedev\engine-dev\Engine\Engine\Scripts\build.py
 challenge|C:\gamedev\engine-dev\Engine\Engine\Scripts\challenge.py
+create|C:\gamedev\engine-dev\Engine\Engine\Scripts\create.py
+help|C:\gamedev\engine-dev\Engine\Engine\Scripts\help.py
 vs2012|C:\gamedev\engine-dev\Engine\Engine\Scripts\vs2012.py

@@ -9,5 +9,7 @@
 #include <Engine/UI/Controls/TextFieldView.h>
 #include <Engine/UI/Controls/Form.h>
 #include <Engine/UI/Controls/HiddenView.h>
+#include <Engine/UI/Controls/TableView.h>
+#include <Engine/UI/Controls/Model3DView.h>
 #include <Engine/UI/Window.h>
 

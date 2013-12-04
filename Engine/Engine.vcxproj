@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Engine\Core\Dispatch.cpp" />
     <ClCompile Include="Source\Engine\Disk\FileInputStream.cpp" />
     <ClCompile Include="Source\Engine\Disk\FileOutputStream.cpp" />
     <ClCompile Include="Source\Engine\Challenge.cpp">
@@ -40,6 +41,7 @@
     <ClCompile Include="Source\Engine\Renderer\Camera\OrthoCamera.cpp" />
     <ClCompile Include="Source\Engine\Renderer\Camera\PerspectiveCamera.cpp" />
     <ClCompile Include="Source\Engine\Renderer\Device\GraphicsDeviceDX11.cpp" />
+    <ClCompile Include="Source\Engine\Renderer\Device\RenderTargetDX11.cpp" />
     <ClCompile Include="Source\Engine\Renderer\Effect.cpp" />
     <ClCompile Include="Source\Engine\Renderer\GraphicsDevice.cpp" />
     <ClCompile Include="Source\Engine\Audio\AudioListener.cpp" />
@@ -50,6 +52,7 @@
     <ClCompile Include="Source\Engine\Database\DatabaseRecord.cpp" />
     <ClCompile Include="Source\Engine\Event\EventData.cpp" />
     <ClCompile Include="Source\Engine\Event\EventManager.cpp" />
+    <ClInclude Include="Source\Engine\Core\Dispatch.h" />
     <ClInclude Include="Source\Engine\Disk\FileInputStream.h" />
     <ClInclude Include="Source\Engine\Disk\FileOutputStream.h" />
     <ClInclude Include="Source\Engine\Core\Config.h" />
@@ -110,6 +113,7 @@
     <ClCompile Include="Source\Engine\Renderer\Material.cpp" />
     <ClCompile Include="Source\Engine\Renderer\Pass.cpp" />
     <ClCompile Include="Source\Engine\Renderer\RenderState.cpp" />
+    <ClCompile Include="Source\Engine\Renderer\RenderTarget.cpp" />
     <ClCompile Include="Source\Engine\Renderer\ShaderData.cpp" />
     <ClCompile Include="Source\Engine\Renderer\Shader\DX11\ConstantBufferDX11.cpp" />
     <ClCompile Include="Source\Engine\Renderer\Shader\DX11\ShaderDX11.cpp" />
@@ -122,6 +126,7 @@
     <ClCompile Include="Source\Engine\Renderer\Shape\HeightMapShape.cpp" />
     <ClCompile Include="Source\Engine\Renderer\Shape\MeshShape.cpp" />
     <ClCompile Include="Source\Engine\Renderer\Shape\ModelShape.cpp" />
+    <ClCompile Include="Source\Engine\Renderer\Shape\RenderableSpriteShape.cpp" />
     <ClCompile Include="Source\Engine\Renderer\Shape\SkyboxShape.cpp" />
     <ClCompile Include="Source\Engine\Renderer\Shape\SpriteShape.cpp" />
     <ClCompile Include="Source\Engine\Renderer\Technique.cpp" />
@@ -131,8 +136,10 @@
     <ClCompile Include="Source\Engine\Renderer\Texture\TextureDX11.cpp" />
     <ClCompile Include="Source\Engine\Renderer\VertexBuffer.cpp" />
     <ClCompile Include="Source\Engine\Renderer\VertexBuffer\VertexBufferDX11.cpp" />
+    <ClCompile Include="Source\Engine\UI\Controls\Model3DView.cpp" />
     <ClCompile Include="Source\Engine\UI\Controls\FormElement.cpp" />
     <ClCompile Include="Source\Engine\UI\Controls\HiddenView.cpp" />
+    <ClCompile Include="Source\Engine\UI\Controls\TableView.cpp" />
     <ClCompile Include="Source\Engine\UI\Platform\Win32\WindowWin32.cpp" />
     <ClCompile Include="Source\Engine\UI\Util\Platform\Win32\FileDialogWin32.cpp" />
     <ClCompile Include="Source\Engine\UI\Window.cpp" />
@@ -186,6 +193,7 @@
     <ClInclude Include="Source\Engine\Renderer\Camera\Camera.h" />
     <ClInclude Include="Source\Engine\Renderer\Camera\OrthoCamera.h" />
     <ClInclude Include="Source\Engine\Renderer\Camera\PerspectiveCamera.h" />
+    <ClInclude Include="Source\Engine\Renderer\Device\RenderTargetDX11.h" />
     <ClInclude Include="Source\Engine\Renderer\Effect.h" />
     <ClInclude Include="Source\Engine\Renderer\Lights\DirectionalLightSource.h" />
     <ClInclude Include="Source\Engine\Renderer\Lights\LightSource.h" />
@@ -267,6 +275,7 @@
     <ClInclude Include="Source\Engine\Renderer\Pass\ModelAnimationPass.h" />
     <ClInclude Include="Source\Engine\Renderer\Renderer.h" />
     <ClInclude Include="Source\Engine\Renderer\RenderState.h" />
+    <ClInclude Include="Source\Engine\Renderer\RenderTarget.h" />
     <ClInclude Include="Source\Engine\Renderer\ShaderData.h" />
     <ClInclude Include="Source\Engine\Renderer\Shader\DX11\ConstantBufferDX11.h" />
     <ClInclude Include="Source\Engine\Renderer\Shader\DX11\ShaderDX11.h" />
@@ -279,6 +288,7 @@
     <ClInclude Include="Source\Engine\Renderer\Shape\HeightMapShape.h" />
     <ClInclude Include="Source\Engine\Renderer\Shape\MeshShape.h" />
     <ClInclude Include="Source\Engine\Renderer\Shape\ModelShape.h" />
+    <ClInclude Include="Source\Engine\Renderer\Shape\RenderableSpriteShape.h" />
     <ClInclude Include="Source\Engine\Renderer\Shape\SkyboxShape.h" />
     <ClInclude Include="Source\Engine\Renderer\Shape\SpriteShape.h" />
     <ClInclude Include="Source\Engine\Renderer\Technique.h" />
@@ -294,7 +304,9 @@
     <ClInclude Include="Source\Engine\Renderer\Types.h" />
     <ClInclude Include="Source\Engine\Renderer\VertexBuffer.h" />
     <ClInclude Include="Source\Engine\Renderer\VertexBuffer\VertexBufferDX11.h" />
+    <ClInclude Include="Source\Engine\UI\Controls\Model3DView.h" />
     <ClInclude Include="Source\Engine\UI\Controls\HiddenView.h" />
+    <ClInclude Include="Source\Engine\UI\Controls\TableView.h" />
     <ClInclude Include="Source\Engine\UI\Platform\Win32\WindowWin32.h" />
     <ClInclude Include="Source\Engine\UI\Util\FileDialog.h" />
     <ClInclude Include="Source\Engine\UI\Util\Platform\Win32\FileDialogWin32.h" />

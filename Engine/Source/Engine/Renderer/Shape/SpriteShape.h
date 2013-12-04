@@ -68,7 +68,15 @@ namespace challenge
 			mBorderWidth = width;
 		}
 
-		void Draw(IGraphicsDevice *device, RenderState &state);
+		void Draw(IGraphicsDevice *device, RenderState &state); 
+
+	protected:
+		ITexture * GetTexture() { return mBackgroundImage; }
+		void SetTexture(ITexture *texture) 
+		{
+			mBackgroundImage = texture; 
+			mHasBackgroundImage = true;
+		}
 
 	private:
 		glm::vec4 mBackgroundColor;

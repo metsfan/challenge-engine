@@ -11,9 +11,18 @@ namespace challenge
 	typedef std::vector<IKeyboardListener *> TKeyboardListenerList;
 	typedef std::vector<IMouseListener *> TMouseListenerList;
 	
-	static const int kShiftKey = 16;
-	static const int kCtrlKey = 17;
-	static const int kAltKey = 18;
+	enum SpecialKey
+	{
+		SpecialKeyShift = 0xF00F001,
+		SpecialKeyCtrl = 0xF00F002,
+		SpecialKeyAlt = 0xF00F003,
+		SpecialKeyDelete = 0xF00F004,
+		SpecialKeyLeft = 0xF00F005,
+		SpecialKeyRight = 0xF00F006,
+		SpecialKeyUp = 0xF00F007,
+		SpecialKeyDown = 0xF00F008,
+		SpecialKeyTab = 0xF00F009
+	};
 
 	class InputManager
 	{

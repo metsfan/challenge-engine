@@ -184,21 +184,17 @@ namespace challenge
 		if (window) {
 			auto application = window->mApplication;
 
-			
-
-			
-
 			if (application) {
 				switch (uMsg) {
 				case WM_SYSKEYUP:
 				case WM_KEYUP:
-					application->ProcessKeyboardEvent(KeyboardEventKeyUp, TranslateVirtualKeyCode(wParam, lParam));
+					ProcessKeyEvent(application, KeyboardEventKeyUp, wParam, lParam);
 					break;
 
 				case WM_SYSKEYDOWN:
 				case WM_KEYDOWN:
 					if (repeatCount <= 1) {					
-						application->ProcessKeyboardEvent(KeyboardEventKeyDown, TranslateVirtualKeyCode(wParam, lParam));
+						ProcessKeyEvent(application, KeyboardEventKeyDown, wParam, lParam);
 					}
 					break;	
 
@@ -262,6 +258,55 @@ namespace challenge
 		}
 
 		return DefWindowProc(hWnd, uMsg, wParam, lParam);
+	}
+
+	void CWindow::ProcessKeyEvent(GameApplication *application, KeyboardEventType evt, WPARAM wParam, LPARAM lParam)
+	{
+		switch (wParam)
+		{
+		case VK_SHIFT:
+		case VK_LSHIFT:
+		case VK_RSHIFT:
+			application->ProcessKeyboardEvent(evt, SpecialKeyShift);
+			break;
+
+		case VK_CONTROL:
+		case VK_LCONTROL:
+		case VK_RCONTROL:
+			application->ProcessKeyboardEvent(evt, SpecialKeyCtrl);
+			break;
+
+		case LVKF_ALT:
+			application->ProcessKeyboardEvent(evt, SpecialKeyAlt);
+			break;
+
+		case VK_DELETE:
+			application->ProcessKeyboardEvent(evt, SpecialKeyDelete);
+			break;
+
+		case VK_LEFT:
+			application->ProcessKeyboardEvent(evt, SpecialKeyLeft);
+			break;
+
+		case VK_RIGHT:
+			application->ProcessKeyboardEvent(evt, SpecialKeyRight);
+			break;
+
+		case VK_UP:
+			application->ProcessKeyboardEvent(evt, SpecialKeyUp);
+			break;
+
+		case VK_DOWN:
+			application->ProcessKeyboardEvent(evt, SpecialKeyDown);
+			break;
+
+		case VK_TAB:
+			application->ProcessKeyboardEvent(evt, SpecialKeyTab);
+			break;
+
+		default:
+			application->ProcessKeyboardEvent(evt, TranslateVirtualKeyCode(wParam, lParam));
+		}
 	}
 
 	WCHAR CWindow::TranslateVirtualKeyCode(WPARAM wParam, LPARAM lParam)

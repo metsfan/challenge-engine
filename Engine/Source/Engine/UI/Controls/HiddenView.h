@@ -13,7 +13,7 @@ namespace challenge
 		{
 		}
 
-		~HiddenView()
+		virtual ~HiddenView()
 		{
 		}
 

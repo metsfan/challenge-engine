@@ -10,7 +10,7 @@ namespace challenge
 	{
 	public:
 		OptionsView(Frame frame = Frame());
-		~OptionsView();
+		virtual ~OptionsView();
 
 		void Update(int deltaMillis);
 

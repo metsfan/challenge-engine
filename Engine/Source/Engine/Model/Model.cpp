@@ -41,6 +41,10 @@ namespace challenge
 		}
 	}
 
+	Model::~Model()
+	{
+	}
+
 	IGeometricShape* Model::CreateBoundingVolume(GeometricShapeType type, const glm::mat4 &transform)
 	{
 		mBoundingVolume = mResource->CreateBoundingVolume(type, transform)->Clone();

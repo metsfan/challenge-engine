@@ -4,7 +4,7 @@
 #include <Engine/Renderer/Shader/ShaderProgram.h>
 #include <Engine/Renderer/VertexBuffer.h>
 #include <Engine/Renderer/Texture.h>
-#include <Engine/UI/Window.h>
+#include <Engine/Renderer/RenderTarget.h>
 #include <Engine/Renderer/GraphicsContext.h>
 
 namespace challenge
@@ -63,16 +63,17 @@ namespace challenge
 		virtual void PushScissorRect(int x, int y, int width, int height) = 0;
 		virtual void PopScissorRect() = 0;
 
-		virtual IShader* CreateShader(std::string filename, ShaderType type) = 0;
-		virtual IShaderProgram* CreateShaderProgram() = 0;
+		virtual IShader * CreateShader(std::string filename, ShaderType type) = 0;
+		virtual IShaderProgram * CreateShaderProgram() = 0;
 
-		virtual IVertexBuffer* CreateVertexBuffer(VERTEX_BUFFER_DESC desc) = 0;
+		virtual IVertexBuffer * CreateVertexBuffer(VERTEX_BUFFER_DESC desc) = 0;
 
 		//virtual ITexture1D* CreateTexture1D() = 0;
-		virtual ITexture* CreateTexture2D(TEXTURE_DESC &desc) = 0;
+		virtual ITexture * CreateTexture2D(TEXTURE_DESC &desc) = 0;
 		//virtual ITexture2DArray* CreateTexture2DArray() = 0;
 		//virtual ITexture3D* CreateTexture3D() = 0;
-		virtual ITexture* CreateTextureCube(TEXTURE_DESC &desc) = 0;
+		virtual ITexture * CreateTextureCube(TEXTURE_DESC &desc) = 0;
+		virtual IRenderTarget * CreateRenderTarget(RENDER_TARGET_DESC &desc) = 0;
 
 
 		virtual void PreRender() = 0;

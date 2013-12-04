@@ -11,7 +11,7 @@ namespace challenge
 	{
 	public:
 		ScrollbarView(Frame frame = Frame());
-		~ScrollbarView();
+		virtual ~ScrollbarView();
 
 	private:
 		Point mScrollPosition;

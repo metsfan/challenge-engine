@@ -72,7 +72,7 @@ namespace challenge
 		void UnfocusView(View *view);
 
 		void AddSubview(View *view);
-		void RemoveSubview(View *view);
+		View * RemoveSubview(View *view);
 
 		virtual void SetWindowVisibility(WindowVisibility visibility) { mVisibility = visibility; }
 		WindowVisibility GetWindowVisibility() { return mVisibility; }

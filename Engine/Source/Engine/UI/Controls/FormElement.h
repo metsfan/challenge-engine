@@ -9,6 +9,7 @@ namespace challenge
 	{
 	public:
 		FormElement(Frame frame = Frame()) : View(frame) {}
+		virtual ~FormElement() {}
 
 		void SetName(const std::string &name) { mName = name; }
 		const std::string& GetName() { return mName; }
@@ -27,6 +28,7 @@ namespace challenge
 	{
 	public:
 		MultiFormElement(Frame frame = Frame()) : View(frame) {}
+		virtual ~MultiFormElement() {}
 
 		void SetName(const std::string &name) { mName = name; }
 		const std::string& GetName() { return mName; }

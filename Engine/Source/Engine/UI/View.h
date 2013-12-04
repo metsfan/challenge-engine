@@ -79,6 +79,8 @@ namespace challenge
 		View(Frame frame = Frame(), LayoutType layout = LayoutTypeAbsolute);
 		virtual ~View(void);
 
+		void SafeDelete();
+
 		virtual void Update(int deltaMillis);
 		virtual void Render(IGraphicsDevice *device, RenderState &state, const Frame &parentFrame);
 
@@ -86,6 +88,14 @@ namespace challenge
 		const std::string& GetId() { return mId; }
 
 		View * FindViewById(const std::string &id);
+		
+		template <typename T>
+		T * FindViewById(const std::string &id)
+		{
+			return dynamic_cast<T *>(this->FindViewById(id));
+		}
+
+		View * FindView(View *view);
 
 		virtual void SetFrame(const Frame &frame) { mFrame = frame; }
 		const Frame& GetAdjustedFrame() { return mAdjustedFrame; }
@@ -144,7 +154,8 @@ namespace challenge
 		virtual void SetBackgroundImage(std::shared_ptr<Image> image);
 
 		virtual void AddSubview(View *view);
-		virtual void RemoveSubview(View *view);
+		virtual View * RemoveSubview(View *view);
+		virtual TViewList RemoveAllSubviews();
 		virtual void RemoveFromSuperview();
 		const TViewList& GetSubviews() { return mSubviews; }
 
@@ -179,6 +190,13 @@ namespace challenge
 		void AddKeyboardEvent(KeyboardEventType type, KeyboardEventDelegate eventDelegate);
 
 		static View * CreateFromResource(const std::string &resource);
+
+		template <typename T>
+		static T * CreateFromResource(const std::string &resource)
+		{
+			return dynamic_cast<T *>(View::CreateFromResource(resource));
+		}
+
 		static void RegisterViewClass(const std::string &name, TViewCreatorFunction creator);
 
 

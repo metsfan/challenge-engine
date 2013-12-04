@@ -21,6 +21,13 @@ namespace challenge
 		this->SetFont(Font::GetFont(kDefaultFont, kDefaultFontSize));
 	}
 
+	LabelView::~LabelView()
+	{
+		if (mLabelSprite) {
+			delete mLabelSprite;
+		}
+	}
+
 	void LabelView::SetText(const std::string &text) 
 	{ 
 		mText = text; 
