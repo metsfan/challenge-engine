@@ -52,3 +52,17 @@ class Application:
                 outfile = open(outFilepath, "w")
                 outfile.write(fileContents)
                 outfile.close()
+
+    def processConfig(self, outDir):
+        configDir = self.projectDir + "/Resources/Config"
+
+        files = os.listdir(configDir)
+        for file in files:
+            filepath = configDir + "/" + file
+            if os.path.isfile(filepath):
+                fileContents = open(filepath).read()
+
+                outFilepath = outDir + "/" + file
+                outfile = open(outFilepath, "w")
+                outfile.write(fileContents)
+                outfile.close()

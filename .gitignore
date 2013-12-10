@@ -11,3 +11,5 @@ ModelReader/Release/*
 Engine.v11.suo
 Engine/Engine.v11.suo
 Engine/Engine.vcxproj.user
+*.vsp
+*.psess
