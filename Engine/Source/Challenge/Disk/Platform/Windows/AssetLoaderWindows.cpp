@@ -15,7 +15,7 @@ namespace challenge
 			GetModuleFileName(sModule, &sBaseFilePath[0], MAX_PATH);
 
 			sBaseFilePath = sBaseFilePath.substr(0, sBaseFilePath.rfind("\\"));
-			
+			sBaseFilePath = StringUtil::ReplaceAll<std::string>(sBaseFilePath, "\\", "/");
 		}
 
 		return sBaseFilePath + "/" + name;

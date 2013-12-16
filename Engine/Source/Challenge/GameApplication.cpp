@@ -119,10 +119,14 @@ namespace challenge
 	/* Renderer methods */
 	void GameApplication::LoadShaderConfig(const std::string &filepath)
 	{
-		std::string kShaderDir = "C:/gamedev/engine-dev/Engine/Debug/";
 		IGraphicsContext *context = mGraphicsDevice->GetContext();
 
-		XMLDocument doc(filepath);
+		Asset file(filepath);
+		if (!file.ReadData()) {
+			return;
+		}
+
+		XMLDocument doc(&file);
 		XMLNode& rootNode = doc.GetRootNode();
 
 		TXMLNodeList &shaders = rootNode.GetFirstChild("Shaders").GetChildrenByName("Shader");
@@ -145,7 +149,7 @@ namespace challenge
 				type = ShaderTypeComputeShader;
 			}
 
-			IShader *shader = mGraphicsDevice->CreateShader(kShaderDir + filename, type);
+			IShader *shader = mGraphicsDevice->CreateShader(filename, type);
 			shader->Load();
 
 			context->AddShader(node.GetAttributeString("name"), shader);
@@ -183,7 +187,12 @@ namespace challenge
 	{
 		IGraphicsContext *context = mGraphicsDevice->GetContext();
 
-		XMLDocument doc(filepath);
+		Asset file(filepath);
+		if (!file.ReadData()) {
+			return;
+		}
+
+		XMLDocument doc(&file);
 		XMLNode &rootNode = doc.GetRootNode();
 
 		TXMLNodeList &effects = rootNode.GetChildrenByName("Effect");

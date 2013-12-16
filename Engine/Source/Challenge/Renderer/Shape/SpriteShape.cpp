@@ -28,7 +28,7 @@ namespace challenge
 			desc.CPUAccess = 0;
 
 			sSpriteVertexBuffer = device->CreateVertexBuffer(desc);
-			sSpriteVertexBuffer->SetData(verts, sizeof(SpriteVertex) * 4);
+			sSpriteVertexBuffer->SetData(verts, sizeof(SpriteVertex) * 4, sizeof(SpriteVertex));
 		}
 	}
 

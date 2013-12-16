@@ -11,6 +11,7 @@ class Application:
     def process(self, outDir):
         self.loadStrings()
         self.processLayout(outDir)
+        self.processConfig(outDir)
 
     def loadStrings(self):
         self.strings = {}

@@ -16,7 +16,7 @@ struct VS_OUT
 	float3 lightDir : LIGHT_DIRECTION;
 };
 
-cbuffer matrices : register(b3)
+cbuffer matrices
 {
 	float4x4 gWVPMatrix;
 	float4x4 gWorldMatrix;
@@ -25,7 +25,7 @@ cbuffer matrices : register(b3)
 
 #define MAX_BONES 64
 
-cbuffer bones : register(b4)
+cbuffer bones
 {
 	float4x4 gBoneMatrices[MAX_BONES];
 };

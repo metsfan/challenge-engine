@@ -22,9 +22,10 @@ namespace challenge
 
 	void XMLDocument::LoadFile(File *file, int options)
 	{
-		const TByteArray &data = file->GetData();
+		TByteArray data = file->GetData();
 
 		if(data.size()) {
+			data.push_back('\0');
 			rapidxml::xml_document<> doc;
 			doc.parse<0>((char *)&data[0]);
 

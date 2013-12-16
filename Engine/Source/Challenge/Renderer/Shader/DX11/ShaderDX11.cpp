@@ -34,8 +34,7 @@ namespace challenge
 
 	void Shader<RendererTypeDX11>::Load()
 	{
-		const unsigned char *source = this->GetShaderSource();
-		const int size = this->GetSourceSize();
+		const TByteArray &source = this->GetShaderSource();
 
 		ID3D11Device *device = mDevice->GetD3D11Device();
 
@@ -44,7 +43,7 @@ namespace challenge
 		{
 		case ShaderTypeVertexShader:
 			{
-				hr = device->CreateVertexShader(source, size, NULL, &mVertexShader);
+				hr = device->CreateVertexShader(&source[0], source.size(), NULL, &mVertexShader);
 				if(hr != S_OK) {
 					throw "Failed to create shader";
 				}
@@ -53,7 +52,7 @@ namespace challenge
 
 		case ShaderTypePixelShader:
 			{
-				hr = device->CreatePixelShader(source, size, NULL, &mPixelShader);
+				hr = device->CreatePixelShader(&source[0], source.size(), NULL, &mPixelShader);
 				if(hr != S_OK) {
 					throw "Failed to create shader";
 				}
@@ -62,7 +61,7 @@ namespace challenge
 
 		case ShaderTypeGeometryShader:
 			{
-				hr = device->CreateGeometryShader(source, size, NULL, &mGeometryShader);
+				hr = device->CreateGeometryShader(&source[0], source.size(), NULL, &mGeometryShader);
 				if(hr != S_OK) {
 					throw "Failed to create shader";
 				}
@@ -71,7 +70,7 @@ namespace challenge
 
 		case ShaderTypeHullShader:
 			{
-				hr = device->CreateHullShader(source, size, NULL, &mHullShader);
+				hr = device->CreateHullShader(&source[0], source.size(), NULL, &mHullShader);
 				if(hr != S_OK) {
 					throw "Failed to create shader";
 				}
@@ -80,7 +79,7 @@ namespace challenge
 
 		case ShaderTypeDomainShader:
 			{
-				hr = device->CreateDomainShader(source, size, NULL, &mDomainShader);
+				hr = device->CreateDomainShader(&source[0], source.size(), NULL, &mDomainShader);
 				if(hr != S_OK) {
 					throw "Failed to create shader";
 				}
@@ -90,7 +89,7 @@ namespace challenge
 		case ShaderTypeComputeShader:
 			{
 				ID3D11ComputeShader *computeShader = NULL;
-				hr = device->CreateComputeShader(source, size, NULL, &mComputeShader);
+				hr = device->CreateComputeShader(&source[0], source.size(), NULL, &mComputeShader);
 				if(hr != S_OK) {
 					throw "Failed to create shader";
 				}
@@ -99,7 +98,7 @@ namespace challenge
 		}
 
 		ID3D11ShaderReflection *reflection = NULL;
-		D3DReflect(source, size, IID_ID3D11ShaderReflection, (void **)&reflection);
+		D3DReflect(&source[0], source.size(), IID_ID3D11ShaderReflection, (void **) &reflection);
 
 		D3D11_SHADER_DESC shaderDesc;
 		reflection->GetDesc(&shaderDesc);
@@ -137,7 +136,8 @@ namespace challenge
 			D3D11_SHADER_INPUT_BIND_DESC inputDesc;
 			reflection->GetResourceBindingDesc(i, &inputDesc);
 
-			if(inputDesc.Type = D3D_SIT_TEXTURE) {
+			if(inputDesc.Type == D3D_SIT_TEXTURE &&
+				inputDesc.Dimension != D3D_SRV_DIMENSION_UNKNOWN) {
 				ShaderResourceVarDX11 rsVar;
 				rsVar.name = inputDesc.Name;
 				rsVar.resIndex = inputDesc.BindPoint;
@@ -150,9 +150,9 @@ namespace challenge
 	void Shader<RendererTypeDX11>::AttachToProgram(IShaderProgram *program)
 	{
 		ShaderProgram<RendererTypeDX11> *dxShaderProgram = dynamic_cast<ShaderProgram<RendererTypeDX11> *>(program);
+		ID3D11DeviceContext *context = mDevice->GetD3D11DeviceContext();
 
 		if(dxShaderProgram) {
-			ID3D11DeviceContext *context = mDevice->GetD3D11DeviceContext();
 
 			switch(this->GetType())
 			{
@@ -208,6 +208,7 @@ namespace challenge
 
 		for(ConstantBufferDX11 *cbuffer : mConstantBuffers) {
 			//cbuffer->BindBuffer(mDevice->GetD3D11DeviceContext());
+			cbuffer->Activate(context);
 		}
 	}
 

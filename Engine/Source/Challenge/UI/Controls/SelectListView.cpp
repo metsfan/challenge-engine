@@ -24,7 +24,9 @@ namespace challenge
 	{
 		if (!sDefaultSelectImage) {
 			Asset imageAsset("select_list_arrow.png");
-			sDefaultSelectImage = std::shared_ptr<Image>(new Image(&imageAsset));
+			if (imageAsset.ReadData()) {
+				sDefaultSelectImage = std::shared_ptr<Image>(new Image(&imageAsset));
+			}
 		}
 		this->AddInternalSubview(mSelectedLabel);
 		this->AddInternalSubview(mSelectButton);

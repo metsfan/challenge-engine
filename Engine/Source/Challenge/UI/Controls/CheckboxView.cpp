@@ -16,12 +16,16 @@ namespace challenge
 	{
 		if (!sDefaultCheckedImage) {
 			Asset imageAsset("checkbox_checked.png");
-			sDefaultCheckedImage = std::shared_ptr<Image>(new Image(&imageAsset));
+			if (imageAsset.ReadData()) {
+				sDefaultCheckedImage = std::shared_ptr<Image>(new Image(&imageAsset));
+			}
 		}
 
 		if (!sDefaultUncheckedImage) {
 			Asset imageAsset("uncheckbox_checked.png");
-			sDefaultCheckedImage = std::shared_ptr<Image>(new Image(&imageAsset));
+			if (imageAsset.ReadData()) {
+				sDefaultCheckedImage = std::shared_ptr<Image>(new Image(&imageAsset));
+			}
 		}
 
 		mCheckedImage->SetBackgroundImage(sDefaultCheckedImage);

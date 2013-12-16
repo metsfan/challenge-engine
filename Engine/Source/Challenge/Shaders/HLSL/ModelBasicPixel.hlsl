@@ -1,4 +1,4 @@
-Texture2D gTexture : register(t0); 
+Texture2D gTexture; 
  
 sampler gTriLinearSam = 
 sampler_state
@@ -9,7 +9,7 @@ sampler_state
     MagFilter = LINEAR;
 };
 
-cbuffer color : register(b11)
+cbuffer color
 {
 	float4 gColor;
 }

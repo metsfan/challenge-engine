@@ -447,6 +447,9 @@
     <ClCompile Include="Source\Challenge\GameController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Challenge\Renderer\Shape\LineShape.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Challenge\GameController.h">
@@ -797,9 +800,6 @@
     <ClInclude Include="Source\Challenge\Renderer\Effect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Challenge\Renderer\GraphicsContext.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Challenge\Renderer\GraphicsDevice.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -977,6 +977,15 @@
     <ClInclude Include="Source\Challenge\GameApplicationWindows.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Challenge\Renderer\Technique\GraphicsContext.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Renderer\GraphicsContext.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Renderer\Shape\LineShape.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ChallengeEngine-settings.props" />
@@ -1018,6 +1027,9 @@
     <FxCompile Include="Source\Challenge\Shaders\HLSL\SpriteColorPixel.hlsl" />
     <FxCompile Include="Source\Challenge\Shaders\HLSL\SpriteTexturePixel.hlsl" />
     <FxCompile Include="Source\Challenge\Shaders\HLSL\SpriteVertex.hlsl" />
+    <FxCompile Include="Source\Challenge\Shaders\HLSL\LineVertex.hlsl" />
+    <FxCompile Include="Source\Challenge\Shaders\HLSL\LinePixel.hlsl" />
+    <FxCompile Include="Source\Challenge\Shaders\HLSL\LineGeometry.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="Source\Engine\Config\shaders.xml" />

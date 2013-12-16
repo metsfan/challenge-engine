@@ -21,7 +21,7 @@ namespace challenge
 	}
 
 	/* IVertexBuffer methods */
-	void VertexBuffer<RendererTypeDX11>::SetData(const void *buffer, int size)
+	void VertexBuffer<RendererTypeDX11>::SetData(const void *buffer, int size, int stride)
 	{
 		D3D11_USAGE usage;
 		switch(mDesc.Usage) 
@@ -66,6 +66,8 @@ namespace challenge
 			// TODO: Error handling
 			throw "Failed to create vertex buffer";
 		}
+
+		mDesc.Stride = stride;
 
 		D3D11_SAMPLER_DESC samplerDesc;
 		samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;

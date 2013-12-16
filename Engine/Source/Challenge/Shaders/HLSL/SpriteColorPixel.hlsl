@@ -6,7 +6,7 @@
 	 float borderWidth : POSITION1;
  };
 
-cbuffer colorBuffer : register(b5)
+cbuffer colorBuffer
 {
 	float4 gColor;
 	float4 gBorderColor;

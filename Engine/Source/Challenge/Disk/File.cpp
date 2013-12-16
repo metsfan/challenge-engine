@@ -34,8 +34,6 @@ namespace challenge
 		filestream.read((char*)&mData[0], size);
 		filestream.close();
 
-		mData.push_back('\0');
-
 		return true;
 	}
 };

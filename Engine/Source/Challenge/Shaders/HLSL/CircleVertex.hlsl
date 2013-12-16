@@ -1,6 +1,7 @@
 struct VS_IN
 {
 	float3 position : POSITION;
+	float2 texCoord : TEXCOORD;
 };
 
 struct VS_OUT
@@ -9,7 +10,7 @@ struct VS_OUT
 	float2 texCoord : TEXCOORD0;
 };
 
-cbuffer matrices : register(b10)
+cbuffer matrices
 {
 	float4x4 gWVPMatrix : WORLDVIEWPROJ_MATRIX;
 };
@@ -19,7 +20,7 @@ VS_OUT main(VS_IN vsIn)
 	VS_OUT vsOut;
 
 	vsOut.position = mul(gWVPMatrix, float4(vsIn.position, 1.0));
-	vsOut.texCoord = float2(0.0, 0.0);
+	vsOut.texCoord = vsIn.texCoord;
 
 	return vsOut;
 }

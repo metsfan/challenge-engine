@@ -31,8 +31,7 @@ namespace challenge
 		IShader *vertexShader = this->GetShader(ShaderTypeVertexShader);
 		if(vertexShader) {
 			vertexShader->AttachToProgram(this);
-			const unsigned char *source = vertexShader->GetShaderSource();
-			const int size = vertexShader->GetSourceSize();
+			const TByteArray &source = vertexShader->GetShaderSource();
 
 			ID3D11Device *device = mDevice->GetD3D11Device();
 			ID3D11DeviceContext *context = mDevice->GetD3D11DeviceContext();
@@ -58,6 +57,7 @@ namespace challenge
 					break;
 
 				case 4:
+				default:
 					format = DXGI_FORMAT_R32G32B32A32_FLOAT;
 					break;
 				}
@@ -69,9 +69,9 @@ namespace challenge
 			}
 
 			HRESULT hr = device->CreateInputLayout(&inputElements[0], inputElements.size(), 
-									source, size, &mDX11InputLayout);
+									&source[0], source.size(), &mDX11InputLayout);
 			if(hr == S_OK) {
-				context->IASetInputLayout(mDX11InputLayout);
+				//context->IASetInputLayout(mDX11InputLayout);
 			}
 		}	
 
@@ -168,54 +168,60 @@ namespace challenge
 		}
 
 		// Reload the resource view
-		if(reload) {
-			ID3D11Device *device = mDevice->GetD3D11Device();
-			ID3D11DeviceContext *context = mDevice->GetD3D11DeviceContext();
+		ID3D11Device *device = mDevice->GetD3D11Device();
+		ID3D11DeviceContext *context = mDevice->GetD3D11DeviceContext();
 
-			switch(type) 
-			{
-			case ShaderTypeVertexShader:
-				context->VSSetShaderResources(start, count, resourceView);
-				break;
+		switch(type) 
+		{
+		case ShaderTypeVertexShader:
+			context->VSSetShaderResources(start, count, resourceView);
+			break;
 
-			case ShaderTypePixelShader: 
-				context->PSSetShaderResources(start, count, resourceView);
-				break;
+		case ShaderTypePixelShader: 
+			context->PSSetShaderResources(start, count, resourceView);
+			break;
 
-			case ShaderTypeGeometryShader:
-				context->GSSetShaderResources(start, count, resourceView);
-				break;
+		case ShaderTypeGeometryShader:
+			context->GSSetShaderResources(start, count, resourceView);
+			break;
 
-			case ShaderTypeHullShader:
-				context->HSSetShaderResources(start, count, resourceView);
-				break;
+		case ShaderTypeHullShader:
+			context->HSSetShaderResources(start, count, resourceView);
+			break;
 
-			case ShaderTypeDomainShader:
-				context->DSSetShaderResources(start, count, resourceView);
-				break;
+		case ShaderTypeDomainShader:
+			context->DSSetShaderResources(start, count, resourceView);
+			break;
 
-			case ShaderTypeComputeShader:
-				context->CSSetShaderResources(start, count, resourceView);
-				break;
-			}
-
-			// Update the resource cache
-			for(int i = start, j = 0; i < end; i++, j++) {
-				mResources[type][i] = resourceView[j];
-			}
+		case ShaderTypeComputeShader:
+			context->CSSetShaderResources(start, count, resourceView);
+			break;
 		}
+
+		// Update the resource cache
+		for(int i = start, j = 0; i < end; i++, j++) {
+			mResources[type][i] = resourceView[j];
+		}
+		
 	}
 
 	void ShaderProgram<RendererTypeDX11>::Use()
 	{
+		ID3D11DeviceContext *context = mDevice->GetD3D11DeviceContext();
+		context->VSSetShader(NULL, 0, 0);
+		context->PSSetShader(NULL, 0, 0);
+		context->GSSetShader(NULL, 0, 0);
+		context->DSSetShader(NULL, 0, 0);
+		context->HSSetShader(NULL, 0, 0);
+		context->CSSetShader(NULL, 0, 0);
+
 		TShaderList &shaders = this->GetShaders();
 		for(IShader *shader : shaders) {
 			if(shader) {
 				shader->AttachToProgram(this);
 			}
 		}
-
-		ID3D11DeviceContext *context = mDevice->GetD3D11DeviceContext();
+		
 		context->IASetInputLayout(mDX11InputLayout);
 	}
 

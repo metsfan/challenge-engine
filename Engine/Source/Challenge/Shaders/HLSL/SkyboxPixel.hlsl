@@ -1,6 +1,6 @@
-TextureCube gSkyboxTexture : register(t1);
+TextureCube gSkyboxTexture;
 
-SamplerState gTriLinearSam : register(s0);
+SamplerState gTriLinearSam;
 
 struct PS_IN
 {

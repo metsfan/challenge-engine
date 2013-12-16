@@ -10,7 +10,7 @@ struct VS_OUT
 	float4 color : COLOR;
 };
 
-cbuffer matrices : register(b10)
+cbuffer matrices
 {
 	float4x4 gWVPMatrix;
 };

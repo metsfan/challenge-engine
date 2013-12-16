@@ -29,6 +29,8 @@ namespace challenge
 		void SetBufferData(const void *value, const size_t size, const UINT offset = 0);
 		void BindBuffer(ID3D11DeviceContext *dxContext);
 
+		void Activate(ID3D11DeviceContext *dxContext);
+
 		bool HasVariableWithName(const std::string &name);
 
 		std::vector<CBVariable>& GetVariables() { return mVariables; }
@@ -40,5 +42,6 @@ namespace challenge
 		UINT mBindCount;
 		std::vector<CBVariable> mVariables;
 		ID3D11Buffer *mD3DBuffer;
+		ShaderType mShaderType;
 	};
 };

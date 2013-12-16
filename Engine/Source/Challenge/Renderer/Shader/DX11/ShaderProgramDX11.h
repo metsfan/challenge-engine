@@ -9,6 +9,13 @@ namespace challenge
 	typedef std::vector<ID3D11Buffer *> TBufferList;
 	typedef std::vector<ID3D11ShaderResourceView *> TShaderResourceList;
 
+	struct ShaderResource
+	{
+		ID3D11ShaderResourceView *resource;
+		int index;
+		ShaderType type;
+	};
+
 	template<>
 	class ShaderProgram<RendererTypeDX11> : public BaseShaderProgram
 	{
@@ -41,6 +48,7 @@ namespace challenge
 		ID3D11InputLayout *mDX11InputLayout;
 		std::vector<TBufferList> mConstantBuffers;
 		std::vector<TShaderResourceList> mResources;
+		std::vector<ShaderResource> mDXResources;
 	};
 
 	typedef ShaderProgram<RendererTypeDX11> ShaderProgramDX11;

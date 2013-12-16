@@ -105,6 +105,7 @@
     <ClCompile Include="Source\Challenge\Renderer\Shape.cpp" />
     <ClCompile Include="Source\Challenge\Renderer\Shape\BoxShape.cpp" />
     <ClCompile Include="Source\Challenge\Renderer\Shape\HeightMapShape.cpp" />
+    <ClCompile Include="Source\Challenge\Renderer\Shape\LineShape.cpp" />
     <ClCompile Include="Source\Challenge\Renderer\Shape\MeshShape.cpp" />
     <ClCompile Include="Source\Challenge\Renderer\Shape\ModelShape.cpp" />
     <ClCompile Include="Source\Challenge\Renderer\Shape\RenderableSpriteShape.cpp" />
@@ -254,6 +255,8 @@
     <ClInclude Include="Source\Challenge\Renderer\Device\RenderTargetDX11.h" />
     <ClInclude Include="Source\Challenge\Renderer\Effect.h" />
     <ClInclude Include="Source\Challenge\Renderer\GraphicsContext.h" />
+    <ClInclude Include="Source\Challenge\Renderer\Shape\LineShape.h" />
+    <ClInclude Include="Source\Challenge\Renderer\Technique\GraphicsContext.h" />
     <ClInclude Include="Source\Challenge\Renderer\GraphicsDevice.h" />
     <ClInclude Include="Source\Challenge\Renderer\Lights\DirectionalLightSource.h" />
     <ClInclude Include="Source\Challenge\Renderer\Lights\LightSource.h" />
@@ -375,6 +378,20 @@
     <FxCompile Include="Source\Challenge\Shaders\HLSL\HeightMapVertex.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OutDir)%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="Source\Challenge\Shaders\HLSL\LineGeometry.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Source\Challenge\Shaders\HLSL\LinePixel.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\Challenge\Shaders\HLSL\LineVertex.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="Source\Challenge\Shaders\HLSL\ModelBasicPixel.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>

@@ -67,16 +67,16 @@
       <file leaf-file-name="build.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/build.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="26" selection-start="184" selection-end="184" vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="289">
+            <state line="9" column="26" selection-start="184" selection-end="184" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="289">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="application.py" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="application.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/application.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="67" column="31" selection-start="2197" selection-end="2197" vertical-scroll-proportion="0.0" vertical-offset="546" max-vertical-offset="1241">
+            <state line="63" column="52" selection-start="2056" selection-end="2056" vertical-scroll-proportion="0.7542707" vertical-offset="480" max-vertical-offset="1241">
               <folding />
             </state>
           </provider>
@@ -100,10 +100,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="create.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="create.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/create.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="32" column="56" selection-start="847" selection-end="847" vertical-scroll-proportion="0.55321944" vertical-offset="106" max-vertical-offset="867">
+            <state line="25" column="28" selection-start="591" selection-end="591" vertical-scroll-proportion="0.0" vertical-offset="106" max-vertical-offset="867">
               <folding />
             </state>
           </provider>
@@ -128,8 +128,8 @@
         <option value="$PROJECT_DIR$/help.py" />
         <option value="$PROJECT_DIR$/challenge.py" />
         <option value="$PROJECT_DIR$/build.py" />
-        <option value="$PROJECT_DIR$/application.py" />
         <option value="$PROJECT_DIR$/vs2012.py" />
+        <option value="$PROJECT_DIR$/application.py" />
       </list>
     </option>
   </component>
@@ -189,7 +189,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -210,6 +209,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -227,8 +227,8 @@
     <property name="FullScreen" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -351,7 +351,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1122" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1122" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -402,9 +402,7 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/vs2012.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="29" selection-start="694" selection-end="694" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <folding />
-        </state>
+        <state line="23" column="29" selection-start="694" selection-end="694" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/build.py">
@@ -423,9 +421,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/vs2012.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="41" selection-start="407" selection-end="407" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <folding />
-        </state>
+        <state line="19" column="41" selection-start="407" selection-end="407" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/build.py">
@@ -444,9 +440,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/vs2012.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="41" selection-start="407" selection-end="407" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <folding />
-        </state>
+        <state line="19" column="41" selection-start="407" selection-end="407" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/.IntelliJIdea12/config/plugins/python/helpers/pydev/_pydev_execfile.py">
@@ -461,20 +455,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/build.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="26" selection-start="184" selection-end="184" vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="289">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="67" column="31" selection-start="2197" selection-end="2197" vertical-scroll-proportion="0.0" vertical-offset="546" max-vertical-offset="1241">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/challenge.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
@@ -484,9 +464,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/vs2012.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="35" selection-start="1086" selection-end="1086" vertical-scroll-proportion="0.69250983" vertical-offset="0" max-vertical-offset="1190">
-          <folding />
-        </state>
+        <state line="33" column="35" selection-start="1086" selection-end="1086" vertical-scroll-proportion="0.69250983" vertical-offset="0" max-vertical-offset="1190" />
       </provider>
     </entry>
     <entry file="file://C:/Python33/Lib/xml/dom/minidom.py">
@@ -498,14 +476,26 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/challenge.bat">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="23" selection-start="33" selection-end="33" vertical-scroll-proportion="0.022339027" vertical-offset="0" max-vertical-offset="761">
-          <folding />
-        </state>
+        <state line="1" column="23" selection-start="33" selection-end="33" vertical-scroll-proportion="0.022339027" vertical-offset="0" max-vertical-offset="761" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/create.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="56" selection-start="847" selection-end="847" vertical-scroll-proportion="0.55321944" vertical-offset="106" max-vertical-offset="867">
+        <state line="25" column="28" selection-start="591" selection-end="591" vertical-scroll-proportion="0.0" vertical-offset="106" max-vertical-offset="867">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="26" selection-start="184" selection-end="184" vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="289">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="63" column="52" selection-start="2056" selection-end="2056" vertical-scroll-proportion="0.7542707" vertical-offset="480" max-vertical-offset="1241">
           <folding />
         </state>
       </provider>

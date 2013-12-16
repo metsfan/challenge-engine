@@ -3,6 +3,7 @@
 #include <Challenge/Challenge.h>
 #include <Challenge/Renderer/Types.h>
 #include <Challenge/Util/Util.h>
+#include <Challenge/Disk/Asset.h>
 
 namespace challenge
 {
@@ -28,7 +29,7 @@ namespace challenge
 	public:
 		virtual void Load() = 0;
 		virtual void AttachToProgram(IShaderProgram *program) = 0;
-		virtual const unsigned char * GetShaderSource() = 0;
+		virtual const TByteArray& GetShaderSource() = 0;
 		virtual const int GetSourceSize() = 0;
 		virtual ShaderType GetType() = 0;
 	};
@@ -41,17 +42,19 @@ namespace challenge
 			mShaderSource(NULL),
 			mSourceSize(0)
 		{
-			mSourceSize = Util::ReadContentsOfBinaryFile(filename, &mShaderSource);
+			Asset file(filename);
+			if (file.ReadData()) {
+				mSourceSize = file.GetData().size();
+				mShaderSource = file.GetData();
+			}
+			
 		}
 
 		virtual ~BaseShader()
 		{
-			if(mShaderSource) {
-				delete mShaderSource;
-			}
 		}
 
-		const unsigned char * GetShaderSource() { return mShaderSource; }
+		const TByteArray& GetShaderSource() { return mShaderSource; }
 		const int GetSourceSize() { return mSourceSize; }
 
 		bool IsLoaded() { return mLoaded; }
@@ -61,7 +64,7 @@ namespace challenge
 
 	private:
 		ShaderType mType;
-		unsigned char *mShaderSource;
+		TByteArray mShaderSource;
 		int mSourceSize;
 		bool mLoaded;
 	};

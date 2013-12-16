@@ -10,7 +10,7 @@ struct VS_OUT
 	float3 texCoord : TEXCOORD;
 };
 
-cbuffer matrices : register(b2)
+cbuffer matrices
 {
 	float4x4 gWVPMatrix;
 };

@@ -12,7 +12,7 @@
 	 float borderWidth : POSITION1;
  };
 
- cbuffer spriteData : register(b1)
+ cbuffer spriteData
  {
 	 float4x4 gWVPMatrix;
 	 float4 gFrame;

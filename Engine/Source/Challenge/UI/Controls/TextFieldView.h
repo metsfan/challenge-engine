@@ -13,6 +13,14 @@ namespace challenge
 		TextFieldView(Frame frame = Frame());
 		virtual ~TextFieldView();
 
+		template <typename T>
+		void SetText(const T &val)
+		{
+			std::stringstream ss;
+			ss << val;
+			this->SetText(ss.str());
+		}
+
 		void SetText(const std::string &text);
 		const std::string& GetText() { return mTextLabel->GetText(); }
 

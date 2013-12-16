@@ -11,5 +11,10 @@ cbuffer color
 
 float4 main(PS_IN psIn) : SV_TARGET
 {
-	return gColor;
+	float dist = distance(psIn.texCoord, float2(0.5, 0.5));
+	if (dist < 0.5) {
+		return gColor;
+	}
+	
+	return float4(0, 0, 0, 0);
 }

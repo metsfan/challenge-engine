@@ -24,7 +24,8 @@ namespace challenge
 
 	void MeshShape::SetData(const void *data, size_t size, int numVerts, PrimitiveType primType)
 	{
-		mBuffer->SetData(data, size);
+		int stride = size / numVerts;
+		mBuffer->SetData(data, size, stride);
 		mNumVerts = numVerts;
 		mPrimType = primType;
 	}
@@ -41,8 +42,9 @@ namespace challenge
 
 			tech->Begin();
 			while(tech->HasNextPass()) {
-				tech->ProcessNextPass(device, state);
 				mBuffer->Activate();
+				tech->ProcessNextPass(device, state);
+				
 				device->Draw(mPrimType, mNumVerts, 0);
 			}
 		}

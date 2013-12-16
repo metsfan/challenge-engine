@@ -6,7 +6,8 @@ namespace challenge
 	ConstantBufferDX11::ConstantBufferDX11(GraphicsDeviceDX11 *device,
 											ID3D11ShaderReflectionConstantBuffer *cbuffer,
 											const D3D11_SHADER_INPUT_BIND_DESC &inputDesc,
-											ShaderType shaderType)
+											ShaderType shaderType) :
+											mShaderType(shaderType)
 	{
 		ID3D11Device *dxDevice = device->GetD3D11Device();
 		ID3D11DeviceContext *dxContext = device->GetD3D11DeviceContext();
@@ -50,37 +51,6 @@ namespace challenge
 		bufferData.pSysMem = mBufferData;
 
 		HRESULT hr = dxDevice->CreateBuffer(&bufferDesc, &bufferData, &mD3DBuffer);
-
-		if(hr == S_OK) {
-			switch(shaderType) 
-			{
-			case ShaderTypeVertexShader:
-				dxContext->VSSetConstantBuffers(mBindIndex, mBindCount, &mD3DBuffer);
-				break;
-
-			case ShaderTypePixelShader:
-				dxContext->PSSetConstantBuffers(mBindIndex, mBindCount, &mD3DBuffer);
-				break;
-
-			case ShaderTypeGeometryShader:
-				dxContext->GSSetConstantBuffers(mBindIndex, mBindCount, &mD3DBuffer);
-				break;
-
-			case ShaderTypeHullShader:
-				dxContext->HSSetConstantBuffers(mBindIndex, mBindCount, &mD3DBuffer);
-				break;
-
-			case ShaderTypeDomainShader:
-				dxContext->DSSetConstantBuffers(mBindIndex, mBindCount, &mD3DBuffer);
-				break;
-
-			case ShaderTypeComputeShader:
-				dxContext->CSSetConstantBuffers(mBindIndex, mBindCount, &mD3DBuffer);
-				break;
-			}
-		} else {
-			throw "Error";
-		}
 	}
 
 	ConstantBufferDX11::~ConstantBufferDX11()
@@ -123,6 +93,36 @@ namespace challenge
 		dxContext->Map(mD3DBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mapResource);
 		memcpy(mapResource.pData, mBufferData, mBufferSize);
 		dxContext->Unmap(mD3DBuffer, 0);
+	}
+
+	void ConstantBufferDX11::Activate(ID3D11DeviceContext *dxContext)
+	{
+		switch (mShaderType)
+		{
+		case ShaderTypeVertexShader:
+			dxContext->VSSetConstantBuffers(mBindIndex, mBindCount, &mD3DBuffer);
+			break;
+
+		case ShaderTypePixelShader:
+			dxContext->PSSetConstantBuffers(mBindIndex, mBindCount, &mD3DBuffer);
+			break;
+
+		case ShaderTypeGeometryShader:
+			dxContext->GSSetConstantBuffers(mBindIndex, mBindCount, &mD3DBuffer);
+			break;
+
+		case ShaderTypeHullShader:
+			dxContext->HSSetConstantBuffers(mBindIndex, mBindCount, &mD3DBuffer);
+			break;
+
+		case ShaderTypeDomainShader:
+			dxContext->DSSetConstantBuffers(mBindIndex, mBindCount, &mD3DBuffer);
+			break;
+
+		case ShaderTypeComputeShader:
+			dxContext->CSSetConstantBuffers(mBindIndex, mBindCount, &mD3DBuffer);
+			break;
+		}
 	}
 
 	bool ConstantBufferDX11::HasVariableWithName(const std::string &name)

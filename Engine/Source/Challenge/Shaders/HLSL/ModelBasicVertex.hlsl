@@ -14,7 +14,7 @@ struct VS_OUT
 	float3 lightDir : LIGHT_DIRECTION;
 };
 
-cbuffer matrices : register(b5)
+cbuffer matrices
 {
 	float4x4 gWVPMatrix;
 	float4x4 gWorldMatrix;

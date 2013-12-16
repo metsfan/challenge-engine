@@ -20,7 +20,7 @@ namespace challenge
 			VERTEX_BUFFER_DESC desc;
 			desc.Stride = sizeof(ModelVertex);
 			IVertexBuffer *meshBuffer = device->CreateVertexBuffer(desc);
-			meshBuffer->SetData(mesh->GetBuffer(), sizeof(ModelVertex) * mesh->GetTotalFaces());
+			meshBuffer->SetData(mesh->GetBuffer(), sizeof(ModelVertex) * mesh->GetTotalFaces(), sizeof(ModelVertex));
 
 			mMeshVertexBuffers.push_back(meshBuffer);
 		}
@@ -90,7 +90,7 @@ namespace challenge
 			} else {
 				state.SetShaderData("DIFFUSE_TEXTURE", NULL);
 				//ShaderDataVector4 colorData(&mColor, 1);
-				//state.SetShaderData("COLOR", NULL);
+				state.SetShaderData("COLOR", NULL);
 			}
 
 			Technique *technique = effect->GetActiveTechnique();
