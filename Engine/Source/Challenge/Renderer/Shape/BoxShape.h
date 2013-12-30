@@ -26,5 +26,6 @@ namespace challenge
 		int mSize;
 		IVertexBuffer *mBuffer;
 		Material *mMaterial;
+		
 	};
 };

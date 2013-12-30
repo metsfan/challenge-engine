@@ -26,6 +26,7 @@ namespace challenge
 		virtual void ProcessMouseWheelEvent(MouseEventType type, int delta) = 0;
 	};
 
+	class Controller;
 	class GameApplication;
 	class View;
 	class IWindow;
@@ -64,7 +65,7 @@ namespace challenge
 	{
 	public:
 		Window(Size size);
-		virtual ~Window();
+		~Window();
 
 		virtual bool Initialize();
 
@@ -82,6 +83,9 @@ namespace challenge
 
 		virtual void ShowNativeFileDialog(FILE_DIALOG_DESC *desc) { throw "No Default Implementation!";  }
 
+		void PushController(Controller *controller);
+		void PopController();
+
 		/* IKeyboardListener methods */
 		bool OnKeyboardEvent(const KeyboardEvent &e);
 
@@ -90,6 +94,7 @@ namespace challenge
 
 	private:
 		WindowVisibility mVisibility;
+		std::stack<Controller *> mControllerStack;
 
 		View *mFocusedView;
 		View *mHoveredView;

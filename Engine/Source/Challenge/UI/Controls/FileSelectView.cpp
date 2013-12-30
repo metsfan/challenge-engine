@@ -28,7 +28,7 @@ namespace challenge
 			std::vector<std::wstring> files = FileDialog::OpenFileDialog(mCurrentDialogOptions);
 
 			if (files.size()) {
-				mCurrentFileLabel->SetText(StringUtil::ConvertString<std::wstring, std::string>(files[0]));
+				mCurrentFileLabel->SetText(StringUtil::ToNarrow(files[0]));
 				mCurrentFileLabel->ResetCursor();
 			}
 		});

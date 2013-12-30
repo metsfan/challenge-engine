@@ -15,7 +15,7 @@ namespace challenge
 	class XMLDocument
 	{
 	public:
-		XMLDocument(const std::string &filepath, int options = 0);
+		XMLDocument(const std::wstring &filepath, int options = 0);
 		XMLDocument(File *file, int options = 0);
 		~XMLDocument();
 

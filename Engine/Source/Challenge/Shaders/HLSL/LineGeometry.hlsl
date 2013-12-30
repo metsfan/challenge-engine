@@ -15,7 +15,7 @@ cbuffer data
 	float4 gWidth : WIDTH;
 };
 
-[maxvertexcount(4)]
+[maxvertexcount(6)]
 void main(
 	line GS_IN input[2] : SV_POSITION,
 	inout TriangleStream< GS_OUT > output
@@ -24,7 +24,9 @@ void main(
 	float dx = input[1].position.x - input[0].position.x;
 	float dz = input[1].position.z - input[0].position.z;
 
-	float4 perp = normalize(float4(-dz, 0.0, dx, 1.0));
+	float2 perp2d = normalize(float2(-dz, dx));
+
+	float4 perp = float4(perp2d.x, 0, perp2d.y, 0);
 
 	float halfWidth = gWidth * 0.5;
 
@@ -53,7 +55,7 @@ void main(
 	output.Append(v2);
 	output.Append(v3);
 
-	output.Append(v1);
+	output.Append(v2);
 	output.Append(v3);
 	output.Append(v4);
 }

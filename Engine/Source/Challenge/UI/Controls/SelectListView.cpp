@@ -23,7 +23,7 @@ namespace challenge
 		mActiveItem(NULL)
 	{
 		if (!sDefaultSelectImage) {
-			Asset imageAsset("select_list_arrow.png");
+			Asset imageAsset(L"select_list_arrow.png");
 			if (imageAsset.ReadData()) {
 				sDefaultSelectImage = std::shared_ptr<Image>(new Image(&imageAsset));
 			}

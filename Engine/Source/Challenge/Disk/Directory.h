@@ -7,9 +7,14 @@ namespace challenge
 	class Directory
 	{
 	public:
-		Directory(const std::string &directory, const std::string filter = "*") :
+		Directory(const std::wstring &directory, const std::wstring filter = L"*") :
 			mDirectoryPath(directory),
 			mFilter(filter)
+		{
+		}
+
+		Directory(const std::string &directory, const std::string filter = "*") :
+			Directory(StringUtil::ToWide(directory), StringUtil::ToWide(filter))
 		{
 		}
 
@@ -17,15 +22,15 @@ namespace challenge
 		{
 		}
 		
-		std::vector<std::string> GetFilesList()
+		std::vector<std::wstring> GetFilesList()
 		{
 			return AssetLoader<CurrentPlatform>::GetFilesInDirectory(mDirectoryPath, mFilter);
 		}
 
-		const std::string& GetDirectoryPath() { return mDirectoryPath; }
+		const std::wstring& GetDirectoryPath() { return mDirectoryPath; }
 
 	private:
-		std::string mDirectoryPath;
-		std::string mFilter;
+		std::wstring mDirectoryPath;
+		std::wstring mFilter;
 	};
 };

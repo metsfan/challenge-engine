@@ -33,8 +33,8 @@ namespace challenge
 		graphicsDesc.MultiSampling = MultisampleLevelNone;
 		mGraphicsDevice = CreateGraphicsDevice<RendererTypeDX11>(graphicsDesc, mWinHandle, this->GetWindow()->GetSize());
 
-		this->LoadShaderConfig("shaders.xml");
-		this->LoadEffectsConfig("effects.xml");
+		this->LoadShaderConfig(L"shaders.xml");
+		this->LoadEffectsConfig(L"effects.xml");
 
 		/*mDatabaseManager = new DatabaseManager();
 		if(!mDatabaseManager->Initialize()) {

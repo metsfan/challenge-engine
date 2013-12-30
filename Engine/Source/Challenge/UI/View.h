@@ -50,6 +50,20 @@ namespace challenge
 		LayoutTypeGrid
 	};
 
+	enum HorizontalAlignment
+	{
+		HorizontalAlignLeft,
+		HorizontalAlignRight,
+		HorizontalAlignCenter
+	};
+
+	enum VerticalAlignment
+	{
+		VerticalAlignTop,
+		VerticalAlignMiddle,
+		VerticalAlignBottom
+	};
+
 	class View;
 
 	typedef std::shared_ptr<View> ViewPtr;
@@ -150,7 +164,12 @@ namespace challenge
 		void SetBorderColor(const Color &color) { mBorderColor = color; }
 		void SetBorderWidth(float width) { mBorderWidth = width; }
 
-		virtual void SetBackgroundImage(std::string imageName);
+		virtual void SetBackgroundImage(std::wstring imageName);
+		virtual void SetBackgroundImage(std::string imageName)
+		{
+			this->SetBackgroundImage(StringUtil::ToWide(imageName));
+		}
+
 		virtual void SetBackgroundImage(std::shared_ptr<Image> image);
 
 		virtual void AddSubview(View *view);
@@ -193,15 +212,29 @@ namespace challenge
 		void AddMouseEvent(MouseEventType type, MouseEventDelegate eventDelegate);
 		void AddKeyboardEvent(KeyboardEventType type, KeyboardEventDelegate eventDelegate);
 
-		static View * CreateFromResource(const std::string &resource);
+		static View * CreateFromResource(const std::wstring &resource);
+
+		static View * CreateFromResource(const std::string &resource)
+		{
+			return View::CreateFromResource(StringUtil::ToWide(resource));
+		}
 
 		template <typename T>
-		static T * CreateFromResource(const std::string &resource)
+		static T * CreateFromResource(const std::wstring &resource)
 		{
 			return dynamic_cast<T *>(View::CreateFromResource(resource));
 		}
 
+		template <typename T>
+		static T * CreateFromResource(const std::string &resource)
+		{
+			return View::CreateFromResource<T>(StringUtil::ToWide(resource));
+		}
+
 		static void RegisterViewClass(const std::string &name, TViewCreatorFunction creator);
+
+		virtual bool OnKeyboardEvent(const KeyboardEvent &e);
+		virtual bool OnMouseEvent(const MouseEvent &e);
 
 
 	protected:
@@ -244,6 +277,8 @@ namespace challenge
 		bool mFrameSet;
 		Color mBorderColor;
 		float mBorderWidth;
+		HorizontalAlignment mHoriAlign;
+		VerticalAlignment mVertAlign;
 		std::map<std::string, std::string> mAttributes;
 
 		Window *mWindow;
@@ -258,15 +293,6 @@ namespace challenge
 		ControlData mControlData;
 
 		static std::map<std::string, TViewCreatorFunction> sViewCreatorRegistry;
-
-		void OnKeyDown(const KeyboardEvent &e);
-		void OnKeyUp(const KeyboardEvent &e);
-
-		void OnMouseDown(const MouseEvent &e);
-		void OnMouseMove(const MouseEvent &e);
-		void OnMouseUp(const MouseEvent &e);
-		void OnMouseClick(const MouseEvent &e);
-		void OnMouseDblClick(const MouseEvent &e);
 
 		virtual bool ProcessMouseEvent(const MouseEvent &e);
 		virtual bool ProcessKeyboardEvent(const KeyboardEvent &e);

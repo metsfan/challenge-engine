@@ -80,8 +80,8 @@ namespace challenge
 		RendererType GetRendererType();
 
 		/* Renderer methods */
-		void LoadShaderConfig(const std::string &filepath);
-		void LoadEffectsConfig(const std::string &filepath);
+		void LoadShaderConfig(const std::wstring &filepath);
+		void LoadEffectsConfig(const std::wstring &filepath);
 
 		/* Input methods */
 		void AddKeyboardListener(std::shared_ptr<IKeyboardListener> listener);
@@ -92,8 +92,8 @@ namespace challenge
 		void ProcessMouseWheelEvent(MouseEventType type, int delta);
 
 		/* Factory methods */
-		Model* CreateModel(const std::string &filename);
-		Model* CreateModel(const std::string &name, const std::vector<ModelMesh *> &meshes);
+		Model* CreateModel(const std::wstring &filename);
+		Model* CreateModel(const std::wstring &name, const std::vector<ModelMesh *> &meshes);
 		Model* CreatePrimitive(PrimitiveShape type);
 
 		/* GUI Methods */

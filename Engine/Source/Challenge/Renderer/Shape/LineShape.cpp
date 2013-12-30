@@ -5,19 +5,22 @@ namespace challenge
 {
 	LineShape::LineShape(IGraphicsDevice *device) :
 		Shape(device, "line"),
-		mReloadPoints(false)
+		mReloadPoints(false),
+		mMesh(NULL)
 	{
-		mMesh = new MeshShape(device, "Line");
 	}
 
 	LineShape::~LineShape()
 	{
-		delete mMesh;
 	}
 
 	void LineShape::Draw(IGraphicsDevice *device, RenderState &state)
 	{
 		if (mPoints.size() > 0) {
+			if (!mMesh) {
+				mMesh = new MeshShape(device, "Line");
+			}
+
 			if (mReloadPoints) {
 				mMesh->SetData(&mPoints[0], sizeof(glm::vec3) * mPoints.size(), mPoints.size(), PrimitiveTypeLineStrip);
 				mReloadPoints = false;

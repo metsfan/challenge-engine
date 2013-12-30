@@ -63,7 +63,7 @@ namespace challenge
 		void PushScissorRect(int x, int y, int width, int height);
 		void PopScissorRect();
 
-		IShader * CreateShader(std::string filename, ShaderType type);
+		IShader * CreateShader(std::wstring filename, ShaderType type);
 		IShaderProgram * CreateShaderProgram();
 		IVertexBuffer * CreateVertexBuffer(VERTEX_BUFFER_DESC desc);
 		ITexture * CreateTexture2D(TEXTURE_DESC &desc);

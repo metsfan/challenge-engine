@@ -30,7 +30,9 @@ namespace challenge
 		mFocused(false),
 		mWindow(NULL),
 		mBorderWidth(0),
-		mAlpha(1)
+		mAlpha(1),
+		mHoriAlign(HorizontalAlignLeft),
+		mVertAlign(VerticalAlignTop)
 	{
 		this->SetLayoutType(layout);
 
@@ -121,6 +123,14 @@ namespace challenge
 			mFrame.size.height = 0;
 		}
 
+		if (mHoriAlign == HorizontalAlignCenter) {
+			mFrame.origin.x = (this->GetParent()->GetWidth() * 0.5) - (this->GetWidth() * 0.5);
+		}
+
+		if (mVertAlign == VerticalAlignMiddle) {
+			mFrame.origin.y = (this->GetParent()->GetHeight() * 0.5) - (this->GetHeight() * 0.5);
+		}
+
 		for(int j = 0; j < mSubviews.size(); j++) {
 			mSubviews[j]->Update(deltaMillis);
 		}
@@ -200,7 +210,7 @@ namespace challenge
 		}
 	}
 
-	void View::SetBackgroundImage(std::string imageName)
+	void View::SetBackgroundImage(std::wstring imageName)
 	{
 		mBackgroundImage = std::shared_ptr<Image>(new Image(imageName));
 		mBackgroundImageChanged = true;
@@ -315,6 +325,34 @@ namespace challenge
 		return false; // Keyboard events are undefined for default controls
 	}
 
+	bool View::OnKeyboardEvent(const KeyboardEvent &e)
+	{
+		if (mKeyboardDelegates.size() > 0 &&
+			mKeyboardDelegates[e.type].size() > 0) {
+			std::vector<KeyboardEventDelegate> delegates = mKeyboardDelegates[e.type];
+
+			for (int i = 0; i < delegates.size(); i++) {
+				delegates[i](this, e);
+			}
+		}
+
+		return false;
+	}
+
+	bool View::OnMouseEvent(const MouseEvent &e)
+	{
+		if (mMouseDelegates.size() > 0 &&
+			mMouseDelegates[e.type].size() > 0) {
+			std::vector<MouseEventDelegate> delegates = mMouseDelegates[e.type];
+
+			for (int i = 0; i < delegates.size(); i++) {
+				delegates[i](this, e);
+			}
+		}
+
+		return false;
+	}
+
 	void View::AddInternalSubview(View * view)
 	{
 		this->AddSubview(view);
@@ -406,6 +444,28 @@ namespace challenge
 		for (auto &pair : attrs) {
 			this->SetAttribute(pair.second.GetName(), pair.second.GetValue());
 		}
+
+		const std::string &horiAlign = node.GetAttributeString("horizontal_align");
+		if (horiAlign == "left") {
+			mHoriAlign = HorizontalAlignLeft;
+		}
+		else if (horiAlign == "center") {
+			mHoriAlign = HorizontalAlignCenter;
+		}
+		else if (horiAlign == "right") {
+			mHoriAlign = HorizontalAlignRight;
+		}
+
+		const std::string &vertAlign = node.GetAttributeString("vertical_align");
+		if (vertAlign == "top") {
+			mVertAlign = VerticalAlignTop;
+		}
+		else if (vertAlign == "middle") {
+			mVertAlign = VerticalAlignMiddle;
+		}
+		else if (vertAlign == "bottom") {
+			mVertAlign = VerticalAlignBottom;
+		}
 	}
 
 	void View::OnXMLParseComplete()
@@ -437,7 +497,7 @@ namespace challenge
 		Logger::log(LogDebug, "Position subviews");
 	}
 
-	View * View::CreateFromResource(const std::string &resource)
+	View * View::CreateFromResource(const std::wstring &resource)
 	{
 		Asset asset(resource);
 		View *view = ViewXMLParser::Parse(&asset);

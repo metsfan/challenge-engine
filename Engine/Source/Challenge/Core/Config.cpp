@@ -6,7 +6,7 @@ namespace challenge
 {
 	std::map<std::string, std::string> Config::mConfigValues;
 
-	void Config::LoadFile(const std::string &file)
+	void Config::LoadFile(const std::wstring &file)
 	{
 		Asset configFile(file);
 		if(configFile.ReadData()) {

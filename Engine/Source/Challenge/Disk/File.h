@@ -7,8 +7,13 @@ namespace challenge
 	class File
 	{
 	public:
-		File(const std::string &path) :
+		File(const std::wstring &path) :
 			mFilepath(path)
+		{
+		}
+
+		File(const std::string &path) :
+			File(StringUtil::ToWide(path))
 		{
 		}
 
@@ -18,10 +23,10 @@ namespace challenge
 
 		bool ReadData();
 		const TByteArray& GetData() { return mData; }
-		const std::string& GetFilepath() { return mFilepath; }
+		const std::wstring& GetFilepath() { return mFilepath; }
 
 	private:
-		std::string mFilepath;
+		std::wstring mFilepath;
 		TByteArray mData;
 	};
 };

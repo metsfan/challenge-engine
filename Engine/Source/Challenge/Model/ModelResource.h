@@ -3,6 +3,7 @@
 #include <Challenge/Challenge.h>
 #include <Challenge/Renderer/Shape/ModelShape.h>
 #include <Challenge/Physics/Shapes/GeometricShape.h>
+#include <Challenge/Disk/FileInputStream.h>
 
 namespace challenge
 {
@@ -44,7 +45,7 @@ namespace challenge
 
 		bool Initialize(const std::vector<ModelMesh *> &meshes);
 		bool Initialize(const ModelVertex *verts, int nVerts);
-		bool Initialize(const std::string &filename);
+		bool Initialize(const std::wstring &filename);
 
 		const TMeshList& GetMeshes() { return mMeshes; }
 		int GetVertexCount() { return mNumVerts; }
@@ -59,7 +60,7 @@ namespace challenge
 
 	private:
 		ModelShape *mShape;
-		std::string mModelPath;
+		std::wstring mModelPath;
 		TMeshList mMeshes;
 		TAnimList mAnimations;
 		TMaterialList mMaterials;
@@ -71,7 +72,7 @@ namespace challenge
 		std::map<GeometricShapeType, IGeometricShape *> mBoundingVolumes;
 		glm::vec4 mBlendColor;
 
-		bool Unserialize(std::ifstream &in);
+		bool Unserialize(FileInputStream &in);
 		void LoadAnimations();
 
 		IGeometricShape* CreateBoundingVolume(const GeometricShapeType type, const glm::mat4 &transform);

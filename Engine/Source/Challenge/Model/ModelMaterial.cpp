@@ -14,26 +14,28 @@ namespace challenge
 	{
 	}
 
-	void ModelMaterial::Unserialize(std::istream &in, const std::string &basePath)
+	void ModelMaterial::Unserialize(FileInputStream &in, const std::wstring &basePath)
 	{
 		for(int i = MaterialTextureNone; i <= kMaterialTextureMax; i++) {
 			MaterialTextureType nType = static_cast<MaterialTextureType>(i);
 			
 			// Read material count for this type
-			int count;
-			in.read((char *)&count, sizeof(int));
+			int count = in.Read<int>();
 
 			for(int j = 0; j < count; j++) {
 				// Read filename
-				int filenameLength;
-				in.read((char *)&filenameLength, sizeof(int));
+				int filenameLength = in.Read<int>();
 
 				std::string filename;
 				filename.resize(filenameLength);
-				in.read(&filename[0], filenameLength);
+				in.Read((char *)&filename[0], filenameLength);
 
-				std::string texFilePath = basePath + filename;
-				mMaterialImages[nType].push_back(new Image(texFilePath));
+				std::wstring texFilePath = basePath + StringUtil::ToWide(filename);
+				Asset texAsset(texFilePath);
+
+				if (texAsset.ReadData()) {
+					mMaterialImages[nType].push_back(new Image(&texAsset));
+				}
 			}
 		}
 	}

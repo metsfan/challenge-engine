@@ -67,16 +67,43 @@
       <file leaf-file-name="build.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/build.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="26" selection-start="184" selection-end="184" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="289">
+            <state line="11" column="12" selection-start="198" selection-end="198" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="289">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="application.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="application.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="63" column="52" selection-start="2056" selection-end="2056" vertical-scroll-proportion="0.7542707" vertical-offset="480" max-vertical-offset="1241">
+            <state line="66" column="40" selection-start="2063" selection-end="2063" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1649">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="os.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://C:/Python33/Lib/os.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="11" column="55" selection-start="651" selection-end="651" vertical-scroll-proportion="0.0" vertical-offset="323" max-vertical-offset="17833">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="site.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://C:/Python33/Lib/site.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="68" column="0" selection-start="2809" selection-end="2809" vertical-scroll-proportion="0.0" vertical-offset="947" max-vertical-offset="11288">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="path.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$APPLICATION_HOME_DIR$/helpers/python-skeletons/os/path.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="284" column="51" selection-start="5361" selection-end="5382" vertical-scroll-proportion="0.0" vertical-offset="4828" max-vertical-offset="5083">
               <folding />
             </state>
           </provider>
@@ -100,10 +127,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="create.py" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="create.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/create.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="28" selection-start="591" selection-end="591" vertical-scroll-proportion="0.0" vertical-offset="106" max-vertical-offset="867">
+            <state line="33" column="76" selection-start="925" selection-end="925" vertical-scroll-proportion="0.68717045" vertical-offset="153" max-vertical-offset="867">
               <folding />
             </state>
           </provider>
@@ -124,12 +151,13 @@
         <option value="$PROJECT_DIR$/vs2012_project.py" />
         <option value="$PROJECT_DIR$/challenge.bat" />
         <option value="$PROJECT_DIR$/applicatoin.py" />
-        <option value="$PROJECT_DIR$/create.py" />
         <option value="$PROJECT_DIR$/help.py" />
         <option value="$PROJECT_DIR$/challenge.py" />
         <option value="$PROJECT_DIR$/build.py" />
         <option value="$PROJECT_DIR$/vs2012.py" />
+        <option value="C:/Python33/Lib/os.py" />
         <option value="$PROJECT_DIR$/application.py" />
+        <option value="$PROJECT_DIR$/create.py" />
       </list>
     </option>
   </component>
@@ -219,7 +247,7 @@
     <property name="MemberChooser.sorted" value="false" />
     <property name="recentsLimit" value="5" />
     <property name="options.lastSelected" value="com.jetbrains.python.configuration.PythonSdkConfigurable" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../dungeon-raider/DungeonRaider" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../dungeon-raider/DungeonRaider" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -227,8 +255,8 @@
     <property name="FullScreen" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -236,6 +264,30 @@
     </option>
   </component>
   <component name="RunManager" selected="Python.challenge">
+    <configuration default="true" type="tests" factoryName="py.test">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="Scripts" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="testToRun" value="" />
+      <option name="keywords" value="" />
+      <option name="params" value="" />
+      <option name="USE_PARAM" value="false" />
+      <option name="USE_KEYWORD" value="false" />
+      <method />
+    </configuration>
     <configuration default="true" type="tests" factoryName="Nosetests">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -275,6 +327,28 @@
       <option name="PARAMETERS" value="" />
       <method />
     </configuration>
+    <configuration default="true" type="tests" factoryName="Unittests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="Scripts" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="PUREUNITTEST" value="true" />
+      <option name="PARAMS" value="" />
+      <option name="USE_PARAM" value="false" />
+      <method />
+    </configuration>
     <configuration default="true" type="tests" factoryName="Doctests">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -295,6 +369,25 @@
       <option name="USE_PATTERN" value="false" />
       <method />
     </configuration>
+    <configuration default="true" type="tests" factoryName="Attests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="Scripts" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <method />
+    </configuration>
     <configuration default="false" name="challenge" type="PythonConfigurationType" factoryName="Python">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -302,14 +395,14 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="C:/Python33/python.exe" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../../../dungeon-raider/DungeonRaider" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../../dungeon-raider/DungeonRaider" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="Scripts" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/challenge.py" />
-      <option name="PARAMETERS" value="build C:\gamedev\dungeon-raider\DungeonRaider\DungeonMaker\ C:\gamedev\dungeon-raider\DungeonRaider\Debug" />
+      <option name="PARAMETERS" value="build C:\Users\Adam\Documents\Projects\dungeon-raider\DungeonRaider\DungeonMaker\ C:\Users\Adam\Documents\Projects\dungeon-raider\DungeonRaider\Debug" />
       <RunnerSettings RunnerId="PyDebugRunner" />
       <RunnerSettings RunnerId="PythonRunner" />
       <ConfigurationWrapper RunnerId="PyDebugRunner" />
@@ -358,10 +451,10 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19895834" sideWeight="0.7957533" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39937758" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19895834" sideWeight="0.6016178" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39838222" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20424671" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.39838222" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33973712" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -392,7 +485,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="28" />
+      <option name="time" value="38" />
     </breakpoint-manager>
   </component>
   <component name="antWorkspaceConfiguration">
@@ -400,37 +493,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/vs2012.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="29" selection-start="694" selection-end="694" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/challenge.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="0" selection-start="523" selection-end="523" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vs2012.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="41" selection-start="407" selection-end="407" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/challenge.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="24" column="0" selection-start="523" selection-end="523" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="0">
@@ -469,9 +531,7 @@
     </entry>
     <entry file="file://C:/Python33/Lib/xml/dom/minidom.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1962" column="0" selection-start="65982" selection-end="65982" vertical-scroll-proportion="0.3298292" vertical-offset="33018" max-vertical-offset="33779">
-          <folding />
-        </state>
+        <state line="1962" column="0" selection-start="65982" selection-end="65982" vertical-scroll-proportion="0.3298292" vertical-offset="33018" max-vertical-offset="33779" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/challenge.bat">
@@ -479,23 +539,54 @@
         <state line="1" column="23" selection-start="33" selection-end="33" vertical-scroll-proportion="0.022339027" vertical-offset="0" max-vertical-offset="761" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/create.py">
+    <entry file="file://$APPLICATION_HOME_DIR$/helpers/python-skeletons/os/path.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="28" selection-start="591" selection-end="591" vertical-scroll-proportion="0.0" vertical-offset="106" max-vertical-offset="867">
+        <state line="284" column="51" selection-start="5361" selection-end="5382" vertical-scroll-proportion="0.0" vertical-offset="4305" max-vertical-offset="5066">
           <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/helpers/python-skeletons/os/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="870" column="4" selection-start="15706" selection-end="15706" vertical-scroll-proportion="0.3324573" vertical-offset="14520" max-vertical-offset="21386" />
+      </provider>
+    </entry>
+    <entry file="file://C:/Python33/Lib/site.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="68" column="0" selection-start="2809" selection-end="2809" vertical-scroll-proportion="0.0" vertical-offset="947" max-vertical-offset="11288">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Python33/Lib/os.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="55" selection-start="651" selection-end="651" vertical-scroll-proportion="0.0" vertical-offset="323" max-vertical-offset="17833">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Python33/Lib/ntpath.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="80" column="51" selection-start="2055" selection-end="2056" vertical-scroll-proportion="0.41694352" vertical-offset="1041" max-vertical-offset="11679" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/build.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="26" selection-start="184" selection-end="184" vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="289">
+        <state line="11" column="12" selection-start="198" selection-end="198" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="289">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="63" column="52" selection-start="2056" selection-end="2056" vertical-scroll-proportion="0.7542707" vertical-offset="480" max-vertical-offset="1241">
+        <state line="66" column="40" selection-start="2063" selection-end="2063" vertical-scroll-proportion="0.0" vertical-offset="1111" max-vertical-offset="1717">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/create.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="33" column="76" selection-start="925" selection-end="925" vertical-scroll-proportion="0.68717045" vertical-offset="153" max-vertical-offset="867">
           <folding />
         </state>
       </provider>

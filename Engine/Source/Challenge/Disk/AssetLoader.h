@@ -8,7 +8,7 @@ namespace challenge
 	class AssetLoader
 	{
 	public:
-		static std::string GetPathForAsset(const std::string &name);
-		static std::vector<std::string> GetFilesInDirectory(const std::string &directory, const std::string &filter);
+		static std::string GetPathForAsset(const std::wstring &name);
+		static std::vector<std::string> GetFilesInDirectory(const std::wstring &directory, const std::wstring &filter);
 	};
 };

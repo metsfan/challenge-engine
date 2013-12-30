@@ -12,7 +12,7 @@ namespace challenge
 			return mConfigValues[key];
 		}
 
-		static void LoadFile(const std::string &file);
+		static void LoadFile(const std::wstring &file);
 
 	private:
 		static std::map<std::string, std::string> mConfigValues;

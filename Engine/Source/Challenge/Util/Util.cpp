@@ -3,20 +3,6 @@
 
 namespace challenge
 {
-	std::string Util::ReadContentsOfFile(std::string file)
-	{
-		std::ifstream input(file);
-		std::string output = "";
-		std::string line;
-		while(std::getline(input, line)) {
-			output.append(line);
-			output.append("\n");
-		}
-		input.close();
-	
-		return output;
-	}
-
 	int Util::ReadContentsOfBinaryFile(std::string file, unsigned char **buffer)
 	{
 		int size;

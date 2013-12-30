@@ -37,7 +37,7 @@ namespace challenge
 	class BaseShader : public IShader
 	{
 	public:
-		BaseShader(std::string filename, ShaderType type) :
+		BaseShader(std::wstring filename, ShaderType type) :
 			mType(type),
 			mShaderSource(NULL),
 			mSourceSize(0)

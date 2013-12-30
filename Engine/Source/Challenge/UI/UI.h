@@ -16,4 +16,5 @@
 #include <Challenge/UI/Dialog/AlertDialog.h>
 
 #include <Challenge/UI/Window.h>
+#include <Challenge/UI/Controller.h>
 

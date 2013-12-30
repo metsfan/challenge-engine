@@ -9,6 +9,11 @@ namespace challenge
 	{
 	public:
 		FileOutputStream(const std::wstring &filepath);
+		FileOutputStream(const std::string &filepath) :
+			FileOutputStream(StringUtil::ToWide(filepath))
+		{
+		}
+
 		~FileOutputStream();
 
 		bool Open();

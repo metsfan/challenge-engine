@@ -7,7 +7,6 @@ namespace challenge
 	class Util 
 	{
 	public:
-		static std::string ReadContentsOfFile(std::string file);
 		static int ReadContentsOfBinaryFile(std::string file, unsigned char **buffer);
 		static glm::vec3 CalculateFaceNormal(glm::vec3 v1, glm::vec3 v2, glm::vec3 v3);
 		static glm::mat3 normal_matrix_frommodelview(glm::mat4 modelview);

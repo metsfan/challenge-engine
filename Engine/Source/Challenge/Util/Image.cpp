@@ -13,7 +13,7 @@ namespace challenge
 		this->LoadImageData(file->GetData());
 	}
 
-	Image::Image(std::string filename)
+	Image::Image(const std::wstring &filename)
 	{
 		mFilepath = filename;
 

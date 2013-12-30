@@ -3,6 +3,7 @@
 #include <Challenge/Challenge.h>
 #include <Challenge/Model/Model.h>
 #include <Challenge/Model/ModelMaterial.h>
+#include <Challenge/Disk/FileInputStream.h>
 
 namespace challenge
 {
@@ -20,7 +21,7 @@ namespace challenge
 	
 		void Transform(const glm::mat4 &transform);
 
-		void Unserialize(std::istream &in);
+		void Unserialize(FileInputStream &in);
 
 		bool GetIntersection(const Ray &ray, float &t);
 

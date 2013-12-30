@@ -4,7 +4,7 @@
 
 namespace challenge
 {
-	XMLDocument::XMLDocument(const std::string &filepath, int options)
+	XMLDocument::XMLDocument(const std::wstring &filepath, int options)
 	{
 		File file(filepath);
 		file.ReadData();

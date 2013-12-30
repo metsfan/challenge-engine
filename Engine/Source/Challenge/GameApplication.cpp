@@ -117,7 +117,7 @@ namespace challenge
 	}
 
 	/* Renderer methods */
-	void GameApplication::LoadShaderConfig(const std::string &filepath)
+	void GameApplication::LoadShaderConfig(const std::wstring &filepath)
 	{
 		IGraphicsContext *context = mGraphicsDevice->GetContext();
 
@@ -131,7 +131,7 @@ namespace challenge
 
 		TXMLNodeList &shaders = rootNode.GetFirstChild("Shaders").GetChildrenByName("Shader");
 		for(XMLNode &node : shaders) {
-			std::string filename = node.GetAttributeString("filename");
+			std::wstring filename = StringUtil::ToWide(node.GetAttributeString("filename"));
 			std::string typeStr = node.GetAttributeString("type");
 
 			ShaderType type;
@@ -183,7 +183,7 @@ namespace challenge
 		
 	}
 
-	void GameApplication::LoadEffectsConfig(const std::string &filepath)
+	void GameApplication::LoadEffectsConfig(const std::wstring &filepath)
 	{
 		IGraphicsContext *context = mGraphicsDevice->GetContext();
 
@@ -275,9 +275,9 @@ namespace challenge
 
 	/* Factory Methods */
 
-	Model* GameApplication::CreateModel(const std::string &filename)
+	Model* GameApplication::CreateModel(const std::wstring &filename)
 	{
-		std::hash<std::string> hashfn;
+		std::hash<std::wstring> hashfn;
 		long key = hashfn(filename);
 		std::shared_ptr<ModelResource> resource = mModelCache.RetrieveResource(key);
 		if(!resource) {
@@ -294,9 +294,9 @@ namespace challenge
 		return new Model(resource);
 	}
 
-	Model* GameApplication::CreateModel(const std::string &name, const std::vector<ModelMesh *> &meshes)
+	Model* GameApplication::CreateModel(const std::wstring &name, const std::vector<ModelMesh *> &meshes)
 	{
-		std::hash<std::string> hashfn;
+		std::hash<std::wstring> hashfn;
 		long key = hashfn(name);
 		std::shared_ptr<ModelResource> resource = mModelCache.RetrieveResource(key);
 		if(!resource) {

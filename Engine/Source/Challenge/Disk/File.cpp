@@ -16,10 +16,10 @@ namespace challenge
 		{
 			return false;
 		}
-		struct stat fileStat;
+		struct _stat fileStat;
 		off_t size;
         
-		int err = stat( mFilepath.c_str(), &fileStat );
+		int err = _wstat(mFilepath.c_str(), &fileStat );
 		if (0 == err)
 		{
 			size = fileStat.st_size;

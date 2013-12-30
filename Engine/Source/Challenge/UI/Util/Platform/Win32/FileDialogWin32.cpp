@@ -102,11 +102,16 @@ namespace challenge
 				UINT fileTypeIndex;
 				saveDialog->GetFileTypeIndex(&fileTypeIndex);
 
-				const std::wstring &extension = desc.Filters[fileTypeIndex - 1].extension;
+				std::wstring extension = desc.Filters[fileTypeIndex - 1].extension;
+				extension = StringUtil::ReplaceAll<std::wstring>(extension, L"*", L"");
 
 				PWSTR buf;
 				item->GetDisplayName(SIGDN_FILESYSPATH, &buf);
-				outFile = StringUtil::ReplaceAll<std::wstring>(buf, L"\\", L"/") + L"." + extension;
+				outFile = StringUtil::ReplaceAll<std::wstring>(buf, L"\\", L"/");
+
+				if (!StringUtil::EndsWith(outFile, extension)) {
+					outFile += L"." + extension;
+				}
 			}
 
 			saveDialog->Release();

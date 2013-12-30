@@ -35,7 +35,7 @@ namespace challenge
 		ModelMaterial();
 		~ModelMaterial();
 
-		void Unserialize(std::istream &in, const std::string &basePath);
+		void Unserialize(FileInputStream &in, const std::wstring &basePath);
 
 		Image* GetImage(MaterialTextureType type, int index) const 
 		{ 

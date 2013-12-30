@@ -181,8 +181,8 @@ namespace challenge
 		}
 
 		Color(float _red, float _green, float _blue, float _alpha) :
-			red(_red / 255.0f), green(_green / 255.0f), 
-			blue(_blue / 255.0f), alpha(_alpha / 255.0f)
+			red(_red * 255.0f), green(_green * 255.0f), 
+			blue(_blue * 255.0f), alpha(_alpha * 255.0f)
 		{
 		}
 

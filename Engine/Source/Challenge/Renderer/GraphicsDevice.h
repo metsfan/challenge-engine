@@ -63,7 +63,7 @@ namespace challenge
 		virtual void PushScissorRect(int x, int y, int width, int height) = 0;
 		virtual void PopScissorRect() = 0;
 
-		virtual IShader * CreateShader(std::string filename, ShaderType type) = 0;
+		virtual IShader * CreateShader(std::wstring filename, ShaderType type) = 0;
 		virtual IShaderProgram * CreateShaderProgram() = 0;
 
 		virtual IVertexBuffer * CreateVertexBuffer(VERTEX_BUFFER_DESC desc) = 0;

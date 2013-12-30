@@ -28,7 +28,7 @@ namespace challenge
 	class Shader<RendererTypeDX11> : public BaseShader
 	{
 	public:
-		Shader(GraphicsDeviceDX11 *device, std::string filename, ShaderType type);
+		Shader(GraphicsDeviceDX11 *device, std::wstring filename, ShaderType type);
 		~Shader();
 
 		void Load();

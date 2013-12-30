@@ -23,16 +23,17 @@ namespace challenge
 	{
 	}
 
-	void ModelMesh::Unserialize(std::istream &in)
+	void ModelMesh::Unserialize(FileInputStream &in)
 	{
 		// Read mesh vertices
-		in.read((char *)&mNumVertices, sizeof(int));
+		mNumVertices = in.Read<int>();
 
+		// Read model vertices
 		mMeshVertices.resize(mNumVertices);
-		in.read((char *)&mMeshVertices[0], sizeof(ModelVertex) * mNumVertices);
+		in.Read((char *)&mMeshVertices[0], sizeof(ModelVertex) * mNumVertices);
 
 		// Read material
-		in.read((char *)&mMaterialId, sizeof(int));
+		mMaterialId = in.Read<int>();
 	}
 
 	void ModelMesh::Transform(const glm::mat4 &transform)

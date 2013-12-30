@@ -9,9 +9,14 @@ namespace challenge
 	class Asset : public File
 	{
 	public:
-		Asset(const std::string &name) :
+		Asset(const std::wstring &name) :
 			File(AssetLoader<CurrentPlatform>::GetPathForAsset(name)),
 			mName(name)
+		{
+		}
+
+		Asset(const std::string &name) :
+			Asset(StringUtil::ToWide(name))
 		{
 		}
 
@@ -19,9 +24,9 @@ namespace challenge
 		{
 		}
 
-		const std::string& GetName() { return mName; }
+		const std::wstring& GetName() { return mName; }
 
 	private:
-		std::string mName;
+		std::wstring mName;
 	};
 };

@@ -31,7 +31,7 @@ def main(args):
             project = VS2012Project(projectFilePath)
 
             scriptFile = scriptPath + "\\challenge build"
-            project.addBuildScript(scriptFile + " $(ProjectDir) $(SolutionDir)$(Configuration)")
+            project.addBuildScript(scriptFile + " $(ProjectDir) $(TargetDir)")
 
             project.addIncludeDirectory(enginePath + "\\Source")
 

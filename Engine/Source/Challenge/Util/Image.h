@@ -15,7 +15,12 @@ namespace challenge
 	{
 	public:
 		Image(File *file);
-		Image(std::string filename);
+		Image(const std::wstring &filename);
+		Image(const std::string &filename) :
+			Image(StringUtil::ToWide(filename))
+		{
+		}
+
 		~Image();
 
 		void LoadImageData(const TByteArray &data);
@@ -24,11 +29,11 @@ namespace challenge
 		int GetWidth() { return mBitmap.size.width; }
 		int GetHeight() { return mBitmap.size.height; }
 		Size GetSize() { return mBitmap.size; }
-		std::string GetFilepath() { return mFilepath; }
+		std::wstring GetFilepath() { return mFilepath; }
 
 	private:
 		ImageBitmap mBitmap;
-		std::string mFilepath;
+		std::wstring mFilepath;
 		ImageType mImageType;
 	};
 };

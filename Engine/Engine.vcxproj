@@ -39,6 +39,9 @@
     <ClCompile Include="Source\Challenge\GameApplication.cpp" />
     <ClCompile Include="Source\Challenge\GameApplicationWindows.cpp" />
     <ClCompile Include="Source\Challenge\GameController.cpp" />
+    <ClCompile Include="Source\Challenge\Object\Component\ModelComponent.cpp" />
+    <ClCompile Include="Source\Challenge\Object\Transformable.cpp" />
+    <ClCompile Include="Source\Challenge\Object\GameObject.cpp" />
     <ClCompile Include="Source\Challenge\Input\InputManager.cpp" />
     <ClCompile Include="Source\Challenge\Math\AxisAlignedBox.cpp" />
     <ClCompile Include="Source\Challenge\Math\Cylinder.cpp" />
@@ -104,6 +107,7 @@
     <ClCompile Include="Source\Challenge\Renderer\Shader\ShaderProgram.cpp" />
     <ClCompile Include="Source\Challenge\Renderer\Shape.cpp" />
     <ClCompile Include="Source\Challenge\Renderer\Shape\BoxShape.cpp" />
+    <ClCompile Include="Source\Challenge\Renderer\Shape\CircleShape.cpp" />
     <ClCompile Include="Source\Challenge\Renderer\Shape\HeightMapShape.cpp" />
     <ClCompile Include="Source\Challenge\Renderer\Shape\LineShape.cpp" />
     <ClCompile Include="Source\Challenge\Renderer\Shape\MeshShape.cpp" />
@@ -118,6 +122,8 @@
     <ClCompile Include="Source\Challenge\Renderer\Texture\TextureDX11.cpp" />
     <ClCompile Include="Source\Challenge\Renderer\VertexBuffer.cpp" />
     <ClCompile Include="Source\Challenge\Renderer\VertexBuffer\VertexBufferDX11.cpp" />
+    <ClCompile Include="Source\Challenge\Scripting\LuaScript.cpp" />
+    <ClCompile Include="Source\Challenge\UI\Controller.cpp" />
     <ClCompile Include="Source\Challenge\UI\Controls\ButtonView.cpp" />
     <ClCompile Include="Source\Challenge\UI\Controls\CheckboxView.cpp" />
     <ClCompile Include="Source\Challenge\UI\Controls\FileSelectView.cpp" />
@@ -196,6 +202,10 @@
     <ClInclude Include="Source\Challenge\GameApplication.h" />
     <ClInclude Include="Source\Challenge\GameApplicationWindows.h" />
     <ClInclude Include="Source\Challenge\GameController.h" />
+    <ClInclude Include="Source\Challenge\Object\Component\Component.h" />
+    <ClInclude Include="Source\Challenge\Object\Component\ModelComponent.h" />
+    <ClInclude Include="Source\Challenge\Object\Transformable.h" />
+    <ClInclude Include="Source\Challenge\Object\GameObject.h" />
     <ClInclude Include="Source\Challenge\Input\InputManager.h" />
     <ClInclude Include="Source\Challenge\Input\KeyboardListener.h" />
     <ClInclude Include="Source\Challenge\Input\MouseListener.h" />
@@ -255,6 +265,7 @@
     <ClInclude Include="Source\Challenge\Renderer\Device\RenderTargetDX11.h" />
     <ClInclude Include="Source\Challenge\Renderer\Effect.h" />
     <ClInclude Include="Source\Challenge\Renderer\GraphicsContext.h" />
+    <ClInclude Include="Source\Challenge\Renderer\Shape\CircleShape.h" />
     <ClInclude Include="Source\Challenge\Renderer\Shape\LineShape.h" />
     <ClInclude Include="Source\Challenge\Renderer\Technique\GraphicsContext.h" />
     <ClInclude Include="Source\Challenge\Renderer\GraphicsDevice.h" />
@@ -292,6 +303,8 @@
     <ClInclude Include="Source\Challenge\Renderer\Types.h" />
     <ClInclude Include="Source\Challenge\Renderer\VertexBuffer.h" />
     <ClInclude Include="Source\Challenge\Renderer\VertexBuffer\VertexBufferDX11.h" />
+    <ClInclude Include="Source\Challenge\Scripting\LuaScript.h" />
+    <ClInclude Include="Source\Challenge\UI\Controller.h" />
     <ClInclude Include="Source\Challenge\UI\Controls\ButtonView.h" />
     <ClInclude Include="Source\Challenge\UI\Controls\CheckboxView.h" />
     <ClInclude Include="Source\Challenge\UI\Controls\FileSelectView.h" />
@@ -349,89 +362,92 @@
   <ItemGroup>
     <FxCompile Include="Source\Challenge\Shaders\HLSL\CirclePixel.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OutDir)%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(TargetDir)%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <FxCompile Include="Source\Challenge\Shaders\HLSL\CircleVertex.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OutDir)%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(TargetDir)%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <FxCompile Include="Source\Challenge\Shaders\HLSL\DebugLinesPixel.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OutDir)%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(TargetDir)%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <FxCompile Include="Source\Challenge\Shaders\HLSL\DebugLinesVertex.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OutDir)%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(TargetDir)%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <FxCompile Include="Source\Challenge\Shaders\HLSL\FontBasicPixel.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OutDir)%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(TargetDir)%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <FxCompile Include="Source\Challenge\Shaders\HLSL\FontBasicVertex.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OutDir)%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(TargetDir)%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <FxCompile Include="Source\Challenge\Shaders\HLSL\HeightMapPixel.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OutDir)%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(TargetDir)%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <FxCompile Include="Source\Challenge\Shaders\HLSL\HeightMapVertex.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OutDir)%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(TargetDir)%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <FxCompile Include="Source\Challenge\Shaders\HLSL\LineGeometry.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Geometry</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Geometry</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(TargetDir)%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <FxCompile Include="Source\Challenge\Shaders\HLSL\LinePixel.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(TargetDir)%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <FxCompile Include="Source\Challenge\Shaders\HLSL\LineVertex.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(TargetDir)%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <FxCompile Include="Source\Challenge\Shaders\HLSL\ModelBasicPixel.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OutDir)%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(TargetDir)%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <FxCompile Include="Source\Challenge\Shaders\HLSL\ModelBasicVertex.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OutDir)%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(TargetDir)%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <FxCompile Include="Source\Challenge\Shaders\HLSL\ModelBoneAnimationVertex.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OutDir)%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(TargetDir)%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <FxCompile Include="Source\Challenge\Shaders\HLSL\PhongPixel.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OutDir)%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(TargetDir)%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <FxCompile Include="Source\Challenge\Shaders\HLSL\PhongVertex.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OutDir)%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(TargetDir)%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <FxCompile Include="Source\Challenge\Shaders\HLSL\SkyboxPixel.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OutDir)%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(TargetDir)%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <FxCompile Include="Source\Challenge\Shaders\HLSL\SkyboxVertex.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OutDir)%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(TargetDir)%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <FxCompile Include="Source\Challenge\Shaders\HLSL\SpriteColorPixel.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OutDir)%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(TargetDir)%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <FxCompile Include="Source\Challenge\Shaders\HLSL\SpriteTexturePixel.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OutDir)%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(TargetDir)%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <FxCompile Include="Source\Challenge\Shaders\HLSL\SpriteVertex.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OutDir)%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(TargetDir)%(Filename).cso</ObjectFileOutput>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
@@ -471,6 +487,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <TargetName>Challenge</TargetName>
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -493,7 +510,7 @@
     </Lib>
     <FxCompile>
       <ShaderModel>4.0</ShaderModel>
-      <ObjectFileOutput>$(OutDir)%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput>$(TargetDir)%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <CustomBuildStep>
       <Command>

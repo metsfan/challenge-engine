@@ -9,7 +9,7 @@
 
 namespace challenge
 {
-	std::map<std::string, std::shared_ptr<ModelResource>> Model::sResourceCache;
+	std::map<std::wstring, std::shared_ptr<ModelResource>> Model::sResourceCache;
 
 	Model::Model(std::shared_ptr<ModelResource> resource) :
 		mActiveAnimFrame(0),
@@ -19,7 +19,7 @@ namespace challenge
 	{
 	}
 
-	Model::Model(const std::string &filepath) :
+	Model::Model(const std::wstring &filepath) :
 		mActiveAnimFrame(0),
 		mBoundingVolume(NULL),
 		mFilepath(filepath),

@@ -16,22 +16,22 @@ namespace challenge
 
 	static const int kNumShapes = 5;
 
-	static const std::string filenames[] = {
-		"box.model",
-		"sphere.model",
-		"cylinder.model",
-		"cone.model",
-		"torus.model"
+	static const std::wstring filenames[] = {
+		L"box.model",
+		L"sphere.model",
+		L"cylinder.model",
+		L"cone.model",
+		L"torus.model"
 	};
 
-	static const std::string kPrimitiveBasePath = "C:/gamedev/engine-dev/Engine/Engine/Source/Engine/Assets/Primitives/";
+	static const std::wstring kPrimitiveBasePath = L"C:/gamedev/engine-dev/Engine/Engine/Source/Engine/Assets/Primitives/";
 
 	class PrimitiveGenerator
 	{
 	public:
 		static Model* CreatePrimitive(PrimitiveShape type)
 		{
-			std::string filepath = kPrimitiveBasePath + filenames[type];
+			std::wstring filepath = kPrimitiveBasePath + filenames[type];
 			return new Model(filepath);
 		}
 	};

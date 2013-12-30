@@ -51,13 +51,32 @@ namespace challenge
 
 			return outStr.str();
 		}
-			
-		template <typename InStringType, typename OutStringType>
-		static OutStringType ConvertString(const InStringType &str)
+
+		template <typename StringType = std::string>
+		static bool StartsWith(const StringType &str, const StringType &search)
 		{
-			std::wstring_convert<std::codecvt<InStringType::value_type, OutStringType::value_type, std::mbstate_t>> converter;
+			return std::equal(str.begin(), str.end(), search.begin());
+		}
+
+		template <typename StringType = std::string>
+		static bool EndsWith(const StringType &str, const StringType &search)
+		{
+			return std::equal(search.rbegin(), search.rend(), str.rbegin());
+		}
+			
+		static std::wstring ToWide(const std::string &str)
+		{
+			std::wstring_convert<std::codecvt<wchar_t, char, std::mbstate_t>> converter;
+
+			return converter.from_bytes(str);
+		}
+
+		static std::string ToNarrow(const std::wstring &str)
+		{
+			std::wstring_convert<std::codecvt<wchar_t, char, std::mbstate_t>> converter;
 
 			return converter.to_bytes(str);
 		}
+
 	};
 };

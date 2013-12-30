@@ -2,6 +2,7 @@
 #include <Challenge/UI/Window.h>
 #include <Challenge/UI/View.h>
 #include <Challenge/UI/UI.h>
+#include <Challenge/UI/Controller.h>
 
 namespace challenge
 {
@@ -89,6 +90,44 @@ namespace challenge
 		return View::RemoveSubview(view);
 	}
 
+	void Window::PushController(Controller *controller)
+	{
+		if (mControllerStack.size() > 0) {
+			Controller *top = mControllerStack.top();
+			this->RemoveSubview(top->GetView());
+
+			top->OnDisappear();
+		}
+
+		mControllerStack.push(controller);
+		
+		View *controllerView = controller->GetView();
+		controllerView->SetFrame(this->GetFrame());
+		this->AddSubview(controllerView);
+
+		controller->OnAppear();
+	}
+
+	void Window::PopController()
+	{
+		if (mControllerStack.size() > 0) {
+			Controller *top = mControllerStack.top();
+			this->RemoveSubview(top->GetView());
+			mControllerStack.pop();
+
+			top->OnDisappear();
+		}
+
+		if (mControllerStack.size() > 0) {
+			Controller *controller = mControllerStack.top();
+			View *controllerView = controller->GetView();
+			controllerView->SetFrame(this->GetFrame());
+			this->AddSubview(controllerView);
+
+			controller->OnAppear();
+		}
+	}
+
 	void Window::RegisterCoreUIClasses()
 	{
 		View::RegisterViewClass("View", [](Frame frame) { return new View(frame); });
@@ -115,16 +154,7 @@ namespace challenge
 		bool handled = false;
 
 		while (selectedView) {
-			if (selectedView->mKeyboardDelegates.size() > 0 &&
-				selectedView->mKeyboardDelegates[e.type].size() > 0) {
-				std::vector<KeyboardEventDelegate> delegates = selectedView->mKeyboardDelegates[e.type];
-
-				for (int i = 0; i < delegates.size(); i++) {
-					delegates[i](selectedView, e);
-				}
-
-				handled = true;
-			}
+			handled |= selectedView->View::OnKeyboardEvent(e);
 
 			selectedView = selectedView->GetParent();
 		}
@@ -145,16 +175,11 @@ namespace challenge
 		if (e.type == MouseEventMouseWheelMove) {
 			View *selectedView = mFocusedView;
 			while (selectedView) {
-				if (selectedView->mMouseDelegates.size() > 0 &&
-					selectedView->mMouseDelegates[e.type].size() > 0) {
-					std::vector<MouseEventDelegate> delegates = selectedView->mMouseDelegates[e.type];
-
-					for (int i = 0; i < delegates.size(); i++) {
-						delegates[i](selectedView, e);
-					}
-
-					handled = true;
+				if (selectedView->View::OnMouseEvent(e)) {
+					break;
 				}
+
+				handled = true;
 
 				selectedView = selectedView->GetParent();
 			}
@@ -172,20 +197,15 @@ namespace challenge
 
 			if (e.type == MouseEventMouseMove) {
 				if (mHoveredView) {
-					/*if (!selectedView || selectedView == this) {
-						mHoveredView = NULL;
-					}*/
-
 					if (selectedView != mHoveredView) {
 						View *currentView = mHoveredView;
 
-						while (currentView) {
-							if (currentView->mMouseDelegates[MouseEventMouseLeave].size() > 0) {
-								std::vector<MouseEventDelegate> delegates = currentView->mMouseDelegates[MouseEventMouseLeave];
+						MouseEvent mouseLeaveEvt = e;
+						mouseLeaveEvt.type = MouseEventMouseLeave;
 
-								for (int i = 0; i < delegates.size(); i++) {
-									delegates[i](currentView, e);
-								}
+						while (currentView) {
+							if (currentView->View::OnMouseEvent(mouseLeaveEvt)) {
+								break;
 							}
 
 							currentView = currentView->GetParent();
@@ -200,13 +220,12 @@ namespace challenge
 
 					View *currentView = selectedView;
 
-					while (currentView) {
-						if (currentView->mMouseDelegates[MouseEventMouseEnter].size() > 0) {
-							std::vector<MouseEventDelegate> delegates = currentView->mMouseDelegates[MouseEventMouseEnter];
+					MouseEvent mouseEnterEvt = e;
+					mouseEnterEvt.type = MouseEventMouseEnter;
 
-							for (int i = 0; i < delegates.size(); i++) {
-								delegates[i](currentView, e);
-							}
+					while (currentView) {
+						if (currentView->View::OnMouseEvent(mouseEnterEvt)) {
+							break;
 						}
 
 						currentView = currentView->GetParent();
@@ -215,16 +234,16 @@ namespace challenge
 			}
 
 
+			if (e.type == MouseEventMouseDown) {
+				int x = 0;
+			}
+
 			while (selectedView) {
-				if (selectedView->mMouseDelegates[e.type].size() > 0) {
-					std::vector<MouseEventDelegate> delegates = selectedView->mMouseDelegates[e.type];
-
-					for (int i = 0; i < delegates.size(); i++) {
-						delegates[i](selectedView, e);
-					}
-				}
-
 				if (selectedView != this && selectedView->GetBackgroundColor().alpha > 0) {
+					if (selectedView->View::OnMouseEvent(e)) {
+						break;
+					}
+
 					handled = true;
 				}
 				

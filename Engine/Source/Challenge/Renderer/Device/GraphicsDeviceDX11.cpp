@@ -236,7 +236,7 @@ namespace challenge
 		
 	}
 
-	IShader * GraphicsDevice<RendererTypeDX11>::CreateShader(std::string filename, ShaderType type)
+	IShader * GraphicsDevice<RendererTypeDX11>::CreateShader(std::wstring filename, ShaderType type)
 	{
 		Shader<RendererTypeDX11> *shader = new Shader<RendererTypeDX11>(this, filename, type);
 		return static_cast<IShader *>(shader);

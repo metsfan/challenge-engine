@@ -15,14 +15,14 @@ namespace challenge
 		mSelected(false)
 	{
 		if (!sDefaultCheckedImage) {
-			Asset imageAsset("checkbox_checked.png");
+			Asset imageAsset(L"checkbox_checked.png");
 			if (imageAsset.ReadData()) {
 				sDefaultCheckedImage = std::shared_ptr<Image>(new Image(&imageAsset));
 			}
 		}
 
 		if (!sDefaultUncheckedImage) {
-			Asset imageAsset("uncheckbox_checked.png");
+			Asset imageAsset(L"uncheckbox_checked.png");
 			if (imageAsset.ReadData()) {
 				sDefaultCheckedImage = std::shared_ptr<Image>(new Image(&imageAsset));
 			}

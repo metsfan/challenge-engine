@@ -30,6 +30,17 @@ namespace challenge
 			mReloadPoints = true;
 		}
 
+		void RemovePoint(int index)
+		{
+			mPoints.erase(mPoints.begin() + index);
+			mReloadPoints = true;
+		}
+
+		int GetNumPoints()
+		{
+			return mPoints.size();
+		}
+
 		void ClearPoints()
 		{
 			mPoints.clear();

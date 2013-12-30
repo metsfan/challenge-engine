@@ -24,10 +24,15 @@ namespace challenge
 	{
 	public:
 		Model(std::shared_ptr<ModelResource> resource);
-		Model(const std::string &filepath);
+		Model(const std::wstring &filepath);
+		Model(const std::string &filepath) :
+			Model(StringUtil::ToWide(filepath))
+		{
+		}
+
 		~Model();
 
-		const std::string GetFilepath() { return mFilepath; }
+		const std::wstring GetFilepath() { return mFilepath; }
 
 		void Transform(const glm::mat4 &transform);
 
@@ -73,7 +78,7 @@ namespace challenge
 		ModelAnimation mActiveAnimation;
 		ModelAnimParams mActiveAnimationData;
 		std::list<ModelAnimParams> mAnimationQueue;
-		std::string mFilepath;
+		std::wstring mFilepath;
 		glm::vec4 mBlendColor;
 
 		void LoadAnimations();
@@ -81,6 +86,6 @@ namespace challenge
 
 		static std::string s_ModelDir;
 
-		static std::map<std::string, std::shared_ptr<ModelResource>> sResourceCache;
+		static std::map<std::wstring, std::shared_ptr<ModelResource>> sResourceCache;
 	};
 };

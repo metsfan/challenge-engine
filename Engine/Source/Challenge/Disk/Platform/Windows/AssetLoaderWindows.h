@@ -8,11 +8,11 @@ namespace challenge
 	class AssetLoader<PlatformTypeWin32>
 	{
 	public:
-		static std::string GetPathForAsset(const std::string &name);
-		static std::vector<std::string> GetFilesInDirectory(const std::string &directory, const std::string &filter);
+		static std::wstring GetPathForAsset(const std::wstring &name);
+		static std::vector<std::wstring> GetFilesInDirectory(const std::wstring &directory, const std::wstring &filter);
 
 	private:
 		static HMODULE sModule;
-		static std::string sBaseFilePath;
+		static std::wstring sBaseFilePath;
 	};
 };

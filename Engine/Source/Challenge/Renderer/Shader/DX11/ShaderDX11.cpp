@@ -5,7 +5,7 @@
 
 namespace challenge
 {
-	Shader<RendererTypeDX11>::Shader(GraphicsDeviceDX11 *device, std::string filename, ShaderType type) :
+	Shader<RendererTypeDX11>::Shader(GraphicsDeviceDX11 *device, std::wstring filename, ShaderType type) :
 			BaseShader(filename, type),
 			mVertexShader(NULL),
 			mPixelShader(NULL),
