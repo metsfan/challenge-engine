@@ -7,7 +7,6 @@
 #include <Challenge/UI/ViewManager.h>
 #include <Challenge/Model/ModelManager.h>
 #include <Challenge/Input/InputManager.h>
-#include <Challenge/Physics/PhysicsManager.h>
 #include <Challenge/Event/EventManager.h>
 #include <Challenge/Database/DatabaseManager.h>
 

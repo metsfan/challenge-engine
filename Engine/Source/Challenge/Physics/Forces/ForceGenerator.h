@@ -1,13 +1,13 @@
 #pragma once
 
 #include <Challenge/Challenge.h>
-#include <Challenge/Physics/Objects/RigidBody.h>
+#include <Challenge/Physics/Objects/PhysicsObject.h>
  
 namespace challenge
 {
 	class IForceGenerator
 	{
 	public:
-		virtual void UpdateForce(RigidBody *body, real duration) = 0;
+		virtual void ApplyForce(PhysicsObject *object, real duration) = 0;
 	};
 };

@@ -1,22 +1,18 @@
 #pragma once
 
 #include <Challenge/Challenge.h>
-#include <Challenge/Physics/PhysicsCore.h>
-#include <Challenge/Physics/Collision/CollisionData.h>
+#pragma once
+
+#include <Challenge/Challenge.h>
+#include <Challenge/Physics/Objects/PhysicsObject.h>
 
 namespace challenge
 {
-	typedef std::vector<CollisionData *> TCollisionDataList;
-
 	class CollisionDetector
 	{
 	public:
 		CollisionDetector();
 
-		void AddObject(IPhysicsObject *object);
-		TCollisionDataList FindCollisions();
-
-	private:
-		TObjectList mObjects;
+		void ResolveCollision(std::vector<PhysicsObject *> objects);
 	};
 };

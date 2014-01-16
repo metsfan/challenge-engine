@@ -10,7 +10,7 @@ namespace challenge
 	public:
 		GravityForceGenerator(glm::vec3 gravity);
 
-		virtual void UpdateForce(RigidBody *body, real duration);
+		virtual void ApplyForce(PhysicsObject *object, real duration);
 
 	protected:
 		glm::vec3 mGravity;

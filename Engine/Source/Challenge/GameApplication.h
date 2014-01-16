@@ -12,12 +12,8 @@
 
 namespace challenge 
 {
-	class ViewManager;
 	class ModelManager;
 	class InputManager;
-	class PhysicsManager;
-	class EventManager;
-	class DatabaseManager;
 	class NetworkManager;
 	class AudioManager;
 
@@ -57,12 +53,8 @@ namespace challenge
 		void Exit() { mApplicationRunning = false; }
 
 		IGraphicsDevice* GetGraphicsDevice() { return mGraphicsDevice; }
-		ViewManager *GetViewManager() const { return mViewManager; }
 		ModelManager *GetModelManager() const { return mModelManager; }
 		InputManager *GetInputManager() const { return mInputManager; }
-		PhysicsManager *GetPhysicsManager() const { return mPhysicsManager; }
-		EventManager *GetEventManager() const { return mEventManager; }
-		DatabaseManager *GetDatabaseManager() const { return mDatabaseManager; }
 		NetworkManager *GetNetworkManager() const { return mNetworkManager; }
 		AudioManager *GetAudioManager() const { return mAudioManager; }
 
@@ -106,12 +98,8 @@ namespace challenge
 		std::shared_ptr<IApplicationListener> mListener;
 
 		IGraphicsDevice *mGraphicsDevice;
-		ViewManager *mViewManager;
 		ModelManager *mModelManager;
 		InputManager *mInputManager;
-		PhysicsManager *mPhysicsManager;
-		EventManager *mEventManager;
-		DatabaseManager *mDatabaseManager;
 		NetworkManager *mNetworkManager;
 		AudioManager *mAudioManager;
 

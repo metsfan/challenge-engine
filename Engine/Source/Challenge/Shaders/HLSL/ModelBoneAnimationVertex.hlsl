@@ -63,7 +63,8 @@ VS_OUT main( VS_IN vsIn)
 	vOut.position = mul(gWVPMatrix, finalPosition); 
 	vOut.normal = normalize(mul((float3x3)gWorldMatrix, normal));
 	vOut.worldPosition = mul(gWorldMatrix, finalPosition);
-	vOut.texCoord = vsIn.texCoord;
+	vOut.texCoord.x = vsIn.texCoord.x;
+	vOut.texCoord.y = 1.0 - vsIn.texCoord.y;
 
 	//float3 lightDir = normalize(float3(0, 0, 1));
 	//vOut.lightDir = normalize(mul((float3x3)gWorldMatrix, lightDir));

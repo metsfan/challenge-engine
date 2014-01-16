@@ -1,7 +1,7 @@
 #include <Challenge/Challenge.h>
 #include "PhysicsCore.h"
 #include <Challenge/Physics/Shapes/GeometricShape.h>
-using namespace challenge;
+/*using namespace challenge;
 
 IGeometricShape* PhysicsObject::GetShape()
 {
@@ -25,4 +25,4 @@ void PhysicsObject::FireCollisionCallbacks(IPhysicsObject *otherObj)
 		TCollisionCallback *callback = mCollisionCallbacks[i];
 		(*callback)(this, otherObj);
 	}
-}
+}*/

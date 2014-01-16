@@ -61,6 +61,7 @@ namespace challenge
 	private:
 		ModelShape *mShape;
 		std::wstring mModelPath;
+		std::wstring mModelName;
 		TMeshList mMeshes;
 		TAnimList mAnimations;
 		TMaterialList mMaterials;

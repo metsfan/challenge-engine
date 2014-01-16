@@ -46,6 +46,7 @@ namespace model
 		int mTotalFaces;
 		TBoneList mBones;
 		float mMinY;
+		aiMatrix4x4 mGlobalTransform;
 
 		void ReadModelData(const aiNode *node, aiMatrix4x4 globalTransform);
 		void ConsolidateMeshes();

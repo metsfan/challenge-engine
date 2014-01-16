@@ -18,8 +18,7 @@ namespace challenge
 
 	ConcaveTriangleMeshShape::ConcaveTriangleMeshShape() : TriangleMeshShape()
 	{
-		mDataTree = new Octree(BoundingBox(), 2);
-		mTreeSet = false;
+		mDataTree = new Octree(BoundingBox(-1000, -1000, -1000, 1000, 1000, 1000), 3);
 	}
 
 	IGeometricShape* ConcaveTriangleMeshShape::Clone()
@@ -27,33 +26,28 @@ namespace challenge
 		return new ConcaveTriangleMeshShape(*this);
 	}
 
-	bool ConcaveTriangleMeshShape::Intersects(IGeometricShape *other, CollisionData *collision)
+	bool ConcaveTriangleMeshShape::Intersects(IGeometricShape *other, CollisionData *collision) const
 	{
 		bool hasCollision = false;
 
-		if(mTreeSet) {
-			GeometricShapeType type = other->GetType();
+		GeometricShapeType type = other->GetType();
 	
 
-			if(type == kShapeTypeAABB) {
-				AABBShape *aabb = reinterpret_cast<AABBShape *>(other);
+		if(type == kShapeTypeAABB) {
+			AABBShape *aabb = reinterpret_cast<AABBShape *>(other);
 
-				/*TGeometricShapeLinkedList shapes = mDataTree->FindNearestShapesToShape(aabb);
-				TGeometricShapeLinkedList::iterator it = shapes.begin();
-				TGeometricShapeLinkedList::iterator end = shapes.end();
-				while(it != end) {
-					TriangleShape *triangle = static_cast<TriangleShape *>(*it);
+			std::vector<OctreeObject> shapes = mDataTree->Query(aabb);
+			for (OctreeObject &obj : shapes) {
+				TriangleShape *triangle = dynamic_cast<TriangleShape *>(obj.shape);
 			
-					bool collides = IntersectionTests::AABBIntersectsTriangle(aabb, triangle, collision);
+				bool collides = IntersectionTests::AABBIntersectsTriangle(aabb, triangle, collision);
 
-					if(collides) {
-						hasCollision = true;
-					}
-
-					++it;
-				}*/
+				if(collides) {
+					hasCollision = true;
+				}
 			}
 		}
+		
 
 		return hasCollision;
 	}
@@ -61,19 +55,7 @@ namespace challenge
 	void ConcaveTriangleMeshShape::AddTriangle(const glm::vec3 &a, const glm::vec3 &b, const glm::vec3 &c)
 	{
 		TriangleMeshShape::AddTriangle(a, b, c);
-	}
 
-	void ConcaveTriangleMeshShape::CalculateDerivedData()
-	{
-		TriangleMeshShape::CalculateDerivedData();
-
-		if(!mTreeSet) {
-			TGeometricShapeLinkedList list;
-			for(int i = 0; i < mTriangles.size(); i++) {
-				list.push_back(mTriangles[i]);
-			}
-			//mDataTree->BuildTree(list);
-			mTreeSet = true;
-		}
+		mDataTree->AddShape(mTriangles.back(), this);
 	}
 };

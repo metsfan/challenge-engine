@@ -147,28 +147,10 @@
     <ClCompile Include="Source\Challenge\Physics\BVH\QuadTree.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Challenge\Physics\Collision\CollisionData.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Challenge\Physics\Collision\CollisionDetector.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Challenge\Physics\Collision\CollisionResolver.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Challenge\Physics\Collision\Contact.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Challenge\Physics\Forces\ForceGenerator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Challenge\Physics\Forces\GravityForceGenerator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Challenge\Physics\Objects\PlaneObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Challenge\Physics\Objects\RigidBody.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Challenge\Physics\Shapes\AABBShape.cpp">
@@ -178,9 +160,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Challenge\Physics\Shapes\GeometricShape.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Challenge\Physics\Shapes\Intersection.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Challenge\Physics\Shapes\OBBShape.cpp">
@@ -202,9 +181,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Challenge\Physics\PhysicsCore.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Challenge\Physics\PhysicsManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Challenge\Physics\PhysicsWorld.cpp">
@@ -468,6 +444,27 @@
     <ClCompile Include="Source\Challenge\Object\Component\ModelComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Challenge\Core\RunLoop.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Object\Component\PhysicsComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Physics\Objects\CharacterPhysicsObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Physics\Objects\PhysicsObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Physics\Collision\CollisionDetector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Physics\Shapes\Intersection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Physics\Collision\CollisionData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Challenge\GameController.h">
@@ -650,28 +647,10 @@
     <ClInclude Include="Source\Challenge\Physics\BVH\QuadTree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Challenge\Physics\Collision\CollisionData.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Challenge\Physics\Collision\CollisionDetector.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Challenge\Physics\Collision\CollisionResolver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Challenge\Physics\Collision\Contact.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Challenge\Physics\Forces\ForceGenerator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Challenge\Physics\Forces\GravityForceGenerator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Challenge\Physics\Objects\PlaneObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Challenge\Physics\Objects\RigidBody.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Challenge\Physics\Shapes\AABBShape.h">
@@ -681,9 +660,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Challenge\Physics\Shapes\GeometricShape.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Challenge\Physics\Shapes\Intersection.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Challenge\Physics\Shapes\OBBShape.h">
@@ -705,9 +681,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Challenge\Physics\PhysicsCore.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Challenge\Physics\PhysicsManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Challenge\Physics\PhysicsWorld.h">
@@ -1023,6 +996,30 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Challenge\Object\Component\ModelComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Core\RunLoop.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Object\Component\PhysicsComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Physics\Objects\CharacterPhysicsObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Physics\Objects\PhysicsObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Util\SafeObject.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Physics\Collision\CollisionDetector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Physics\Shapes\Intersection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Physics\Collision\CollisionData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

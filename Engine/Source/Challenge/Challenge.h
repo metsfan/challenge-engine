@@ -7,3 +7,4 @@
 #include <Challenge/Core/BasicTypes.h>
 #include <Challenge/Core/PlatformIncludes.h>
 #include <Challenge/Util/Logger.h>
+#include <Challenge/Util/SafeObject.hpp>

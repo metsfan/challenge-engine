@@ -53,7 +53,23 @@ namespace challenge
 
 	bool OBBShape::Intersects(IGeometricShape *other, CollisionData *collision) const
 	{
-		return false;
+		GeometricShapeType otherType = other->GetType();
+		bool intersects = false;
+
+		if (otherType == kShapeTypeAABB) {
+			AABBShape *aabb = static_cast<AABBShape *>(other);
+			//intersects = IntersectionTests::AABBIntersectsAABB(aabb, this, collision);
+		}
+		else if (otherType == kShapeTypePlane) {
+			PlaneShape *plane = static_cast<PlaneShape *>(other);
+			//intersects = IntersectionTests::AABBIntersectsPlane(this, plane, collision);
+		}
+		else if (otherType == kShapeTypeConcaveTriangleMesh) {
+			ConcaveTriangleMeshShape *mesh = dynamic_cast<ConcaveTriangleMeshShape *>(other);
+			mesh->Intersects((IGeometricShape *)this, collision);
+		}
+
+		return intersects;
 	}
 
 	bool OBBShape::RayIntersects(const Ray &ray, float &t) const

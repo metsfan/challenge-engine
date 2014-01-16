@@ -13,12 +13,11 @@ namespace challenge
 	public:
 		ConcaveTriangleMeshShape();
 
-		virtual bool Intersects(IGeometricShape *other, CollisionData *collision = NULL);
+		virtual bool Intersects(IGeometricShape *other, CollisionData *collision = NULL) const;
 
-		virtual GeometricShapeType GetType() { return kShapeTypeConcaveTriangleMesh; } 
+		virtual GeometricShapeType GetType() const { return kShapeTypeConcaveTriangleMesh; } 
 
 		virtual void AddTriangle(const glm::vec3 &a, const glm::vec3 &b, const glm::vec3 &c);
-		virtual void CalculateDerivedData(); 
 
 		static IGeometricShape* CreateFromPointsList(const std::vector<glm::vec3> &points);
 

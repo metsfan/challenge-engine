@@ -1,5 +1,5 @@
 #include <Challenge/Challenge.h>
-#include <Challenge/Physics/Shapes/Intersection.h>
+//#include <Challenge/Physics/Shapes/Intersection.h>
 #include <Challenge/Physics/Shapes/GeometricShape.h>
 #include <Challenge/Model/Model.h>
 

@@ -2,9 +2,10 @@
 
 #include <Challenge/Challenge.h>
 #include <Challenge/Physics/PhysicsCore.h>
+#include <Challenge/Physics/Objects/PhysicsObject.h>
 #include <Challenge/Physics/Forces/GravityForceGenerator.h>
 #include <Challenge/Physics/Collision/CollisionDetector.h>
-#include <Challenge/Physics/Collision/CollisionResolver.h>
+//#include <Challenge/Physics/Collision/CollisionResolver.h>
 
 namespace challenge
 {
@@ -17,15 +18,14 @@ namespace challenge
 			mGravityForce = new GravityForceGenerator(gravity); 
 		} 
 
-		void AddObject(IPhysicsObject *body);
-		void AddRigidBody(RigidBody *body);
+		void AddObject(PhysicsObject *body);
 
-		void UpdateSimulation(real duration);
+		void Update(uint32_t deltaMillis);
 
 	private:
 		CollisionDetector *mCollisionDetector;
-		CollisionResolver *mCollisionResolver;
-		TRigidBodyList mRigidBodies;
+		//CollisionResolver *mCollisionResolver;
+		SafeObject<std::vector<PhysicsObject *>> mObjects;
 		GravityForceGenerator *mGravityForce;
 		bool stopGravity;
 

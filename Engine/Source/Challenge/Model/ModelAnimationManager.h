@@ -1,25 +1,26 @@
 #pragma once
 
 #include <Challenge/Challenge.h>
+#include <Challenge/Core/RunLoop.h>
 
 namespace challenge
 {
-	class ModelManager;
+	class Model;
 
 	class ModelAnimationManager
 	{
 	public:
-		ModelAnimationManager(ModelManager *manager);
+		ModelAnimationManager();
 		~ModelAnimationManager();
 
-		void StartAnimations();
-
-		ModelManager* GetModelManager() { return mManager; }
-
-		static void AnimationThreadCallback(ModelAnimationManager *animManager);
+		void AddModel(Model *model)
+		{
+			mModels.push_back(model);
+		}
 
 	private:
-		std::thread *mAnimationThread;
-		ModelManager *mManager;
+		RunLoop *mAnimationThread;
+	
+		static std::vector<Model *> mModels;
 	};
 };

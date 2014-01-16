@@ -5,41 +5,38 @@ using namespace challenge;
 PhysicsWorld::PhysicsWorld()
 {
 	mCollisionDetector = new CollisionDetector();
-	mCollisionResolver = new CollisionResolver();
+	//mCollisionResolver = new CollisionResolver();
+	mGravityForce = new GravityForceGenerator(glm::vec3(0, -9.81, 0));
 }
 
-void PhysicsWorld::AddObject(IPhysicsObject *object)
+void PhysicsWorld::AddObject(PhysicsObject *object)
 {
-	mCollisionDetector->AddObject(object);
+	mObjects.lock();
+	mObjects.push_back(object);
+	mObjects.unlock();
+
+	//mCollisionDetector->AddObject(object);
 }
 
-void PhysicsWorld::AddRigidBody(RigidBody *body)
-{
-	mRigidBodies.push_back(body);
-	mCollisionDetector->AddObject(body);
-}
 
-
-void PhysicsWorld::UpdateSimulation(real duration)
+void PhysicsWorld::Update(uint32_t deltaMillis)
 {
-	if(mRigidBodies.size() > 0) {
-		TRigidBodyList tmp(mRigidBodies.size());
-		std::copy(mRigidBodies.begin(), mRigidBodies.begin() + mRigidBodies.size(), tmp.begin());
+	real duration = deltaMillis * 0.001;
+	if(mObjects.size() > 0) {
+		mObjects.lock();
+		auto objects = mObjects;
+		mObjects.unlock();
 
 		this->ApplyGravity(duration);
-		TRigidBodyList::iterator it = tmp.begin();
-
-		while (it != tmp.end()) {
-			RigidBody *body = (*it);
-			body->Integrate(duration);
-
-			++it;
+		for (PhysicsObject *object : mObjects) {
+			object->Update(duration);
 		}
 	}
 
-	TCollisionDataList collisions = mCollisionDetector->FindCollisions();
+	mCollisionDetector->ResolveCollision(mObjects);
+	//TCollisionDataList collisions = mCollisionDetector->FindCollisions();
 
-	mCollisionResolver->ResolveCollisions(collisions, duration);
+	//mCollisionResolver->ResolveCollisions(collisions, duration);
 
 }
 
@@ -47,12 +44,7 @@ void PhysicsWorld::UpdateSimulation(real duration)
 
 void PhysicsWorld::ApplyGravity(real duration)
 {
-	TRigidBodyList::iterator it = mRigidBodies.begin();
-
-	while (it != mRigidBodies.end()) {
-		RigidBody * body = (*it);
-		mGravityForce->UpdateForce(body, duration);
-
-		++it;
+	for (PhysicsObject *object : mObjects) {
+		mGravityForce->ApplyForce(object, duration);
 	}
 }

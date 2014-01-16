@@ -21,6 +21,7 @@
     <ClCompile Include="Source\Challenge\Core\BasicTypes.cpp" />
     <ClCompile Include="Source\Challenge\Core\Config.cpp" />
     <ClCompile Include="Source\Challenge\Core\Dispatch.cpp" />
+    <ClCompile Include="Source\Challenge\Core\RunLoop.cpp" />
     <ClCompile Include="Source\Challenge\Database\DatabaseManager.cpp" />
     <ClCompile Include="Source\Challenge\Database\DatabaseRecord.cpp" />
     <ClCompile Include="Source\Challenge\Disk\Asset.cpp" />
@@ -40,6 +41,7 @@
     <ClCompile Include="Source\Challenge\GameApplicationWindows.cpp" />
     <ClCompile Include="Source\Challenge\GameController.cpp" />
     <ClCompile Include="Source\Challenge\Object\Component\ModelComponent.cpp" />
+    <ClCompile Include="Source\Challenge\Object\Component\PhysicsComponent.cpp" />
     <ClCompile Include="Source\Challenge\Object\Transformable.cpp" />
     <ClCompile Include="Source\Challenge\Object\GameObject.cpp" />
     <ClCompile Include="Source\Challenge\Input\InputManager.cpp" />
@@ -66,14 +68,11 @@
     <ClCompile Include="Source\Challenge\Physics\BVH\QuadTree.cpp" />
     <ClCompile Include="Source\Challenge\Physics\Collision\CollisionData.cpp" />
     <ClCompile Include="Source\Challenge\Physics\Collision\CollisionDetector.cpp" />
-    <ClCompile Include="Source\Challenge\Physics\Collision\CollisionResolver.cpp" />
-    <ClCompile Include="Source\Challenge\Physics\Collision\Contact.cpp" />
     <ClCompile Include="Source\Challenge\Physics\Forces\ForceGenerator.cpp" />
     <ClCompile Include="Source\Challenge\Physics\Forces\GravityForceGenerator.cpp" />
-    <ClCompile Include="Source\Challenge\Physics\Objects\PlaneObject.cpp" />
-    <ClCompile Include="Source\Challenge\Physics\Objects\RigidBody.cpp" />
+    <ClCompile Include="Source\Challenge\Physics\Objects\CharacterPhysicsObject.cpp" />
+    <ClCompile Include="Source\Challenge\Physics\Objects\PhysicsObject.cpp" />
     <ClCompile Include="Source\Challenge\Physics\PhysicsCore.cpp" />
-    <ClCompile Include="Source\Challenge\Physics\PhysicsManager.cpp" />
     <ClCompile Include="Source\Challenge\Physics\PhysicsWorld.cpp" />
     <ClCompile Include="Source\Challenge\Physics\Shapes\AABBShape.cpp" />
     <ClCompile Include="Source\Challenge\Physics\Shapes\ConcaveTriangleMeshShape.cpp" />
@@ -174,6 +173,7 @@
     <ClInclude Include="Source\Challenge\Core\Dispatch.h" />
     <ClInclude Include="Source\Challenge\Core\Globals.h" />
     <ClInclude Include="Source\Challenge\Core\PlatformIncludes.h" />
+    <ClInclude Include="Source\Challenge\Core\RunLoop.h" />
     <ClInclude Include="Source\Challenge\Database\DatabaseManager.h" />
     <ClInclude Include="Source\Challenge\Database\DatabaseRecord.h" />
     <ClInclude Include="Source\Challenge\Disk\Asset.h" />
@@ -204,6 +204,7 @@
     <ClInclude Include="Source\Challenge\GameController.h" />
     <ClInclude Include="Source\Challenge\Object\Component\Component.h" />
     <ClInclude Include="Source\Challenge\Object\Component\ModelComponent.h" />
+    <ClInclude Include="Source\Challenge\Object\Component\PhysicsComponent.h" />
     <ClInclude Include="Source\Challenge\Object\Transformable.h" />
     <ClInclude Include="Source\Challenge\Object\GameObject.h" />
     <ClInclude Include="Source\Challenge\Input\InputManager.h" />
@@ -233,14 +234,11 @@
     <ClInclude Include="Source\Challenge\Physics\BVH\QuadTree.h" />
     <ClInclude Include="Source\Challenge\Physics\Collision\CollisionData.h" />
     <ClInclude Include="Source\Challenge\Physics\Collision\CollisionDetector.h" />
-    <ClInclude Include="Source\Challenge\Physics\Collision\CollisionResolver.h" />
-    <ClInclude Include="Source\Challenge\Physics\Collision\Contact.h" />
     <ClInclude Include="Source\Challenge\Physics\Forces\ForceGenerator.h" />
     <ClInclude Include="Source\Challenge\Physics\Forces\GravityForceGenerator.h" />
-    <ClInclude Include="Source\Challenge\Physics\Objects\PlaneObject.h" />
-    <ClInclude Include="Source\Challenge\Physics\Objects\RigidBody.h" />
+    <ClInclude Include="Source\Challenge\Physics\Objects\CharacterPhysicsObject.h" />
+    <ClInclude Include="Source\Challenge\Physics\Objects\PhysicsObject.h" />
     <ClInclude Include="Source\Challenge\Physics\PhysicsCore.h" />
-    <ClInclude Include="Source\Challenge\Physics\PhysicsManager.h" />
     <ClInclude Include="Source\Challenge\Physics\PhysicsWorld.h" />
     <ClInclude Include="Source\Challenge\Physics\Shapes\AABBShape.h" />
     <ClInclude Include="Source\Challenge\Physics\Shapes\ConcaveTriangleMeshShape.h" />
@@ -339,6 +337,7 @@
     <ClInclude Include="Source\Challenge\Util\ImageParser.h" />
     <ClInclude Include="Source\Challenge\Util\Logger.h" />
     <ClInclude Include="Source\Challenge\Util\PrimitiveGenerator.h" />
+    <ClInclude Include="Source\Challenge\Util\SafeObject.hpp" />
     <ClInclude Include="Source\Challenge\Util\StringUtil.h" />
     <ClInclude Include="Source\Challenge\Util\Timer.h" />
     <ClInclude Include="Source\Challenge\Util\Util.h" />

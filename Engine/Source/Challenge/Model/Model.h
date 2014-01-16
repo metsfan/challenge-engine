@@ -20,6 +20,8 @@ namespace challenge
 		glm::mat3 gNormalMatrix;
 	};
 
+	class ModelAnimationManager;
+
 	class Model
 	{
 	public:
@@ -41,7 +43,7 @@ namespace challenge
 		IGeometricShape* CreateBoundingVolume(GeometricShapeType type, const glm::mat4 &transform);
 
 		void SetIsStatic(bool isStatic) { mStatic = isStatic; }
-		bool IsStatic() { return mStatic; }
+		bool IsStatic() { return !mResource->IsAnimated(); }
 		void SetAnimFrame(int frame);
 		void SetNextFrame(int deltaMillis);
 
@@ -87,5 +89,6 @@ namespace challenge
 		static std::string s_ModelDir;
 
 		static std::map<std::wstring, std::shared_ptr<ModelResource>> sResourceCache;
+		static ModelAnimationManager *mModelAnimator;
 	};
 };

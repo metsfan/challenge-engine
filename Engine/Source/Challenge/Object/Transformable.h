@@ -4,6 +4,14 @@
 
 namespace challenge
 {
+	class Transformable;
+
+	class ITransformableListener
+	{
+	public:
+		virtual void OnTransformChanged(Transformable *transformable) = 0;
+	};
+
 	class Transformable
 	{
 	public:
@@ -22,37 +30,37 @@ namespace challenge
 			return "transform"; 
 		}
 
-		void MoveBy(const glm::vec3 &position)
+		virtual void MoveBy(const glm::vec3 &position)
 		{
 			mPosition += position;
 			mChanged = true;
 		}
 
-		void MoveTo(const glm::vec3 &position)
+		virtual void MoveTo(const glm::vec3 &position)
 		{
 			mPosition = position;
 			mChanged = true;
 		}
 
-		void RotateBy(const glm::vec3 &rotate)
+		virtual void RotateBy(const glm::vec3 &rotate)
 		{
 			mRotation += rotate;
 			mChanged = true;
 		}
 
-		void RotateTo(const glm::vec3 &rotate)
+		virtual void RotateTo(const glm::vec3 &rotate)
 		{
 			mRotation = rotate;
 			mChanged = true;
 		}
 
-		void ScaleBy(const glm::vec3 &scale)
+		virtual void ScaleBy(const glm::vec3 &scale)
 		{
 			mScale *= scale;
 			mChanged = true;
 		}
 
-		void ScaleTo(const glm::vec3 &scale)
+		virtual void ScaleTo(const glm::vec3 &scale)
 		{
 			mScale = scale;
 			mChanged = true;

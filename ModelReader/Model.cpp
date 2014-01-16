@@ -11,6 +11,12 @@ namespace model
 	Model::Model(std::string &filepath, glm::mat4 globalTransform) :
 		mAnimData(NULL)
 	{
+		mGlobalTransform = aiMatrix4x4(
+			globalTransform[0][0], globalTransform[0][1], globalTransform[0][2], globalTransform[0][3],
+			globalTransform[1][0], globalTransform[1][1], globalTransform[1][2], globalTransform[1][3],
+			globalTransform[2][0], globalTransform[2][1], globalTransform[2][2], globalTransform[2][3],
+			globalTransform[3][0], globalTransform[3][1], globalTransform[3][2], globalTransform[3][3]
+			);
 		this->Load(filepath, globalTransform);
 	}
 
@@ -43,17 +49,9 @@ namespace model
 			}
 		}
 
-		aiMatrix4x4 aiGlobalTransform;
-		aiGlobalTransform = aiMatrix4x4(
-			globalTransform[0][0], globalTransform[0][1], globalTransform[0][2], globalTransform[0][3],
-			globalTransform[1][0], globalTransform[1][1], globalTransform[1][2], globalTransform[1][3],
-			globalTransform[2][0], globalTransform[2][1], globalTransform[2][2], globalTransform[2][3],
-			globalTransform[3][0], globalTransform[3][1], globalTransform[3][2], globalTransform[3][3]
-		);
-
 		mMinY = INFINITE;
 
-		ReadModelData(mScene->mRootNode, aiGlobalTransform);
+		ReadModelData(mScene->mRootNode, mGlobalTransform);
 
 		/*for(int i = 0; i < mMeshes.size(); i++) {
 			ModelMesh *mesh = mMeshes[i];
@@ -83,7 +81,7 @@ namespace model
 					int index = face->mIndices[k];
 					aiVector3D pos = mesh->mVertices[index];
 
-					aiMatrix4x4 xForm = globalTransform * node->mTransformation;
+					aiMatrix4x4 xForm = node->mTransformation;
 					aiMatrix3x3 normalXForm = aiMatrix3x3(xForm);
 					aiTransformVecByMatrix4(&pos, &xForm);
 
@@ -252,6 +250,8 @@ namespace model
 						boneMatrices[i] = tempNode->mTransformation * boneMatrices[i];
 						tempNode = tempNode->mParent;
 					}
+
+					boneMatrices[i] = boneMatrices[i];
 				}
 
 				// Write bone matrices

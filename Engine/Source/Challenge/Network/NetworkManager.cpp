@@ -40,12 +40,12 @@ void NetworkManager::NetworkThreadCallback(NetworkManager *netManager)
 	while(true) {
 		std::string receivedData = netManager->GetNetworkInterface()->ReadData();
 
-		EventManager *eventManager = GameApplication::GetInstance()->GetEventManager();
+		/*EventManager *eventManager = GameApplication::GetInstance()->GetEventManager();
 		if(eventManager) {
 			NetworkReceivedEventData *eventData = new NetworkReceivedEventData(0);
 			eventData->packetData = receivedData;
 			eventManager->QueueEvent(eventData);
-		}
+		}*/
 	}
 }
 

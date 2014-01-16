@@ -1,5 +1,5 @@
 #include <Challenge/Challenge.h>
-#include <Challenge/Physics/Shapes/Intersection.h>
+//#include <Challenge/Physics/Shapes/Intersection.h>
 #include "AABBShape.h"
 
 namespace challenge
@@ -52,10 +52,15 @@ namespace challenge
 
 		if(otherType == kShapeTypeAABB) {
 			AABBShape *aabb = static_cast<AABBShape *>(other);
-			intersects = IntersectionTests::AABBIntersectsAABB(aabb, this, collision);
-		} else if(otherType == kShapeTypePlane) {
+			//intersects = IntersectionTests::AABBIntersectsAABB(aabb, this, collision);
+		} 
+		else if(otherType == kShapeTypePlane) {
 			PlaneShape *plane = static_cast<PlaneShape *>(other);
-			intersects = IntersectionTests::AABBIntersectsPlane(this, plane, collision);
+			//intersects = IntersectionTests::AABBIntersectsPlane(this, plane, collision);
+		}
+		else if (otherType == kShapeTypeConcaveTriangleMesh) {
+			ConcaveTriangleMeshShape *mesh = dynamic_cast<ConcaveTriangleMeshShape *>(other);
+			intersects = mesh->Intersects((IGeometricShape *)this, collision);
 		}
 
 		return intersects;

@@ -11,9 +11,6 @@ ModelManager::ModelManager()
 
 bool ModelManager::Initialize()
 {
-	mAnimManager = new ModelAnimationManager(this);
-	mAnimManager->StartAnimations();
-
 	return true;
 }
 

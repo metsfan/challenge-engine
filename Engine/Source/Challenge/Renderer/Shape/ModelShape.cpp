@@ -60,7 +60,7 @@ namespace challenge
 		Effect *effect = context->GetEffect("Model");
 		ShaderDataMatrix4 boneData;
 
-		if(mModel->IsAnimated() && false) {
+		if(mModel->IsAnimated()) {
 			const std::vector<glm::mat4> &boneMatrices = mModel->GetBonesForKeyframe(mCurrentAnimFrame);
 			boneData.SetData(&boneMatrices[0], boneMatrices.size());
 			state.SetShaderData("BONE_MATRICES", &boneData);

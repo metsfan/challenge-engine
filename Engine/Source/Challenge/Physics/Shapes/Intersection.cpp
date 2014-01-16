@@ -5,7 +5,7 @@
 using namespace challenge;
 
 
-bool IntersectionTests::SphereIntersectsSphere(const SphereShape *sphere1, const SphereShape *sphere2, CollisionData *collision)
+/*bool IntersectionTests::SphereIntersectsSphere(const SphereShape *sphere1, const SphereShape *sphere2, CollisionData *collision)
 {
 	return false;
 }
@@ -38,7 +38,7 @@ bool IntersectionTests::AABBIntersectsPlane(const AABBShape *aabb, const PlaneSh
 	glm::vec3 center = aabb->GetPosition();
 	//center += glm::vec3(aabb->mHalfX, aabb->mHalfY, aabb->mHalfZ) * normal;
 	float r = glm::dot(plane1.mComponents, glm::vec4(center, 1.0));
-	bool intersects = abs(r) <= rEff;*/
+	bool intersects = abs(r) <= rEff;
 
 	const glm::vec3 &center = aabb->GetCenter();
 	const glm::vec3 &e = aabb->GetDimensions();
@@ -180,11 +180,11 @@ bool IntersectionTests::AABBIntersectsPlane(const AABBShape *aabb, const PlaneSh
 	}
 
 	return intersects;
-}
+}*/
 
 bool IntersectionTests::AABBIntersectsTriangle(const AABBShape *aabb, const TriangleShape *triangle, CollisionData *collision)
 {
-	glm::vec3 c = aabb->GetCenter();
+	glm::vec3 c = aabb->GetPosition();
 
 	glm::vec3 v[3];
 	v[0] = triangle->GetPoint(0) - c;
@@ -244,13 +244,17 @@ bool IntersectionTests::AABBIntersectsTriangle(const AABBShape *aabb, const Tria
 		return false;
 	}
 
-	Contact *contact = new Contact();
+	if (collision) {
+		collision->penetrationDepth = PhysicsMath::PointPlaneDistance(c, &triangle->GetPlane());
+	}
 
-	/*contact->mContactNormal = triangle->mNormalPlane.mNormal;
+	/*Contact *contact = new Contact();
+
+	contact->mContactNormal = triangle->mNormalPlane.mNormal;
 	//c.y += aabb->mHalfY;
 	contact->mContactPoint = c;
 	contact->mPenetration = PhysicsMath::PointPlaneDistance(c, &triangle->mNormalPlane);
-	collision->mContacts.push_back(contact);*/
+	collision->mContacts.push_back(contact);
 
 	//return true;
 	bool intersects = IntersectionTests::AABBIntersectsPlane(aabb, &triangle->GetPlane(), NULL);
@@ -310,7 +314,7 @@ bool IntersectionTests::AABBIntersectsTriangle(const AABBShape *aabb, const Tria
 		contact->mPenetration = -PhysicsMath::PointPlaneDistance(c, &triangle->GetPlane());
 		//contact->mPenetration = 0.01;
 		collision->mContacts.push_back(contact);
-	}
+	}*/
 
-	return intersects;
+	return true;
 }

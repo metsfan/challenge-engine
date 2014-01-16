@@ -24,7 +24,7 @@ namespace challenge
 		L"torus.model"
 	};
 
-	static const std::wstring kPrimitiveBasePath = L"C:/gamedev/engine-dev/Engine/Engine/Source/Engine/Assets/Primitives/";
+	static const std::wstring kPrimitiveBasePath = L"Models/Primitives/";
 
 	class PrimitiveGenerator
 	{

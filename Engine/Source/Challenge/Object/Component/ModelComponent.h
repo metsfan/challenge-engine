@@ -5,10 +5,11 @@
 
 namespace challenge
 {
-	class ModelComponent : public IRenderableComponent
+	class ModelComponent : public RenderableComponent
 	{
 	public:
-		ModelComponent(Model *model) :
+		ModelComponent(GameObject *owner, Model *model) :
+			RenderableComponent(owner),
 			mModel(model)
 		{
 		}
@@ -18,6 +19,16 @@ namespace challenge
 		}
 
 		std::string GetType() { return "model"; }
+
+		void SetAnimation(const std::string &animation)
+		{
+			mModel->SetActiveAnimation(animation);
+		}
+
+		void QueueAnimation(const std::string &animation, bool loop)
+		{
+			mModel->QueueAnimation(animation, loop);
+		}
 
 		void Update(int deltaMillis)
 		{

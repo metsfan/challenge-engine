@@ -95,7 +95,7 @@ namespace challenge
 
 	std::vector<OctreeObject> Octree::Query(IGeometricShape *shape)
 	{
-		std::list<OctreeObject> objects;
+		std::vector<OctreeObject> objects;
 		this->FindObjects(mHead, shape, objects);
 
 		std::vector<OctreeObject> finalList;
@@ -105,7 +105,7 @@ namespace challenge
 			}
 		}
 
-		return finalList;
+		return objects;
 	}
 
 	const OctreeObject* Octree::RayIntersection(Ray ray, int queryType)
@@ -326,13 +326,19 @@ namespace challenge
 		return node;
 	}
 
-	void Octree::FindObjects(OctreeNode *node, IGeometricShape *shape, std::list<OctreeObject> &list)
+	void Octree::FindObjects(OctreeNode *node, IGeometricShape *shape, std::vector<OctreeObject> &list)
 	{
-		if(!shape->ContainedWithin(node->mBounds)) {
+		if (!node) {
 			return;
 		}
 
-		std::copy(node->mShapes.begin(), node->mShapes.end(), list.begin());
+		if (!shape->ContainedWithin(node->mBounds)) {
+			return;
+		}
+
+		for (auto shape : node->mShapes) {
+			list.push_back(shape);
+		}
 
 		for(int i = 0; i < 8; i++) {
 			this->FindObjects(node->mChildren[i], shape, list);

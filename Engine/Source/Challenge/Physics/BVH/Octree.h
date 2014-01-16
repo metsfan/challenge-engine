@@ -100,7 +100,7 @@ namespace challenge
 		OctreeObject* FindRayIntersection(OctreeNode *node, const Ray &ray, const Ray &original, int offset,
 			real t0x, real t0y, real t0z, real t1x, real t1y, real t1z, real &minT);
 		OctreeNode* FindContainingNode(OctreeNode *node, IGeometricShape *shape);
-		void FindObjects(OctreeNode *node, IGeometricShape *shape, std::list<OctreeObject> &list);
+		void FindObjects(OctreeNode *node, IGeometricShape *shape, std::vector<OctreeObject> &list);
 		void SplitNode(OctreeNode *node);
 	};
 }

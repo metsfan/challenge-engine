@@ -50,7 +50,9 @@ namespace challenge
 		if(inStream.Open()) {
 			
 			int lastSlash = filename.rfind('/');
+			int lastDot = filename.rfind('.');
 			mModelPath = filename.substr(0, lastSlash + 1);
+			mModelName = filename.substr(lastSlash + 1, lastDot - lastSlash - 1);
 
 			//Logger::log(LogDebug, "Model path: %s", mModelPath.c_str());
 			
@@ -112,7 +114,7 @@ namespace challenge
 
 	void ModelResource::LoadAnimations()
 	{
-		File file(mModelPath + L"animations.xml");
+		Asset file(mModelPath + mModelName + L"-animations.xml");
 		if (file.ReadData()) {
 			const TByteArray &data = file.GetData();
 

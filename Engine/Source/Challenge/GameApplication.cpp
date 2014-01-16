@@ -2,7 +2,6 @@
 #include <Challenge/UI/Window.h>
 #include <Challenge/Model/ModelManager.h>
 #include <Challenge/Input/InputManager.h>
-#include <Challenge/Physics/PhysicsManager.h>
 #include <Challenge/Network/NetworkManager.h>
 #include <Challenge/Audio/AudioManager.h>
 #include <Challenge/Renderer/VertexBuffer/VertexBufferDX11.h>
@@ -24,9 +23,7 @@ namespace challenge
 		mWindow(window),
 		mListener(listener),
 		mInitialized(false),
-		mEventManager(NULL),
 		mNetworkManager(NULL),
-		mDatabaseManager(NULL),
 		mInputManager(NULL),
 		mModelManager(NULL)
 		//mPrimitiveGenerator(NULL)

@@ -5,7 +5,7 @@ using namespace challenge;
 
 DatabaseRecord::DatabaseRecord(void)
 {
-	mManager = GameApplication::GetInstance()->GetDatabaseManager();
+	//mManager = GameApplication::GetInstance()->GetDatabaseManager();
 }
 
 

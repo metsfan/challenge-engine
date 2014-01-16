@@ -1,5 +1,5 @@
 #include <Challenge/Challenge.h>
-#include <Challenge/Physics/Shapes/Intersection.h>
+//#include <Challenge/Physics/Shapes/Intersection.h>
 #include "PlaneShape.h"
 
 namespace challenge
@@ -18,7 +18,7 @@ namespace challenge
 		switch(otherType) {
 		case kShapeTypeAABB:
 			AABBShape *aabb = static_cast<AABBShape *>(other);
-			intersects = IntersectionTests::AABBIntersectsPlane(aabb, this);
+			//intersects = IntersectionTests::AABBIntersectsPlane(aabb, this);
 			break;
 		}
 

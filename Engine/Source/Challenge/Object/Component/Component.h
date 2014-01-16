@@ -4,6 +4,8 @@
 
 namespace challenge
 {
+	class GameObject;
+
 	class IComponent
 	{
 	public:
@@ -12,9 +14,28 @@ namespace challenge
 		virtual void Update(int deltaMillis) = 0;
 	};
 
-	class IRenderableComponent : public IComponent
+	class BaseComponent : public IComponent
 	{
 	public:
+		BaseComponent(GameObject *owner) :
+			mOwner(owner)
+		{
+		}
+
+		GameObject * GetOwner() { return mOwner; }
+
+	private:
+		GameObject *mOwner;
+	};
+
+	class RenderableComponent : public BaseComponent
+	{
+	public:
+		RenderableComponent(GameObject *owner) :
+			BaseComponent(owner)
+		{
+		}
+
 		virtual void Render(IGraphicsDevice *device, RenderState &state) = 0;
 	};
 };

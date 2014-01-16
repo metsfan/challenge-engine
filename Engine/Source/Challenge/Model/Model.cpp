@@ -4,12 +4,15 @@
 #include <Challenge/Model/ModelMesh.h>
 #include <Challenge/Model/ModelMaterial.h>
 #include <Challenge/Model/ModelBone.h>
+#include <Challenge/Model/ModelAnimationManager.h>
+#include <Challenge/Disk/Asset.h>
 #include <rapidxml/rapidxml.hpp>
 #include "Model.h"
 
 namespace challenge
 {
 	std::map<std::wstring, std::shared_ptr<ModelResource>> Model::sResourceCache;
+	ModelAnimationManager *Model::mModelAnimator = NULL;
 
 	Model::Model(std::shared_ptr<ModelResource> resource) :
 		mActiveAnimFrame(0),
@@ -38,6 +41,12 @@ namespace challenge
 				throw "Failed to initialize model resource";
 			}
 		}
+
+		if (!mModelAnimator) {
+			mModelAnimator = new ModelAnimationManager();
+		}
+
+		mModelAnimator->AddModel(this);
 	}
 
 	Model::~Model()
@@ -46,7 +55,7 @@ namespace challenge
 
 	IGeometricShape* Model::CreateBoundingVolume(GeometricShapeType type, const glm::mat4 &transform)
 	{
-		mBoundingVolume = mResource->CreateBoundingVolume(type, transform)->Clone();
+ 		mBoundingVolume = mResource->CreateBoundingVolume(type, transform)->Clone();
 
 		return mBoundingVolume;
 	}

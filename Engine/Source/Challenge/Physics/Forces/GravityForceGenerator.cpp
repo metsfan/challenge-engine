@@ -7,9 +7,11 @@ GravityForceGenerator::GravityForceGenerator(glm::vec3 gravity) :
 {
 }
 
-void GravityForceGenerator::UpdateForce(RigidBody *body, real duration)
+void GravityForceGenerator::ApplyForce(PhysicsObject *object, real duration)
 {
-	if(body->HasInfiniteMass()) { return; }
+	if (object->HasInfiniteMass()) {
+		return;
+	}
 
-	body->AddForce(mGravity * body->mMass);
+	object->ApplyForce(mGravity * duration);
 }

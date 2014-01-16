@@ -40,7 +40,7 @@ namespace challenge
 	typedef std::vector<IPhysicsObject *> TObjectList;
 	typedef std::vector<RigidBody *> TRigidBodyList;
 
-	class PhysicsObject : public IPhysicsObject
+	/*class PhysicsObject : public IPhysicsObject
 	{
 	public:
 		PhysicsObject() { mId = Util::uuid_create(); }
@@ -67,5 +67,5 @@ namespace challenge
 		real mInverseMass;
 		real mMass;
 		TCollisionCallbackList mCollisionCallbacks;
-	};
+	};*/
 };

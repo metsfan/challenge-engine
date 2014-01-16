@@ -121,7 +121,7 @@ namespace challenge
 				break;
 
 			case kShapeTypeConcaveTriangleMesh:
-				//return ConcaveTriangleMeshShape::CreateFromPointsList(points, transform);
+				return ConcaveTriangleMeshShape::CreateFromPointsList(points);
 				break;
 			}
 		}

@@ -1,5 +1,4 @@
 #include <Challenge/Challenge.h>
-#include <Challenge/Physics/Objects/PlaneObject.h>
 #include "TriangleMeshShape.h"
 #include <Challenge/Physics/Shapes/GeometricShape.h>
 #include <Challenge/Physics/Collision/CollisionData.h>
