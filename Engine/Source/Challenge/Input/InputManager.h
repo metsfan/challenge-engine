@@ -21,7 +21,8 @@ namespace challenge
 		SpecialKeyRight = 0xF00F006,
 		SpecialKeyUp = 0xF00F007,
 		SpecialKeyDown = 0xF00F008,
-		SpecialKeyTab = 0xF00F009
+		SpecialKeyTab = 0xF00F009,
+		SpecialKeySpace = 0xF00F00A
 	};
 
 	class InputManager

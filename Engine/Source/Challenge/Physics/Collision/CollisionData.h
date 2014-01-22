@@ -7,9 +7,13 @@ namespace challenge
 {
 	//typedef std::vector<Contact *> TContactList;
 
+	class PhysicsObject;
+
 	struct CollisionData
 	{
+		PhysicsObject *other = NULL;
 		real penetrationDepth = 0;
+		glm::vec3 collisionNormal;
 	};
 
 	/*class CollisionData

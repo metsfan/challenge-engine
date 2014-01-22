@@ -31,6 +31,7 @@ namespace challenge
 			Model(StringUtil::ToWide(filepath))
 		{
 		}
+		Model(const std::vector<ModelVertex> &points);
 
 		~Model();
 

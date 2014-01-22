@@ -24,19 +24,17 @@ namespace challenge
 
 		state.PopTransform();
 
-		auto physicsComponents = this->FindComponents<PhysicsComponent>();
-		for (auto physics : physicsComponents) {
-			physics->GetPhysicsObject()->DrawDebug(device, state);
-		}
+		auto physicsComponent = this->FindComponent<PhysicsComponent>();
+		physicsComponent->GetPhysicsObject()->DrawDebug(device, state);
 	}
 
 	void GameObject::MoveBy(const glm::vec3 &position)
 	{
 		Transformable::MoveBy(position);
 
-		auto physicsComponents = this->FindComponents<PhysicsComponent>();
-		for (auto physics : physicsComponents) {
-			physics->GetPhysicsObject()->SetPosition(this->GetPosition());
+		auto physicsComponent = this->FindComponent<PhysicsComponent>();
+		if (physicsComponent) {
+			physicsComponent->GetPhysicsObject()->MoveBy(position);
 		}
 	}
 
@@ -44,9 +42,9 @@ namespace challenge
 	{
 		Transformable::MoveTo(position);
 
-		auto physicsComponents = this->FindComponents<PhysicsComponent>();
-		for (auto physics : physicsComponents) {
-			physics->GetPhysicsObject()->SetPosition(this->GetPosition());
+		auto physicsComponent = this->FindComponent<PhysicsComponent>();
+		if (physicsComponent) {
+			physicsComponent->GetPhysicsObject()->SetPosition(position);
 		}
 	}
 }

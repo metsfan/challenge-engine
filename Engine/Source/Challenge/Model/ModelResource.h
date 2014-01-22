@@ -44,7 +44,7 @@ namespace challenge
 		~ModelResource();
 
 		bool Initialize(const std::vector<ModelMesh *> &meshes);
-		bool Initialize(const ModelVertex *verts, int nVerts);
+		bool Initialize(const std::vector<ModelVertex> &verts);
 		bool Initialize(const std::wstring &filename);
 
 		const TMeshList& GetMeshes() { return mMeshes; }

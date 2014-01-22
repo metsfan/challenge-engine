@@ -9,14 +9,12 @@ namespace challenge
 	{
 	}
 
-	ModelMesh::ModelMesh(const ModelVertex *verts, int nVerts)
+	ModelMesh::ModelMesh(const std::vector<ModelVertex> verts) :
+		mMaterialId(-1)
 	{
-		int verticesSize = nVerts * sizeof(ModelVertex);
+		mMeshVertices = verts;
 
-		mMeshVertices.resize(nVerts);
-		memcpy(&mMeshVertices[0], verts, verticesSize);
-
-		mNumVertices = nVerts;
+		mNumVertices = verts.size();
 	}
 
 	ModelMesh::~ModelMesh()

@@ -8,8 +8,16 @@ namespace challenge
 	class CharacterPhysicsObject : public PhysicsObject
 	{
 	public:
-		CharacterPhysicsObject();
-		~CharacterPhysicsObject();
+		CharacterPhysicsObject() :
+			PhysicsObject()
+		{
+		}
+
+		~CharacterPhysicsObject()
+		{
+		}
+
+		virtual bool CollidesWith(PhysicsObject *other, CollisionData *collision = NULL);
 
 		void SetMaxJumpHeight(real jumpHeight) { mMaxJumpHeight = jumpHeight; }
 		void SetMaxClimbAngle(real climbAngle) { mMaxClimbAngle = climbAngle; }

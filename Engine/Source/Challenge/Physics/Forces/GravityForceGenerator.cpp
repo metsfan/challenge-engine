@@ -13,5 +13,5 @@ void GravityForceGenerator::ApplyForce(PhysicsObject *object, real duration)
 		return;
 	}
 
-	object->ApplyForce(mGravity * duration);
+	object->ApplyForce(mGravity);
 }

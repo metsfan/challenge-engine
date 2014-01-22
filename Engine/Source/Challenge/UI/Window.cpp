@@ -239,7 +239,7 @@ namespace challenge
 			}
 
 			while (selectedView) {
-				if (selectedView != this && selectedView->GetBackgroundColor().alpha > 0) {
+				if (selectedView != this) {
 					if (selectedView->View::OnMouseEvent(e)) {
 						break;
 					}

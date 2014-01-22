@@ -156,9 +156,6 @@
     <ClCompile Include="Source\Challenge\Physics\Shapes\AABBShape.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Challenge\Physics\Shapes\ConcaveTriangleMeshShape.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Challenge\Physics\Shapes\GeometricShape.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -169,9 +166,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Challenge\Physics\Shapes\SphereShape.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Challenge\Physics\Shapes\TriangleMeshShape.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Challenge\Physics\Shapes\TriangleShape.cpp">
@@ -465,6 +459,9 @@
     <ClCompile Include="Source\Challenge\Physics\Collision\CollisionData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Challenge\Physics\Shapes\TriangleMeshShape.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Challenge\GameController.h">
@@ -656,9 +653,6 @@
     <ClInclude Include="Source\Challenge\Physics\Shapes\AABBShape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Challenge\Physics\Shapes\ConcaveTriangleMeshShape.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Challenge\Physics\Shapes\GeometricShape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -669,9 +663,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Challenge\Physics\Shapes\SphereShape.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Challenge\Physics\Shapes\TriangleMeshShape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Challenge\Physics\Shapes\TriangleShape.h">
@@ -1020,6 +1011,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Challenge\Physics\Collision\CollisionData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Physics\Shapes\TriangleMeshShape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

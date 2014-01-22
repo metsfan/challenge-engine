@@ -3,6 +3,8 @@
 #include <Challenge/Challenge.h>
 #include "GeometricShape.h"
 #include <Challenge/Math/Ray.h>
+#include <Challenge/Physics/Shapes/Intersection.h>
+#include <Challenge/Physics/Shapes/TriangleMeshShape.h>
 
 #define EPSILON 0.001
 
@@ -17,7 +19,6 @@ namespace challenge
 		AABBShape(const BoundingBox &box);
 		IGeometricShape* Clone() { return new AABBShape(*this); }
 
-		virtual bool Intersects(IGeometricShape *other, CollisionData *collision = NULL) const;
 		bool RayIntersects(const Ray &ray, float &t) const;
 		virtual glm::mat3 CalculateInertiaTensor(float mass);
 
@@ -85,6 +86,31 @@ namespace challenge
 		real GetZ() const { return mCenter.z; }
 
 		void DrawDebug(IGraphicsDevice *device, RenderState &state);
+
+		virtual bool Intersects(const IGeometricShape *other, CollisionData *collision = NULL) const
+		{
+			return other->Intersects(this, collision);
+		}
+
+		virtual bool Intersects(const AABBShape *aabb, CollisionData *collision = NULL) const
+		{
+			return IntersectionTests::AABBIntersectsAABB(this, aabb, collision);
+		}
+
+		virtual bool Intersects(const OBBShape *obb, CollisionData *collision = NULL) const
+		{
+			return IntersectionTests::AABBIntersectsOBB(this, obb, collision);
+		}
+
+		virtual bool Intersects(const TriangleShape *triangle, CollisionData *collision = NULL) const
+		{
+			return IntersectionTests::AABBIntersectsTriangle(this, triangle, collision);
+		}
+
+		virtual bool Intersects(const TriangleMeshShape *mesh, CollisionData *collision = NULL) const
+		{
+			return mesh->Intersects(this, collision);
+		}
 
 	private:
 		glm::vec3 mDimensions;

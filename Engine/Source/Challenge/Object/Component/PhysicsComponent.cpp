@@ -14,11 +14,6 @@ namespace challenge
 	{
 	}
 
-	void PhysicsComponent::UpdatePhysics()
-	{
-		mObject->SetPosition(this->GetOwner()->GetPosition());
-	}
-
 	void PhysicsComponent::Update(int deltaMillis)
 	{
 		this->GetOwner()->MoveTo(mObject->GetPosition());

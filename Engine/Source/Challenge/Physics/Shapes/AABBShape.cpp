@@ -45,27 +45,6 @@ namespace challenge
 		mCenter = (box.mMin + box.mMax) * 0.5f;
 	}
 
-	bool AABBShape::Intersects(IGeometricShape *other, CollisionData *collision) const
-	{
-		GeometricShapeType otherType = other->GetType();
-		bool intersects = false;
-
-		if(otherType == kShapeTypeAABB) {
-			AABBShape *aabb = static_cast<AABBShape *>(other);
-			//intersects = IntersectionTests::AABBIntersectsAABB(aabb, this, collision);
-		} 
-		else if(otherType == kShapeTypePlane) {
-			PlaneShape *plane = static_cast<PlaneShape *>(other);
-			//intersects = IntersectionTests::AABBIntersectsPlane(this, plane, collision);
-		}
-		else if (otherType == kShapeTypeConcaveTriangleMesh) {
-			ConcaveTriangleMeshShape *mesh = dynamic_cast<ConcaveTriangleMeshShape *>(other);
-			intersects = mesh->Intersects((IGeometricShape *)this, collision);
-		}
-
-		return intersects;
-	}
-
 	glm::mat3 AABBShape::CalculateInertiaTensor(float mass)
 	{
 		float a = (1.0f / 12.0f) * mass;
@@ -114,6 +93,7 @@ namespace challenge
 		glm::vec4 color(1, 0, 0, 0.5);
 		ShaderDataVector4 colorData(&color, 1);
 		state.SetShaderData("COLOR", &colorData);
+		state.SetShaderData("DIFFUSE_TEXTURE", NULL);
 		device->EnableState(GraphicsState::AlphaBlending);
 
 		mDebugShape->Render(device, state);

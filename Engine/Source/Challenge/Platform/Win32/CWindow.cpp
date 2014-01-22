@@ -306,6 +306,9 @@ namespace challenge
 			application->ProcessKeyboardEvent(evt, SpecialKeyTab);
 			break;
 
+		case VK_SPACE:
+			application->ProcessKeyboardEvent(evt, SpecialKeySpace);
+
 		default:
 			application->ProcessKeyboardEvent(evt, TranslateVirtualKeyCode(wParam, lParam));
 		}

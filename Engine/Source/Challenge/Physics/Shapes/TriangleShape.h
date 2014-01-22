@@ -4,6 +4,7 @@
 #include "GeometricShape.h"
 #include "PlaneShape.h"
 #include <Challenge/Math/Ray.h>
+#include <Challenge/Physics/Shapes/Intersection.h>
 
 namespace challenge
 {
@@ -15,27 +16,41 @@ namespace challenge
 
 		GeometricShapeType GetType() const { return kShapeTypeTriangle; }
 
-		bool RayIntersects(Ray ray, glm::vec3 *outPoint = NULL) const;
+		bool RayIntersects(const Ray &ray, float &t) const;
 
-		void SetPoint(int index, const glm::vec3& point)
+		const glm::vec3& GetPoint(int i) const { return mTriangle.GetPoint(i); }
+		const glm::vec4& GetPlane() const { return mTriangle.GetPlane(); }
+		const glm::vec3& GetNormal() const { return mTriangle.GetNormal(); }
+
+		void DrawDebug(IGraphicsDevice *device, RenderState &state);
+
+		virtual bool Intersects(const IGeometricShape *other, CollisionData *collision = NULL) const
 		{
-			mPoints[index] = point;
-			this->CalculateNormal();
+			return other->Intersects(this, collision);
 		}
 
-		const glm::vec3& GetPoint(int i) const { return mPoints[i]; }
-		const PlaneShape& GetPlane() const { return mNormalPlane; }
+		virtual bool Intersects(const AABBShape *aabb, CollisionData *collision = NULL) const
+		{
+			return IntersectionTests::AABBIntersectsTriangle(aabb, this, collision);
+		}
+
+		virtual bool Intersects(const OBBShape *obb, CollisionData *collision = NULL) const
+		{
+			return false;
+		}
+
+		virtual bool Intersects(const TriangleShape *triangle, CollisionData *collision = NULL) const
+		{
+			return false;
+		}
+
+		virtual bool Intersects(const TriangleMeshShape *mesh, CollisionData *collision = NULL) const
+		{
+			return false;
+		}
 		
 	private:
-		glm::vec3 mPoints[3];
-		PlaneShape mNormalPlane;
-
-		void CalculateNormal()
-		{
-			glm::vec3 normal = glm::normalize(glm::cross((mPoints[1] - mPoints[0]), (mPoints[2] - mPoints[1])));
-			float d = glm::dot(normal, mPoints[0]);
-			mNormalPlane = PlaneShape(glm::vec4(normal, d));
-		}
+		Triangle mTriangle;
 
 		void CalculateBoundingBox();
 	};

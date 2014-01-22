@@ -15,8 +15,7 @@ namespace challenge
 		kShapeTypePlane,
 		kShapeTypeSphere,
 		kShapeTypeTriangle,
-		kShapeTypeTriangleMesh,
-		kShapeTypeConcaveTriangleMesh
+		kShapeTypeTriangleMesh
 	} GeometricShapeType;
 
 	struct DebugLinesVertex
@@ -29,11 +28,21 @@ namespace challenge
 
 	class Model;
 
+	class AABBShape;
+	class OBBShape;
+	class TriangleShape;
+	class TriangleMeshShape;
+
 	class IGeometricShape
 	{
 	public:
-		virtual bool Intersects(IGeometricShape *other, CollisionData *collision = NULL) const = 0;
+		virtual bool Intersects(const IGeometricShape *other, CollisionData *collision = NULL) const = 0;
 		virtual bool Intersects(const BoundingBox &bounds) const = 0;
+
+		virtual bool Intersects(const AABBShape *aabb, CollisionData *collision = NULL) const = 0;
+		virtual bool Intersects(const OBBShape *obb, CollisionData *collision = NULL) const = 0;
+		virtual bool Intersects(const TriangleShape *triangle, CollisionData *collision = NULL) const = 0;
+		virtual bool Intersects(const TriangleMeshShape *mesh, CollisionData *collision = NULL) const = 0;
 		//virtual TPointsList Intersection(IGeometricShape *other) = 0;
 
 		virtual GeometricShapeType GetType() const = 0;
@@ -94,7 +103,7 @@ namespace challenge
 };
 
 #include <Challenge/Physics/Shapes/AABBShape.h>
-#include <Challenge/Physics/Shapes/ConcaveTriangleMeshShape.h>
+#include <Challenge/Physics/Shapes/TriangleMeshShape.h>
 #include <Challenge/Physics/Shapes/OBBShape.h>
 #include <Challenge/Physics/Shapes/PlaneShape.h>
 #include <Challenge/Physics/Shapes/SphereShape.h>
@@ -117,11 +126,7 @@ namespace challenge
 				return OBBShape::CreateFromPointsList(points, transform);
 
 			case kShapeTypeTriangleMesh:
-				//return TriangleMeshShape::CreateFromPointsList(points);
-				break;
-
-			case kShapeTypeConcaveTriangleMesh:
-				return ConcaveTriangleMeshShape::CreateFromPointsList(points);
+				return TriangleMeshShape::CreateFromPointsList(points);
 				break;
 			}
 		}

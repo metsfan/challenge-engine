@@ -38,12 +38,12 @@ namespace challenge
 		{
 		}
 
-		OctreeObject(IGeometricShape *_shape, void *_object) :
+		OctreeObject(const IGeometricShape *_shape, void *_object) :
 			shape(_shape), object(_object)
 		{
 		}
 
-		IGeometricShape *shape;
+		const IGeometricShape *shape;
 		void *object;
 	};
 
@@ -56,9 +56,9 @@ namespace challenge
 		OctreeNode(const BoundingBox &bounds);
 		void BuildChildren();
 		bool Contains(const glm::vec3 &point);
-		bool IntersectsShape(IGeometricShape *shape);
-		void AddShape(IGeometricShape *shape, void *object);
-		OctreeObject RemoveShape(IGeometricShape *shape);
+		bool IntersectsShape(const IGeometricShape *shape);
+		void AddShape(const IGeometricShape *shape, void *object);
+		OctreeObject RemoveShape(const IGeometricShape *shape);
 
 	private:
 		BoundingBox mBounds;
@@ -84,23 +84,23 @@ namespace challenge
 		Octree(const BoundingBox &maxBounds, int maxDepth, int flags = 0);
 		~Octree();
 
-		std::vector<OctreeObject> Query(IGeometricShape *shape);
+		std::vector<OctreeObject> Query(const IGeometricShape *shape);
 		const OctreeObject* RayIntersection(Ray ray, int queryType = RayCastClosest);
-		void AddShape(IGeometricShape *shape, void *object);
+		void AddShape(const IGeometricShape *shape, void *object);
 
-		void UpdateObject(IGeometricShape *object);
+		void UpdateObject(const IGeometricShape *object);
 
 	private:
 		OctreeNode *mHead;
 		int mMaxDepth;
 		int mFlags;
 		BoundingBox mMaxBounds;
-		std::map<IGeometricShape *, OctreeNode *> mObjectLookup;
+		std::map<const IGeometricShape *, OctreeNode *> mObjectLookup;
 
 		OctreeObject* FindRayIntersection(OctreeNode *node, const Ray &ray, const Ray &original, int offset,
 			real t0x, real t0y, real t0z, real t1x, real t1y, real t1z, real &minT);
-		OctreeNode* FindContainingNode(OctreeNode *node, IGeometricShape *shape);
-		void FindObjects(OctreeNode *node, IGeometricShape *shape, std::vector<OctreeObject> &list);
+		OctreeNode* FindContainingNode(OctreeNode *node, const IGeometricShape *shape);
+		void FindObjects(OctreeNode *node, const IGeometricShape *shape, std::vector<OctreeObject> &list);
 		void SplitNode(OctreeNode *node);
 	};
 }

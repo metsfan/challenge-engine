@@ -31,11 +31,11 @@ namespace challenge
 		return true;
 	}
 
-	bool ModelResource::Initialize(const ModelVertex *verts, int nVerts)
+	bool ModelResource::Initialize(const std::vector<ModelVertex> &verts)
 	{
-		ModelMesh *mesh = new ModelMesh(verts, nVerts);
+		ModelMesh *mesh = new ModelMesh(verts);
 		mMeshes.push_back(mesh);
-		mNumVerts = nVerts;
+		mNumVerts = verts.size();
 
 		this->LoadAnimations();
 

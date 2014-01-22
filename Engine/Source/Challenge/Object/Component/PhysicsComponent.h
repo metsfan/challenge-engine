@@ -18,8 +18,6 @@ namespace challenge
 
 		void Update(int deltaMillis);
 
-		void UpdatePhysics();
-
 	private:
 		PhysicsObject *mObject;
 	};

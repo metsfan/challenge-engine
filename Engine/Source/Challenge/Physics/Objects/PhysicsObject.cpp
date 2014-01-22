@@ -15,10 +15,17 @@ namespace challenge
 		mPosition += mVelocity * seconds;
 
 		mShape->SetPosition(mPosition);
+
+		mTotalForce = glm::vec3(0);
 	}
 
 	void PhysicsObject::ResolveCollision(const CollisionData &collision)
 	{
-		this->SetPosition(mPosition + glm::vec3(0, collision.penetrationDepth, 0));
+		this->SetPosition(mPosition + glm::vec3(0, -collision.penetrationDepth, 0));
+	}
+
+	bool PhysicsObject::CollidesWith(PhysicsObject *other, CollisionData *collision)
+	{
+		return other->mShape->Intersects(mShape, collision);
 	}
 };

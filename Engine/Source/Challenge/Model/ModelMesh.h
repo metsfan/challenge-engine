@@ -11,7 +11,7 @@ namespace challenge
 	{
 	public:
 		ModelMesh();
-		ModelMesh(const ModelVertex *vertices, int nVerts);
+		ModelMesh(const std::vector<ModelVertex> verts);
 		~ModelMesh();
 
 		int GetMaterial() { return mMaterialId; }

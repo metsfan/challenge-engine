@@ -21,6 +21,12 @@ namespace challenge
 			mPosition = position; 
 			mShape->SetPosition(position);
 		}
+
+		void MoveBy(const glm::vec3 &delta)
+		{
+			this->SetPosition(mPosition + delta);
+		}
+
 		const glm::vec3& GetPosition() { return mPosition; }
 
 		void SetVelocity(const glm::vec3 &velocity) { mVelocity = velocity; }
@@ -41,10 +47,7 @@ namespace challenge
 			mTotalForce += force;
 		}
 
-		virtual bool CollidesWith(PhysicsObject *other, CollisionData *collision = NULL)
-		{
-			return other->mShape->Intersects(mShape, collision);
-		}
+		virtual bool CollidesWith(PhysicsObject *other, CollisionData *collision = NULL);
 
 		virtual void ResolveCollision(const CollisionData &collision);
 

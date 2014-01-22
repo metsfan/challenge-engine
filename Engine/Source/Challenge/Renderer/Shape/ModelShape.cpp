@@ -82,16 +82,19 @@ namespace challenge
 			ShaderDataVector4 colorData;
 			glm::vec4 clearColor(0);
 
-			if(mTextures[mesh->GetMaterial()]->IsLoaded()) {
+			if(mesh->GetMaterial() >= 0 &&
+				mTextures[mesh->GetMaterial()]->IsLoaded()) {
 				diffuseTex = ShaderDataTexture(mTextures[mesh->GetMaterial()]);
 				state.SetShaderData("DIFFUSE_TEXTURE", &diffuseTex);
-				colorData = ShaderDataVector4(&mColor, 1);
-				state.SetShaderData("COLOR", &colorData);
+				
 			} else {
 				state.SetShaderData("DIFFUSE_TEXTURE", NULL);
 				//ShaderDataVector4 colorData(&mColor, 1);
-				state.SetShaderData("COLOR", NULL);
+				//state.SetShaderData("COLOR", NULL);
 			}
+
+			colorData = ShaderDataVector4(&mColor, 1);
+			state.SetShaderData("COLOR", &colorData);
 
 			Technique *technique = effect->GetActiveTechnique();
 			technique->Begin();

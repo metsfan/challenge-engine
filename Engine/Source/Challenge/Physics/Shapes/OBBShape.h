@@ -15,7 +15,31 @@ namespace challenge
 		virtual ~OBBShape() {}
 		IGeometricShape* Clone() { return new OBBShape(*this); }
 
-		virtual bool Intersects(IGeometricShape *other, CollisionData *collision = NULL) const;
+		virtual bool Intersects(const IGeometricShape *other, CollisionData *collision = NULL) const
+		{
+			return other->Intersects(this, collision);
+		}
+
+		virtual bool Intersects(const AABBShape *aabb, CollisionData *collision = NULL) const
+		{
+			return IntersectionTests::AABBIntersectsOBB(aabb, this, collision);
+		}
+
+		virtual bool Intersects(const OBBShape *obb, CollisionData *collision = NULL) const
+		{
+			return IntersectionTests::OBBIntersectsOBB(this, obb, collision);
+		}
+
+		virtual bool Intersects(const TriangleShape *triangle, CollisionData *collision = NULL) const
+		{
+			return false;
+		}
+
+		virtual bool Intersects(const TriangleMeshShape *mesh, CollisionData *collision = NULL) const
+		{
+			return false;
+		}
+
 		bool RayIntersects(const Ray &ray, float &t) const;
 
 		static IGeometricShape* CreateFromPointsList(const std::vector<glm::vec3> &points, const glm::mat4 &transform);
@@ -81,7 +105,7 @@ namespace challenge
 		real GetY() const { return mCenter.y; }
 		real GetZ() const { return mCenter.z; }
 
-		const glm::mat3& GetAxes() { return mAxes; }
+		const glm::mat3& GetAxes() const { return mAxes; }
 		void SetAxes(const glm::mat3 &axes) { mAxes = axes; }
 
 		virtual void SetTransform(const glm::mat4 &transform);

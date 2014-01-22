@@ -50,18 +50,18 @@ namespace challenge
 		return mBounds.Contains(point);
 	}
 
-	bool OctreeNode::IntersectsShape(IGeometricShape *shape)
+	bool OctreeNode::IntersectsShape(const IGeometricShape *shape)
 	{
 		return shape->Intersects(mBounds);
 	}
 
-	void OctreeNode::AddShape(IGeometricShape *shape, void *object)
+	void OctreeNode::AddShape(const IGeometricShape *shape, void *object)
 	{
 		OctreeObject obj(shape, object);
 		mShapes.push_back(obj);	
 	}
 
-	OctreeObject OctreeNode::RemoveShape(IGeometricShape *shape)
+	OctreeObject OctreeNode::RemoveShape(const IGeometricShape *shape)
 	{
 		OctreeObject obj;
 		for(auto it = mShapes.begin(); it != mShapes.end(); ++it) {
@@ -93,7 +93,7 @@ namespace challenge
 		delete mHead;
 	}
 
-	std::vector<OctreeObject> Octree::Query(IGeometricShape *shape)
+	std::vector<OctreeObject> Octree::Query(const IGeometricShape *shape)
 	{
 		std::vector<OctreeObject> objects;
 		this->FindObjects(mHead, shape, objects);
@@ -147,7 +147,7 @@ namespace challenge
 		return NULL;
 	}
 
-	void Octree::AddShape(IGeometricShape *shape, void *object)
+	void Octree::AddShape(const IGeometricShape *shape, void *object)
 	{
 		if(!shape->ContainedWithin(mHead->mBounds)) {
 			// Expand tree size
@@ -160,7 +160,7 @@ namespace challenge
 		}
 	}
 
-	void Octree::UpdateObject(IGeometricShape *object)
+	void Octree::UpdateObject(const IGeometricShape *object)
 	{
 		if(!object) {
 			return;
@@ -312,7 +312,7 @@ namespace challenge
 		return minObj;
 	}
 
-	OctreeNode* Octree::FindContainingNode(OctreeNode *node, IGeometricShape *shape)
+	OctreeNode* Octree::FindContainingNode(OctreeNode *node, const IGeometricShape *shape)
 	{
 		if(node->mHasChildren) {
 			bool contained = true;
@@ -326,7 +326,7 @@ namespace challenge
 		return node;
 	}
 
-	void Octree::FindObjects(OctreeNode *node, IGeometricShape *shape, std::vector<OctreeObject> &list)
+	void Octree::FindObjects(OctreeNode *node, const IGeometricShape *shape, std::vector<OctreeObject> &list)
 	{
 		if (!node) {
 			return;

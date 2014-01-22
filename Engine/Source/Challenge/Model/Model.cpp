@@ -49,6 +49,15 @@ namespace challenge
 		mModelAnimator->AddModel(this);
 	}
 
+	Model::Model(const std::vector<ModelVertex> &points)
+	{
+		mResource = std::shared_ptr<ModelResource>(new ModelResource());
+
+		std::vector<ModelMesh *> meshes;
+		meshes.push_back(new ModelMesh(points));
+		mResource->Initialize(meshes);
+	}
+
 	Model::~Model()
 	{
 	}

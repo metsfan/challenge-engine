@@ -25,8 +25,16 @@ namespace challenge
 			return (mPoints[0] * u) + (mPoints[1] * v) + (mPoints[2] * w);
 		}
 
+		const glm::vec4 GetPlane() const
+		{
+			glm::vec3 normal = glm::normalize(glm::cross((mPoints[1] - mPoints[0]), (mPoints[2] - mPoints[1])));
+			float d = -glm::dot(normal, mPoints[0]);
+			return glm::vec4(normal, d);
+		}
+
 	private:
 		glm::vec3 mPoints[3];
 		glm::vec3 mNormal;
+		glm::vec4 mPlane;
 	};
 };
