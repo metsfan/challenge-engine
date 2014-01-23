@@ -9,8 +9,11 @@ namespace challenge
 		glm::vec3 min(INFINITY);
 		glm::vec3 max(-INFINITY);
 
+		glm::mat3 basis = glm::mat3(transform);
+		glm::mat4 finalTransform = glm::mat4(basis);
+
 		for(auto pt : points) {
-			pt = glm::vec3(transform * glm::vec4(pt, 1.0f));
+			pt = glm::vec3(finalTransform * glm::vec4(pt, 1.0f));
 			min.x = glm::min(pt.x, min.x);
 			min.y = glm::min(pt.y, min.y);
 			min.z = glm::min(pt.z, min.z);
@@ -70,13 +73,7 @@ namespace challenge
 
 	bool AABBShape::RayIntersects(const Ray &ray, float &t) const
 	{
-		//BoundingBox bbox = GetBoundingBox();
-		//glm::vec3 transformedCenter = glm::vec3(mTransform * glm::vec4(mCenter, 1.0));
-		glm::vec3 transformedCenter = mPosition;
-		BoundingBox bbox(transformedCenter.x - mDimensions.x, transformedCenter.y, transformedCenter.z - mDimensions.z, 
-			transformedCenter.x + mDimensions.x, transformedCenter.y + (mDimensions.y * 2), transformedCenter.z + mDimensions.z);
-
-		return ray.GetIntersection(bbox, t);
+		return ray.GetIntersection(this->GetBoundingBox(), t);
 	}
 
 	//void AABBShape::CreateDebugShape(MeshShape *shape, RenderState &state)

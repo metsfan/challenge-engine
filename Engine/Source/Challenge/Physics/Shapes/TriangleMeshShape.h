@@ -48,7 +48,7 @@ namespace challenge
 	private:
 		Octree *mDataTree;
 		bool mTreeSet;
-		std::vector<TriangleShape> mTriangles;
+		std::vector<TriangleShape *> mTriangles;
 
 		mutable TriangleShape *mDebugTriangle;
 	};

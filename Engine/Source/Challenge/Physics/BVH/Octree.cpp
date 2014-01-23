@@ -98,12 +98,12 @@ namespace challenge
 		std::vector<OctreeObject> objects;
 		this->FindObjects(mHead, shape, objects);
 
-		std::vector<OctreeObject> finalList;
+		/*std::vector<OctreeObject> finalList;
 		for(auto &obj : objects) {
 			if(obj.shape->Intersects(shape)) {
 				finalList.push_back(obj);
 			}
-		}
+		}*/
 
 		return objects;
 	}
@@ -332,7 +332,7 @@ namespace challenge
 			return;
 		}
 
-		if (!shape->ContainedWithin(node->mBounds)) {
+		if (!shape->Intersects(node->mBounds)) {
 			return;
 		}
 

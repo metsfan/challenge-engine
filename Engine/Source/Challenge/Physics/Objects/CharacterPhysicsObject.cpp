@@ -13,6 +13,10 @@ namespace challenge
 		Ray castRay(origin, glm::vec3(0, -1, 0));
 		float t;
 
+		if (collision.other->GetShape()->GetType() == kShapeTypeOBB) {
+			int x = 0;
+		}
+
 		bool intersects = collision.other->GetShape()->RayIntersects(castRay, t);
 		
 		if (intersects) {

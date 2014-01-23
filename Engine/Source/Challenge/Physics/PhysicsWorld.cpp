@@ -6,7 +6,7 @@ PhysicsWorld::PhysicsWorld()
 {
 	mCollisionDetector = new CollisionDetector();
 	//mCollisionResolver = new CollisionResolver();
-	mGravityForce = new GravityForceGenerator(glm::vec3(0, -9.81, 0));
+	mGravityForce = new GravityForceGenerator(glm::vec3(0, -20, 0));
 }
 
 void PhysicsWorld::AddObject(PhysicsObject *object)

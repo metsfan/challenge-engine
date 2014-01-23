@@ -21,11 +21,12 @@ namespace challenge
 		
 		bool Contains(const BoundingBox &other) const
 		{
-			if(this->mMax.x < other.mMin.x || this->mMin.x > other.mMax.x) return false;
-			if(this->mMax.y < other.mMin.y || this->mMin.y > other.mMax.y) return false;
-			if(this->mMax.z < other.mMin.z || this->mMin.z > other.mMax.z) return false;
-
-			return true;
+			return !(mMin.x > other.mMin.x ||
+				mMin.y > other.mMin.y ||
+				mMin.z > other.mMin.z ||
+				mMax.x < other.mMax.x ||
+				mMax.y < other.mMax.y ||
+				mMax.z < other.mMax.z);
 		}
 
 		bool Contains(const glm::vec3 &point) const
@@ -40,23 +41,12 @@ namespace challenge
 
 		bool Intersects(BoundingBox other) const
 		{
-			if(this->mMax.x < other.mMin.x || this->mMax.y < other.mMin.y) {
-				return false;
-			}
-    
-			if(this->mMin.x > other.mMax.x || this->mMax.y < other.mMin.y) {
-				return false;
-			}
-    
-			if(this->mMin.x > other.mMax.x || this->mMin.y > other.mMax.y) {
-				return false;
-			}
-    
-			if(this->mMax.x < other.mMin.x || this->mMin.y > other.mMax.y) {
-				return false;
-			}
-    
-			return true;
+			return !(mMin.x > other.mMax.x ||
+				mMin.y > other.mMax.y ||
+				mMin.z > other.mMax.z ||
+				mMax.x < other.mMin.x ||
+				mMax.y < other.mMin.y ||
+				mMax.z < other.mMin.z);
 		}
 
 		glm::vec3 GetCenter() const { return (mMax + mMin) * 0.5f; }

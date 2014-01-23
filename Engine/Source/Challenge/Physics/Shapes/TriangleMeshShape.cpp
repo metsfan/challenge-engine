@@ -33,32 +33,38 @@ namespace challenge
 	{
 		bool hasCollision = false;
 
-		GeometricShapeType type = other->GetType();
-	
+		std::vector<OctreeObject> shapes = mDataTree->Query(other);
+		for (OctreeObject &obj : shapes) {
+			//for (const TriangleShape &triangle : mTriangles) {
+			const TriangleShape *triangle = dynamic_cast<const TriangleShape *>(obj.shape);
 
-		if(type == kShapeTypeAABB) {
-			const AABBShape *aabb = reinterpret_cast<const AABBShape *>(other);
-			return this->Intersects(aabb, collision);
+			bool collides = triangle->Intersects(other, collision);
+
+			if (collides) {
+				hasCollision = true;
+
+				mDebugTriangle = const_cast<TriangleShape *>(triangle);
+			}
 		}
-		
-		return false;
+
+		return hasCollision;
 	}
 
 	bool TriangleMeshShape::Intersects(const AABBShape *aabb, CollisionData *collision) const
 	{
 		bool hasCollision = false;
 
-		//std::vector<OctreeObject> shapes = mDataTree->Query(aabb);
-		//for (OctreeObject &obj : shapes) {
-		for (const TriangleShape &triangle : mTriangles) {
-			//TriangleShape *triangle = dynamic_cast<TriangleShape *>(obj.shape);
+		std::vector<OctreeObject> shapes = mDataTree->Query(aabb);
+		for (OctreeObject &obj : shapes) {
+		//for (const TriangleShape &triangle : mTriangles) {
+			const TriangleShape *triangle = dynamic_cast<const TriangleShape *>(obj.shape);
 
-			bool collides = IntersectionTests::AABBIntersectsTriangle(aabb, &triangle, collision);
+			bool collides = IntersectionTests::AABBIntersectsTriangle(aabb, triangle, collision);
 
 			if (collides) {
 				hasCollision = true;
 
-				mDebugTriangle = const_cast<TriangleShape *>(&triangle);
+				mDebugTriangle = const_cast<TriangleShape *>(triangle);
 			}
 		}
 
@@ -70,8 +76,8 @@ namespace challenge
 		float minT = INFINITY;
 		bool intersects = false;
 
-		for (const TriangleShape &triangle : mTriangles) {
-			if (triangle.RayIntersects(ray, t)) {
+		for (const TriangleShape *triangle : mTriangles) {
+			if (triangle->RayIntersects(ray, t)) {
 				intersects = true;
 				minT = glm::min(minT, t);
 			}
@@ -83,8 +89,8 @@ namespace challenge
 
 	void TriangleMeshShape::AddTriangle(const glm::vec3 &a, const glm::vec3 &b, const glm::vec3 &c)
 	{
-		mTriangles.push_back(TriangleShape(a, b, c));
-		mDataTree->AddShape(&mTriangles.back(), this);
+		mTriangles.push_back(new TriangleShape(a, b, c));
+		mDataTree->AddShape(mTriangles.back(), this);
 	}
 
 	void TriangleMeshShape::DrawDebug(IGraphicsDevice *device, RenderState &state)
