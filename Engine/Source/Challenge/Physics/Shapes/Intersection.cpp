@@ -185,6 +185,11 @@ namespace challenge
 	{
 		bool intersects = aabb1->GetBoundingBox().Intersects(aabb2->GetBoundingBox());
 
+		if (collision) {
+			BoundingBox intersection = aabb1->GetBoundingBox().Intersection(aabb2->GetBoundingBox());
+			collision->penetrationDepth.y = intersection.GetHeight();
+		}
+
 		return intersects;
 	}
 
@@ -267,7 +272,7 @@ namespace challenge
 
 
 		if (collision) {
-			collision->penetrationDepth = PhysicsMath::PointPlaneDistance(c, triangle->GetPlane());
+			collision->penetrationDepth.y = -PhysicsMath::PointPlaneDistance(c, triangle->GetPlane());
 			collision->collisionNormal = triangle->GetNormal();
 		}
 

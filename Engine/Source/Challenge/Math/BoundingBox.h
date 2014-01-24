@@ -18,6 +18,11 @@ namespace challenge
 		real GetWidth() { return mMax.x - mMin.x; }
 		real GetHeight() { return mMax.y - mMin.y; }
 		real GetDepth() { return mMax.z - mMin.z; }
+
+		glm::vec3 GetDimensions() 
+		{ 
+			return glm::vec3(this->GetWidth(), this->GetHeight(), this->GetDepth()); 
+		}
 		
 		bool Contains(const BoundingBox &other) const
 		{
@@ -39,7 +44,7 @@ namespace challenge
 					point.z <= this->mMax.z);
 		}
 
-		bool Intersects(BoundingBox other) const
+		bool Intersects(const BoundingBox &other) const
 		{
 			return !(mMin.x > other.mMax.x ||
 				mMin.y > other.mMax.y ||
@@ -47,6 +52,19 @@ namespace challenge
 				mMax.x < other.mMin.x ||
 				mMax.y < other.mMin.y ||
 				mMax.z < other.mMin.z);
+		}
+
+		BoundingBox Intersection(const BoundingBox &other) const
+		{
+			BoundingBox inter;
+			inter.mMin.x = glm::max(mMin.x, other.mMin.x);
+			inter.mMin.y = glm::max(mMin.y, other.mMin.y);
+			inter.mMin.z = glm::max(mMin.z, other.mMin.z);
+			inter.mMax.x = glm::min(mMax.x, other.mMax.x);
+			inter.mMax.y = glm::min(mMax.y, other.mMax.y);
+			inter.mMax.z = glm::min(mMax.z, other.mMax.z);
+
+			return inter;
 		}
 
 		glm::vec3 GetCenter() const { return (mMax + mMin) * 0.5f; }

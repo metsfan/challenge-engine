@@ -24,8 +24,8 @@ namespace challenge
 
 		state.PopTransform();
 
-		//auto physicsComponent = this->FindComponent<PhysicsComponent>();
-		//physicsComponent->GetPhysicsObject()->DrawDebug(device, state);
+		auto physicsComponent = this->FindComponent<PhysicsComponent>();
+		physicsComponent->GetPhysicsObject()->DrawDebug(device, state);
 	}
 
 	void GameObject::MoveBy(const glm::vec3 &position)
