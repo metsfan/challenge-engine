@@ -19,6 +19,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Source\Challenge\Core\BasicTypes.cpp" />
+    <ClCompile Include="Source\Challenge\Core\Color.cpp" />
     <ClCompile Include="Source\Challenge\Core\Config.cpp" />
     <ClCompile Include="Source\Challenge\Core\Dispatch.cpp" />
     <ClCompile Include="Source\Challenge\Core\RunLoop.cpp" />
@@ -168,6 +169,7 @@
     <ClInclude Include="Source\Challenge\Audio\SoundGroup.h" />
     <ClInclude Include="Source\Challenge\Challenge.h" />
     <ClInclude Include="Source\Challenge\Core\BasicTypes.h" />
+    <ClInclude Include="Source\Challenge\Core\Color.h" />
     <ClInclude Include="Source\Challenge\Core\Config.h" />
     <ClInclude Include="Source\Challenge\Core\Dispatch.h" />
     <ClInclude Include="Source\Challenge\Core\Globals.h" />

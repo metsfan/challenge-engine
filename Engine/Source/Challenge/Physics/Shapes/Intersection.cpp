@@ -187,7 +187,7 @@ namespace challenge
 
 		if (collision) {
 			BoundingBox intersection = aabb1->GetBoundingBox().Intersection(aabb2->GetBoundingBox());
-			collision->penetrationDepth.y = intersection.GetHeight();
+			collision->penetrationDepth = intersection.GetHeight();
 		}
 
 		return intersects;
@@ -211,11 +211,12 @@ namespace challenge
 	bool IntersectionTests::AABBIntersectsTriangle(const AABBShape *aabb, const TriangleShape *triangle, CollisionData *collision)
 	{
 		glm::vec3 c = aabb->GetPosition();
+		const glm::vec3 &tc = triangle->GetPosition();
 
 		glm::vec3 v[3];
-		v[0] = triangle->GetPoint(0) - c;
-		v[1] = triangle->GetPoint(1) - c;
-		v[2] = triangle->GetPoint(2) - c;
+		v[0] = (triangle->GetPoint(0) + tc) - c;
+		v[1] = (triangle->GetPoint(1) + tc) - c;
+		v[2] = (triangle->GetPoint(2) + tc) - c;
 
 		glm::vec3 f[3] = { v[1] - v[0], v[2] - v[1], v[0] - v[2] };
 		glm::vec3 axes[3] = {
@@ -226,6 +227,9 @@ namespace challenge
 
 		float p0, p1, p2, r, min, max;
 		glm::vec3 axis;
+
+		glm::vec3 minAxis;
+		real minDist = INFINITY;
 
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
@@ -242,12 +246,13 @@ namespace challenge
 				min = MIN(p0, MIN(p1, p2));
 				max = MAX(p0, MAX(p1, p2));
 
-				if (abs(min) < 100) {
-					printf("stop");
-				}
-
 				if (min > r || max < -r) {
 					return false;
+				}
+
+				if (minDist > max - min) {
+					minAxis = axis;
+					minDist = max - min;
 				}
 			}
 		}
@@ -258,10 +263,20 @@ namespace challenge
 			return false;
 		}
 
+		if (minDist > max - min) {
+			minAxis = axis;
+			minDist = max - min;
+		}
+
 		min = MIN(v[0].y, MIN(v[1].y, v[2].y));
 		max = MAX(v[0].y, MAX(v[1].y, v[2].y));
 		if (max < -aabb->GetHalfY() || min > aabb->GetHalfY()) {
 			return false;
+		}
+
+		if (minDist > max - min) {
+			minAxis = axis;
+			minDist = max - min;
 		}
 
 		min = MIN(v[0].z, MIN(v[1].z, v[2].z));
@@ -270,10 +285,17 @@ namespace challenge
 			return false;
 		}
 
+		if (minDist > max - min) {
+			minAxis = axis;
+			minDist = max - min;
+		}
+
 
 		if (collision) {
-			collision->penetrationDepth.y = -PhysicsMath::PointPlaneDistance(c, triangle->GetPlane());
-			collision->collisionNormal = triangle->GetNormal();
+			Logger::log(LogDebug, "Penetration Depth: %f", minDist);
+
+			collision->penetrationDepth = PhysicsMath::PointPlaneDistance(c, triangle->GetPlane());
+			collision->collisionNormal = glm::vec3(0, -1, 0);
 		}
 
 		/*Contact *contact = new Contact();
@@ -465,5 +487,13 @@ namespace challenge
 		}
 
 		return true;
+	}
+
+
+	void IntersectionTests::UpdateSATPenetration(real min1, real max1,
+		real min2, real max2,
+		const glm::vec3 &axis, real &min, glm::vec3 &minAxis)
+	{
+
 	}
 }

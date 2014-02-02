@@ -43,7 +43,12 @@ namespace challenge
 
 	bool TriangleShape::RayIntersects(const Ray &ray, float &t) const
 	{
-		return ray.GetIntersection(mTriangle, t);
+		Triangle translated;
+		translated[0] = mTriangle[0] + this->GetPosition();
+		translated[1] = mTriangle[1] + this->GetPosition();
+		translated[2] = mTriangle[2] + this->GetPosition();
+
+		return ray.GetIntersection(translated, t);
 	}
 	
 	void TriangleShape::DrawDebug(IGraphicsDevice *device, RenderState &state)

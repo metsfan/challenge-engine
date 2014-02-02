@@ -17,7 +17,7 @@ namespace challenge
 	{
 	}
 
-	TXMLNodeList XMLNode::GetChildrenByName(std::string name)
+	TXMLNodeList XMLNode::GetChildrenByName(const std::string &name)
 	{
 		TXMLNodeList nodes;
 
@@ -30,7 +30,7 @@ namespace challenge
 		return nodes;
 	}
 
-	XMLNode& XMLNode::GetFirstChild(std::string name)
+	XMLNode& XMLNode::GetFirstChild(const std::string &name)
 	{
 		for(XMLNode &node : mChildren) {
 			if(node.mName == name) {
@@ -48,7 +48,7 @@ namespace challenge
 		return mChildren[index];
 	}
 
-	std::string XMLNode::GetAttributeString(std::string name)
+	std::string XMLNode::GetAttributeString(const std::string &name)
 	{
 		if(mAttributes.count(name)) {
 			return mAttributes[name].GetValue();
@@ -57,7 +57,7 @@ namespace challenge
 		return "";
 	}
 
-	short XMLNode::GetAttributeShort(std::string name)
+	short XMLNode::GetAttributeShort(const std::string &name)
 	{
 		std::string strval = this->GetAttributeString(name);
 		if(strval.length() > 0) {
@@ -66,7 +66,7 @@ namespace challenge
 		return 0;
 	}
 
-	int XMLNode::GetAttributeInt(std::string name)
+	int XMLNode::GetAttributeInt(const std::string &name)
 	{
 		std::string strval = this->GetAttributeString(name);
 		if(strval.length() > 0) {
@@ -75,7 +75,7 @@ namespace challenge
 		return 0;
 	}
 
-	float XMLNode::GetAttributeFloat(std::string name)
+	float XMLNode::GetAttributeFloat(const std::string &name)
 	{
 		std::string strval = this->GetAttributeString(name);
 		if(strval.length() > 0) {
@@ -84,7 +84,7 @@ namespace challenge
 		return 0;
 	}
 
-	double XMLNode::GetAttributeDouble(std::string name)
+	double XMLNode::GetAttributeDouble(const std::string &name)
 	{
 		std::string strval = this->GetAttributeString(name);
 		if(strval.length() > 0) {
@@ -93,7 +93,7 @@ namespace challenge
 		return 0;
 	}
 
-	void XMLNode::SetAttribute(std::string name, std::string value)
+	void XMLNode::SetAttribute(const std::string &name, std::string value)
 	{
 		if(mAttributes.count(name)) {
 			return mAttributes[name].SetValue(value);
@@ -104,28 +104,28 @@ namespace challenge
 		}
 	}
 
-	void XMLNode::SetAttribute(std::string name, short value)
+	void XMLNode::SetAttribute(const std::string &name, short value)
 	{
 		std::stringstream ss;
 		ss << value;
 		this->SetAttribute(name, ss.str());
 	}
 
-	void XMLNode::SetAttribute(std::string name, int value)
+	void XMLNode::SetAttribute(const std::string &name, int value)
 	{
 		std::stringstream ss;
 		ss << value;
 		this->SetAttribute(name, ss.str());
 	}
 
-	void XMLNode::SetAttribute(std::string name, float value)
+	void XMLNode::SetAttribute(const std::string &name, float value)
 	{
 		std::stringstream ss;
 		ss << value;
 		this->SetAttribute(name, ss.str());
 	}
 
-	void XMLNode::SetAttribute(std::string name, double value)
+	void XMLNode::SetAttribute(const std::string &name, double value)
 	{
 		std::stringstream ss;
 		ss << value;

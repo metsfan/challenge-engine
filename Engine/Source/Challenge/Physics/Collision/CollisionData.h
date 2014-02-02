@@ -12,7 +12,7 @@ namespace challenge
 	struct CollisionData
 	{
 		PhysicsObject *other = NULL;
-		glm::vec3 penetrationDepth;
+		real penetrationDepth;
 		glm::vec3 collisionNormal;
 	};
 

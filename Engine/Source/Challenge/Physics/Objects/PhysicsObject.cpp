@@ -21,7 +21,7 @@ namespace challenge
 
 	void PhysicsObject::ResolveCollision(const CollisionData &collision)
 	{
-		this->SetPosition(mPosition + collision.penetrationDepth);
+		this->SetPosition(mPosition + (collision.collisionNormal * collision.penetrationDepth));
 	}
 
 	bool PhysicsObject::CollidesWith(PhysicsObject *other, CollisionData *collision)

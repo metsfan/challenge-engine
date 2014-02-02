@@ -415,7 +415,41 @@ namespace challenge
 	{
 		mFrameSet = node.GetAttributeString("frame") != "";
 
-		this->SetFrame(ViewXMLParser::ParseFrame(node.GetAttributeString("frame")));
+		if (node.HasAttribute("frame")) {
+			this->SetFrame(ViewXMLParser::ParseFrame(node.GetAttributeString("frame")));
+		}
+		else {
+			if (node.HasAttribute("size")) {
+				this->SetSize(ViewXMLParser::ParseSize(node.GetAttributeString("size")));
+			}
+			else {
+				if (node.HasAttribute("width")) {
+					this->SetWidth(node.GetAttributeFloat("width"));
+				}
+
+				if (node.HasAttribute("height")) {
+					this->SetWidth(node.GetAttributeFloat("height"));
+				}
+			}
+
+			if (node.HasAttribute("position")) {
+				this->SetPosition(ViewXMLParser::ParsePoint(node.GetAttributeString("position")));
+			}
+			else {
+				if (node.HasAttribute("x")) {
+					this->SetWidth(node.GetAttributeFloat("x"));
+				}
+
+				if (node.HasAttribute("y")) {
+					this->SetWidth(node.GetAttributeFloat("y"));
+				}
+			}
+		}
+
+		if (node.HasAttribute("z_index")) {
+			this->SetZPosition(node.GetAttributeFloat("z_index"));
+		}
+		
 		this->SetPadding(ViewXMLParser::ParseRect(node.GetAttributeString("padding")));
 
 		const std::string &layout = node.GetAttributeString("layout");

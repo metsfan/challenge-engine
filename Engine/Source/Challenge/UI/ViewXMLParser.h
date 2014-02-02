@@ -12,6 +12,8 @@ namespace challenge
 		static View * Parse(File *file);
 		static Frame ParseFrame(const std::string &frameStr);
 		static Rect ParseRect(const std::string &rectStr);
+		static Size ParseSize(const std::string &sizeStr);
+		static Point ParsePoint(const std::string &pointStr);
 
 	private:
 		static View * ParseView(XMLNode &node);

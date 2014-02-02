@@ -46,6 +46,32 @@ namespace challenge
 		return rect;
 	}
 
+	Size ViewXMLParser::ParseSize(const std::string &sizeStr)
+	{
+		auto tokens = StringUtil::SplitString(sizeStr, std::string(","));
+
+		Size size;
+		if (tokens.size() == 2) {
+			size.width = atoi(tokens[0].c_str());
+			size.height = atoi(tokens[1].c_str());
+		}
+
+		return size;
+	}
+
+	Point ViewXMLParser::ParsePoint(const std::string &pointStr)
+	{
+		auto tokens = StringUtil::SplitString(pointStr, std::string(","));
+
+		Point point;
+		if (tokens.size() == 2) {
+			point.x = atoi(tokens[0].c_str());
+			point.y = atoi(tokens[1].c_str());
+		}
+
+		return point;
+	}
+
 	View * ViewXMLParser::ParseView(XMLNode &node)
 	{
 		const std::string &name = node.GetName();

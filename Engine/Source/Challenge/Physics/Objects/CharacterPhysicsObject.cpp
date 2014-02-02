@@ -13,13 +13,15 @@ namespace challenge
 		Ray castRay(origin, glm::vec3(0, -1, 0));
 		float t;
 
-		if (collision.other->GetShape()->GetType() == kShapeTypeOBB) {
+		
+		if (collision.other->GetPosition().x != 0) {
 			int x = 0;
 		}
-
 		bool intersects = collision.other->GetShape()->RayIntersects(castRay, t);
 		
 		if (intersects) {
+			
+
 			glm::vec3 rayPos = castRay.ValueAt(t);
 			glm::vec3 position = this->GetPosition();
 			position.y = rayPos.y + this->GetShape()->GetBoundingBox().GetHeight() * 0.5;

@@ -26,6 +26,9 @@ namespace challenge
 		static bool BoxIntersect(const glm::mat3 &axes1, const glm::vec3 &dims1, 
 			const glm::mat3 &axes2, const glm::vec3 &dims2, 
 			const glm::vec3 &t);
+		static void UpdateSATPenetration(real min1, real max1,
+			real min2, real max2,
+			const glm::vec3 &axis, real &min, glm::vec3 &minAxis);
 	};
 };
 

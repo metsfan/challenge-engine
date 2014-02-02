@@ -12,6 +12,12 @@ namespace challenge
 		for (PhysicsObject *obj1 : objects) {
 			for (PhysicsObject *obj2 : objects) {
 				if (obj1 != obj2) {
+					// Skip this pass if both objects have infinite mass
+					if (obj1->HasInfiniteMass() &&
+						obj2->HasInfiniteMass()) {
+						continue;
+					}
+
 					CollisionData collision;
 					if (obj1->CollidesWith(obj2, &collision)) {
 						if (!obj1->HasInfiniteMass()) {

@@ -54,6 +54,10 @@ namespace challenge
 	{
 		bool hasCollision = false;
 
+		if (this->GetPosition().x != 0) {
+			int x = 0;
+		}
+
 		std::vector<OctreeObject> shapes = mDataTree->Query(aabb);
 		for (OctreeObject &obj : shapes) {
 		//for (const TriangleShape &triangle : mTriangles) {
@@ -89,7 +93,9 @@ namespace challenge
 
 	void TriangleMeshShape::AddTriangle(const glm::vec3 &a, const glm::vec3 &b, const glm::vec3 &c)
 	{
-		mTriangles.push_back(new TriangleShape(a, b, c));
+		TriangleShape *triangle = new TriangleShape(a, b, c);
+		triangle->SetPosition(this->GetPosition());
+		mTriangles.push_back(triangle);
 		mDataTree->AddShape(mTriangles.back(), this);
 	}
 
@@ -97,6 +103,15 @@ namespace challenge
 	{
 		if (mDebugTriangle) {
 			mDebugTriangle->DrawDebug(device, state);
+		}
+	}
+
+	void TriangleMeshShape::SetPosition(glm::vec3 position)
+	{
+		GeometricShape::SetPosition(position);
+
+		for (TriangleShape *triangle : mTriangles) {
+			triangle->SetPosition(position);
 		}
 	}
 };
