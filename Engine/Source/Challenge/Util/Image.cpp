@@ -10,14 +10,16 @@ namespace challenge
 	{
 		mFilepath = file->GetFilepath();
 
-		this->LoadImageData(file->GetData());
+		if (file->ReadData()) {
+			this->LoadImageData(file->GetData());
+		}
 	}
 
-	Image::Image(const std::wstring &filename)
+	Image::Image(const std::wstring &asset)
 	{
-		mFilepath = filename;
+		Asset file(asset);
+		mFilepath = file.GetFilepath();
 
-		File file(filename);
 		if(file.ReadData()) {
 			this->LoadImageData(file.GetData());
 		} else {

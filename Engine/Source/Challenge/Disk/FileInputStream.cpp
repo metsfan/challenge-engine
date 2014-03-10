@@ -42,7 +42,20 @@ namespace challenge
 			mStream.read(buf, size);
 			return mStream.gcount();
 		}
+
+		return 0;
 	}
 
+	int FileInputStream::ReadLine(std::string &str)
+	{
+		if (mStream.is_open()) {
+			mStream.getline(&str[0], str.size(), '\r');
+			mStream.ignore(1);
+
+			return mStream.gcount();
+		}
+
+		return 0;
+	}
 };
 

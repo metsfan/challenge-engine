@@ -6,6 +6,8 @@ def main(args):
     projectDir = args[2]
     outputDir = args[3]
 
+    print("Moving Assets")
+
     app = Application(projectDir)
     app.process(outputDir)
 

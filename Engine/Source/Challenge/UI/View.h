@@ -6,6 +6,7 @@
 #include <Challenge/UI/Types.h>
 #include <Challenge/Util/XML/XML.h>
 #include <Challenge/UI/Layout/Layout.h>
+#include <Challenge/Util/ImageAtlas.h>
 
 namespace challenge
 {
@@ -91,6 +92,10 @@ namespace challenge
 
 	public:
 		View(Frame frame = Frame(), LayoutType layout = LayoutTypeAbsolute);
+		View(real x, real y, real width, real height, LayoutType layout = LayoutTypeAbsolute) :
+			View(Frame(x, y, width, height), layout)
+		{
+		}
 		virtual ~View(void);
 
 		void SafeDelete();
@@ -155,6 +160,12 @@ namespace challenge
 		virtual real GetRightPadding() { return mPadding.right; }
 		virtual real GetTopPadding() { return mPadding.top; }
 
+		HorizontalAlignment GetHorizontalAlignment() { return mHoriAlign; }
+		VerticalAlignment GetVerticalAlignment() { return mVertAlign; }
+
+		void SetHorizontalAlignment(HorizontalAlignment halign) { mHoriAlign = halign; }
+		void SetVerticalAlignment(VerticalAlignment valign) { mVertAlign = valign; }
+
 		virtual void SetVisible(bool visible);
 		virtual bool IsVisible() { return mVisible; }
 
@@ -171,6 +182,7 @@ namespace challenge
 		}
 
 		virtual void SetBackgroundImage(std::shared_ptr<Image> image);
+		virtual void SetBackgroundImage(std::shared_ptr<ImageAtlas> atlas, const std::string &key);
 
 		virtual void AddSubview(View *view);
 		virtual View * RemoveSubview(View *view);
@@ -261,6 +273,8 @@ namespace challenge
 		real mAlpha;
 		Color mBackgroundColor;
 		std::shared_ptr<Image> mBackgroundImage;
+		std::shared_ptr<ImageAtlas> mBackgroundImageAtlas;
+		std::string mBackgroundImageKey;
 		bool mBackgroundImageChanged;
 		ControlType mType;
 		bool mVisible;

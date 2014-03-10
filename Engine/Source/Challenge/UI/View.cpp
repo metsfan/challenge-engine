@@ -23,6 +23,7 @@ namespace challenge
 		mVisible(true),
 		mZPosition(0),
 		mBackgroundImage(NULL),
+		mBackgroundImageAtlas(NULL),
 		mParent(NULL),
 		mSprite(NULL),
 		mBackgroundImageChanged(false),
@@ -123,13 +124,16 @@ namespace challenge
 			mFrame.size.height = 0;
 		}
 
-		if (mHoriAlign == HorizontalAlignCenter) {
-			mFrame.origin.x = (this->GetParent()->GetWidth() * 0.5) - (this->GetWidth() * 0.5);
-		}
+		if (this->GetParent()) {
+			if (this->GetParent()->mHoriAlign == HorizontalAlignCenter) {
+				mFrame.origin.x = (this->GetParent()->GetWidth() * 0.5) - (this->GetWidth() * 0.5);
+			}
 
-		if (mVertAlign == VerticalAlignMiddle) {
-			mFrame.origin.y = (this->GetParent()->GetHeight() * 0.5) - (this->GetHeight() * 0.5);
+			if (this->GetParent()->mVertAlign == VerticalAlignMiddle) {
+				mFrame.origin.y = (this->GetParent()->GetHeight() * 0.5) - (this->GetHeight() * 0.5);
+			}
 		}
+		
 
 		for(int j = 0; j < mSubviews.size(); j++) {
 			mSubviews[j]->Update(deltaMillis);
@@ -161,7 +165,13 @@ namespace challenge
 
 			if(mBackgroundImage) {
 				if(mBackgroundImageChanged) {
-					mSprite->SetBackgroundImage(mBackgroundImage.get());
+					if (mBackgroundImageAtlas) {
+						mSprite->SetBackgroundImage(mBackgroundImageAtlas.get(), mBackgroundImageKey);
+					}
+					else if (mBackgroundImage) {
+						mSprite->SetBackgroundImage(mBackgroundImage.get());
+					}
+					
 					//mSprite->SetTextureFrame(0.0, 9, 1.0, 0.5);
 					mBackgroundImageChanged = false;
 				}
@@ -212,15 +222,28 @@ namespace challenge
 
 	void View::SetBackgroundImage(std::wstring imageName)
 	{
+		mBackgroundImageAtlas = NULL;
 		mBackgroundImage = std::shared_ptr<Image>(new Image(imageName));
 		mBackgroundImageChanged = true;
 	}
 
 	void View::SetBackgroundImage(std::shared_ptr<Image> image)
 	{
+		mBackgroundImageAtlas = NULL;
 		mBackgroundImage = image;
 		if(mFrame.size.width == 0 || mFrame.size.height == 0) {
 			mFrame.size = image->GetSize();
+		}
+		mBackgroundImageChanged = true;
+	}
+
+	void View::SetBackgroundImage(std::shared_ptr<ImageAtlas> atlas, const std::string &key)
+	{
+		mBackgroundImage = NULL;
+		mBackgroundImageAtlas = atlas;
+		mBackgroundImageKey = key;
+		if (mFrame.size.width == 0 || mFrame.size.height == 0) {
+			mFrame.size = atlas->GetImageSize(key);
 		}
 		mBackgroundImageChanged = true;
 	}

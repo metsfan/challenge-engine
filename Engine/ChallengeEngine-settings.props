@@ -9,7 +9,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ChallengeDir)\Engine\Source;$(ChallengeDir)\Engine\Source\Challenge\Lib\include;$(ChallengeDir)\Engine\Source\Challenge\Lib\include\mysql;$(ChallengeDir)\Engine\Source\Challenge\Lib\include\zlib;$(ChallengeDir)\Engine\Source\Challenge\Lib\include\freetype2;$(ChallengeDir)\Engine\Source\Challenge\Lib\include\lua;$(ChallengeDir)\Engine\Source\Challenge\Lib\include\ahote;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include;C:\DownLoadedSdks\boost</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ChallengeDir)\Engine\Source;$(ChallengeDir)\Engine\Source\Challenge\Lib\include;$(ChallengeDir)\Engine\Source\Challenge\Lib\include\mysql;$(ChallengeDir)\Engine\Source\Challenge\Lib\include\zlib;$(ChallengeDir)\Engine\Source\Challenge\Lib\include\freetype2;$(ChallengeDir)\Engine\Source\Challenge\Lib\include\lua;$(ChallengeDir)\Engine\Source\Challenge\Lib\include\ahote;C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include;C:\Users\Adam\Documents\Libs\boost</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WINDOWS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>

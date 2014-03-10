@@ -17,9 +17,11 @@ namespace challenge
 	public:
 		XMLDocument(const std::wstring &filepath, int options = 0);
 		XMLDocument(File *file, int options = 0);
+		XMLDocument(const TByteArray &data, int options = 0);
 		~XMLDocument();
 
 		void LoadFile(File *file, int options = 0);
+		void LoadData(TByteArray data, int options = 0);
 
 		XMLNode& GetRootNode() { return mRootNode; }
 

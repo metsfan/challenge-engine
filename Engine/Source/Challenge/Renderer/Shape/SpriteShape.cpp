@@ -51,8 +51,28 @@ namespace challenge
 				throw "Failed to load texture";
 			}
 			mHasBackgroundImage = true;
+			mTexFrame = glm::vec4(0, 0, 1, 1);
 		} else {
 			mHasBackgroundImage = false;
+		}
+	}
+
+	void SpriteShape::SetBackgroundImage(ImageAtlas *atlas, const std::string &key)
+	{
+		std::string texKey = std::to_string(reinterpret_cast<uint64_t>(atlas));
+
+		IGraphicsContext *context = this->GetDevice()->GetContext();
+		mBackgroundImage = context->GetSharedTexture(texKey);
+		if (!mBackgroundImage) {
+			this->SetBackgroundImage(atlas->GetImage().get());
+			
+			const Frame &texFrame = atlas->GetTexCoords(key);
+			mTexFrame.x = texFrame.origin.x;
+			mTexFrame.y = texFrame.origin.y;
+			mTexFrame.z = texFrame.size.width;
+			mTexFrame.w = texFrame.size.height;
+
+			context->PutSharedTexture(texKey, mBackgroundImage);
 		}
 	}
 

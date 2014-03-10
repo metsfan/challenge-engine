@@ -15,9 +15,9 @@ namespace challenge
 	{
 	public:
 		Image(File *file);
-		Image(const std::wstring &filename);
-		Image(const std::string &filename) :
-			Image(StringUtil::ToWide(filename))
+		Image(const std::wstring &asset);
+		Image(const std::string &asset) :
+			Image(StringUtil::ToWide(asset))
 		{
 		}
 

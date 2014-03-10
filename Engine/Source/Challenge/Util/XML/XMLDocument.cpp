@@ -16,27 +16,35 @@ namespace challenge
 		this->LoadFile(file, options);
 	}
 
+	XMLDocument::XMLDocument(const TByteArray &data, int options)
+	{
+		this->LoadData(data, options);
+	}
+
 	XMLDocument::~XMLDocument()
 	{
 	}
 
 	void XMLDocument::LoadFile(File *file, int options)
 	{
-		TByteArray data = file->GetData();
+		this->LoadData(file->GetData(), options);
+	}
 
-		if(data.size()) {
+	void XMLDocument::LoadData(TByteArray data, int options)
+	{
+		if (data.size()) {
 			data.push_back('\0');
 			rapidxml::xml_document<> doc;
-			doc.parse<0>((char *)&data[0]);
+			doc.parse<0>((char *) &data[0]);
 
 			rapidxml::xml_node<> *root = doc.first_node(0);
-			if(!root) {
+			if (!root) {
 				throw "Could not find root node";
 			}
 
 			mRootNode = XMLNode(root->name(), root->value());
 			rapidxml::xml_attribute<> *attr = root->first_attribute(0);
-			while(attr) {
+			while (attr) {
 				mRootNode.SetAttribute(std::string(attr->name()), std::string(attr->value()));
 
 				attr = attr->next_attribute();

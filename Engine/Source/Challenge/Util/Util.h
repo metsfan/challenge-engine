@@ -25,5 +25,12 @@ namespace challenge
 		{
 			return dynamic_cast<T *>(object) != NULL;
 		}
+
+		template <typename T>
+		static size_t Hash(const T &value)
+		{
+			std::hash<T> hashFunc;
+			return hashFunc(value);
+		}
 	};
 };

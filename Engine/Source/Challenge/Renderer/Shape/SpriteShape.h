@@ -3,6 +3,7 @@
 #include <Challenge/Challenge.h>
 #include <Challenge/Renderer/Shape.h>
 #include <Challenge/Util/Image.h>
+#include <Challenge/Util/ImageAtlas.h>
 
 namespace challenge
 {
@@ -19,6 +20,7 @@ namespace challenge
 
 		void SetBackgroundColor(const glm::vec4 &color);
 		void SetBackgroundImage(Image *backgroundImage);
+		void SetBackgroundImage(ImageAtlas *atlas, const std::string &key);
 		void SetSize(real width, real height)
 		{
 			mFrame.z = width;

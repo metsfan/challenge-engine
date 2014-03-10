@@ -32,6 +32,9 @@ namespace challenge
 		virtual bool ContainsEffect(std::string key) = 0;
 
 		virtual void SetActiveShaderProgram(IShaderProgram *shader) = 0;
+
+		virtual ITexture * GetSharedTexture(const std::string &key) = 0;
+		virtual void PutSharedTexture(const std::string &key, ITexture *texture) = 0;
 	};
 
 	class BaseGraphicsContext : public IGraphicsContext
@@ -55,12 +58,23 @@ namespace challenge
 		void SetActiveShaderProgram(IShaderProgram *shader);
 		void SetActiveTexture(ITexture *texture, int slot);
 
+		ITexture * GetSharedTexture(const std::string &key)
+		{
+			return mSharedTextures[key];
+		}
+
+		void PutSharedTexture(const std::string &key, ITexture *texture)
+		{
+			mSharedTextures[key] = texture;
+		}
+
 	private:
 		TShaderCacheMap mShaders;
 		TShaderProgramCacheMap mShaderPrograms;
 		TEffectCacheMap mEffects;
 		IShaderProgram *mActiveShader;
 		std::map<int, ITexture *> mActiveTextures;
+		std::unordered_map<std::string, ITexture *> mSharedTextures;
 	};
 
 	template <typename Renderer>

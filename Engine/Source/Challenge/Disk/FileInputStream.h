@@ -13,12 +13,17 @@ namespace challenge
 			FileInputStream(StringUtil::ToWide(filepath))
 		{
 		}
+		FileInputStream(File *file) :
+			FileInputStream(file->GetFilepath())
+		{
+		}
 
 		~FileInputStream();
 
 		bool Open();
 		void Close();
 
+		int ReadLine(std::string &str);
 		int ReadString(std::string &str);
 		int Read(char *buf, size_t size);
 		

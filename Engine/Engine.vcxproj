@@ -155,6 +155,7 @@
     <ClCompile Include="Source\Challenge\Util\Logger.cpp" />
     <ClCompile Include="Source\Challenge\Util\PrimitiveGenerator.cpp" />
     <ClCompile Include="Source\Challenge\Util\StringUtil.cpp" />
+    <ClCompile Include="Source\Challenge\Util\ImageAtlas.cpp" />
     <ClCompile Include="Source\Challenge\Util\Timer.cpp" />
     <ClCompile Include="Source\Challenge\Util\Util.cpp" />
     <ClCompile Include="Source\Challenge\Util\XML\XMLAttribute.cpp" />
@@ -339,6 +340,7 @@
     <ClInclude Include="Source\Challenge\Util\PrimitiveGenerator.h" />
     <ClInclude Include="Source\Challenge\Util\SafeObject.hpp" />
     <ClInclude Include="Source\Challenge\Util\StringUtil.h" />
+    <ClInclude Include="Source\Challenge\Util\ImageAtlas.h" />
     <ClInclude Include="Source\Challenge\Util\Timer.h" />
     <ClInclude Include="Source\Challenge\Util\Util.h" />
     <ClInclude Include="Source\Challenge\Util\XML\XML.h" />
