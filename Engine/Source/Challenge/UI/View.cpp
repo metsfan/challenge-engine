@@ -163,7 +163,7 @@ namespace challenge
 			mSprite->SetBackgroundColor(glm::vec4(mBackgroundColor.red, mBackgroundColor.green, 
 				mBackgroundColor.blue, mBackgroundColor.alpha * mAlpha));
 
-			if(mBackgroundImage) {
+			if (mBackgroundImage || mBackgroundImageAtlas) {
 				if(mBackgroundImageChanged) {
 					if (mBackgroundImageAtlas) {
 						mSprite->SetBackgroundImage(mBackgroundImageAtlas.get(), mBackgroundImageKey);
@@ -171,7 +171,7 @@ namespace challenge
 					else if (mBackgroundImage) {
 						mSprite->SetBackgroundImage(mBackgroundImage.get());
 					}
-					
+
 					//mSprite->SetTextureFrame(0.0, 9, 1.0, 0.5);
 					mBackgroundImageChanged = false;
 				}

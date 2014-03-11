@@ -51,6 +51,7 @@ namespace challenge
 				throw "Failed to load texture";
 			}
 			mHasBackgroundImage = true;
+
 			mTexFrame = glm::vec4(0, 0, 1, 1);
 		} else {
 			mHasBackgroundImage = false;
@@ -65,15 +66,16 @@ namespace challenge
 		mBackgroundImage = context->GetSharedTexture(texKey);
 		if (!mBackgroundImage) {
 			this->SetBackgroundImage(atlas->GetImage().get());
-			
-			const Frame &texFrame = atlas->GetTexCoords(key);
-			mTexFrame.x = texFrame.origin.x;
-			mTexFrame.y = texFrame.origin.y;
-			mTexFrame.z = texFrame.size.width;
-			mTexFrame.w = texFrame.size.height;
-
 			context->PutSharedTexture(texKey, mBackgroundImage);
 		}
+
+		mHasBackgroundImage = true;
+
+		const Frame &texFrame = atlas->GetTexCoords(key);
+		mTexFrame.x = texFrame.origin.x;
+		mTexFrame.y = texFrame.origin.y;
+		mTexFrame.z = texFrame.size.width;
+		mTexFrame.w = texFrame.size.height;
 	}
 
 	void SpriteShape::Draw(IGraphicsDevice *device, RenderState &state)

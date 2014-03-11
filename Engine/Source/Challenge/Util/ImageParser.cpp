@@ -102,8 +102,12 @@ namespace challenge
 			png_bytep row = row_pointers[i];
             
 			if (hasAlpha) {
-				memcpy(outPtr + (row_bytes * i),
-						row, row_bytes);
+				for (int j = 0, k = 0; j < row_bytes; j += 4, k += 4) {
+					outPtr[k] = row[j];
+					outPtr[k + 1] = row[j + 1];
+					outPtr[k + 2] = row[j + 2];
+					outPtr[k + 3] = row[j + 3];
+				}
 			} else {
 				for (int j = 0, k = 0; j < row_bytes; j += 3, k += 4) {
 					outPtr[k] = row[j];

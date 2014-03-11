@@ -17,6 +17,9 @@ namespace challenge
 
 			std::string filename = rootNode.GetAttributeString("filename");
 			mImage = std::shared_ptr<Image>(new Image(filename));
+			mSize.width = rootNode.GetAttributeFloat("width");
+			mSize.height = rootNode.GetAttributeFloat("height");
+
 			if (mImage) {
 				auto &imageNodes = rootNode.GetChildrenByName("Image");
 				for (auto &imageNode : imageNodes) {
