@@ -241,16 +241,15 @@ namespace challenge
 			while (selectedView) {
 				if (selectedView != this) {
 					if (selectedView->View::OnMouseEvent(e)) {
+						handled = true;
 						break;
 					}
-
-					handled = true;
 				}
 				
 				selectedView = selectedView->GetParent();	
 			}
 		}
 
-		return handled;
+		return false;
 	}
 };

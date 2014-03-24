@@ -27,7 +27,7 @@ void PhysicsWorld::Update(uint32_t deltaMillis)
 		auto objects = mObjects;
 		mObjects.unlock();
 
-		this->ApplyGravity(duration);
+		//this->ApplyGravity(duration);
 		for (PhysicsObject *object : mObjects) {
 			object->Update(duration);
 		}

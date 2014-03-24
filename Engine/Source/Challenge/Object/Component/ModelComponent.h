@@ -41,6 +41,8 @@ namespace challenge
 			}
 		}
 
+		Model * GetModel() { return mModel; }
+
 	private:
 		Model *mModel;
 	};

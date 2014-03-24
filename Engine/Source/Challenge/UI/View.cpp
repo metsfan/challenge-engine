@@ -33,7 +33,8 @@ namespace challenge
 		mBorderWidth(0),
 		mAlpha(1),
 		mHoriAlign(HorizontalAlignLeft),
-		mVertAlign(VerticalAlignTop)
+		mVertAlign(VerticalAlignTop),
+		mRotation(0)
 	{
 		this->SetLayoutType(layout);
 

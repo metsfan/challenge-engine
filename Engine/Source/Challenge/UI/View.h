@@ -220,6 +220,15 @@ namespace challenge
 		void SetAttribute(const std::string &name, const std::string &value);
 		std::string GetAttribute(const std::string &name);
 
+		void ClipSubviews(bool clip);
+
+		virtual void SetRotation(real rotation)
+		{
+			mRotation = rotation;
+		}
+
+		virtual real GetRotation() { return mRotation; }
+
 		/* Event Delegates */
 		void AddMouseEvent(MouseEventType type, MouseEventDelegate eventDelegate);
 		void AddKeyboardEvent(KeyboardEventType type, KeyboardEventDelegate eventDelegate);
@@ -252,7 +261,6 @@ namespace challenge
 	protected:
 		SpriteShape* GetSprite() { return mSprite; }
 		const Frame& GetTextureFrame() { return mTextureFrame; }
-		void ClipSubviews(bool clip);
 		void AddInternalSubview(View *view);
 
 		virtual void ParseFromXML(XMLNode &node);
@@ -291,6 +299,7 @@ namespace challenge
 		bool mFrameSet;
 		Color mBorderColor;
 		float mBorderWidth;
+		real mRotation;
 		HorizontalAlignment mHoriAlign;
 		VerticalAlignment mVertAlign;
 		std::map<std::string, std::string> mAttributes;

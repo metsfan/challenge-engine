@@ -59,7 +59,7 @@ namespace challenge
 
 		glm::vec3 min = mCenter - mDimensions;
 		glm::vec3 max = mCenter + mDimensions;
-		return translatedRay.GetIntersection(BoundingBox(-mDimensions, mDimensions), t);
+		return translatedRay.GetIntersection(BoundingBox(min, max), t);
 	}
 
 	void OBBShape::SetTransform(const glm::mat4 &transform)
