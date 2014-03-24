@@ -6,19 +6,26 @@ namespace challenge
 	Controller::Controller() :
 		mView(new View())
 	{
-		this->OnLoad();
+		Dispatch::PushTask(Dispatch::MainQueue, [this]() {
+			this->OnLoad();
+		});
 	}
 
 	Controller::Controller(const std::string &layout) :
 		mView(View::CreateFromResource(layout))
 	{
-		this->OnLoad();
+		Dispatch::PushTask(Dispatch::MainQueue, [this]() {
+			this->OnLoad();
+		});
 	}
 
 	Controller::Controller(View *view) :
 		mView(view)
 	{
-		this->OnLoad();
+		Dispatch::PushTask(Dispatch::MainQueue, [this]() {
+			this->OnLoad();
+		});
+		
 	}
 
 	Controller::~Controller()
