@@ -27,8 +27,8 @@ namespace challenge
 		/*auto physicsComponent = this->FindComponent<PhysicsComponent>();
 		if (physicsComponent) {
 			physicsComponent->GetPhysicsObject()->DrawDebug(device, state);
-		}
-		*/
+		}*/
+		
 	}
 
 	void GameObject::MoveBy(const glm::vec3 &position)
