@@ -21,7 +21,9 @@
     <ClCompile Include="Source\Challenge\Core\BasicTypes.cpp" />
     <ClCompile Include="Source\Challenge\Core\Color.cpp" />
     <ClCompile Include="Source\Challenge\Core\Config.cpp" />
+    <ClCompile Include="Source\Challenge\Core\Cursor.cpp" />
     <ClCompile Include="Source\Challenge\Core\Dispatch.cpp" />
+    <ClCompile Include="Source\Challenge\Core\Platform\Win32\CursorWin32.cpp" />
     <ClCompile Include="Source\Challenge\Core\RunLoop.cpp" />
     <ClCompile Include="Source\Challenge\Database\DatabaseManager.cpp" />
     <ClCompile Include="Source\Challenge\Database\DatabaseRecord.cpp" />
@@ -172,9 +174,11 @@
     <ClInclude Include="Source\Challenge\Core\BasicTypes.h" />
     <ClInclude Include="Source\Challenge\Core\Color.h" />
     <ClInclude Include="Source\Challenge\Core\Config.h" />
+    <ClInclude Include="Source\Challenge\Core\Cursor.h" />
     <ClInclude Include="Source\Challenge\Core\Dispatch.h" />
     <ClInclude Include="Source\Challenge\Core\Globals.h" />
     <ClInclude Include="Source\Challenge\Core\PlatformIncludes.h" />
+    <ClInclude Include="Source\Challenge\Core\Platform\Win32\CursorWin32.h" />
     <ClInclude Include="Source\Challenge\Core\RunLoop.h" />
     <ClInclude Include="Source\Challenge\Database\DatabaseManager.h" />
     <ClInclude Include="Source\Challenge\Database\DatabaseRecord.h" />

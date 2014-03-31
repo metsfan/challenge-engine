@@ -79,7 +79,8 @@ namespace challenge
 		void AddKeyboardListener(std::shared_ptr<IKeyboardListener> listener);
 		void AddMouseListener(std::shared_ptr<IMouseListener> listener);
 
-		void ProcessKeyboardEvent(KeyboardEventType type, unsigned int keyCode);
+		void ProcessKeyboardEvent(KeyboardEventType type, uint32_t keyCode);
+		void ProcessKeyboardEvent(KeyboardEventType type, uint32_t keyCode, uint32_t virtualKeyCode);
 		void ProcessMouseEvent(MouseEventType type, unsigned int button, const Point &position);
 		void ProcessMouseWheelEvent(MouseEventType type, int delta);
 

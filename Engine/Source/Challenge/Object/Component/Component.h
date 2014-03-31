@@ -22,6 +22,10 @@ namespace challenge
 		{
 		}
 
+		virtual void Update(int deltaMillis)
+		{
+		}
+
 		GameObject * GetOwner() { return mOwner; }
 
 	private:

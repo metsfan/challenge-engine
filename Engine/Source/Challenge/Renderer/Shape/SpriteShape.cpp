@@ -8,6 +8,7 @@ namespace challenge
 
 	SpriteShape::SpriteShape(IGraphicsDevice *device, const std::string &effect, ITexture *texture) :
 		Shape(device, effect),
+		mBackgroundColor(0, 0, 0, 1),
 		mBackgroundImage(texture),
 		mHasBackgroundImage(texture != NULL),
 		mTexFrame(0, 0, 1, 1),
@@ -53,6 +54,8 @@ namespace challenge
 			mHasBackgroundImage = true;
 
 			mTexFrame = glm::vec4(0, 0, 1, 1);
+			mFrame.z = backgroundImage->GetSize().width;
+			mFrame.w = backgroundImage->GetSize().height;
 		} else {
 			mHasBackgroundImage = false;
 		}

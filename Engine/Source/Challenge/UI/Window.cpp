@@ -64,7 +64,9 @@ namespace challenge
 		View::Render(device, state, parentFrame);
 
 		device->DisableState(ScissorTest);
-		//device->DisableState(AlphaBlending);
+
+		Cursor::Render(device, state);
+
 		device->EnableState(DepthTest);
 	}
 
@@ -250,6 +252,6 @@ namespace challenge
 			}
 		}
 
-		return false;
+		return handled;
 	}
 };

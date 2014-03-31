@@ -22,9 +22,10 @@ namespace challenge
 			capslockOn(false)
 		{}
 
-		KeyboardEvent(KeyboardEventType _type, unsigned int _keyCode) :
-			type(_type), 
+		KeyboardEvent(KeyboardEventType _type, uint32_t _keyCode, uint32_t _virtualKeyCode) :
+			type(_type),
 			keyCode(_keyCode),
+			virtualKeyCode(_virtualKeyCode),
 			shiftDown(false),
 			ctrlDown(false),
 			altDown(false),
@@ -32,7 +33,8 @@ namespace challenge
 		{}
 
 
-		unsigned int keyCode; 
+		uint32_t keyCode;
+		uint32_t virtualKeyCode;
 		KeyboardEventType type;
 		bool shiftDown;
 		bool ctrlDown;

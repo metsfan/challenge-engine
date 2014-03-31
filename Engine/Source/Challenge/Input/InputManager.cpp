@@ -31,7 +31,7 @@ namespace challenge
 		}
 	}
 
-	void InputManager::ProcessKeyboardEvent(KeyboardEventType type, unsigned int keyCode)
+	void InputManager::ProcessKeyboardEvent(KeyboardEventType type, uint32_t keyCode, uint32_t virtualKeyCode)
 	{
 		if(keyCode == SpecialKeyShift) {
 			mShiftDown = type == KeyboardEventKeyUp ? false : true;
@@ -40,7 +40,7 @@ namespace challenge
 		} else if(keyCode == SpecialKeyAlt) {
 			mAltDown = type == KeyboardEventKeyUp ? false : true;
 		} else {
-			KeyboardEvent evt(type, keyCode);
+			KeyboardEvent evt(type, keyCode, virtualKeyCode);
 
 			bool found = false;
 			auto key = std::find(mActiveKeys.begin(), mActiveKeys.end(), keyCode);

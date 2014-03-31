@@ -255,13 +255,22 @@ namespace challenge
 		mInputManager->AddMouseListener(listener);
 	}
 
-	void GameApplication::ProcessKeyboardEvent(KeyboardEventType type, unsigned int keyCode)
+	void GameApplication::ProcessKeyboardEvent(KeyboardEventType type, uint32_t keyCode)
 	{
-		mInputManager->ProcessKeyboardEvent(type, keyCode);
+		mInputManager->ProcessKeyboardEvent(type, keyCode, keyCode);
+	}
+
+	void GameApplication::ProcessKeyboardEvent(KeyboardEventType type, uint32_t keyCode, uint32_t virtualKeyCode)
+	{
+		mInputManager->ProcessKeyboardEvent(type, keyCode, virtualKeyCode);
 	}
 
 	void GameApplication::ProcessMouseEvent(MouseEventType type, unsigned int button, const Point &position)
 	{
+		if (type == MouseEventMouseMove) {
+			Cursor::SetPosition(position);
+		}
+
 		mInputManager->ProcessMouseEvent(type, button, position);
 	}
 

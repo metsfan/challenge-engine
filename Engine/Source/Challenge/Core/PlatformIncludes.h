@@ -14,5 +14,6 @@
 #include <Challenge/GameApplicationWindows.h>
 #include <Challenge/Disk/Platform/Windows/AssetLoaderWindows.h>
 #include <Challenge/UI/Util/Platform/Win32/FileDialogWin32.h>
+#include <Challenge/Core/Platform/Win32/CursorWin32.h>
 
 #endif

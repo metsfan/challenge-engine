@@ -468,6 +468,12 @@
     <ClCompile Include="Source\Challenge\Util\ImageAtlas.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Challenge\Core\Cursor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Core\Platform\Win32\CursorWin32.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Challenge\GameController.h">
@@ -1026,6 +1032,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Challenge\Util\ImageAtlas.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Core\Cursor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Core\Platform\Win32\CursorWin32.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

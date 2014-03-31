@@ -45,7 +45,7 @@ namespace challenge
 		ATOM CreateRegisterClass(HINSTANCE instance);
 		static LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 		static void ProcessKeyEvent(GameApplication *application, KeyboardEventType evt, WPARAM wParam, LPARAM lParam);
-		static WCHAR TranslateVirtualKeyCode(WPARAM wParam, LPARAM lParam);
+		static WCHAR TranslateVirtualKeyCode(WPARAM wParam, LPARAM lParam, bool realKeys);
 	};
 
 	static int CreateGameWindow(_In_ HINSTANCE hInstance,

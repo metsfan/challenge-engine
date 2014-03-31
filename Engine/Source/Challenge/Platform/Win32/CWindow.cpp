@@ -310,14 +310,20 @@ namespace challenge
 			application->ProcessKeyboardEvent(evt, SpecialKeySpace);
 
 		default:
-			application->ProcessKeyboardEvent(evt, TranslateVirtualKeyCode(wParam, lParam));
+			application->ProcessKeyboardEvent(evt, 
+				TranslateVirtualKeyCode(wParam, lParam, true), 
+				TranslateVirtualKeyCode(wParam, lParam, false));
 		}
 	}
 
-	WCHAR CWindow::TranslateVirtualKeyCode(WPARAM wParam, LPARAM lParam)
+	WCHAR CWindow::TranslateVirtualKeyCode(WPARAM wParam, LPARAM lParam, bool realKeys)
 	{
 		BYTE kbstate[256];
 		GetKeyboardState(kbstate);
+		if (realKeys) {
+			kbstate[VK_SHIFT] = 0;
+			kbstate[VK_CONTROL] = 0;
+		}
 
 		WCHAR outChar;
 		ToUnicode(wParam, lParam, kbstate, &outChar, 1, 0);

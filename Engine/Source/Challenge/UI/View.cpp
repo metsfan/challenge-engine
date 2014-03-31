@@ -372,6 +372,8 @@ namespace challenge
 			for (int i = 0; i < delegates.size(); i++) {
 				delegates[i](this, e);
 			}
+
+			return true;
 		}
 
 		return false;

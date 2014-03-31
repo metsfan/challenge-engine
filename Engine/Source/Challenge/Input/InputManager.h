@@ -33,7 +33,7 @@ namespace challenge
 		void AddKeyboardListener(std::shared_ptr<IKeyboardListener> listener);
 		void AddMouseListener(std::shared_ptr<IMouseListener> listener);
 
-		void ProcessKeyboardEvent(KeyboardEventType type, unsigned int keyCode);
+		void ProcessKeyboardEvent(KeyboardEventType type, uint32_t keyCode, uint32_t virtualKeyCode);
 		void ProcessMouseEvent(MouseEventType type, unsigned int button, Point position);
 		void ProcessMouseWheelEvent(MouseEventType type, int delta);
 
@@ -57,8 +57,8 @@ namespace challenge
 		std::vector<std::weak_ptr<IKeyboardListener>> mKeyboardListeners;
 		std::vector<std::weak_ptr<IMouseListener>> mMouseListeners;
 
-		std::vector<unsigned int> mActiveMouseButtons;
-		std::vector<unsigned int> mActiveKeys;
+		std::vector<uint32_t> mActiveMouseButtons;
+		std::vector<uint32_t> mActiveKeys;
 		Point mMousePosition;
 		bool mMouseDown;
 		bool mMouseMoving;
