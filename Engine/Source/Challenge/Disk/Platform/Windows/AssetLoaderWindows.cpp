@@ -9,7 +9,7 @@ namespace challenge
 
 	std::wstring AssetLoader<PlatformTypeWin32>::GetPathForAsset(const std::wstring &name)
 	{
-		if(!sModule) {
+		//if(!sModule) {
 			sModule = GetModuleHandle(NULL);
 
 			sBaseFilePath.resize(MAX_PATH);
@@ -17,7 +17,7 @@ namespace challenge
 
 			sBaseFilePath = sBaseFilePath.substr(0, sBaseFilePath.rfind(L"\\"));
 			sBaseFilePath = StringUtil::ReplaceAll<std::wstring>(sBaseFilePath, L"\\", L"/");
-		}
+		//}
 
 		return sBaseFilePath + L"/" + name;
 	}

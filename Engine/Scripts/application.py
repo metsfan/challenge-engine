@@ -14,7 +14,8 @@ class Application:
     def process(self, outDir):
         self.loadStrings()
         self.processLayout(outDir)
-        self.processConfig(outDir)
+        self.copyDirectory("/Resources/Config", outDir)
+        self.copyDirectory("/Resources/Scripts", outDir)
         self.copyAssets(outDir)
 
     def loadStrings(self):
@@ -58,8 +59,8 @@ class Application:
                 outfile.write(fileContents)
                 outfile.close()
 
-    def processConfig(self, outDir):
-        configDir = self.projectDir + "/Resources/Config"
+    def copyDirectory(self, inDir, outDir):
+        configDir = self.projectDir + inDir
 
         files = os.listdir(configDir)
         for file in files:
