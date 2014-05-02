@@ -1,0 +1,273 @@
+
+Total count
+PopPtr     : 1
+PshV4      : 20
+PSF        : 105
+CALL       : 2
+RET        : 3
+JMP        : 10
+JS         : 11
+IncVi      : 10
+PshVPtr    : 46
+CMPIi      : 11
+PshRPtr    : 20
+STR        : 20
+CALLSYS    : 153
+SUSPEND    : 90
+FREE       : 2
+STOREOBJ   : 1
+GETOBJ     : 1
+GETREF     : 42
+OBJTYPE    : 1
+SetV4      : 1
+SetV8      : 4
+CpyVtoV4   : 10
+CpyVtoV8   : 37
+CpyVtoR8   : 1
+CpyRtoV4   : 2
+RDR8       : 19
+VAR        : 43
+MULIi      : 10
+i64TOi     : 18
+iTOi64     : 20
+RefCpyV    : 1
+JLowZ      : 10
+
+Never executed
+PshGPtr   
+PshC4     
+SwapPtr   
+NOT       
+PshG4     
+LdGRdR4   
+JZ        
+JNZ       
+JNS       
+JP        
+JNP       
+TZ        
+TNZ       
+TS        
+TNS       
+TP        
+TNP       
+NEGi      
+NEGf      
+NEGd      
+INCi16    
+INCi8     
+DECi16    
+DECi8     
+INCi      
+DECi      
+INCf      
+DECf      
+INCd      
+DECd      
+DecVi     
+BNOT      
+BAND      
+BOR       
+BXOR      
+BSLL      
+BSRL      
+BSRA      
+COPY      
+PshC8     
+RDSPtr    
+CMPd      
+CMPu      
+CMPf      
+CMPi      
+CMPIf     
+CMPIu     
+JMPP      
+PopRPtr   
+CALLBND   
+ALLOC     
+LOADOBJ   
+REFCPY    
+CHKREF    
+GETOBJREF 
+PshNull   
+ClrVPtr   
+TYPEID    
+ADDSi     
+CpyVtoR4  
+CpyVtoG4  
+CpyRtoV8  
+CpyGtoV4  
+WRTV1     
+WRTV2     
+WRTV4     
+WRTV8     
+RDR1      
+RDR2      
+RDR4      
+LDG       
+LDV       
+PGA       
+CmpPtr    
+iTOf      
+fTOi      
+uTOf      
+fTOu      
+sbTOi     
+swTOi     
+ubTOi     
+uwTOi     
+dTOi      
+dTOu      
+dTOf      
+iTOd      
+uTOd      
+fTOd      
+ADDi      
+SUBi      
+MULi      
+DIVi      
+MODi      
+ADDf      
+SUBf      
+MULf      
+DIVf      
+MODf      
+ADDd      
+SUBd      
+MULd      
+DIVd      
+MODd      
+ADDIi     
+SUBIi     
+ADDIf     
+SUBIf     
+MULIf     
+SetG4     
+ChkRefS   
+ChkNullV  
+CALLINTF  
+iTOb      
+iTOw      
+SetV1     
+SetV2     
+Cast      
+uTOi64    
+fTOi64    
+dTOi64    
+fTOu64    
+dTOu64    
+i64TOf    
+u64TOf    
+i64TOd    
+u64TOd    
+NEGi64    
+INCi64    
+DECi64    
+BNOT64    
+ADDi64    
+SUBi64    
+MULi64    
+DIVi64    
+MODi64    
+BAND64    
+BOR64     
+BXOR64    
+BSLL64    
+BSRL64    
+BSRA64    
+CMPi64    
+CMPu64    
+ChkNullS  
+ClrHi     
+JitEntry  
+CallPtr   
+FuncPtr   
+LoadThisR 
+PshV8     
+DIVu      
+MODu      
+DIVu64    
+MODu64    
+LoadRObjR 
+LoadVObjR 
+JLowNZ    
+AllocMem  
+SetListSiz
+PshListElm
+SetListTyp
+POWi      
+POWu      
+POWf      
+POWd      
+POWdi     
+POWi64    
+POWu64    
+
+Sequences
+PopPtr    , VAR        : 1
+PshV4     , PSF        : 20
+PSF       , STR        : 20
+PSF       , CALLSYS    : 67
+PSF       , GETREF     : 9
+PSF       , CpyVtoV8   : 9
+CALL      , SUSPEND    : 1
+CALL      , OBJTYPE    : 1
+RET       , SUSPEND    : 1
+RET       , STOREOBJ   : 1
+JMP       , PshVPtr    : 9
+JMP       , SUSPEND    : 1
+JS        , SUSPEND    : 11
+IncVi     , SUSPEND    : 10
+PshVPtr   , CALLSYS    : 23
+PshVPtr   , GETREF     : 22
+PshVPtr   , RefCpyV    : 1
+CMPIi     , JS         : 11
+PshRPtr   , PSF        : 9
+PshRPtr   , CALLSYS    : 11
+STR       , CALLSYS    : 20
+CALLSYS   , PSF        : 67
+CALLSYS   , RET        : 1
+CALLSYS   , JMP        : 9
+CALLSYS   , PshRPtr    : 20
+CALLSYS   , SUSPEND    : 16
+CALLSYS   , CpyRtoV4   : 2
+CALLSYS   , RDR8       : 19
+CALLSYS   , VAR        : 9
+CALLSYS   , JLowZ      : 10
+SUSPEND   , CALL       : 1
+SUSPEND   , IncVi      : 10
+SUSPEND   , PshVPtr    : 15
+SUSPEND   , CMPIi      : 11
+SUSPEND   , SUSPEND    : 19
+SUSPEND   , FREE       : 2
+SUSPEND   , SetV4      : 1
+SUSPEND   , SetV8      : 3
+SUSPEND   , CpyVtoV8   : 9
+SUSPEND   , VAR        : 9
+SUSPEND   , MULIi      : 10
+FREE      , RET        : 1
+FREE      , CpyVtoR8   : 1
+STOREOBJ  , SUSPEND    : 1
+GETOBJ    , CALL       : 1
+GETREF    , CALLSYS    : 31
+GETREF    , GETREF     : 11
+OBJTYPE   , CALLSYS    : 1
+SetV4     , JMP        : 1
+SetV8     , VAR        : 4
+CpyVtoV4  , iTOi64     : 10
+CpyVtoV8  , SUSPEND    : 19
+CpyVtoV8  , i64TOi     : 18
+CpyVtoR8  , RET        : 1
+CpyRtoV4  , PshV4      : 2
+RDR8      , CpyVtoV8   : 19
+VAR       , PSF        : 9
+VAR       , PshVPtr    : 22
+VAR       , GETOBJ     : 1
+VAR       , SetV8      : 1
+VAR       , CpyVtoV4   : 10
+MULIi     , iTOi64     : 10
+i64TOi    , PshV4      : 18
+iTOi64    , VAR        : 20
+RefCpyV   , PopPtr     : 1
+JLowZ     , SUSPEND    : 10
+LABEL     , SUSPEND    : 1

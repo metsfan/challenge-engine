@@ -43,6 +43,57 @@
     <ClCompile Include="Source\Challenge\GameApplication.cpp" />
     <ClCompile Include="Source\Challenge\GameApplicationWindows.cpp" />
     <ClCompile Include="Source\Challenge\GameController.cpp" />
+    <ClCompile Include="Source\Challenge\Lib\include\angelscript\autowrapper\generator\generateheader.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Lib\include\angelscript\contextmgr\contextmgr.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Lib\include\angelscript\debugger\debugger.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Lib\include\angelscript\scriptany\scriptany.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Lib\include\angelscript\scriptarray\scriptarray.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Lib\include\angelscript\scriptbuilder\scriptbuilder.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Lib\include\angelscript\scriptdictionary\scriptdictionary.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Lib\include\angelscript\scriptfile\scriptfile.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Lib\include\angelscript\scriptgrid\scriptgrid.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Lib\include\angelscript\scripthandle\scripthandle.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Lib\include\angelscript\scripthelper\scripthelper.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Lib\include\angelscript\scriptmath\scriptmath.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Lib\include\angelscript\scriptmath\scriptmathcomplex.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Lib\include\angelscript\scriptstdstring\scriptstdstring.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Lib\include\angelscript\scriptstdstring\scriptstdstring_utils.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Lib\include\angelscript\serializer\serializer.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Lib\include\angelscript\weakref\weakref.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="Source\Challenge\Object\Component\ModelComponent.cpp" />
     <ClCompile Include="Source\Challenge\Object\Component\PhysicsComponent.cpp" />
     <ClCompile Include="Source\Challenge\Object\Transformable.cpp" />
@@ -123,7 +174,10 @@
     <ClCompile Include="Source\Challenge\Renderer\Texture\TextureDX11.cpp" />
     <ClCompile Include="Source\Challenge\Renderer\VertexBuffer.cpp" />
     <ClCompile Include="Source\Challenge\Renderer\VertexBuffer\VertexBufferDX11.cpp" />
-    <ClCompile Include="Source\Challenge\Scripting\LuaScript.cpp" />
+    <ClCompile Include="Source\Challenge\Scripting\ScriptFunction.cpp" />
+    <ClCompile Include="Source\Challenge\Scripting\ScriptEngine.cpp" />
+    <ClCompile Include="Source\Challenge\Scripting\Types\ScriptMap.cpp" />
+    <ClCompile Include="Source\Challenge\Scripting\Types\ScriptVector.cpp" />
     <ClCompile Include="Source\Challenge\UI\Controller.cpp" />
     <ClCompile Include="Source\Challenge\UI\Controls\ButtonView.cpp" />
     <ClCompile Include="Source\Challenge\UI\Controls\CheckboxView.cpp" />
@@ -208,6 +262,22 @@
     <ClInclude Include="Source\Challenge\GameApplication.h" />
     <ClInclude Include="Source\Challenge\GameApplicationWindows.h" />
     <ClInclude Include="Source\Challenge\GameController.h" />
+    <ClInclude Include="Source\Challenge\Lib\include\angelscript\autowrapper\aswrappedcall.h" />
+    <ClInclude Include="Source\Challenge\Lib\include\angelscript\contextmgr\contextmgr.h" />
+    <ClInclude Include="Source\Challenge\Lib\include\angelscript\debugger\debugger.h" />
+    <ClInclude Include="Source\Challenge\Lib\include\angelscript\scriptany\scriptany.h" />
+    <ClInclude Include="Source\Challenge\Lib\include\angelscript\scriptarray\scriptarray.h" />
+    <ClInclude Include="Source\Challenge\Lib\include\angelscript\scriptbuilder\scriptbuilder.h" />
+    <ClInclude Include="Source\Challenge\Lib\include\angelscript\scriptdictionary\scriptdictionary.h" />
+    <ClInclude Include="Source\Challenge\Lib\include\angelscript\scriptfile\scriptfile.h" />
+    <ClInclude Include="Source\Challenge\Lib\include\angelscript\scriptgrid\scriptgrid.h" />
+    <ClInclude Include="Source\Challenge\Lib\include\angelscript\scripthandle\scripthandle.h" />
+    <ClInclude Include="Source\Challenge\Lib\include\angelscript\scripthelper\scripthelper.h" />
+    <ClInclude Include="Source\Challenge\Lib\include\angelscript\scriptmath\scriptmath.h" />
+    <ClInclude Include="Source\Challenge\Lib\include\angelscript\scriptmath\scriptmathcomplex.h" />
+    <ClInclude Include="Source\Challenge\Lib\include\angelscript\scriptstdstring\scriptstdstring.h" />
+    <ClInclude Include="Source\Challenge\Lib\include\angelscript\serializer\serializer.h" />
+    <ClInclude Include="Source\Challenge\Lib\include\angelscript\weakref\weakref.h" />
     <ClInclude Include="Source\Challenge\Object\Component\Component.h" />
     <ClInclude Include="Source\Challenge\Object\Component\ModelComponent.h" />
     <ClInclude Include="Source\Challenge\Object\Component\PhysicsComponent.h" />
@@ -306,7 +376,15 @@
     <ClInclude Include="Source\Challenge\Renderer\Types.h" />
     <ClInclude Include="Source\Challenge\Renderer\VertexBuffer.h" />
     <ClInclude Include="Source\Challenge\Renderer\VertexBuffer\VertexBufferDX11.h" />
+    <ClInclude Include="Source\Challenge\Scripting\Helpers\ScriptBasics.h" />
+    <ClInclude Include="Source\Challenge\Scripting\Helpers\ScriptRefCounter.h" />
+    <ClInclude Include="Source\Challenge\Scripting\Helpers\ScriptUtil.h" />
     <ClInclude Include="Source\Challenge\Scripting\LuaScript.h" />
+    <ClInclude Include="Source\Challenge\Scripting\ScriptFunction.h" />
+    <ClInclude Include="Source\Challenge\Scripting\ScriptEngine.h" />
+    <ClInclude Include="Source\Challenge\Scripting\ScriptObject.h" />
+    <ClInclude Include="Source\Challenge\Scripting\Types\ScriptMap.h" />
+    <ClInclude Include="Source\Challenge\Scripting\Types\ScriptVector.h" />
     <ClInclude Include="Source\Challenge\UI\Controller.h" />
     <ClInclude Include="Source\Challenge\UI\Controls\ButtonView.h" />
     <ClInclude Include="Source\Challenge\UI\Controls\CheckboxView.h" />
@@ -363,6 +441,9 @@
     <None Include="Source\Challenge\Renderer\Technique\BasicColorTechnique.inl" />
     <None Include="Source\Challenge\Renderer\Technique\BasicModelTechnique.inl" />
     <None Include="Source\Challenge\Renderer\Technique\PhongTechnique.inl" />
+    <ClInclude Include="Source\Challenge\Scripting\ScriptFunction.inl">
+      <FileType>Document</FileType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Source\Challenge\Shaders\HLSL\CirclePixel.hlsl">

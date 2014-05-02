@@ -426,9 +426,6 @@
     <ClCompile Include="Source\Challenge\UI\Controller.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Challenge\Scripting\LuaScript.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Challenge\Object\GameObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -472,6 +469,69 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Challenge\Core\Platform\Win32\CursorWin32.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Scripting\ScriptFunction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Lib\include\angelscript\autowrapper\generator\generateheader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Lib\include\angelscript\contextmgr\contextmgr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Lib\include\angelscript\debugger\debugger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Lib\include\angelscript\scriptany\scriptany.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Lib\include\angelscript\scriptarray\scriptarray.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Lib\include\angelscript\scriptbuilder\scriptbuilder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Lib\include\angelscript\scriptdictionary\scriptdictionary.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Lib\include\angelscript\scriptfile\scriptfile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Lib\include\angelscript\scriptgrid\scriptgrid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Lib\include\angelscript\scripthandle\scripthandle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Lib\include\angelscript\scripthelper\scripthelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Lib\include\angelscript\scriptmath\scriptmath.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Lib\include\angelscript\scriptmath\scriptmathcomplex.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Lib\include\angelscript\scriptstdstring\scriptstdstring.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Lib\include\angelscript\scriptstdstring\scriptstdstring_utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Lib\include\angelscript\serializer\serializer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Lib\include\angelscript\weakref\weakref.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Scripting\ScriptEngine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Scripting\Types\ScriptVector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Scripting\Types\ScriptMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1038,6 +1098,81 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Challenge\Core\Platform\Win32\CursorWin32.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Scripting\ScriptFunction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Lib\include\angelscript\weakref\weakref.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Lib\include\angelscript\autowrapper\aswrappedcall.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Lib\include\angelscript\contextmgr\contextmgr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Lib\include\angelscript\debugger\debugger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Lib\include\angelscript\scriptany\scriptany.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Lib\include\angelscript\scriptarray\scriptarray.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Lib\include\angelscript\scriptbuilder\scriptbuilder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Lib\include\angelscript\scriptdictionary\scriptdictionary.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Lib\include\angelscript\scriptfile\scriptfile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Lib\include\angelscript\scriptgrid\scriptgrid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Lib\include\angelscript\scripthandle\scripthandle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Lib\include\angelscript\scripthelper\scripthelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Lib\include\angelscript\scriptmath\scriptmath.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Lib\include\angelscript\scriptmath\scriptmathcomplex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Lib\include\angelscript\scriptstdstring\scriptstdstring.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Lib\include\angelscript\serializer\serializer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Scripting\ScriptObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Scripting\ScriptFunction.inl">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Scripting\ScriptEngine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Scripting\Types\ScriptVector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Scripting\Helpers\ScriptBasics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Scripting\Helpers\ScriptRefCounter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Scripting\Types\ScriptMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Scripting\Helpers\ScriptUtil.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

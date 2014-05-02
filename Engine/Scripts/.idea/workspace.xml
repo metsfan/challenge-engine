@@ -67,7 +67,7 @@
       <file leaf-file-name="build.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/build.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="11" selection-start="197" selection-end="197" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="323">
+            <state line="11" column="11" selection-start="197" selection-end="197" vertical-scroll-proportion="0.0" vertical-offset="187" max-vertical-offset="323">
               <folding />
             </state>
           </provider>
@@ -76,7 +76,7 @@
       <file leaf-file-name="application.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/application.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="56" selection-start="389" selection-end="389" vertical-scroll-proportion="0.11486486" vertical-offset="136" max-vertical-offset="1666">
+            <state line="17" column="56" selection-start="389" selection-end="389" vertical-scroll-proportion="0.0" vertical-offset="289" max-vertical-offset="1666">
               <folding />
             </state>
           </provider>
@@ -85,7 +85,7 @@
       <file leaf-file-name="os.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://C:/Python33/Lib/os.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="55" selection-start="651" selection-end="651" vertical-scroll-proportion="0.0" vertical-offset="323" max-vertical-offset="17833">
+            <state line="11" column="55" selection-start="651" selection-end="651" vertical-scroll-proportion="0.0" vertical-offset="187" max-vertical-offset="17833">
               <folding />
             </state>
           </provider>
@@ -255,8 +255,8 @@
     <property name="FullScreen" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -444,8 +444,8 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1122" extended-state="7" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1936" height="1122" extended-state="0" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -586,7 +586,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/application.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="56" selection-start="389" selection-end="389" vertical-scroll-proportion="0.11486486" vertical-offset="136" max-vertical-offset="1666">
+        <state line="17" column="56" selection-start="389" selection-end="389" vertical-scroll-proportion="0.0" vertical-offset="289" max-vertical-offset="1666">
           <folding />
         </state>
       </provider>

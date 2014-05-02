@@ -1,0 +1,75 @@
+uint64 tester(int)
+
+Temps: 3, 5, 7, 8
+
+Variables: 
+ 000: int x
+ 001: map<uint64,uint64> testMap
+ 002: int i
+ 010: uint64 retval
+ 008: map {noname}
+
+
+- 31,2 -
+    0  10 *    VarDecl  0
+    0  10 *    SUSPEND
+    1  10 *    VarDecl  1
+    1  10 *    CALL     101           (map<uint64,uint64>@ factstub())
+    3  10 *    STOREOBJ v1
+- 33,7 -
+    4  10 *    SUSPEND
+    5  10 *    VarDecl  2
+    5  10 *    SetV4    v2, 0x0          (i:0, f:0)
+    7  10 *    JMP      +20              (d:29)
+    9  10 * 4:
+    9  10 *    SUSPEND
+- 34,3 -
+   10  10 * {
+   10  10 *    SUSPEND
+   11  10 *    MULIi    v3, v2, 3
+   14  10 *    iTOi64   v5, v3
+   16  10 *    VAR      v5
+   17  11 *    CpyVtoV4 v3, v2
+   19  11 *    iTOi64   v7, v3
+   21  11 *    VAR      v7
+   22  12 *    PshVPtr  v1
+   23  13 *    GETREF   1
+   24  13 *    GETREF   2
+   25  13 *    CALLSYS  102           (void map::insert(const uint64&in, const uint64&in))
+- 33,26 -
+   27  10 * }
+   27  10 * 3:
+   27  10 *    SUSPEND
+   28  10 *    IncVi    v2
+- 33,18 -
+   29  10 * 1:
+   29  10 *    SUSPEND
+   30  10 *    CMPIi    v2, 10
+   32  10 *    JS       -25              (d:9)
+- 41,2 -
+   34  10 * 2:
+   34  10 *    SUSPEND
+   35  10 *    PshVPtr  v1
+   36  11 *    RefCpyV  v8, 19923640
+   38  11 *    PopPtr
+   39  10 *    VAR      v8
+   40  11 *    GETOBJ   0
+   41  11 *    CALL     107           (void printMap(map<uint64,uint64>@))
+- 44,2 -
+   43  10 *    SUSPEND
+   44  10 *    VarDecl  3
+   44  10 *    SetV8    v5, 0x0          (i:0, f:0)
+   47  10 *    VAR      v5
+   48  11 *    PshVPtr  v1
+   49  12 *    GETREF   1
+   50  12 *    CALLSYS  103           (uint64& map::opIndex(const uint64&in))
+   52  10 *    RDR8     v7
+   53  10 *    CpyVtoV8 v10, v7
+- 46,2 -
+   55  10 *    SUSPEND
+   56  10 * {
+   56  10 *    FREE     v1, 19923640
+   58  10 * }
+   58  10 *    CpyVtoR8 v10
+   59  10 * 0:
+   59  10 *    RET      1

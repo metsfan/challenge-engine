@@ -1,9 +1,14 @@
 #pragma once
 
 #include <Challenge/Challenge.h>
+#include <Challenge/Util/Image.h>
+#include <Challenge/Renderer/GraphicsDevice.h>
+#include <Challenge/Renderer/RenderState.h>
 
 namespace challenge
 {
+	class SpriteShape;
+
 	class Cursor
 	{
 	public:

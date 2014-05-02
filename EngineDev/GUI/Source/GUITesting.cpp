@@ -1,9 +1,7 @@
 #include <time.h>
-#include <Engine/GameApplicationWindows.h>
-#include <Engine/UI/UIManager.h>
-#include <Engine/UI/Controls/Button.h>
-#include <Engine/Util/Timer.h>
-#include <Engine/Util/Logger.h>
+#include <Challenge/GameApplicationWindows.h>
+#include <Challenge/Util/Timer.h>
+#include <Challenge/Util/Logger.h>
 using namespace challenge;
 
 void FPSCallback(void *obj);

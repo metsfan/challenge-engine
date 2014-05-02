@@ -7,14 +7,11 @@
 #include "PlaneShape.h"
 #include "TriangleShape.h"
 
+#include <glm/gtx/norm.hpp>
+
 namespace challenge
 {
 	/*bool IntersectionTests::SphereIntersectsSphere(const SphereShape *sphere1, const SphereShape *sphere2, CollisionData *collision)
-	{
-	return false;
-	}
-
-	bool IntersectionTests::AABBIntersectsSphere(const AABBShape *aabb, const SphereShape *sphere, CollisionData *collision)
 	{
 	return false;
 	}
@@ -180,6 +177,14 @@ namespace challenge
 
 	return intersects;
 	}*/
+
+	bool IntersectionTests::AABBIntersectsSphere(const AABBShape *aabb, const SphereShape *sphere, CollisionData *collision)
+	{
+		double sqDistance = glm::distance2(aabb->GetPosition(), sphere->GetPosition());
+		double sqRadius = sphere->GetRadius() * sphere->GetRadius();
+
+		return sqDistance <= sqRadius;
+	}
 
 	bool IntersectionTests::AABBIntersectsAABB(const AABBShape *aabb1, const AABBShape *aabb2, CollisionData *collision)
 	{

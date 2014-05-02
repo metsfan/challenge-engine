@@ -9,12 +9,13 @@ namespace challenge
 	class OBBShape;
 	class TriangleShape;
 	class TriangleMeshShape;
+	class SphereShape;
 
 	class IntersectionTests 
 	{
 	public:
 		//static bool SphereIntersectsSphere(const SphereShape *sphere1,const  SphereShape *sphere2, CollisionData *collision = NULL);
-		//static bool AABBIntersectsSphere(const AABBShape *aabb, const SphereShape *sphere, CollisionData *collision = NULL);
+		static bool AABBIntersectsSphere(const AABBShape *aabb, const SphereShape *sphere, CollisionData *collision = NULL);
 		//static bool AABBIntersectsPlane(const AABBShape *aabb, const PlaneShape *plane, CollisionData *collision = NULL);
 		static bool AABBIntersectsAABB(const AABBShape *aabb1, const AABBShape *aabb2, CollisionData *collision = NULL);
 		static bool AABBIntersectsOBB(const AABBShape *aabb, const OBBShape *obb, CollisionData *collision = NULL);

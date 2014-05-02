@@ -4,14 +4,11 @@
 
 namespace challenge
 {
-	SphereShape::SphereShape(glm::vec3 center, real radius) :
+	SphereShape::SphereShape(const glm::vec3 &center, real radius) :
+		GeometricShape(),
 		mRadius(radius),
 		mCenter(center)
 	{
-	}
-
-	bool SphereShape::Intersects(IGeometricShape *other, CollisionData *collision) const
-	{
-		return false;
+		this->CalculateBoundingBox();
 	}
 };

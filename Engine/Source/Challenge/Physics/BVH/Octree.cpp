@@ -336,8 +336,10 @@ namespace challenge
 			return;
 		}
 
-		for (auto shape : node->mShapes) {
-			list.push_back(shape);
+		for (auto &obj : node->mShapes) {
+			if (obj.shape->Intersects(shape)) {
+				list.push_back(obj);
+			}
 		}
 
 		for(int i = 0; i < 8; i++) {
