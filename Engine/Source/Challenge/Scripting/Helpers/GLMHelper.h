@@ -13,86 +13,89 @@ namespace challenge
 		static void RegisterVec2(asIScriptEngine *engine);
 		static void RegisterVec3(asIScriptEngine *engine);
 		static void RegisterVec4(asIScriptEngine *engine);
+		static void RegisterMat2(asIScriptEngine *engine);
+		static void RegisterMat3(asIScriptEngine *engine);
+		static void RegisterMat4(asIScriptEngine *engine);
 
 	private:
-		template <typename vecType>
+		template <typename T>
 		static void opAddAssign(asIScriptGeneric *gen)
 		{
-			vecType &vector = *(vecType *) gen->GetObjectA();
+			T &obj = *(T *) gen->GetObjectA();
 			float arg= gen->GetArgFloat(0);
-			vector += arg;
-			gen->SetReturnObject(&vector);
+			obj += arg;
+			gen->SetReturnObject(&obj);
 		}
 
-		template <typename vecType>
+		template <typename T>
 		static void opSubAssign(asIScriptGeneric *gen)
 		{
-			vecType &vector = *(vecType *) gen->GetObjectA();
+			T &obj = *(T *) gen->GetObjectA();
 			float arg = gen->GetArgFloat(0);
-			vector -= arg;
-			gen->SetReturnObject(&vector);
+			obj -= arg;
+			gen->SetReturnObject(&obj);
 		}
 
-		template <typename vecType>
+		template <typename T>
 		static void opMulAssign(asIScriptGeneric *gen)
 		{
-			vecType &vector = *(vecType *) gen->GetObjectA();
+			T &obj = *(T *) gen->GetObjectA();
 			float arg = gen->GetArgFloat(0);
-			vector *= arg;
-			gen->SetReturnObject(&vector);
+			obj *= arg;
+			gen->SetReturnObject(&obj);
 		}
 
-		template <typename vecType>
+		template <typename T>
 		static void opDivAssign(asIScriptGeneric *gen)
 		{
-			vecType &vector = *(vecType *) gen->GetObjectA();
+			T &obj = *(T *) gen->GetObjectA();
 			float arg = gen->GetArgFloat(0);
-			vector /= arg;
-			gen->SetReturnObject(&vector);
+			obj /= arg;
+			gen->SetReturnObject(&obj);
 		}
 
-		template <typename vecType>
+		template <typename T>
 		static void opAdd(asIScriptGeneric *gen)
 		{
-			vecType &vector = *(vecType *) gen->GetObjectA();
+			T &obj = *(T *) gen->GetObjectA();
 			float arg = gen->GetArgFloat(0);
-			vecType outVec = vector + arg;
+			T outVec = obj + arg;
 			gen->SetReturnObject(&outVec);
 		}
 
-		template <typename vecType>
+		template <typename T>
 		static void opSub(asIScriptGeneric *gen)
 		{
-			vecType &vector = *(vecType *) gen->GetObjectA();
+			T &obj = *(T *) gen->GetObjectA();
 			float arg = gen->GetArgFloat(0);
-			vecType outVec = vector - arg;
+			T outVec = obj - arg;
 			gen->SetReturnObject(&outVec);
 		}
 
-		template <typename vecType>
+		template <typename T>
 		static void opMul(asIScriptGeneric *gen)
 		{
-			vecType &vector = *(vecType *) gen->GetObjectA();
+			T &obj = *(T *) gen->GetObjectA();
 			float arg = gen->GetArgFloat(0);
-			vecType outVec = vector * arg;
+			T outVec = obj * arg;
 			gen->SetReturnObject(&outVec);
 		}
 
-		template <typename vecType>
+		template <typename T>
 		static void opDiv(asIScriptGeneric *gen)
 		{
-			vecType &vector = *(vecType *) gen->GetObjectA();
+			T &obj = *(T *) gen->GetObjectA();
 			float arg = gen->GetArgFloat(0);
-			vecType outVec = vector / arg;
+			T outVec = obj / arg;
 			gen->SetReturnObject(&outVec);
 		}
 
-		template <typename vecType>
+		template <typename T>
 		static void opIndex(asIScriptGeneric *gen)
 		{
-			vecType &vector = *(vecType *) gen->GetObjectA();
+			T &obj = *(T *) gen->GetObjectA();
 			int arg = gen->GetArgDWord(0);
-			gen->SetReturnFloat(vector[arg]);
+			gen->SetReturnFloat(obj[arg]);
 		}
 	};
 };
