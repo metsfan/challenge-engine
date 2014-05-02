@@ -534,6 +534,9 @@
     <ClCompile Include="Source\Challenge\Scripting\Types\ScriptMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Challenge\Scripting\Helpers\GLMHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Challenge\GameController.h">
@@ -1173,6 +1176,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Challenge\Scripting\Helpers\ScriptUtil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Scripting\Helpers\GLMHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

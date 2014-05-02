@@ -35,5 +35,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="scripts\script.as" />
+    <None Include="scripts\vectors.as" />
   </ItemGroup>
 </Project>
