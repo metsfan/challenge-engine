@@ -11,15 +11,21 @@ namespace challenge
 	public:
 
 		template <typename T>
-		static void Construct(void *memory)
+		static T * Construct(void *memory)
 		{
 			new (memory) T();
+		}
+
+		template <typename T, typename... Args>
+		static T * ConstructEx(void *memory, Args... args)
+		{
+			return new (memory) T(args...);
 		}
 
 		template <typename T>
 		static void Destruct(void *memory)
 		{
-			reinterpret_cast<T>(memory)->~T();
+			reinterpret_cast<T *>(memory)->~T();
 		}
 
 		template <typename T>

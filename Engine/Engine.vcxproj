@@ -174,7 +174,9 @@
     <ClCompile Include="Source\Challenge\Renderer\Texture\TextureDX11.cpp" />
     <ClCompile Include="Source\Challenge\Renderer\VertexBuffer.cpp" />
     <ClCompile Include="Source\Challenge\Renderer\VertexBuffer\VertexBufferDX11.cpp" />
-    <ClCompile Include="Source\Challenge\Scripting\Helpers\GLMHelper.cpp" />
+    <ClInclude Include="Source\Challenge\Scripting\Helpers\GLMHelper.inl">
+      <FileType>CppCode</FileType>
+    </ClInclude>
     <ClCompile Include="Source\Challenge\Scripting\ScriptFunction.cpp" />
     <ClCompile Include="Source\Challenge\Scripting\ScriptEngine.cpp" />
     <ClCompile Include="Source\Challenge\Scripting\Types\ScriptMap.cpp" />

@@ -1,26 +1,29 @@
 
 Total count
-PshC4      : 1
-PSF        : 23
+PopPtr     : 1
+PSF        : 34
 RET        : 1
-PshRPtr    : 4
-STR        : 4
-CALLSYS    : 23
-SUSPEND    : 6
-GETREF     : 2
-SetV4      : 2
-CpyRtoV4   : 1
-WRTV4      : 2
-RDR4       : 3
-VAR        : 2
-fTOd       : 4
+COPY       : 1
+PshVPtr    : 1
+PshRPtr    : 5
+STR        : 5
+CALLSYS    : 30
+SUSPEND    : 15
+ALLOC      : 1
+GETOBJ     : 1
+GETREF     : 3
+SetV4      : 8
+WRTV4      : 8
+RDR4       : 5
+VAR        : 4
+fTOd       : 5
 LoadThisR  : 2
-PshV8      : 4
-LoadVObjR  : 3
+PshV8      : 5
+LoadVObjR  : 11
 
 Never executed
-PopPtr    
 PshGPtr   
+PshC4     
 PshV4     
 SwapPtr   
 NOT       
@@ -62,9 +65,7 @@ BXOR
 BSLL      
 BSRL      
 BSRA      
-COPY      
 PshC8     
-PshVPtr   
 RDSPtr    
 CMPd      
 CMPu      
@@ -76,11 +77,9 @@ CMPIu
 JMPP      
 PopRPtr   
 CALLBND   
-ALLOC     
 FREE      
 LOADOBJ   
 STOREOBJ  
-GETOBJ    
 REFCPY    
 CHKREF    
 GETOBJREF 
@@ -95,6 +94,7 @@ CpyVtoV8
 CpyVtoR4  
 CpyVtoR8  
 CpyVtoG4  
+CpyRtoV4  
 CpyRtoV8  
 CpyGtoV4  
 WRTV1     
@@ -204,34 +204,41 @@ POWi64
 POWu64    
 
 Sequences
-PshC4     , PSF        : 1
-PSF       , PshC4      : 1
-PSF       , STR        : 4
-PSF       , CALLSYS    : 15
-PSF       , GETREF     : 2
+PopPtr    , VAR        : 1
+PSF       , PSF        : 1
+PSF       , PshVPtr    : 1
+PSF       , STR        : 5
+PSF       , CALLSYS    : 19
+PSF       , ALLOC      : 1
+PSF       , GETOBJ     : 1
+PSF       , GETREF     : 3
 PSF       , LoadThisR  : 1
-PshRPtr   , PSF        : 2
+PSF       , LoadVObjR  : 2
+COPY      , PopPtr     : 1
+PshVPtr   , COPY       : 1
+PshRPtr   , PSF        : 3
 PshRPtr   , CALLSYS    : 2
-STR       , CALLSYS    : 4
-CALLSYS   , PSF        : 14
-CALLSYS   , PshRPtr    : 4
-CALLSYS   , SUSPEND    : 2
-CALLSYS   , CpyRtoV4   : 1
-CALLSYS   , VAR        : 2
+STR       , CALLSYS    : 5
+CALLSYS   , PSF        : 19
+CALLSYS   , PshRPtr    : 5
+CALLSYS   , SUSPEND    : 3
+CALLSYS   , VAR        : 3
+SUSPEND   , PSF        : 1
 SUSPEND   , RET        : 1
-SUSPEND   , SUSPEND    : 1
-SUSPEND   , SetV4      : 2
+SUSPEND   , SUSPEND    : 3
+SUSPEND   , SetV4      : 8
 SUSPEND   , LoadThisR  : 1
 SUSPEND   , LoadVObjR  : 1
-GETREF    , CALLSYS    : 2
-SetV4     , LoadVObjR  : 2
-CpyRtoV4  , fTOd       : 1
-WRTV4     , SUSPEND    : 2
-RDR4      , fTOd       : 3
-VAR       , PSF        : 2
-fTOd      , PshV8      : 4
+ALLOC     , PSF        : 1
+GETOBJ    , CALLSYS    : 1
+GETREF    , CALLSYS    : 3
+SetV4     , LoadVObjR  : 8
+WRTV4     , SUSPEND    : 8
+RDR4      , fTOd       : 5
+VAR       , PSF        : 4
+fTOd      , PshV8      : 5
 LoadThisR , RDR4       : 2
-PshV8     , PSF        : 4
-LoadVObjR , WRTV4      : 2
-LoadVObjR , RDR4       : 1
+PshV8     , PSF        : 5
+LoadVObjR , WRTV4      : 8
+LoadVObjR , RDR4       : 3
 LABEL     , SUSPEND    : 1
