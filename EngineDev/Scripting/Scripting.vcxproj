@@ -96,6 +96,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="scripts\script.as" />
+    <None Include="scripts\stlmap.as" />
+    <None Include="scripts\stlvector.as" />
     <None Include="scripts\vectors.as" />
   </ItemGroup>
   <ItemGroup>

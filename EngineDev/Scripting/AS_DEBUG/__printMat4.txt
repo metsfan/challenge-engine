@@ -1,0 +1,46 @@
+void printMat4(mat4&in)
+
+Temps: 2, 6
+
+Variables: 
+ 000: mat4& mat
+ 001: int i
+ 006: vec4 {noname}
+
+
+- 13,7 -
+    0   6 *    VarDecl  0
+    0   6 *    SUSPEND
+    1   6 *    VarDecl  1
+    1   6 *    SetV4    v1, 0x0          (i:0, f:0)
+    3   6 *    JMP      +16              (d:21)
+    5   6 * 4:
+    5   6 *    SUSPEND
+- 14,3 -
+    6   6 * {
+    6   6 *    SUSPEND
+    7   6 *    PshV4    v1
+    8   7 *    PshVPtr  v0
+    9   8 *    CALLSYS  238           (vec4& mat4::opIndex(int))
+   11   6 *    PshRPtr
+   12   7 *    PSF      v6
+   13   8 *    COPY     v4, 67108879
+   15   7 *    PopPtr
+   16   6 *    PSF      v6
+   17   7 *    CALL     260           (void printVec4(vec4&in))
+- 13,25 -
+   19   6 *    ObjInfo  v6, 0
+   19   6 * }
+   19   6 * 3:
+   19   6 *    SUSPEND
+   20   6 *    IncVi    v1
+- 13,18 -
+   21   6 * 1:
+   21   6 *    SUSPEND
+   22   6 *    CMPIi    v1, 4
+   24   6 *    JS       -21              (d:5)
+- 16,2 -
+   26   6 * 2:
+   26   6 *    SUSPEND
+   27   6 * 0:
+   27   6 *    RET      1

@@ -380,9 +380,11 @@
     <ClInclude Include="Source\Challenge\Renderer\VertexBuffer.h" />
     <ClInclude Include="Source\Challenge\Renderer\VertexBuffer\VertexBufferDX11.h" />
     <ClInclude Include="Source\Challenge\Scripting\Helpers\GLMHelper.h" />
+    <ClInclude Include="Source\Challenge\Scripting\Helpers\MapHelper.h" />
     <ClInclude Include="Source\Challenge\Scripting\Helpers\ScriptBasics.h" />
     <ClInclude Include="Source\Challenge\Scripting\Helpers\ScriptRefCounter.h" />
     <ClInclude Include="Source\Challenge\Scripting\Helpers\ScriptUtil.h" />
+    <ClInclude Include="Source\Challenge\Scripting\Helpers\VectorHelper.h" />
     <ClInclude Include="Source\Challenge\Scripting\LuaScript.h" />
     <ClInclude Include="Source\Challenge\Scripting\ScriptFunction.h" />
     <ClInclude Include="Source\Challenge\Scripting\ScriptEngine.h" />
@@ -448,6 +450,8 @@
     <ClInclude Include="Source\Challenge\Scripting\ScriptFunction.inl">
       <FileType>Document</FileType>
     </ClInclude>
+    <None Include="Source\Challenge\Scripting\Helpers\MapHelper.inl" />
+    <None Include="Source\Challenge\Scripting\Helpers\VectorHelper.inl" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Source\Challenge\Shaders\HLSL\CirclePixel.hlsl">

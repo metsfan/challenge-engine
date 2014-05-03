@@ -13,7 +13,7 @@ namespace challenge
 		template <typename T>
 		static T * Construct(void *memory)
 		{
-			new (memory) T();
+			return new (memory) T();
 		}
 
 		template <typename T, typename... Args>

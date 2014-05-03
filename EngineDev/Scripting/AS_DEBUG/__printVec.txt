@@ -1,0 +1,81 @@
+void printVec(vector_int&in)
+
+Temps: 7, 9
+
+Variables: 
+ 000: vector_int& vec
+ 008: int i
+ 007: string {noname}
+
+
+- 3,2 -
+    0   9 *    VarDecl  0
+    0   9 *    SUSPEND
+    1   9 *    STR      0         (l:9 s:"--start--")
+    2  11 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&in))
+    4   9 *    PshRPtr
+    5  10 *    PSF      v7
+    6  11 *    CALLSYS  35           (string::string(const string&in))
+    8   9 *    ObjInfo  v7, 1
+    8   9 *    PSF      v7
+    9  10 *    CALLSYS  72           (void print(const string&in))
+   11   9 *    PSF      v7
+   12  10 *    CALLSYS  36           (string::~string())
+- 5,7 -
+   14   9 *    ObjInfo  v7, 0
+   14   9 *    SUSPEND
+   15   9 *    VarDecl  1
+   15   9 *    SetV4    v8, 0x0          (i:0, f:0)
+   17   9 *    JMP      +23              (d:42)
+   19   9 * 4:
+   19   9 *    SUSPEND
+- 6,3 -
+   20   9 * {
+   20   9 *    SUSPEND
+   21   9 *    PshV4    v8
+   22  10 *    PshVPtr  v0
+   23  11 *    CALLSYS  250           (const int& vector_int::opIndex(int))
+   25   9 *    RDR4     v9
+   26   9 *    PshV4    v9
+   27  10 *    PSF      v7
+   28  11 *    STR      1         (l:0 s:"")
+   29  13 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&in))
+   31  11 *    PshRPtr
+   32  12 *    CALLSYS  56           (string string::opAdd_r(int) const)
+   34   9 *    ObjInfo  v7, 1
+   34   9 *    PSF      v7
+   35  10 *    CALLSYS  72           (void print(const string&in))
+   37   9 *    PSF      v7
+   38  10 *    CALLSYS  36           (string::~string())
+- 5,34 -
+   40   9 *    ObjInfo  v7, 0
+   40   9 * }
+   40   9 * 3:
+   40   9 *    SUSPEND
+   41   9 *    IncVi    v8
+- 5,18 -
+   42   9 * 1:
+   42   9 *    SUSPEND
+   43   9 *    PshVPtr  v0
+   44  10 *    CALLSYS  248           (int vector_int::size())
+   46   9 *    CpyRtoV4 v9
+   47   9 *    CMPi     v8, v9
+   49   9 *    JS       -32              (d:19)
+- 9,2 -
+   51   9 * 2:
+   51   9 *    SUSPEND
+   52   9 *    STR      2         (l:7 s:"--end--")
+   53  11 *    CALLSYS  33           (const string& _string_factory_(const int, const uint8&in))
+   55   9 *    PshRPtr
+   56  10 *    PSF      v7
+   57  11 *    CALLSYS  35           (string::string(const string&in))
+   59   9 *    ObjInfo  v7, 1
+   59   9 *    PSF      v7
+   60  10 *    CALLSYS  72           (void print(const string&in))
+   62   9 *    PSF      v7
+   63  10 *    CALLSYS  36           (string::~string())
+- 10,2 -
+   65   9 *    ObjInfo  v7, 0
+   65   9 *    SUSPEND
+   66   9 * 0:
+   66   9 *    RET      1

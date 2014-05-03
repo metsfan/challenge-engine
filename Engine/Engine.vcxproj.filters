@@ -1181,6 +1181,12 @@
     <ClInclude Include="Source\Challenge\Scripting\Helpers\GLMHelper.inl">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Challenge\Scripting\Helpers\VectorHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Scripting\Helpers\MapHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ChallengeEngine-settings.props" />
@@ -1200,6 +1206,12 @@
       <Filter>Header Files</Filter>
     </None>
     <None Include="Source\Challenge\Renderer\Technique\PhongTechnique.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Source\Challenge\Scripting\Helpers\VectorHelper.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="Source\Challenge\Scripting\Helpers\MapHelper.inl">
       <Filter>Header Files</Filter>
     </None>
   </ItemGroup>
