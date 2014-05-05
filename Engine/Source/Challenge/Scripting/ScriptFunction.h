@@ -16,21 +16,8 @@ namespace challenge
 	public:
 		~ScriptFunction();
 
-		template <typename T> T GetReturnValue();
-		template<> float GetReturnValue<float>();
-		template<> double GetReturnValue<double>();
-		template<> bool GetReturnValue<bool>();
-		template<> int8_t GetReturnValue<int8_t>();
-		template<> int16_t GetReturnValue<int16_t>();
-		template<> int32_t GetReturnValue<int32_t>();
-		template<> int64_t GetReturnValue<int64_t>();
-		template<> uint8_t GetReturnValue<uint8_t>();
-		template<> uint16_t GetReturnValue<uint16_t>();
-		template<> uint32_t GetReturnValue<uint32_t>();
-		template<> uint64_t GetReturnValue<uint64_t>();
-
-		template<typename... Args>
-		void Call(Args... args);
+		template<typename ReturnType, typename... Args>
+		ReturnType Call(Args... args);
 
 	private:
 		asIScriptContext *mContext;
@@ -51,6 +38,20 @@ namespace challenge
 		template<> void SetParam<uint16_t>(const uint16_t &param);
 		template<> void SetParam<uint32_t>(const uint32_t &param);
 		template<> void SetParam<uint64_t>(const uint64_t &param);
+
+		template <typename T> T GetReturnValue();
+		template<> float GetReturnValue<float>();
+		template<> double GetReturnValue<double>();
+		template<> bool GetReturnValue<bool>();
+		template<> int8_t GetReturnValue<int8_t>();
+		template<> int16_t GetReturnValue<int16_t>();
+		template<> int32_t GetReturnValue<int32_t>();
+		template<> int64_t GetReturnValue<int64_t>();
+		template<> uint8_t GetReturnValue<uint8_t>();
+		template<> uint16_t GetReturnValue<uint16_t>();
+		template<> uint32_t GetReturnValue<uint32_t>();
+		template<> uint64_t GetReturnValue<uint64_t>();
+		template<> void GetReturnValue<void>();
 
 		void SetParamArgs() 
 		{

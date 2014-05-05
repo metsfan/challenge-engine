@@ -64,8 +64,8 @@ namespace challenge
 		return mContext->GetReturnQWord();
 	}
 
-	template<typename... Args>
-	void ScriptFunction::Call(Args... args)
+	template<typename ReturnType, typename... Args>
+	ReturnType ScriptFunction::Call(Args... args)
 	{
 		int result;
 
@@ -76,6 +76,8 @@ namespace challenge
 		SetParamArgs(args...);
 
 		result = mContext->Execute();
+
+		return GetReturnValue<ReturnType>();
 	}
 
 	template <typename T>
@@ -158,5 +160,9 @@ namespace challenge
 	template<> void ScriptFunction::SetParam<uint64_t>(const uint64_t &param)
 	{
 		mContext->SetArgQWord(mParamIndex++, param);
+	}
+
+	template<> void ScriptFunction::GetReturnValue<void>()
+	{
 	}
 }

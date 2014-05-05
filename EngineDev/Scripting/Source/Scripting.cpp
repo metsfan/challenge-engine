@@ -15,6 +15,11 @@
 
 using namespace challenge;
 
+template <typename T, typename... Args>
+T f(Args... args)
+{
+	return T(0);
+}
 
 
 int _tmain(int argc, _TCHAR* argv[])
@@ -26,6 +31,10 @@ int _tmain(int argc, _TCHAR* argv[])
 	GLMHelper::Register(ScriptEngine::GetASEngine());
 	VectorHelper::Register<int>(ScriptEngine::GetASEngine(), "int");
 	MapHelper::Register<int, float>(ScriptEngine::GetASEngine(), "int", "float");
+
+	int x = 0, y = 2, z = 3;
+
+	int t = f<int>(x, y, z);
 
 	//engine.LoadFile("scripts/script.as");
 	//engine.LoadFile("scripts/vectors.as");
@@ -39,7 +48,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	//ScriptFunction function("uint64 tester(int)", engine.GetContext(), engine.GetModule());
 	//ScriptFunction function("void main(vec2 &in)", engine.GetContext(), engine.GetModule());
 	//ScriptFunction function("void main(vector_int &in)", engine.GetContext(), engine.GetModule());
-	ScriptFunction *function = module->GetFunction("void main(map_int_float &in)");
+	ScriptFunction *function = module->GetFunction("float main(map_int_float &in)");
 
 	glm::vec2 testVec(4, 7);
 	std::vector<int> vec;
@@ -52,7 +61,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	//function.Call(&testVec);
 	//function.Call(&vec);
-	function->Call(&map);
+	function->Call<void>(&map);
 	//uint64_t returnValue = function.GetReturnValue<uint64_t>();
 
 	return 0;

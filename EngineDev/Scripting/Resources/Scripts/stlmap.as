@@ -8,9 +8,11 @@ void printMap(map_int_float &in aMap)
 	}
 }
 
-void main(map_int_float &in aMap)
+float main(map_int_float &in aMap)
 {
-	aMap.insert(5, 7.0f);
+	aMap.insert(5, 7.3f);
 
 	printMap(aMap);
+
+	return 4.3f;
 }
