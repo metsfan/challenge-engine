@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Challenge/Challenge.h>
-#include <Challenge/Scripting/ScriptObject.h>
+#include <Challenge/Scripting/ScriptModule.h>
 
 #include <angelscript/angelscript.h>
 #include <type_traits>
@@ -10,10 +10,10 @@ namespace challenge
 {
 	class ScriptFunction
 	{
+		friend class ScriptModule;
 		friend class ScriptEngine;
 
 	public:
-		ScriptFunction(const std::string &signature, asIScriptContext *context, asIScriptModule *module);
 		~ScriptFunction();
 
 		template <typename T> T GetReturnValue();
@@ -36,6 +36,8 @@ namespace challenge
 		asIScriptContext *mContext;
 		asIScriptFunction *mFunction;
 		int mParamIndex;
+
+		ScriptFunction(ScriptModule *module, const std::string &signature);
 
 		template <typename T> void SetParam(const T &param);
 		template<> void SetParam<float>(const float &param);

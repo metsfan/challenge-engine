@@ -3,10 +3,14 @@
 
 namespace challenge
 {
-	ScriptFunction::ScriptFunction(const std::string &signature, asIScriptContext *context, asIScriptModule *module) :
-		mContext(context)
+	ScriptFunction::ScriptFunction(ScriptModule *module, const std::string &signature) :
+		mContext(ScriptEngine::GetContext())
 	{
-		mFunction = module->GetFunctionByDecl(signature.c_str());
+		if (!module || !module->GetModule()) {
+			throw "Module is not initialized";
+		}
+
+		mFunction = module->GetModule()->GetFunctionByDecl(signature.c_str());
 		mFunction->AddRef();
 	}
 

@@ -11,8 +11,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Challenge\Scripting\ScriptFunction.cpp" />
+    <ClCompile Include="Source\Challenge\Scripting\ScriptModule.cpp" />
     <ClCompile Include="Source\Challenge\Audio\AudioListener.cpp" />
-    <ClCompile Include="Source\Challenge\Audio\AudioManager.cpp" />
+    <ClCompile Include="Source\Challenge\Audio\AudioSystem.cpp" />
     <ClCompile Include="Source\Challenge\Audio\Sound.cpp" />
     <ClCompile Include="Source\Challenge\Audio\SoundGroup.cpp" />
     <ClCompile Include="Source\Challenge\Challenge.cpp">
@@ -108,7 +110,6 @@
     <ClCompile Include="Source\Challenge\Model\Model.cpp" />
     <ClCompile Include="Source\Challenge\Model\ModelAnimationManager.cpp" />
     <ClCompile Include="Source\Challenge\Model\ModelBone.cpp" />
-    <ClCompile Include="Source\Challenge\Model\ModelManager.cpp" />
     <ClCompile Include="Source\Challenge\Model\ModelMaterial.cpp" />
     <ClCompile Include="Source\Challenge\Model\ModelMesh.cpp" />
     <ClCompile Include="Source\Challenge\Model\ModelResource.cpp" />
@@ -174,10 +175,10 @@
     <ClCompile Include="Source\Challenge\Renderer\Texture\TextureDX11.cpp" />
     <ClCompile Include="Source\Challenge\Renderer\VertexBuffer.cpp" />
     <ClCompile Include="Source\Challenge\Renderer\VertexBuffer\VertexBufferDX11.cpp" />
+    <ClInclude Include="Source\Challenge\Scripting\ScriptModule.h" />
     <ClInclude Include="Source\Challenge\Scripting\Helpers\GLMHelper.inl">
       <FileType>CppCode</FileType>
     </ClInclude>
-    <ClCompile Include="Source\Challenge\Scripting\ScriptFunction.cpp" />
     <ClCompile Include="Source\Challenge\Scripting\ScriptEngine.cpp" />
     <ClCompile Include="Source\Challenge\Scripting\Types\ScriptMap.cpp" />
     <ClCompile Include="Source\Challenge\Scripting\Types\ScriptVector.cpp" />
@@ -224,7 +225,7 @@
     <ClCompile Include="Source\Challenge\View\ActorParams.cpp" />
     <ClCompile Include="Source\Challenge\View\GameView.cpp" />
     <ClInclude Include="Source\Challenge\Audio\AudioListener.h" />
-    <ClInclude Include="Source\Challenge\Audio\AudioManager.h" />
+    <ClInclude Include="Source\Challenge\Audio\AudioSystem.h" />
     <ClInclude Include="Source\Challenge\Audio\Sound.h" />
     <ClInclude Include="Source\Challenge\Audio\SoundGroup.h" />
     <ClInclude Include="Source\Challenge\Challenge.h" />
@@ -299,7 +300,6 @@
     <ClInclude Include="Source\Challenge\Model\Model.h" />
     <ClInclude Include="Source\Challenge\Model\ModelAnimationManager.h" />
     <ClInclude Include="Source\Challenge\Model\ModelBone.h" />
-    <ClInclude Include="Source\Challenge\Model\ModelManager.h" />
     <ClInclude Include="Source\Challenge\Model\ModelMaterial.h" />
     <ClInclude Include="Source\Challenge\Model\ModelMesh.h" />
     <ClInclude Include="Source\Challenge\Model\ModelResource.h" />
@@ -388,7 +388,6 @@
     <ClInclude Include="Source\Challenge\Scripting\LuaScript.h" />
     <ClInclude Include="Source\Challenge\Scripting\ScriptFunction.h" />
     <ClInclude Include="Source\Challenge\Scripting\ScriptEngine.h" />
-    <ClInclude Include="Source\Challenge\Scripting\ScriptObject.h" />
     <ClInclude Include="Source\Challenge\Scripting\Types\ScriptMap.h" />
     <ClInclude Include="Source\Challenge\Scripting\Types\ScriptVector.h" />
     <ClInclude Include="Source\Challenge\UI\Controller.h" />
@@ -427,6 +426,7 @@
     <ClInclude Include="Source\Challenge\Util\Logger.h" />
     <ClInclude Include="Source\Challenge\Util\PrimitiveGenerator.h" />
     <ClInclude Include="Source\Challenge\Util\SafeObject.hpp" />
+    <ClInclude Include="Source\Challenge\Util\StaticBlock.h" />
     <ClInclude Include="Source\Challenge\Util\StringUtil.h" />
     <ClInclude Include="Source\Challenge\Util\ImageAtlas.h" />
     <ClInclude Include="Source\Challenge\Util\Timer.h" />

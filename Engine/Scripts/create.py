@@ -8,7 +8,6 @@ def main(args):
     print("Creating new application")
 
     appName = args[2]
-    print("App Name: ", appName)
 
     platform = args[3]
 
@@ -21,9 +20,10 @@ def main(args):
                    "Resources/Config",
                    "Resources/Layout",
                    "Resources/Strings",
-                   "Resources/Shaders")
+                   "Resources/Shaders",
+                   "Resources/Scripts")
 
-    if platform == "vs2012":
+    if platform == "vs2012" or platform == "vs2013":
         projectFilePath = appName + "\\" + appName + ".vcxproj"
 
         if os.path.exists(projectFilePath):

@@ -15,7 +15,7 @@ class Application:
         self.loadStrings()
         self.processLayout(outDir)
         self.copyDirectory("/Resources/Config", outDir)
-        self.copyDirectory("/Resources/Scripts", outDir)
+        self.copyDirectory("/Resources/Scripts", outDir + "/Scripts")
         self.copyAssets(outDir)
 
     def loadStrings(self):
@@ -67,6 +67,9 @@ class Application:
             filepath = configDir + "/" + file
             if os.path.isfile(filepath):
                 fileContents = open(filepath).read()
+
+                if not os.path.exists(outDir):
+                    os.mkdir(outDir)
 
                 outFilepath = outDir + "/" + file
                 outfile = open(outFilepath, "w")

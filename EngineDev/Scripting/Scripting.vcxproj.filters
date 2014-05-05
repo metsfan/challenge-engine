@@ -18,25 +18,25 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h">
+    <ClInclude Include="Source\stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="targetver.h">
+    <ClInclude Include="Source\targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
+    <ClCompile Include="Source\Scripting.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Scripting.cpp">
+    <ClCompile Include="Source\stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="scripts\script.as" />
-    <None Include="scripts\vectors.as" />
-    <None Include="scripts\stlvector.as" />
-    <None Include="scripts\stlmap.as" />
+    <None Include="Resources\Scripts\script.as" />
+    <None Include="Resources\Scripts\stlmap.as" />
+    <None Include="Resources\Scripts\stlvector.as" />
+    <None Include="Resources\Scripts\vectors.as" />
   </ItemGroup>
 </Project>

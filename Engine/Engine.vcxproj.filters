@@ -18,9 +18,6 @@
     <ClCompile Include="Source\Challenge\Audio\AudioListener.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Challenge\Audio\AudioManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Challenge\Audio\Sound.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -109,9 +106,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Challenge\Model\ModelBone.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Challenge\Model\ModelManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Challenge\Model\ModelMaterial.cpp">
@@ -471,9 +465,6 @@
     <ClCompile Include="Source\Challenge\Core\Platform\Win32\CursorWin32.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Challenge\Scripting\ScriptFunction.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Challenge\Lib\include\angelscript\autowrapper\generator\generateheader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -534,15 +525,21 @@
     <ClCompile Include="Source\Challenge\Scripting\Types\ScriptMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Challenge\Scripting\ScriptModule.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Scripting\ScriptFunction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Audio\AudioSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Challenge\GameController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Challenge\Audio\AudioListener.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Challenge\Audio\AudioManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Challenge\Audio\Sound.h">
@@ -678,9 +675,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Challenge\Model\ModelBone.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Challenge\Model\ModelManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Challenge\Model\ModelMaterial.h">
@@ -1151,9 +1145,6 @@
     <ClInclude Include="Source\Challenge\Lib\include\angelscript\serializer\serializer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Challenge\Scripting\ScriptObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Challenge\Scripting\ScriptFunction.inl">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -1185,6 +1176,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Challenge\Scripting\Helpers\MapHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Scripting\ScriptModule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Util\StaticBlock.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Audio\AudioSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

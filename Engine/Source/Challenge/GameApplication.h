@@ -12,10 +12,8 @@
 
 namespace challenge 
 {
-	class ModelManager;
 	class InputManager;
-	class NetworkManager;
-	class AudioManager;
+	class ScriptEngine;
 
 	class Model;
 	class ModelMesh;
@@ -53,10 +51,6 @@ namespace challenge
 		void Exit() { mApplicationRunning = false; }
 
 		IGraphicsDevice* GetGraphicsDevice() { return mGraphicsDevice; }
-		ModelManager *GetModelManager() const { return mModelManager; }
-		InputManager *GetInputManager() const { return mInputManager; }
-		NetworkManager *GetNetworkManager() const { return mNetworkManager; }
-		AudioManager *GetAudioManager() const { return mAudioManager; }
 
 		const Size& GetScreenSize() { return mScreenSize; }
 
@@ -65,11 +59,6 @@ namespace challenge
 		void PreRender();
 		void Render();
 		void PostRender();
-
-		static GameApplication *GetInstance();
-
-		IVertexBuffer* CreateVertexBuffer(void *buffer, int size);
-		RendererType GetRendererType();
 
 		/* Renderer methods */
 		void LoadShaderConfig(const std::wstring &filepath);
@@ -84,13 +73,7 @@ namespace challenge
 		void ProcessMouseEvent(MouseEventType type, unsigned int button, const Point &position);
 		void ProcessMouseWheelEvent(MouseEventType type, int delta);
 
-		/* Factory methods */
-		Model* CreateModel(const std::wstring &filename);
-		Model* CreateModel(const std::wstring &name, const std::vector<ModelMesh *> &meshes);
-		Model* CreatePrimitive(PrimitiveShape type);
-
 		/* GUI Methods */
-
 		void ProcessMouseEvent(const MouseEvent &e);
 		void ProcessKeyboardEvent(const KeyboardEvent &e);
 
@@ -99,20 +82,13 @@ namespace challenge
 		std::shared_ptr<IApplicationListener> mListener;
 
 		IGraphicsDevice *mGraphicsDevice;
-		ModelManager *mModelManager;
 		InputManager *mInputManager;
-		NetworkManager *mNetworkManager;
-		AudioManager *mAudioManager;
-
-		ResourceCache<ModelResource> mModelCache;
-		//PrimitiveGenerator *mPrimitiveGenerator;
 
 		Size mScreenSize;
 
 		bool mInitialized;
 		
-		static GameApplication *mGameInstance;
-		static Font* sDefaultFont;
+		static ScriptEngine *sScriptEngine;
 
 		void StartRunning() { mApplicationRunning = true; }
 

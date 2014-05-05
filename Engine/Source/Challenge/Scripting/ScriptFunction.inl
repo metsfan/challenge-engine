@@ -1,3 +1,6 @@
+#include <Challenge/Scripting/ScriptEngine.h>
+#include <Challenge/Scripting/ScriptModule.h>
+
 namespace challenge
 {
 	template <typename T> T ScriptFunction::GetReturnValue()

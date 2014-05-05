@@ -1,9 +1,7 @@
 #include <Challenge/Challenge.h>
 #include <Challenge/UI/Window.h>
-#include <Challenge/Model/ModelManager.h>
 #include <Challenge/Input/InputManager.h>
 #include <Challenge/Network/NetworkManager.h>
-#include <Challenge/Audio/AudioManager.h>
 #include <Challenge/Renderer/VertexBuffer/VertexBufferDX11.h>
 #include <Challenge/Disk/ResourceCache.h>
 #include <Challenge/Model/Model.h>
@@ -16,19 +14,12 @@ namespace challenge
 	static const std::string kDefaultFont = "arial";
 	static const int kDefaultFontSize = 15;
 
-	GameApplication* GameApplication::mGameInstance = NULL;
-	Font* GameApplication::sDefaultFont = NULL;
-
 	GameApplication::GameApplication(std::shared_ptr<Window> window, std::shared_ptr<IApplicationListener> listener) :
 		mWindow(window),
 		mListener(listener),
 		mInitialized(false),
-		mNetworkManager(NULL),
-		mInputManager(NULL),
-		mModelManager(NULL)
-		//mPrimitiveGenerator(NULL)
+		mInputManager(NULL)
 	{
-		mGameInstance = NULL;
 	}
 
 	GameApplication::~GameApplication()
@@ -40,20 +31,6 @@ namespace challenge
 
 	bool GameApplication::Initialize()
 	{
-		//FontManager *fontManager = FontManager::GetInstance();
-		//fontManager->AddFont("arial", "arial.ttf", 15);
-		//fontManager->AddFont("arial", "arial.ttf", 18);
-
-		/*mNetworkManager = new NetworkManager();
-		if(!mNetworkManager->Initialize()) {
-			return false;
-		}
-
-		mAudioManager = new AudioManager();
-		if(!mAudioManager->Initialize()) {
-			return false;
-		}*/
-
 		mInputManager = new InputManager();
 		this->AddKeyboardListener(mWindow);
 		this->AddMouseListener(mWindow);
@@ -100,17 +77,6 @@ namespace challenge
 	void GameApplication::PostRender()
 	{
 		mGraphicsDevice->PostRender();
-	}
-
-	IVertexBuffer* GameApplication::CreateVertexBuffer(void *buffer, int size)
-	{
-		IVertexBuffer *vertBuffer = NULL;
-		RendererType type = GetRendererType();
-		/*if(type == RendererTypeDX11) {
-			vertBuffer = new VertexBufferDX11(buffer, size, D3D11_USAGE_DEFAULT, sizeof(ModelVertex));
-		}*/
-
-		return vertBuffer;
 	}
 
 	/* Renderer methods */
@@ -278,100 +244,6 @@ namespace challenge
 	{
 		mInputManager->ProcessMouseWheelEvent(type, delta);
 	}
-
-	/* Factory Methods */
-
-	Model* GameApplication::CreateModel(const std::wstring &filename)
-	{
-		std::hash<std::wstring> hashfn;
-		long key = hashfn(filename);
-		std::shared_ptr<ModelResource> resource = mModelCache.RetrieveResource(key);
-		if(!resource) {
-			ModelResource newResource;
-			if(newResource.Initialize(filename)) {
-				mModelCache.AddResource(key, newResource);
-			} else {
-				return NULL;
-			}
-
-			return new Model(mModelCache.RetrieveResource(key));
-		}
-
-		return new Model(resource);
-	}
-
-	Model* GameApplication::CreateModel(const std::wstring &name, const std::vector<ModelMesh *> &meshes)
-	{
-		std::hash<std::wstring> hashfn;
-		long key = hashfn(name);
-		std::shared_ptr<ModelResource> resource = mModelCache.RetrieveResource(key);
-		if(!resource) {
-			ModelResource newResource;
-			if(newResource.Initialize(meshes)) {
-				mModelCache.AddResource(key, newResource);
-			} else {
-				return NULL;
-			}
-
-			return new Model(mModelCache.RetrieveResource(key));
-		}
-
-		return new Model(resource);
-	}
-
-	Model* GameApplication::CreatePrimitive(PrimitiveShape type)
-	{
-		//if(mPrimitiveGenerator) {
-			//return mPrimitiveGenerator->CreatePrimitive(type);
-		//}
-
-		return NULL;
-	}
-
-	/* GUI Methods */
-
-	RendererType GameApplication::GetRendererType()
-	{
-		//return mWindow->GetRenderer()->GetType();
-		return RendererTypeDX11();
-	}
-
-	GameApplication *GameApplication::GetInstance() 
-	{
-		/*if(mGameInstance == NULL) {
-			mGameInstance = new GameApplication();
-			if(!mGameInstance->Initialize()) {
-				mGameInstance = NULL;
-			}
-		}*/
-		return mGameInstance;
-	}
-
-	/*void GameApplication::ProcessMouseEvent(const MouseEvent &e)
-	{
-		bool handled = mViewManager->ProcessMouseEvent(e);
-		if(!handled) {
-			for(int i = 0; i < mMouseListeners.size(); i++) {
-				std::shared_ptr<IMouseListener> listener = mMouseListeners[i].lock();
-				if (listener) {
-					listener->OnMouseEvent(e);
-				}
-			}
-		}
-	}
-
-	void GameApplication::ProcessKeyboardEvent(const KeyboardEvent &e)
-	{
-		bool handled = mViewManager->ProcessKeyboardEvent(e);
-		if(!handled) {
-			for(int i = 0; i < mKeyboardListeners.size(); i++) {
-				std::shared_ptr<IKeyboardListener> listener = mKeyboardListeners[i].lock();
-				if(listener) {
-					listener->OnKeyboardEvent(e);
-				}
-			}
-		}
-	}*/
 }
 
 

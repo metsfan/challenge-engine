@@ -15,25 +15,31 @@
 
 using namespace challenge;
 
+
+
 int _tmain(int argc, _TCHAR* argv[])
 {
 	ScriptEngine engine;
 
-	ScriptVector::Register(engine.GetEngine());
-	ScriptMap::Register(engine.GetEngine());
-	GLMHelper::Register(engine.GetEngine());
-	VectorHelper::Register<int>(engine.GetEngine(), "int");
-	MapHelper::Register<int, float>(engine.GetEngine(), "int", "float");
+	ScriptVector::Register(ScriptEngine::GetASEngine());
+	ScriptMap::Register(ScriptEngine::GetASEngine());
+	GLMHelper::Register(ScriptEngine::GetASEngine());
+	VectorHelper::Register<int>(ScriptEngine::GetASEngine(), "int");
+	MapHelper::Register<int, float>(ScriptEngine::GetASEngine(), "int", "float");
 
 	//engine.LoadFile("scripts/script.as");
 	//engine.LoadFile("scripts/vectors.as");
 	//engine.LoadFile("scripts/stlvector.as");
-	engine.LoadFile("scripts/stlmap.as");
+	//engine.LoadFile("Scripts/stlmap.as");
+
+	ScriptModule *module = ScriptEngine::GetModule("default");
+	module->AddDefaultScriptsDirectory();
+	module->Build();
 
 	//ScriptFunction function("uint64 tester(int)", engine.GetContext(), engine.GetModule());
 	//ScriptFunction function("void main(vec2 &in)", engine.GetContext(), engine.GetModule());
 	//ScriptFunction function("void main(vector_int &in)", engine.GetContext(), engine.GetModule());
-	ScriptFunction function("void main(map_int_float &in)", engine.GetContext(), engine.GetModule());
+	ScriptFunction *function = module->GetFunction("void main(map_int_float &in)");
 
 	glm::vec2 testVec(4, 7);
 	std::vector<int> vec;
@@ -46,7 +52,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	//function.Call(&testVec);
 	//function.Call(&vec);
-	function.Call(&map);
+	function->Call(&map);
 	//uint64_t returnValue = function.GetReturnValue<uint64_t>();
 
 	return 0;

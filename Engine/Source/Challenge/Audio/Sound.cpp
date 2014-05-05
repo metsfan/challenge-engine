@@ -3,94 +3,95 @@
 #include <Challenge/Util/Util.h>
 #include <Challenge/Util/Logger.h>
 #include <Challenge/GameApplication.h>
-#include <Challenge/Audio/AudioManager.h>
+#include <Challenge/Audio/AudioSystem.h>
 
-using namespace challenge;
-
-Sound::Sound(std::string filename, glm::vec3 position, bool loop)
+namespace challenge
 {
-	FMOD_VECTOR velocity = { 0, 0, 0 };
-	FMOD_VECTOR pos = { position.x, position.y, position.z };
+	Sound::Sound(std::string filename, glm::vec3 position, bool loop)
+	{
+		FMOD_VECTOR velocity = { 0, 0, 0 };
+		FMOD_VECTOR pos = { position.x, position.y, position.z };
 
-	AudioManager *audioManager = GameApplication::GetInstance()->GetAudioManager();
-	FMOD::System *system = audioManager->mAudioSystem;
+		FMOD::System *system = AudioSystem::GetFMODSystem();
 
-	FMOD_RESULT result;
+		FMOD_RESULT result;
 
-	mFilepath = kSoundDir + filename;
-	mPosition = pos;
-	mVelocity = velocity;
+		mFilepath = kSoundDir + filename;
+		mPosition = pos;
+		mVelocity = velocity;
 
-	result = system->createSound(mFilepath.c_str(), FMOD_3D, 0, &mSound);
-	if(result != FMOD_OK) {
-		//TODO: Error handling
+		result = system->createSound(mFilepath.c_str(), FMOD_3D, 0, &mSound);
+		if (result != FMOD_OK) {
+			//TODO: Error handling
+		}
+
+		result = system->playSound(FMOD_CHANNEL_FREE, mSound, true, &mChannel);
+		if (result != FMOD_OK) {
+			//TODO: Error handling
+		}
+
+		Update();
+
+		SetLooping(loop);
 	}
 
-	result = system->playSound(FMOD_CHANNEL_FREE, mSound, true, &mChannel);
-	if(result != FMOD_OK) {
-		//TODO: Error handling
+	Sound::~Sound()
+	{
+		mSound->release();
 	}
 
-	Update();
-
-	SetLooping(loop);
-}
-
-Sound::~Sound()
-{
-	mSound->release();
-}
-
-void Sound::Play()
-{
-	mChannel->setPaused(false);
-}
-
-void Sound::Stop()
-{
-	Pause();
-	Rewind();
-}
-
-void Sound::Pause()
-{
-	mChannel->setPaused(true);
-}
-
-void Sound::Rewind()
-{
-	mChannel->setPosition(0, FMOD_TIMEUNIT_MS);
-}
-
-void Sound::SetVolume(float volume)
-{
-	mChannel->setVolume(CLAMP(volume, 0, 1));
-}
-
-void Sound::SetLooping(bool looping)
-{
-	if(looping) {
-		mSound->setMode(FMOD_LOOP_NORMAL);
-	} else {
-		mSound->setMode(FMOD_LOOP_OFF);
+	void Sound::Play()
+	{
+		mChannel->setPaused(false);
 	}
-}
 
-void Sound::SetPosition(glm::vec3 position)
-{
-	FMOD_VECTOR fmodVec = { position.x, position.y, position.z };
-	mPosition = fmodVec;
-	Update();
-}
+	void Sound::Stop()
+	{
+		Pause();
+		Rewind();
+	}
 
-void Sound::SetVelocity(glm::vec3 velocity)
-{
-	FMOD_VECTOR fmodVec = { velocity.x, velocity.y, velocity.z };
-	mVelocity = fmodVec;
-	Update();
-}
+	void Sound::Pause()
+	{
+		mChannel->setPaused(true);
+	}
 
-void Sound::Update()
-{
-	mChannel->set3DAttributes(&mPosition, &mVelocity);
+	void Sound::Rewind()
+	{
+		mChannel->setPosition(0, FMOD_TIMEUNIT_MS);
+	}
+
+	void Sound::SetVolume(float volume)
+	{
+		mChannel->setVolume(CLAMP(volume, 0, 1));
+	}
+
+	void Sound::SetLooping(bool looping)
+	{
+		if (looping) {
+			mSound->setMode(FMOD_LOOP_NORMAL);
+		}
+		else {
+			mSound->setMode(FMOD_LOOP_OFF);
+		}
+	}
+
+	void Sound::SetPosition(glm::vec3 position)
+	{
+		FMOD_VECTOR fmodVec = { position.x, position.y, position.z };
+		mPosition = fmodVec;
+		Update();
+	}
+
+	void Sound::SetVelocity(glm::vec3 velocity)
+	{
+		FMOD_VECTOR fmodVec = { velocity.x, velocity.y, velocity.z };
+		mVelocity = fmodVec;
+		Update();
+	}
+
+	void Sound::Update()
+	{
+		mChannel->set3DAttributes(&mPosition, &mVelocity);
+	}
 }
