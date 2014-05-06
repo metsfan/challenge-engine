@@ -67,14 +67,13 @@ namespace challenge
 	template<typename ReturnType, typename... Args>
 	ReturnType ScriptFunction::Call(Args... args)
 	{
+		std::lock_guard<std::mutex> lock(mCallMutex);
+
 		int result;
 
 		mParamIndex = 0;
 
-		result = mContext->Prepare(mFunction);
-
 		SetParamArgs(args...);
-
 		result = mContext->Execute();
 
 		return GetReturnValue<ReturnType>();

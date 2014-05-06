@@ -13,10 +13,16 @@ namespace challenge
 		friend class ScriptFunction;
 
 	public:
-		static void Initialize();
+		//static void Initialize();
+		static asIScriptEngine * CreateEngine();
 
 		static asIScriptEngine * GetASEngine() { return mScriptEngine; }
 		static ScriptModule * GetModule(const std::string &name);
+
+		static asIScriptContext * CreateContext()
+		{
+			return mScriptEngine->CreateContext();
+		}
 
 	private:
 		static asIScriptEngine *mScriptEngine;

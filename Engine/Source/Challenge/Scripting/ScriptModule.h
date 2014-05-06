@@ -41,7 +41,8 @@ namespace challenge
 		asIScriptModule *mModule;
 		CScriptBuilder mScriptBuilder;
 		std::string mName;
-		std::unordered_map<std::string, ScriptFunction *> mFunctions;
+		std::map<size_t, std::unordered_map<std::string, ScriptFunction *>> mFunctions;
+		std::mutex mFunctionLock;
 
 		ScriptModule(const std::string &name);
 

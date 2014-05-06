@@ -26,11 +26,7 @@ int _tmain(int argc, _TCHAR* argv[])
 {
 	ScriptEngine engine;
 
-	ScriptVector::Register(ScriptEngine::GetASEngine());
-	ScriptMap::Register(ScriptEngine::GetASEngine());
-	GLMHelper::Register(ScriptEngine::GetASEngine());
-	VectorHelper::Register<int>(ScriptEngine::GetASEngine(), "int");
-	MapHelper::Register<int, float>(ScriptEngine::GetASEngine(), "int", "float");
+	
 
 	int x = 0, y = 2, z = 3;
 
@@ -41,14 +37,53 @@ int _tmain(int argc, _TCHAR* argv[])
 	//engine.LoadFile("scripts/stlvector.as");
 	//engine.LoadFile("Scripts/stlmap.as");
 
-	ScriptModule *module = ScriptEngine::GetModule("default");
+	ScriptVector::Register(ScriptEngine::GetASEngine());
+	ScriptMap::Register(ScriptEngine::GetASEngine());
+	GLMHelper::Register(ScriptEngine::GetASEngine());
+	VectorHelper::Register<int>(ScriptEngine::GetASEngine(), "int");
+	MapHelper::Register<int, float>(ScriptEngine::GetASEngine(), "int", "float");
+
+	ScriptModule *module = ScriptEngine::GetModule("default1");
 	module->AddDefaultScriptsDirectory();
 	module->Build();
 
 	//ScriptFunction function("uint64 tester(int)", engine.GetContext(), engine.GetModule());
 	//ScriptFunction function("void main(vec2 &in)", engine.GetContext(), engine.GetModule());
 	//ScriptFunction function("void main(vector_int &in)", engine.GetContext(), engine.GetModule());
-	ScriptFunction *function = module->GetFunction("float main(map_int_float &in)");
+	std::thread thread1([module]() {
+		
+		ScriptFunction *function = module->GetFunction("float main(map_int_float &in)");
+		function->SetContext(ScriptEngine::CreateContext());
+
+		std::map<int, float> map;
+		map[8] = 2.5f;
+
+		float ret = function->Call<float>(&map);
+
+		printf("Return: %f\n", ret);
+	});
+
+	std::thread thread2([module]() {
+		/*ScriptFunction *function = module->GetFunction("uint64 tester(int x)");
+		function->SetContext(ScriptEngine::CreateContext());
+
+		int x = 5;
+
+		uint64_t ret = function->Call<float>(x);
+
+		printf("Return: %lld\n", ret);*/
+
+		ScriptFunction *function = module->GetFunction("float main(map_int_float &in)");
+		function->SetContext(ScriptEngine::CreateContext());
+
+		std::map<int, float> map;
+		map[2] = 8.5f;
+
+		float ret = function->Call<float>(&map);
+
+		printf("Return: %f\n", ret);
+	});
+	
 
 	glm::vec2 testVec(4, 7);
 	std::vector<int> vec;
@@ -56,13 +91,11 @@ int _tmain(int argc, _TCHAR* argv[])
 	vec.push_back(7);
 	vec.push_back(4);
 
-	std::map<int, float> map;
-	map[8] = 2.5f;
-
-	//function.Call(&testVec);
-	//function.Call(&vec);
-	function->Call<void>(&map);
+	
 	//uint64_t returnValue = function.GetReturnValue<uint64_t>();
+
+	thread1.join();
+	thread2.join();
 
 	return 0;
 }

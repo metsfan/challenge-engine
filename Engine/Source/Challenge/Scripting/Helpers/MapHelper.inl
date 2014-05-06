@@ -3,6 +3,7 @@
 
 namespace challenge
 {
+
 	class _MapIterStore
 	{
 	public:
@@ -10,6 +11,7 @@ namespace challenge
 		static typename std::map<K, V>::iterator NextIter(std::map<K, V> &map, bool begin, bool peek)
 		{
 			static std::map<std::map<K, V> *, std::map<K, V>::iterator> iters;
+			std::lock_guard<std::mutex> lock(mMutex);
 
 			if (!begin) {
 				auto &it = iters.find(&map);
@@ -37,7 +39,12 @@ namespace challenge
 				return map.begin();
 			}
 		}
+
+	private:
+		static std::mutex mMutex;
 	};
+
+	std::mutex _MapIterStore::mMutex;
 
 	class _MapHelper
 	{

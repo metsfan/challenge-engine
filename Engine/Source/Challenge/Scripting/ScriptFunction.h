@@ -16,6 +16,12 @@ namespace challenge
 	public:
 		~ScriptFunction();
 
+		void SetContext(asIScriptContext *context) 
+		{
+			mContext = context; 
+			int result = mContext->Prepare(mFunction);
+		}
+
 		template<typename ReturnType, typename... Args>
 		ReturnType Call(Args... args);
 
@@ -23,6 +29,7 @@ namespace challenge
 		asIScriptContext *mContext;
 		asIScriptFunction *mFunction;
 		int mParamIndex;
+		std::mutex mCallMutex;
 
 		ScriptFunction(ScriptModule *module, const std::string &signature);
 

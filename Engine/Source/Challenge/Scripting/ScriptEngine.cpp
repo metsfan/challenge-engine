@@ -12,11 +12,13 @@ namespace challenge
 	std::unordered_map<std::string, ScriptModule *> ScriptEngine::mScriptModules;
 
 	StaticBlock staticBlock([]() {
-		ScriptEngine::Initialize();
+		ScriptEngine::CreateEngine();
 	});
 
-	void ScriptEngine::Initialize()
+	asIScriptEngine * ScriptEngine::CreateEngine()
 	{
+		asPrepareMultithread();
+
 		mScriptEngine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
 		mScriptContext = mScriptEngine->CreateContext();
 
@@ -25,6 +27,8 @@ namespace challenge
 		RegisterStdString(mScriptEngine);
 
 		mScriptEngine->RegisterGlobalFunction("void print(const string &in)", asFUNCTION(ScriptEngine::Print), asCALL_CDECL);
+
+		return mScriptEngine;
 	}
 
 	void ScriptEngine::MessageCallback(const asSMessageInfo *msg, void *param)

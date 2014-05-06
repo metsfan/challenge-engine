@@ -47,17 +47,22 @@ namespace challenge
 
 	ScriptFunction * ScriptModule::GetFunction(const std::string &decl)
 	{
+		std::lock_guard<std::mutex> lock(mFunctionLock);
+
 		if (!mModule) {
 			return NULL;
 		}
 
-		auto it = mFunctions.find(decl);
-		if (it != mFunctions.end()) {
+		size_t threadId = std::this_thread::get_id().hash();
+		auto &bucket = mFunctions[threadId];
+
+		auto it = bucket.find(decl);
+		if (it != bucket.end()) {
 			return it->second;
 		}
 
 		ScriptFunction *newFunction = new ScriptFunction(this, decl);
-		mFunctions[decl] = newFunction;
+		bucket[decl] = newFunction;
 
 		return newFunction;
 	}
