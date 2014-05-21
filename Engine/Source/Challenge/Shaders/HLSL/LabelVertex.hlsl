@@ -29,7 +29,7 @@ VS_OUT main( VS_IN vsIn )
 	vsOut.texCoord = vsIn.texCoord;
 
 	float2 transPos = vsIn.position - gOriginAngle.xy;
-	transPos.x += lineOffset;
+	//transPos.x += lineOffset;
 	float sinA = gOriginAngle.z;
 	float cosA = gOriginAngle.w;
 
@@ -37,7 +37,7 @@ VS_OUT main( VS_IN vsIn )
 	finalPos.x = (cosA * transPos.x) - (sinA * transPos.y);
 	finalPos.y = (sinA * transPos.x) + (cosA * transPos.y);
 
-	float2 position = gPosition + gScale * vsIn.position;
+	float2 position = gPosition + gScale * finalPos;
 	vsOut.position = mul(gWVPMatrix, float4(position, 0.0, 1.0));
 
 	return vsOut;

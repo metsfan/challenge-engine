@@ -5,16 +5,16 @@ void GUITesting::OnApplicationInitialized(GameApplication *app)
 {
 	auto window = app->GetWindow();
 
-	/*TextFieldView *textField = new TextFieldView(Frame(100, 100, 75, 30));
+	TextFieldView *textField = new TextFieldView(Frame(100, 100, 75, 30));
 	textField->SetBorderWidth(1);
 	textField->SetBorderColor(Color::Black());
-	window->AddSubview(textField);*/
+	window->AddSubview(textField);
 
-	LabelView *label = new LabelView(Frame(100, 100, 75, 30));
+	/*LabelView *label = new LabelView(Frame(100, 100, 75, 30));
 	label->SetText("Hello");
 	label->SetTextColor(Color::Red());
 	label->SetBackgroundColor(Color::Clear());
-	window->AddSubview(label);
+	window->AddSubview(label);*/
 }
 
 void GUITesting::OnApplicationDestroyed(GameApplication *app)

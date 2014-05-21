@@ -244,6 +244,7 @@ namespace challenge
         TextAlignHorizontal mHorizontalAlignment;
         TextAlignVertical mVerticalAlignment;
         std::vector<double> mLineWidths;
+		std::vector<float> mLineOffsets;
         MeshShape *mOutlineShape;
         
         int mLabelOriginAndAngleUniform;

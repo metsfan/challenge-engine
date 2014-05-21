@@ -61,7 +61,7 @@ namespace challenge
 		mLabel->SetTextColor(mTextColor);
 
 		mLabel->SetPosition(frame.origin.x + parentFrame.origin.x,
-			frame.origin.y + parentFrame.origin.y - 5);
+			frame.origin.y + parentFrame.origin.y + 10);
 
 		mLabel->Draw(device, state);
 

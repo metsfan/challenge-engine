@@ -56,6 +56,7 @@ namespace challenge
 
 		mCursor->SetBackgroundColor(Color(0, 0, 0, 255));
 		mTextLabel->AddSubview(mCursor);
+		mTextLabel->SetBackgroundColor(Color::Clear());
 
 		//mLetterPositions.push_back(mCursorPosition);
 		

@@ -18,11 +18,12 @@ namespace challenge
     
     static const Size kGlyphAtlasSize(2048, 2048);
     static const char16_t kEllipsisCharacter = 0x2026;
+	static const size_t kMaxLineOffsets = 20;
     
     Label::Label(IGraphicsDevice *device) :
         MeshShape(device, "Label"),
         mFont(FontManager::GetDefaultFont()),
-        mFontScale(2),
+        mFontScale(1),
         mAlpha(1),
         mTextColor(Vector4f(0, 0, 0, 1)),
         mFontKey(0),
@@ -47,6 +48,8 @@ namespace challenge
 		mPositionUniform = device->GetContext()->GetGlobalIndex("POSITION");
 		mLabelOriginAndAngleUniform = device->GetContext()->GetGlobalIndex("ORIGIN_ANGLE");
 		mScaleUniform = device->GetContext()->GetGlobalIndex("SCALE");
+
+		mLineOffsets.resize(kMaxLineOffsets);
     }
     
     Label::~Label()
@@ -59,6 +62,11 @@ namespace challenge
     
     void Label::Draw(IGraphicsDevice *device, RenderState &state, PrimitiveType primitiveType)
     {
+		if (mText.size() == 0)
+		{
+			return;
+		}
+
         if (!msAtlasTexture)
         {
             msAtlasTexture = new GlyphAtlasTexture(device, kGlyphAtlasSize);
@@ -240,13 +248,11 @@ namespace challenge
 			state.SetShaderData(mGlyphAtlasUniform, msAtlasTexture->GetTexture());
             state.SetShaderData(mPositionUniform, &mPosition);
             
-            std::vector<float> lineOffsets;
-            for(double d : mLineWidths)
-            {
-                lineOffsets.push_back(this->DetermineLineStart(d));
+			for (int i = 0; i < mLineWidths.size(); i++) {
+                mLineOffsets[i] = this->DetermineLineStart(mLineWidths[i]);
             }
 
-            state.SetShaderData(mLineOffsetUniform, &lineOffsets[0]);
+			state.SetShaderData(mLineOffsetUniform, &mLineOffsets[0]);
             state.SetShaderData(mAlphaUniform, &mAlpha);
 			state.SetShaderData(mLabelOriginAndAngleUniform, &mLabelOriginAndAngle);
             
