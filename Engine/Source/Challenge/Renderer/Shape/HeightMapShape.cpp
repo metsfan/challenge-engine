@@ -52,7 +52,7 @@ namespace challenge
 
 	void HeightMapShape::Draw(IGraphicsDevice *device, RenderState &state)
 	{
-		ShaderDataMatrix4 wvpData(&state.GetWorldViewProjection(), 1);
+		/*ShaderDataMatrix4 wvpData(&state.GetWorldViewProjection(), 1);
 		state.SetShaderData("WORLDVIEWPROJ_MATRIX", &wvpData);
 
 		ShaderDataTexture texData(mHeightMapTexture);
@@ -69,6 +69,6 @@ namespace challenge
 			mBuffer->Activate();
 			technique->ProcessNextPass(device, state);
 			device->Draw(PrimitiveTypeTriangleList, mBuffer->GetNumVerts(), 0);
-		}
+		}*/
 	}
 };

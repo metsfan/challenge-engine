@@ -93,7 +93,7 @@ namespace challenge
 		transform *= glm::mat4(mAxes);
 		transform = glm::scale(transform, this->GetDimensions() * 2.0f);
 		
-		state.PushTransform(transform);
+		/*state.PushTransform(transform);
 
 		glm::vec4 color(1, 0, 0, 0.5);
 		ShaderDataVector4 colorData(&color, 1);
@@ -107,6 +107,6 @@ namespace challenge
 		state.SetShaderData("COLOR", &clearColorData);
 
 		state.PopTransform();
-		device->DisableState(GraphicsState::AlphaBlending);
+		device->DisableState(GraphicsState::AlphaBlending);*/
 	}
 };

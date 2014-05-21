@@ -33,6 +33,10 @@ namespace challenge
 
 		virtual void SetActiveShaderProgram(IShaderProgram *shader) = 0;
 
+		virtual int32_t RegisterGlobal(const std::string &name) = 0;
+		virtual int32_t GetGlobalIndex(const std::string &name) = 0;
+		virtual size_t GetNumGlobalVariables() = 0;
+
 		virtual ITexture * GetSharedTexture(const std::string &key) = 0;
 		virtual void PutSharedTexture(const std::string &key, ITexture *texture) = 0;
 	};
@@ -68,6 +72,10 @@ namespace challenge
 			mSharedTextures[key] = texture;
 		}
 
+		int32_t RegisterGlobal(const std::string &name);
+		int32_t GetGlobalIndex(const std::string &name);
+		size_t GetNumGlobalVariables() { return mGlobalDataRegistry.size(); }
+
 	private:
 		TShaderCacheMap mShaders;
 		TShaderProgramCacheMap mShaderPrograms;
@@ -75,6 +83,7 @@ namespace challenge
 		IShaderProgram *mActiveShader;
 		std::map<int, ITexture *> mActiveTextures;
 		std::unordered_map<std::string, ITexture *> mSharedTextures;
+		std::unordered_map<std::string, uint32_t> mGlobalDataRegistry;
 	};
 
 	template <typename Renderer>

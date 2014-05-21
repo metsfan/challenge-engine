@@ -32,5 +32,24 @@ namespace challenge
 			std::hash<T> hashFunc;
 			return hashFunc(value);
 		}
+
+		static double GetSystemTime();
+		static double GetClockTime();
+
+		template <typename T>
+		static T Wrap(T val, T min, T max)
+		{
+			if (val < min)
+			{
+				return max + (val - min);
+			}
+
+			if (val > max)
+			{
+				return min + (val - max);
+			}
+
+			return val;
+		}
 	};
 };

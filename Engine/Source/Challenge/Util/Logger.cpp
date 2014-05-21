@@ -4,7 +4,7 @@ using namespace challenge;
 
 bool Logger::s_OpenedOnce = false;
 
-void Logger::log(LogLevel level, std::string message)
+void Logger::Log(LogLevel level, std::string message)
 {
 	/*std::ofstream outfile;
 
@@ -40,7 +40,7 @@ void Logger::log(LogLevel level, std::string message)
 	//outfile.close();
 }
 
-void Logger::log(LogLevel level, const char *format, ...)
+void Logger::Log(LogLevel level, const char *format, ...)
 {
 	va_list args;
 	va_start(args, format);
@@ -52,5 +52,5 @@ void Logger::log(LogLevel level, const char *format, ...)
 	std::stringstream ss;
 	ss << buffer;
 
-	Logger::log(level, ss.str());
+	Logger::Log(level, ss.str());
 }

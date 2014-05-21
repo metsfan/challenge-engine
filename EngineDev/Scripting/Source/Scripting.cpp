@@ -53,7 +53,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	std::thread thread1([module]() {
 		
 		ScriptFunction *function = module->GetFunction("float main(map_int_float &in)");
-		function->SetContext(ScriptEngine::CreateContext());
+		//function->SetContext(ScriptEngine::CreateContext());
 
 		std::map<int, float> map;
 		map[8] = 2.5f;
@@ -74,7 +74,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		printf("Return: %lld\n", ret);*/
 
 		ScriptFunction *function = module->GetFunction("float main(map_int_float &in)");
-		function->SetContext(ScriptEngine::CreateContext());
+		//function->SetContext(ScriptEngine::CreateContext());
 
 		std::map<int, float> map;
 		map[2] = 8.5f;

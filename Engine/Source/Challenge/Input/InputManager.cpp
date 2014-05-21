@@ -176,7 +176,7 @@ namespace challenge
 				evt.keyCode = key;
 				evt.type = KeyboardEventKeyPress;
 
-				//Logger::log(LogDebug, "Key Press: %c", key);
+				//Logger::Log(LogDebug, "Key Press: %c", key);
 
 				this->PostKeyboardEvent(evt);
 			}

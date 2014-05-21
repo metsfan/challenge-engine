@@ -1,65 +1,83 @@
 #pragma once
 
+#include <set>
+
 #include <Challenge/Challenge.h>
 #include <Challenge/Font/Glyph.h>
-#include <Challenge/Font/FontTypes.h>
-#include <Challenge/Font/Font.h>
+#include <Challenge/Font/Types.h>
+#include <Challenge/Util/SafeObject.hpp>
 
 namespace challenge
 {
+	class Font;
+
 	struct GlyphData
 	{
 		Vector2 minCoordinate;
 		Vector2 maxCoordinate;
-        Size size;
+        
+        Vector2i dataPosition;
+        Vector2i dataSize;
+        
+        Vector2i size;
 		int page;
-        int advance;
-        Point bearing;
+        double advance;
+        Vector2f bearing;
         int maxHeight;
+        int character;
 	};
 
-	typedef std::map<int, GlyphData> TGlyphEntryMap;
+	typedef std::map<uint64_t, GlyphData> TGlyphEntryMap;
     
     static const Point kBaseOffset(3, 2);
 
-	template <typename CharType>
-	class GlyphAtlas
+    class IGlyphAtlasListener
+    {
+    public:
+        
+        virtual ~IGlyphAtlasListener(){}
+        virtual void OnAtlasReset() = 0;
+    };
+    
+    /** This class will become invalid whenever a glyph has been added that was previously not in the atlas.
+     *
+     * It must be validated externally once the user syncs the atlas's data with their own data
+     **/
+	class GlyphAtlas : public Validatable
 	{
 	public:
-		GlyphAtlas(FONT_STRING_DESC<CharType> fontStringDesc, Font *font, Size size, TFontPassList passes);
+		GlyphAtlas(const Size& size);
 		~GlyphAtlas();
 
-		void AddGlyph(int character);
-        bool ContainsGlyph(int character) { return mGlyphs.count(character); }
-		const void* GetData() { return static_cast<void *>(&mData[0]); }
+		void AddGlyph(Font* font, int character, unsigned short outlineSize = 0);
+        bool ContainsGlyph(Font* font, int character, unsigned short outlineSize = 0) { return mGlyphs.count(this->GenerateKey(font, character, outlineSize)); }
+		const void* GetData() { return static_cast<void *>( mData.empty() ? NULL : &mData[0]); }
 		const Size& GetSize() const { return mSize; }
 		const int GetNumAtlases() { return mNumAtlases; }
-		const GlyphData GetCoordinates(int character);
-        long GetKerning(int leftChar, int rightChar);
-        Font* GetFont() { return mFont; }
+		const GlyphData GetCoordinates(Font* font, int character, unsigned short outlineSize = 0);
         bool UpdatedAfter(long time) { return mLastUpdated > time; }
         float GetUsage() { return (float)mCursor.y / (float)mSize.height; }
         void Empty();
+        void AddListener(IGlyphAtlasListener* listener);
+        void RemoveListener(IGlyphAtlasListener* listener);
+        double GetScale(){return 2.0;}
+        void Validate() { Validatable::Validate();}
 
+        uint64_t GenerateKey(Font* font, int character, unsigned short outlineSize = 0);
+    private:
+        
+        typedef SafeObject<std::set<IGlyphAtlasListener*> > TAtlasListenerSet;
+        
 	private:
-		FONT_STRING_DESC<CharType> mFontStringDesc;
 		std::vector<FontTexel> mData;
 		int mDataSize;
 		int mShelfHeight;
 		Size mSize;
 		int mTexWidth;
 		Point mCursor;
-		Font *mFont;
 		int mNumAtlases;
-		TFontPassList mPasses;
 		TGlyphEntryMap mGlyphs;
         long mLastUpdated;
+        TAtlasListenerSet mListeners;
 	};
-    
-    typedef GlyphAtlas<char> GlyphAtlas8;
-    typedef GlyphAtlas<char16_t> GlyphAtlas16;
-    typedef GlyphAtlas<char32_t> GlyphAtlast32;
-    
 }
-
-#include <Challenge/Font/GlyphAtlas.inl>

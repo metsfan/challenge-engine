@@ -1,25 +1,25 @@
 #pragma once
 
-#include <Challenge/Challenge.h>
-#include <Challenge/Font/Glyph.h>
-#include <Challenge/Font/FontTypes.h>
-#include <Challenge/Font/FontFace.h>
-#include <Challenge/Util/Util.h>
-
 #include <ft2build.h>
 #include FT_FREETYPE_H 
+
+#include <Challenge/Challenge.h>
+#include <Challenge/Font/Glyph.h>
+#include <Challenge/Font/Types.h>
+#include <Challenge/Font/FontFace.h>
+#include <Challenge/Util/SafeObject.hpp>
+
+#define NEWLINE_CHAR 10
+#define SPACE_CHAR 32
 
 namespace challenge
 {
 	static const int kBottomBuffer = 5;
+	static const float oo255 = 1.0f / 255.0f;
 
-	typedef std::map<int, Glyph *> TGlyphMap;
+	typedef std::map<uint64_t, Glyph *> TGlyphMap;
     
-    template <typename CharType>
     class GlyphAtlas;
-
-	class FontCache;
-    
 	class StringBuffer
 	{
 		friend class Font;
@@ -35,60 +35,117 @@ namespace challenge
 			}*/
 		}
 
-		const BYTE* GetBuffer() { return mBuffer; }
+		const void* GetBuffer() { return mBuffer; }
 		const Size& GetSize() const { return mSize; }
 
 	private:
-		BYTE *mBuffer;
+		void *mBuffer;
 		Size mSize;
 	};
 
 	class Font
 	{
+        friend class FontManager;
         friend class Glyph;
         
 	public:
-		Font(FONT_DESC &fontDesc);
 		~Font();
+        
+        int GetSize() { return mFontDesc.FontSize; }
+        const std::string& GetFamily() { return mFontDesc.FontFamily; }
 
-        template <typename CharType>
-		StringBuffer CreateStringBitmap(FONT_STRING_DESC<CharType> fontStringDesc);
-		
-		template <typename CharType>
-		GlyphAtlas<CharType>* CreateGlyphAtlas(FONT_STRING_DESC<CharType> fontStringDesc, Size atlasSize);
+//        template <typename CharType>
+//		StringBuffer CreateStringBitmap(FONT_STRING_DESC<CharType> fontStringDesc);
+//        
+//        template <typename CharType>
+//        TFontPassList GetPasses(FONT_STRING_DESC<CharType> &fontStringDesc);
+        
+		double GetKerning(Glyph *leftGlyph, Glyph *rightGlyph);
+        double GetKerning(int leftChar, int rightChar, int leftCharOutlineSize = 0, int rightCharOutlineSize = 0);
+		Glyph* GetGlyph(int character, int outlineSize = 0);
 
-		long GetKerning(Glyph *leftGlyph, Glyph *rightGlyph);
-        int GetKerning(int leftChar, int rightChar);
-		Glyph* GetGlyph(int character, bool outline = false);
-		Glyph* GetGlyphForPass(FontPass &pass, int character);
-
-		int GetMaxCharHeight() { return mFaces[0]->GetMaxCharHeight(); }
-        int GetLineHeight() { return mFaces[0]->GetLineHeight(); }
-		Size GetStringDimensions(const std::string &str);
-		
+		double GetMaxCharHeight()
+        {
+            if (mFaces.size())
+            {
+                return mFaces[0]->GetMaxCharHeight();
+            }
+            
+            if (mBackupFont)
+            {
+                return mBackupFont->GetMaxCharHeight();
+            }
+            
+            return 0;
+        }
+        
+        double GetLineHeight()
+        {
+            if (mFaces.size())
+            {
+                return mFaces[0]->GetLineHeight();
+            }
+            
+            if (mBackupFont)
+            {
+                return mBackupFont->GetMaxCharHeight();
+            }
+            
+            return 0;
+        }
+        
+        double GetSpaceWidth()
+        {
+            if (mSpaceGlyph)
+                return mSpaceGlyph->GetAdvance().x;
+            return 0;
+        }
+        
+        double GetFontScale()
+        {
+            return mScale;
+        }
+        
 		static FT_Library sFTLibrary;
 
-		/* Static Getters */
-		static Font* GetFont(const std::string &name, int size);
-		static Font* GetFont(FONT_DESC &fontDesc);
-
+        uint64_t GenerateKey(int character, int outlineSize)
+        {
+            uint64_t key = character;
+            key <<= 32;
+            key |= outlineSize;
+            return key;
+        }
+        
+        unsigned short GetFontId()
+        {
+            return mUID;
+        }
+        
 	private:
-        std::vector<FontFace *> mFaces;
+        
+        std::vector<std::shared_ptr<FontFace> > mFaces;
+        
+        // Filepath -> font face
+        static SafeObject<std::map<std::string, std::shared_ptr<FontFace> > > sFontFaces;
+        
 		TGlyphMap mGlyphs;
-		TGlyphMap mOutlineGlyphs;
+
 		int mMaxHeight;
 		FONT_DESC mFontDesc;
+        Font *mBackupFont;
+        Glyph* mSpaceGlyph;
+        double mScale;
+        
+        unsigned short mUID;
+        
+        Font(FONT_DESC &fontDesc);
+        
+        void SetBackupFont(Font *font) { mBackupFont = font; }
 
 		template <typename CharType>
 		void BuildStringBuffer(FONT_STRING_DESC<CharType> &fontStringDesc, StringBuffer &stringBuffer, std::function<void(Glyph*, Point&, Point&)> *charAddedFunc = NULL);
-
-		template <typename CharType>
-		TFontPassList GetPasses(FONT_STRING_DESC<CharType> &fontStringDesc);
 		
-		static std::string sFontPath;
-		static FontCache sGlobalFontCache;
+        static unsigned short sUIDCounter;
 	};
 };
-
-#include <Challenge/Font/Font.inl>
 

@@ -224,7 +224,7 @@ namespace challenge
 		if(animation == "") {
 			mActiveAnimation.startFrame = -1;
 		} else if(mActiveAnimationData.name != animation) {
-			//Logger::log(LogDebug, animation);
+			//Logger::Log(LogDebug, animation);
 			ModelAnimParams animData;
 			animData.name = animation;
 			animData.loop = loop;

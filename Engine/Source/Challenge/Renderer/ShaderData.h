@@ -1,11 +1,13 @@
 #pragma once
 
 #include <Challenge/Challenge.h>
-#include <Challenge/Renderer/Shader/ShaderProgram.h>
+//#include <Challenge/Renderer/Shader/ShaderProgram.h>
 #include <Challenge/Renderer/Texture.h>
 
 namespace challenge
 {
+	class IShaderProgram;
+
 	class ShaderData
 	{
 	public:
@@ -13,11 +15,23 @@ namespace challenge
 		{
 		}
 
+		ShaderData(void *data) :
+			mData(data)
+		{
+		}
+
 		virtual ~ShaderData()
 		{
 		}
 
-		virtual void Apply(IShaderProgram *program, int index, ShaderType type) = 0;
+		void * GetData() { return mData; }
+
+		virtual void Apply(IShaderProgram *program, int index, int type)
+		{
+		}
+
+	private:
+		void *mData;
 	};
 
 	template <typename T>
@@ -48,9 +62,9 @@ namespace challenge
 			mCount = count;
 		}
 
-		void Apply(IShaderProgram *program, int index, ShaderType type)
+		void Apply(IShaderProgram *program, int index, int type)
 		{
-			program->SetConstantData(index, mData, mCount, type);
+			//program->SetConstantData(index, mData, mCount, type);
 		}
 
 	private:
@@ -60,12 +74,12 @@ namespace challenge
 
 	typedef ShaderDataPrimitive<float> ShaderDataFloat;
 	typedef ShaderDataPrimitive<int> ShaderDataInt;
-	typedef ShaderDataPrimitive<glm::vec2> ShaderDataVector2;
-	typedef ShaderDataPrimitive<glm::vec3> ShaderDataVector3;
-	typedef ShaderDataPrimitive<glm::vec4> ShaderDataVector4;
-	typedef ShaderDataPrimitive<glm::mat2> ShaderDataMatrix2;
-	typedef ShaderDataPrimitive<glm::mat3> ShaderDataMatrix3;
-	typedef ShaderDataPrimitive<glm::mat4> ShaderDataMatrix4;
+	typedef ShaderDataPrimitive<glm::vec2> ShaderDataVector2f;
+	typedef ShaderDataPrimitive<glm::vec3> ShaderDataVector3f;
+	typedef ShaderDataPrimitive<glm::vec4> ShaderDataVector4f;
+	typedef ShaderDataPrimitive<glm::mat2> ShaderDataMatrix2f;
+	typedef ShaderDataPrimitive<glm::mat3> ShaderDataMatrix3f;
+	typedef ShaderDataPrimitive<glm::mat4> ShaderDataMatrix4f;
 
 	class ShaderDataStruct : public ShaderData
 	{
@@ -82,9 +96,9 @@ namespace challenge
 		{
 		}
 
-		void Apply(IShaderProgram *program, int index, ShaderType type)
+		void Apply(IShaderProgram *program, int index, int type)
 		{
-			program->SetConstantDataStruct(index, mData, mSize, type);
+			//program->SetConstantDataStruct(index, mData, mSize, type);
 		}
 
 	private:
@@ -112,10 +126,12 @@ namespace challenge
 		{
 		}
 
-		void Apply(IShaderProgram *program, int index, ShaderType type)
+		void Apply(IShaderProgram *program, int index, int type)
 		{
-			program->SetTexture(index, mTexture, type);
+			//program->SetTexture(index, mTexture, type);
 		}
+
+		ITexture * GetTexture() { return mTexture; }
 
 	private:
 		ITexture *mTexture;

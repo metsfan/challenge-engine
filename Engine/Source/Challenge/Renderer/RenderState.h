@@ -69,14 +69,26 @@ namespace challenge
 		void SetMaterial(Material *material) { mMaterial = material; }
 		Material* GetMaterial() { return mMaterial; }
 
-		void SetShaderData(std::string field, ShaderData *data)
+		void SetShaderData(int index, void *data)
 		{
-			mShaderData[field] = data;
+			if (index < 0) {
+				return;
+			}
+
+			if (mShaderData.size() <= index) {
+				mShaderData.resize(index + 1);
+			}
+
+			mShaderData[index] = data;
 		}
 
-		ShaderData* GetShaderData(std::string &field) 
+		void * GetShaderData(int index) 
 		{
-			return mShaderData[field];
+			if (mShaderData.size() > index) {
+				return mShaderData[index];
+			}
+			
+			return NULL;
 		}
 
 	private:
@@ -85,7 +97,7 @@ namespace challenge
 		glm::mat4 mProjection;
 		glm::mat4 mTopTransform;
 		glm::mat4 mWVP;
-		std::unordered_map<std::string, ShaderData *> mShaderData;
+		std::vector<void *> mShaderData;
 		Material *mMaterial;
 	};
 };

@@ -18,6 +18,9 @@ class Application:
         self.copyDirectory("/Resources/Scripts", outDir + "/Scripts")
         self.copyAssets(outDir)
 
+        challenge_config_dir = os.path.dirname(os.path.realpath(__file__)) + "/../Source/Challenge/Config"
+        self.copyAbsoluteDirectory(challenge_config_dir, outDir)
+
     def loadStrings(self):
         self.strings = {}
 
@@ -60,7 +63,10 @@ class Application:
                 outfile.close()
 
     def copyDirectory(self, inDir, outDir):
-        configDir = self.projectDir + inDir
+        self.copyAbsoluteDirectory(self.projectDir + inDir, outDir)
+
+    def copyAbsoluteDirectory(self, inDir, outDir):
+        configDir = inDir
 
         files = os.listdir(configDir)
         for file in files:

@@ -2,23 +2,27 @@
 #include <Challenge/UI/ViewManager.h>
 #include <Challenge/Font/FontEngine.h>
 #include <Challenge/Font/Font.h>
+#include <Challenge/Font/TextUtil.h>
 #include <Challenge/GameApplication.h>
 #include <Challenge/Renderer/Texture/Texture2DDX11.h>
 #include <Challenge/UI/Controls/LabelView.h>
+#include <Challenge/Renderer/Shape/Label.h>
 
 namespace challenge
 {
 	static const std::string kDefaultFont = "arial";
 	static const int kDefaultFontSize = 13;
+	
+	GlyphAtlasTexture *LabelView::sGlyphTexture = NULL;
 
 	LabelView::LabelView(Frame frame) : 
 		View(frame),
-		mLabelTexture(NULL),
+		mLabel(NULL),
 		mFont(NULL),
 		mTextChanged(false),
 		mLabelSprite(NULL)
 	{
-		this->SetFont(Font::GetFont(kDefaultFont, kDefaultFontSize));
+		this->SetFont(FontManager::GetDefaultFont());
 	}
 
 	LabelView::~LabelView()
@@ -48,6 +52,25 @@ namespace challenge
 
 		const Frame &frame = this->GetFrame();
 
+		if (!mLabel) {
+			mLabel = new Label(device);
+		}
+
+		mLabel->SetFont(mFont);
+		mLabel->SetText(StringUtil::ToWide(mText));
+		mLabel->SetTextColor(mTextColor);
+
+		mLabel->SetPosition(frame.origin.x + parentFrame.origin.x,
+			frame.origin.y + parentFrame.origin.y - 5);
+
+		mLabel->Draw(device, state);
+
+		/*if (!sGlyphTexture) {
+			sGlyphTexture = new GlyphAtlasTexture(device, Size(1024, 1024));
+		}
+
+		
+
 		if(!mLabelTexture) {
 			TEXTURE_DESC desc;
 			mLabelTexture = device->CreateTexture2D(desc);
@@ -61,20 +84,20 @@ namespace challenge
 			if(mText.length() > 0) {
 				FONT_UTF8STRING_DESC fontString;
 				fontString.Text = mText;
-				StringBuffer stringBuffer = mFont->CreateStringBitmap<char>(fontString);
+				//StringBuffer stringBuffer = mFont->CreateStringBitmap<char>(fontString);
 
-				mLabelTexture->Initialize(stringBuffer.GetBuffer(), stringBuffer.GetSize());
+				//mLabelTexture->Initialize(stringBuffer.GetBuffer(), stringBuffer.GetSize());
 				//mLabelSprite->SetSize(stringBuffer.GetSize().width, stringBuffer.GetSize().height);
-				Size stringDims = mFont->GetStringDimensions(mText);
+				Size stringDims = TextUtil::SizeOfText(StringUtil::ToWide(mText), mFont);
 				/*if(frame.size.width < stringDims.width) {
 					real dif = stringDims.width - frame.size.width;
 					real texX = dif / stringBuffer.GetSize().width;
 
 					mLabelSprite->SetTextureFrame(texX, 0, 1 - texX, 1);
 					mLabelSprite->SetSize(stringBuffer.GetSize().width * (1 - texX), stringBuffer.GetSize().height);
-				} else*/ {
+				} else {
 					mLabelSprite->SetTextureFrame(0, 0, 1, 1);
-					mLabelSprite->SetSize(stringBuffer.GetSize().width, stringBuffer.GetSize().height);
+					//mLabelSprite->SetSize(stringBuffer.GetSize().width, stringBuffer.GetSize().height);
 				}
 				
 				
@@ -89,7 +112,7 @@ namespace challenge
 									frame.origin.y + parentFrame.origin.y - 5);
 			
 			mLabelSprite->Draw(device, state);
-		}
+		}*/
 	}
 	
 	void LabelView::ParseFromXML(XMLNode &node)

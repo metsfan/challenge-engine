@@ -1,150 +1,152 @@
 #include <Challenge/Challenge.h>
 #include <Challenge/Font/Font.h>
-#include <Challenge/Font/FontCache.h>
-#include <Challenge/Font/UnicodeRanges.h>
+#include <Challenge/Font/FontManager.h>
+#include <Challenge/Util/Util.h>
+#include <Challenge/Disk/File.h>
 
 namespace challenge
 {
-	FT_Library Font::sFTLibrary = NULL;
-	std::string Font::sFontPath = "C:/Windows/Fonts/";
-	FontCache Font::sGlobalFontCache;
-
-	static const std::string kDefaultFontPath = "C:/Windows/Fonts/";
-	static const std::string kTrueTypeExtension = ".ttf";
-
-	Font::Font(FONT_DESC &fontDesc) :
-		mFontDesc(fontDesc),
-		mMaxHeight(15)
-	{
-
-		FT_Error error;
-		if(!sFTLibrary) {
-			error = FT_Init_FreeType(&sFTLibrary);
-			if (error) {
-				throw "Error initializing library";
-			}
-		}
-
-		if(fontDesc.Files.size() == 0) {
-			fontDesc.Files.push_back(FontFile(kDefaultFontPath + fontDesc.FontFamily + kTrueTypeExtension));
-		}
+    FT_Library Font::sFTLibrary = NULL;
+    static const std::string kTTFExtension = ".ttf";
     
-		for (int i = 0; i < fontDesc.Files.size(); i++) {
-			std::ifstream ifile(fontDesc.Files[i].filepath);
+    unsigned short Font::sUIDCounter = 0;
+    SafeObject<std::map<std::string, std::shared_ptr<FontFace> > > Font::sFontFaces;
+    
+    Font::Font(FONT_DESC &fontDesc) :
+        mFontDesc(fontDesc),
+        mBackupFont(NULL)
+    {
+        mUID = sUIDCounter++;
+        mScale = 2;//DeviceSpecification::GetDevicePixelDensity();
         
-			if(ifile.good()) {
-				mFaces.push_back(new FontFace(sFTLibrary, fontDesc.Files[i], fontDesc.FontSize));
-			} else {
-				printf("Failed to load font at path %s\n", fontDesc.Files[i].filepath.c_str());
-			}
+        FT_Error error;
+        if(!sFTLibrary) {
+            error = FT_Init_FreeType(&sFTLibrary);
+            if (error) {
+                //throw Exception(InternalException, "Font Freetype", "Freetype failed to initialize.");
+            }
+        }
         
-		}
-	}
-
-	Font::~Font()
-	{
-	}
-
-	long Font::GetKerning(Glyph *leftGlyph, Glyph *rightGlyph)
-	{
-        if (leftGlyph && rightGlyph) {
-            for (int i = 0; i < mFaces.size(); i++) {
-                if(mFaces[i]->ContainsGlyph(leftGlyph->GetCharacter())) {
-                    FontFace *face = mFaces[i];
+        if (fontDesc.Files.size() == 0)
+        {
+           // FontFile defaultFile(File::GetCacheDirectory() + fontDesc.FontFamily + kTTFExtension);
+           // fontDesc.Files.push_back(defaultFile);
+        }
+        
+        sFontFaces.lock();
+        
+        for (int i = 0; i < fontDesc.Files.size(); i++)
+        {
+            auto cachedFace = sFontFaces.find(fontDesc.Files[i].filepath);
+            if (cachedFace != sFontFaces.end())
+            {
+                mFaces.push_back(cachedFace->second);
+            }
+            else
+            {
+                std::ifstream ifile(fontDesc.Files[i].filepath);
+                
+                if(ifile.good())
+                {
+                    mFaces.push_back(std::make_shared<FontFace>(sFTLibrary, fontDesc.Files[i], fontDesc.FontSize * 2, fontDesc.HintingEnabled));
+                    sFontFaces.insert(std::make_pair(fontDesc.Files[i].filepath, mFaces.back()));
+                }
+                else
+                {
+                    Logger::Log(LogError, "Failed to load font at path %s\n", fontDesc.Files[i].filepath.c_str());
+                }
+            }
+        }
+        
+        sFontFaces.unlock();
+    
+        mSpaceGlyph = this->GetGlyph(' ');
+    }
+    
+    Font::~Font()
+    {
+        sFontFaces.lock();
+        
+        for(auto& face : mFaces)
+        {
+            if (face.use_count() == 2)
+            {
+                // Only the static font face map and ourself use this face. remove it from the static map.
+                sFontFaces.erase(face->GetFile().filepath);
+            }
+        }
+        
+        sFontFaces.unlock();
+    }
+    
+    double Font::GetKerning(Glyph *leftGlyph, Glyph *rightGlyph)
+    {
+        if (leftGlyph && rightGlyph)
+        {
+            for(auto face : mFaces)
+            {
+                if (face->ContainsGlyph(leftGlyph->GetCharacter()))
+                {
                     return face->GetKerning(leftGlyph, rightGlyph);
                 }
             }
         }
-            
-        return 0;
-	}
         
-    int Font::GetKerning(int leftChar, int rightChar)
+        return 0;
+    }
+    
+    double Font::GetKerning(int leftChar, int rightChar, int leftCharOutlineSize, int rightCharOutlineSize)
     {
-        Glyph *leftGlyph = this->GetGlyph(leftChar);
-        Glyph *rightGlyph = this->GetGlyph(rightChar);
-            
+        Glyph *leftGlyph = this->GetGlyph(leftChar, leftCharOutlineSize);
+        Glyph *rightGlyph = this->GetGlyph(rightChar, rightCharOutlineSize);
+        
         return this->GetKerning(leftGlyph, rightGlyph);
     }
-
-	Glyph* Font::GetGlyph(int character, bool outline)
-	{
-		TGlyphMap *map = &mGlyphs;
-		if(outline) {
-			map = &mOutlineGlyphs;
-		}
-
-		Glyph *glyph = NULL;
-		if(!map->count(character)) {
-            for (int i = 0; i < mFaces.size(); i++) {
-                if(mFaces[i]->ContainsGlyph(character)) {
-                    int olWidth = outline ? mFontDesc.OutlineWidth : 0;
-                    glyph = new Glyph(sFTLibrary, *mFaces[i], character, olWidth);
-                    (*map)[character] = glyph;
-                    if (glyph->mSize.height > mMaxHeight) {
-                        mMaxHeight = glyph->mSize.height;
+    
+    Glyph* Font::GetGlyph(int character, int outlineSize)
+    {
+        Glyph *glyph = NULL;
+        Font *font = this;
+        
+        uint64_t key = this->GenerateKey(character, outlineSize);
+        
+        while (font)
+        {
+            TGlyphMap *map = &font->mGlyphs;
+            
+            if(map->find(key) == map->end())
+            {
+                for(auto face : font->mFaces)
+                {
+                    if (face->ContainsGlyph(character))
+                    {
+                        face->SetSize(mScale * mFontDesc.FontSize);
+                        
+                        glyph = new Glyph(sFTLibrary, *face, character, outlineSize, mFontDesc.HintingEnabled);
+                        (*map)[key] = glyph;
+                        if (glyph->mSize.y > mMaxHeight)
+                        {
+                            font->mMaxHeight = glyph->mSize.y;
+                        }
+                        break;
                     }
-                    break;
                 }
+            } else
+            {
+                glyph = (*map)[key];
             }
-		} else {
-			glyph = (*map)[character];
-		}
+            
+            if (glyph)
+                break;
+            
+            if (font == this && mBackupFont != font)
+            {
+                font = mBackupFont;
+            } else {
+                font = NULL;
+            }
+        }
+        return glyph;
+    }
 
-		return glyph;
-	}
-
-	Glyph* Font::GetGlyphForPass(FontPass &pass, int character)
-	{
-		Glyph *glyph = NULL;
-
-		switch(pass.type)
-		{
-                            
-			case FontPassOutline:
-				glyph = this->GetGlyph(character, true);
-				break;
-                            
-			case FontPassShadow:
-			case FontPassBuffer:
-			case FontPassNormal:
-			default:
-				glyph = this->GetGlyph(character);
-				break;
-		}
-
-		return glyph;
-	}
-
-	/* Static Getters */
-	Font* Font::GetFont(const std::string &name, int size)
-	{
-		FONT_DESC fontDesc;
-		fontDesc.FontFamily = name;
-		fontDesc.FontSize = size;
-		
-		FontFile file(kDefaultFontPath + fontDesc.FontFamily + kTrueTypeExtension);
-		file.AddRange(LATIN_RANGE);
-		fontDesc.Files.push_back(file);
-
-		return sGlobalFontCache.GetFont(fontDesc);
-	}
-
-	Font* Font::GetFont(FONT_DESC &fontDesc)
-	{
-		return sGlobalFontCache.GetFont(fontDesc);
-	}
-
-	Size Font::GetStringDimensions(const std::string &str)
-	{
-		Size dims;
-
-		for(int i = 0; i < str.length(); i++) {
-			Glyph *glyph = this->GetGlyph(str[i]);
-			dims.width += glyph->GetAdvance().x;
-			dims.height = std::max(dims.height, glyph->GetSize().height);
-		}
-
-		return dims;
-	}
-};
+}

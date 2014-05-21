@@ -297,7 +297,7 @@ namespace challenge
 
 
 		if (collision) {
-			Logger::log(LogDebug, "Penetration Depth: %f", minDist);
+			//Logger::Log(LogDebug, "Penetration Depth: %f", minDist);
 
 			collision->penetrationDepth = PhysicsMath::PointPlaneDistance(c, triangle->GetPlane());
 			collision->collisionNormal = glm::vec3(0, -1, 0);
@@ -362,7 +362,7 @@ namespace challenge
 		}
 		}
 
-		//Logger::log(LogDebug, "%f", minDist);
+		//Logger::Log(LogDebug, "%f", minDist);
 
 		//contact->mPenetration = -minDist;
 		c.y -= aabb->GetHalfY();

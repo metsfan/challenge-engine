@@ -11,7 +11,7 @@ namespace challenge
 	class NetworkServer : public NetworkInterface
 	{
 	public:
-		NetworkServer(std::string ip, int port);
+		NetworkServer(std::string ip, int port, NetworkProto proto);
 
 		virtual std::string ReadData();
 		virtual void WriteData(std::stringstream &dataStream);

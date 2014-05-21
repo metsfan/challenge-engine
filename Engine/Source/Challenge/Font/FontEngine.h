@@ -8,6 +8,6 @@
 
 #pragma once
 
-#include <Challenge/Font/FontCache.h>
+#include <Challenge/Font/FontManager.h>
 #include <Challenge/Font/GlyphAtlas.h>
 #include <Challenge/Font/UnicodeRanges.h>

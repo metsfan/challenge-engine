@@ -3,6 +3,8 @@
 
 namespace challenge
 {
+	static const double kTimeRatio = (double) std::chrono::nanoseconds::period().num / (double) std::chrono::nanoseconds::period().den;
+
 	int Util::ReadContentsOfBinaryFile(std::string file, unsigned char **buffer)
 	{
 		int size;
@@ -234,4 +236,16 @@ namespace challenge
         
         return v;
     }
+
+	double Util::GetSystemTime()
+	{
+		std::chrono::time_point<std::chrono::system_clock, std::chrono::nanoseconds> now = std::chrono::system_clock::now();
+		return (double) now.time_since_epoch().count() * kTimeRatio;
+	}
+
+	double Util::GetClockTime()
+	{
+		std::chrono::time_point<std::chrono::high_resolution_clock, std::chrono::nanoseconds> now = std::chrono::high_resolution_clock::now();
+		return (double) now.time_since_epoch().count() * kTimeRatio;
+	}
 };

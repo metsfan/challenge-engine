@@ -23,5 +23,7 @@ namespace challenge
 		Effect *mEffect;
 		PrimitiveType mPrimType;
 		int mNumVerts;
+
+		int mWVPIndex;
 	};
 };

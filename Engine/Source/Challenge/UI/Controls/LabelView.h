@@ -4,10 +4,12 @@
 #include <Challenge/UI/View.h>
 #include <Challenge/Font/Font.h>
 #include <Challenge/Renderer/Texture.h>
+#include <Challenge/Font/GlyphAtlasTexture.h>
 
 namespace challenge
 {
 	//class Font;
+	class Label;
 
 	class LabelView : public View
 	{
@@ -33,11 +35,12 @@ namespace challenge
 		std::string mText;
 		Font *mFont;
 		Color mTextColor;
-		ITexture *mLabelTexture;
+		//ITexture *mLabelTexture;
+		Label *mLabel;
 		bool mTextChanged;
 		SpriteShape *mLabelSprite;
 
-
+		static GlyphAtlasTexture *sGlyphTexture;
 		//static HLSLProgram *sFontShader;
 	};
 };

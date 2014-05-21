@@ -554,7 +554,7 @@ namespace challenge
 			mParent->PositionSubviews();
 		}
 
-		Logger::log(LogDebug, "Position subviews");
+		//Logger::Log(LogDebug, "Position subviews");
 	}
 
 	View * View::CreateFromResource(const std::wstring &resource)

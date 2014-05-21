@@ -16,6 +16,8 @@ namespace challenge
 		ZeroMemory(&desc, sizeof(VERTEX_BUFFER_DESC));
 		desc.Stride = sizeof(DebugLinesVertex);
 		mBuffer = device->CreateVertexBuffer(desc);
+
+		mWVPIndex = device->GetContext()->GetGlobalIndex("WORLDVIEWPROJ_MATRIX");
 	}
 
 	MeshShape::~MeshShape()
@@ -33,10 +35,7 @@ namespace challenge
 	void MeshShape::Draw(IGraphicsDevice *device, RenderState &state)
 	{
 		if(mEffect) {
-			
-
-			ShaderDataMatrix4 wvpData(&state.GetWorldViewProjection(), 1);
-			state.SetShaderData("WORLDVIEWPROJ_MATRIX", &wvpData);
+			state.SetShaderData(mWVPIndex, &state.GetWorldViewProjection());
 
 			auto tech = mEffect->GetActiveTechnique();
 

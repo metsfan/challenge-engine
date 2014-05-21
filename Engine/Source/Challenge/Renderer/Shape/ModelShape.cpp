@@ -37,7 +37,7 @@ namespace challenge
 				const TByteArray &bits = image->GetBits();
 				texture->Initialize(&bits[0], Size(image->GetWidth(), image->GetHeight()));
 			} else {
-				Logger::log(LogDebug, "Image not found");
+				Logger::Log(LogDebug, "Image not found");
 			}
 
 			mTextures.push_back(texture);
@@ -46,7 +46,7 @@ namespace challenge
 
 	void ModelShape::Draw(IGraphicsDevice *device, RenderState &state)
 	{
-		IGraphicsContext *context = device->GetContext();
+		/*IGraphicsContext *context = device->GetContext();
 		const TMeshList &meshes = mModel->GetMeshes();
 
 		glm::mat4 &wvp = state.GetWorldViewProjection();
@@ -73,7 +73,7 @@ namespace challenge
 		/*if(mTextures.size() == 0) {
 			ShaderDataVector4 colorData(&mColor, 1);
 			state.SetShaderData("COLOR", &colorData);
-		}*/
+		}*
 
 		for(int i = 0; i < meshes.size(); i++) {
 			ModelMesh *mesh = meshes[i];
@@ -103,7 +103,7 @@ namespace challenge
 				mMeshVertexBuffers[i]->Activate();
 				device->Draw(PrimitiveTypeTriangleList, mesh->GetTotalFaces(), 0);
 			}
-		}
+		}*/
 	}
 
 	ModelShape::~ModelShape()

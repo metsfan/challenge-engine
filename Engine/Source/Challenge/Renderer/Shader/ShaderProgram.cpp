@@ -1,13 +1,14 @@
 #include <Challenge/Challenge.h>
-#include "ShaderProgram.h"
+#include <Challenge/Renderer/Shader/ShaderProgram.h>
 
 namespace challenge
 {
-	BaseShaderProgram::BaseShaderProgram() :
+	BaseShaderProgram::BaseShaderProgram(IGraphicsDevice *device) :
+		GraphicsObject(device),
 		mInputLayout(NULL),
-		mShaders(kShaderTypeMax+1)
+		mShaders(kShaderTypeMax + 1)
 	{
-		for(int i = 0; i < mShaders.size(); i++) {
+		for (int i = 0; i < mShaders.size(); i++) {
 			mShaders[i] = NULL;
 		}
 	}
@@ -25,5 +26,14 @@ namespace challenge
 	IShader* BaseShaderProgram::GetShader(ShaderType type)
 	{
 		return mShaders[type];
+	}
+
+	void BaseShaderProgram::UpdateState(RenderState &state)
+	{
+		for (int i = 0; i < mShaders.size(); i++) {
+			if (mShaders[i]) {
+				mShaders[i]->UpdateState(this, state);
+			}
+		}
 	}
 };

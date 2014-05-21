@@ -1,31 +1,31 @@
 #pragma once
 
 #include <Challenge/Challenge.h>
-#include <Challenge/Network/NetworkManager.h>
+#include <Challenge/Network/Network.h>
 
 namespace challenge
 {
 	class NetworkSocket
 	{
 	public:
-		NetworkSocket(std::string ip, int port);
+		NetworkSocket(const NetworkAddress *address);
 		~NetworkSocket();
 
-		bool Send(std::stringstream &data, std::string ip, int port);
-		std::string Receive();
+		virtual int Send(const TByteArray &data, const NetworkAddress *address = NULL) = 0;
+		virtual int Receive(TByteArray &data, NetworkAddress *address = NULL) = 0;
 		void Close();
-		int GetPort() { return mPort; }
-		std::string GetIP() { return mIP; }
 
-		static NetworkAddress GetLocalAddress();
+	protected:
+		const NetworkAddress& GetAddress() { return mAddress; }
+		const sockaddr_in& GetSockAddr() { return mAddr; }
+		uint32_t GetSocket() { return mSocket; }
+
+		void InitializeSocket(int type, int protocol);
 
 	private:
-		std::string mIP;
-		int mPort;
-		SOCKET mSocket;
+		NetworkAddress mAddress;
+		uint32_t mSocket;
 		sockaddr_in mAddr;
 		int mAddrSize;
-
-		void Initialize(std::string ip, int port);
 	};
 };

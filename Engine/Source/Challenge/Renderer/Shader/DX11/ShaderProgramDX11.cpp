@@ -6,7 +6,7 @@
 namespace challenge
 {
 	ShaderProgram<RendererTypeDX11>::ShaderProgram(GraphicsDeviceDX11 *device) :
-		BaseShaderProgram(),
+		BaseShaderProgram(device),
 		mDevice(device)
 	{
 		for(int i = kShaderTypeMin; i <= kShaderTypeMax; i++) {

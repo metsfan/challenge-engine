@@ -36,7 +36,7 @@ namespace challenge
 					subview->SetY(currentPos + padding.top);
 					currentPos += frame.size.height + padding.top + padding.bottom;
 				}
-				Logger::log(LogDebug, "Current pos: %d", currentPos);
+				Logger::Log(LogDebug, "Current pos: %d", currentPos);
 			}
 		}
 

@@ -30,7 +30,7 @@ namespace challenge
 			sMesh->SetData(&data[0], sizeof(data), 4, PrimitiveTypeTriangleStrip);
 		}
 
-		ShaderDataVector4 circleColor(&mColor, 1);
+		/*ShaderDataVector4 circleColor(&mColor, 1);
 		state.SetShaderData("COLOR", &circleColor);
 
 		glm::mat4 model = glm::translate(glm::mat4(), mPosition);
@@ -41,6 +41,6 @@ namespace challenge
 		sMesh->Draw(device, state);
 		device->DisableState(AlphaBlending);
 
-		state.PopTransform();
+		state.PopTransform();*/
 	}
 }

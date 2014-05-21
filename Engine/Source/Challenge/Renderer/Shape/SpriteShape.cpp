@@ -31,6 +31,15 @@ namespace challenge
 			sSpriteVertexBuffer = device->CreateVertexBuffer(desc);
 			sSpriteVertexBuffer->SetData(verts, sizeof(SpriteVertex) * 4, sizeof(SpriteVertex));
 		}
+
+		IGraphicsContext *context = device->GetContext();
+		mWVPIndex = context->GetGlobalIndex("WORLDVIEWPROJ_MATRIX");
+		mFrameIndex = context->GetGlobalIndex("FRAME");
+		mTextureFrameIndex = context->GetGlobalIndex("TEXTURE_FRAME");
+		mBackgroundColorIndex = context->GetGlobalIndex("BACKGROUND_COLOR");
+		mBackgroundImageIndex = context->GetGlobalIndex("BACKGROUND_IMAGE");
+		mBorderWidthIndex = context->GetGlobalIndex("BORDER_WIDTH");
+		mBorderColorIndex = context->GetGlobalIndex("BORDER_COLOR");
 	}
 
 	SpriteShape::~SpriteShape()
@@ -93,28 +102,18 @@ namespace challenge
 		}
 
 		glm::mat4 wvp = state.GetWorldViewProjection();
-		ShaderDataMatrix4 wvpData(&wvp, 1);
-		state.SetShaderData("WORLDVIEWPROJ_MATRIX", &wvpData);
 
-		ShaderDataVector4 frameData(&mFrame, 1);
-		state.SetShaderData("FRAME", &frameData);
+		state.SetShaderData(mWVPIndex, &wvp);
+		state.SetShaderData(mFrameIndex, &mFrame);
+		state.SetShaderData(mTextureFrameIndex, &mTexFrame);
+		state.SetShaderData(mBackgroundColorIndex, &mBackgroundColor);
 
-		ShaderDataVector4 texFrameData(&mTexFrame, 1);
-		state.SetShaderData("TEXTURE_FRAME", &texFrameData);
-
-		ShaderDataVector4 colorData(&mBackgroundColor, 1);
-		state.SetShaderData("BACKGROUND_COLOR", &colorData);
-
-		ShaderDataTexture bgImageData(mBackgroundImage);
 		if(mBackgroundImage) {
-			state.SetShaderData("BACKGROUND_IMAGE", &bgImageData);
+			state.SetShaderData(mBackgroundImageIndex, mBackgroundImage);
 		}
 
-		ShaderDataFloat borderWidthData(&mBorderWidth, 1);
-		state.SetShaderData("BORDER_WIDTH", &borderWidthData);
-
-		ShaderDataVector4 borderColorData(&mBorderColor, 1);
-		state.SetShaderData("BORDER_COLOR", &borderColorData);
+		state.SetShaderData(mBorderWidthIndex, &mBorderWidth);
+		state.SetShaderData(mBorderColorIndex, &mBorderColor);
 
 		if(sSpriteVertexBuffer) {
 			Technique *technique = effect->GetActiveTechnique();

@@ -4,6 +4,7 @@
 #include <Challenge/Renderer/Shader/Shader.h>
 #include <Challenge/Renderer/Shader/InputLayout.h>
 #include <Challenge/Renderer/Texture.h>
+#include <Challenge/Renderer/RenderState.h>
 
 namespace challenge
 {
@@ -27,14 +28,16 @@ namespace challenge
 		virtual void SetConstantDataStruct(int index, const void *data, int size, ShaderType shader) = 0;
 		
 		virtual void SetTexture(int index, ITexture *texture, ShaderType shader) = 0;
+
+		virtual void UpdateState(RenderState &state) = 0;
 	};
 
 	typedef std::vector<IShader *> TShaderList;
 
-	class BaseShaderProgram : public IShaderProgram
+	class BaseShaderProgram : public IShaderProgram, GraphicsObject
 	{
 	public:
-		BaseShaderProgram();
+		BaseShaderProgram(IGraphicsDevice *device);
 		~BaseShaderProgram();
 
 		void SetShader(IShader *shader);
@@ -44,12 +47,15 @@ namespace challenge
 
 		IShader* GetShader(ShaderType type);
 
+		void UpdateState(RenderState &state);
+
 	protected:
 		TShaderList& GetShaders() { return mShaders; }
 
 	private:
 		TShaderList mShaders;
 		InputLayout *mInputLayout;
+		IGraphicsDevice *mDevice;
 	};
 
 	template <typename Renderer>

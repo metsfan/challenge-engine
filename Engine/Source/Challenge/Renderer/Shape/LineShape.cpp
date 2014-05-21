@@ -26,13 +26,13 @@ namespace challenge
 				mReloadPoints = false;
 			}
 
-			ShaderDataFloat widthData(&mWidth, 1);
+			/*ShaderDataFloat widthData(&mWidth, 1);
 			state.SetShaderData("WIDTH", &widthData);
 
 			ShaderDataVector4 colorData(&mColor, 1);
 			state.SetShaderData("COLOR", &colorData);
 			
-			mMesh->Draw(device, state);
+			mMesh->Draw(device, state);*/
 		}
 	}
 }

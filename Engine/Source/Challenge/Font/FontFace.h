@@ -9,24 +9,25 @@
 #pragma once
 
 #include <Challenge/Challenge.h>
-#include <Challenge/Font/FontTypes.h>
-#include <Challenge/Font/Glyph.h>
-
+#include <Challenge/Font/Types.h>
 #include <ft2build.h>
 #include FT_FREETYPE_H
+#include <Challenge/Font/Glyph.h>
 
 namespace challenge
 {
     class FontFace
     {
     public:
-        FontFace(FT_Library library, FontFile &file, int size);
+        FontFace(FT_Library library, FontFile &file, int size, bool hintingEnabled = true);
         ~FontFace();
+        
+        void SetSize(int size);
         
         bool ContainsGlyph(int character);
         
-        int GetMaxCharHeight();
-        int GetLineHeight();
+        double GetMaxCharHeight();
+        double GetLineHeight();
         
         bool HasKerning() { return mHasKerning; }
         bool IsHorizontal() { return mHorizontal; }
@@ -34,13 +35,20 @@ namespace challenge
         
         FT_Face& GetFTFace() { return mFace; }
         
-        int GetKerning(Glyph *leftGlyph, Glyph *rightGlyph);
+        double GetKerning(Glyph *leftGlyph, Glyph *rightGlyph);
+        
+        bool IsHintingEnabled() const { return mHintingEnabled;}
+        
+        const FontFile& GetFile() const {return mFile;}
         
     private:
         FT_Face mFace;
+        FontFile mFile;
         std::vector<Range> mGlyphRanges;
+        int mSize;
         bool mHasKerning;
         bool mHorizontal;
         bool mVertical;
+        bool mHintingEnabled;
     };
 };

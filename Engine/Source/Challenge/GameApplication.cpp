@@ -1,12 +1,13 @@
 #include <Challenge/Challenge.h>
 #include <Challenge/UI/Window.h>
 #include <Challenge/Input/InputManager.h>
-#include <Challenge/Network/NetworkManager.h>
+#include <Challenge/Network/Network.h>
 #include <Challenge/Renderer/VertexBuffer/VertexBufferDX11.h>
 #include <Challenge/Disk/ResourceCache.h>
 #include <Challenge/Model/Model.h>
 #include <Challenge/Util/XML/XMLDocument.h>
 #include <Challenge/Renderer/Effect.h>
+#include <Challenge/Font/FontManager.h>
 #include "GameApplication.h"
 
 namespace challenge
@@ -34,6 +35,8 @@ namespace challenge
 		mInputManager = new InputManager();
 		this->AddKeyboardListener(mWindow);
 		this->AddMouseListener(mWindow);
+
+		FontManager::LoadSystemFont("win32");
 
 		if (mListener) {
 			mListener->OnApplicationInitialized(this);
@@ -115,6 +118,70 @@ namespace challenge
 			IShader *shader = mGraphicsDevice->CreateShader(filename, type);
 			shader->Load();
 
+			TXMLNodeList &globals = node.GetChildrenByName("Global");
+			for (XMLNode &globalNode : globals) {
+				std::string name = globalNode.GetAttributeString("name");
+				std::string semantic = globalNode.GetAttributeString("semantic");
+				std::string typeStr = globalNode.GetAttributeString("shader");
+				std::string dataTypeStr = globalNode.GetAttributeString("type");
+				int num = 1;
+				if (globalNode.HasAttribute("num")) {
+					num = globalNode.GetAttributeInt("num");
+				}
+
+				ShaderType type;
+				if (typeStr == "vertex") {
+					type = ShaderTypeVertexShader;
+				}
+				else if (typeStr == "pixel") {
+					type = ShaderTypePixelShader;
+				}
+				else if (typeStr == "domain") {
+					type = ShaderTypeDomainShader;
+				}
+				else if (typeStr == "hull") {
+					type = ShaderTypeHullShader;
+				}
+				else if (typeStr == "geometry") {
+					type = ShaderTypeGeometryShader;
+				}
+				else if (typeStr == "compute") {
+					type = ShaderTypeComputeShader;
+				}
+
+				ShaderVarType dataType;
+				if (dataTypeStr == "vec2") {
+					dataType = ShaderVarVec2;
+				}
+				else if (dataTypeStr == "vec3") {
+					dataType = ShaderVarVec3;
+				}
+				else if (dataTypeStr == "vec4") {
+					dataType = ShaderVarVec4;
+				}
+				else if (dataTypeStr == "mat2") {
+					dataType = ShaderVarMat2;
+				}
+				else if (dataTypeStr == "mat3") {
+					dataType = ShaderVarMat3;
+				}
+				else if (dataTypeStr == "mat4") {
+					dataType = ShaderVarMat4;
+				}
+				else if (dataTypeStr == "float") {
+					dataType = ShaderVarFloat;
+				}
+				else if (dataTypeStr == "int") {
+					dataType = ShaderVarInt;
+				}
+				else if (dataTypeStr == "texture") {
+					dataType = ShaderVarTexture;
+				}
+
+				int index = context->RegisterGlobal(semantic);
+				shader->AddGlobalVariable(index, name, semantic, dataType, num);
+			}
+
 			context->AddShader(node.GetAttributeString("name"), shader);
 		}
 
@@ -173,30 +240,6 @@ namespace challenge
 					
 					std::string shaderProgram = passNode.GetFirstChild("ShaderProgram").GetAttributeString("name");
 					pass->SetShader(context->GetShaderProgram(shaderProgram));
-
-					TXMLNodeList &globals = passNode.GetChildrenByName("Global");
-					for(XMLNode &globalNode : globals) {
-						std::string name = globalNode.GetAttributeString("name");
-						std::string semantic = globalNode.GetAttributeString("semantic");
-						std::string typeStr = globalNode.GetAttributeString("shader");
-
-						ShaderType type;
-						if(typeStr == "vertex") {
-							type = ShaderTypeVertexShader;
-						} else if(typeStr == "pixel") {
-							type = ShaderTypePixelShader;
-						} else if(typeStr == "domain") {
-							type = ShaderTypeDomainShader;
-						} else if(typeStr == "hull") {
-							type = ShaderTypeHullShader;
-						} else if(typeStr == "geometry") {
-							type = ShaderTypeGeometryShader;
-						} else if(typeStr == "compute") {
-							type = ShaderTypeComputeShader;
-						}
-
-						pass->AddGlobal(name, semantic, type);
-					}
 
 					technique->AddPass(pass);
 				}

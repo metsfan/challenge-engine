@@ -8,7 +8,7 @@ namespace challenge
 	class NetworkClient : public NetworkInterface
 	{
 	public:
-		NetworkClient(std::string ip, int port);
+		NetworkClient(std::string ip, int port, NetworkProto proto);
 
 		virtual std::string ReadData();
 		virtual void WriteData(std::stringstream dataStream);

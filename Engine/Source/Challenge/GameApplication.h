@@ -6,7 +6,7 @@
 #include <Challenge/Renderer/GraphicsDevice.h>
 #include <Challenge/Disk/ResourceCache.h>
 #include <Challenge/Util/PrimitiveGenerator.h>
-#include <Challenge/Font/FontTypes.h>
+#include <Challenge/Font/Types.h>
 #include <Challenge/Input/KeyboardListener.h>
 #include <Challenge/Input/MouseListener.h>
 

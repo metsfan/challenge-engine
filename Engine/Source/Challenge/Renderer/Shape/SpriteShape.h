@@ -88,6 +88,15 @@ namespace challenge
 		glm::vec4 mTexFrame;
 		float mBorderWidth;
 		glm::vec4 mBorderColor;
+
+		int32_t mWVPIndex;
+		int32_t mFrameIndex;
+		int32_t mTextureFrameIndex;
+		int32_t mBackgroundColorIndex;
+		int32_t mBackgroundImageIndex;
+		int32_t mBorderWidthIndex;
+		int32_t mBorderColorIndex;
+
 	};
 
 };

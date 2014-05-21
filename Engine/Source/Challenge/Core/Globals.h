@@ -34,6 +34,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
+#include <glm/gtx/epsilon.hpp>
 
 #define ROOT_DIR "C:/gamedev/dungeon-raider/DungeonRaider/DungeonRaider/Source"
 #define GUID_SIZE 36

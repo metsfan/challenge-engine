@@ -11,6 +11,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Challenge\Font\FontConfig.cpp" />
+    <ClCompile Include="Source\Challenge\Font\FontManager.cpp" />
+    <ClCompile Include="Source\Challenge\Font\GlyphAtlas.cpp" />
+    <ClCompile Include="Source\Challenge\Font\GlyphAtlasTexture.cpp" />
+    <ClCompile Include="Source\Challenge\Font\TextUtil.cpp" />
+    <ClCompile Include="Source\Challenge\Network\NetworkStream.cpp" />
+    <ClCompile Include="Source\Challenge\Network\TCPSocket.cpp" />
+    <ClCompile Include="Source\Challenge\Network\UDPSocket.cpp" />
+    <ClCompile Include="Source\Challenge\Renderer\Shape\Label.cpp" />
     <ClCompile Include="Source\Challenge\Scripting\ScriptFunction.cpp" />
     <ClCompile Include="Source\Challenge\Scripting\ScriptModule.cpp" />
     <ClCompile Include="Source\Challenge\Audio\AudioListener.cpp" />
@@ -39,7 +48,6 @@
     <ClCompile Include="Source\Challenge\Event\EventData.cpp" />
     <ClCompile Include="Source\Challenge\Event\EventManager.cpp" />
     <ClCompile Include="Source\Challenge\Font\Font.cpp" />
-    <ClCompile Include="Source\Challenge\Font\FontCache.cpp" />
     <ClCompile Include="Source\Challenge\Font\FontFace.cpp" />
     <ClCompile Include="Source\Challenge\Font\Glyph.cpp" />
     <ClCompile Include="Source\Challenge\GameApplication.cpp" />
@@ -113,10 +121,6 @@
     <ClCompile Include="Source\Challenge\Model\ModelMaterial.cpp" />
     <ClCompile Include="Source\Challenge\Model\ModelMesh.cpp" />
     <ClCompile Include="Source\Challenge\Model\ModelResource.cpp" />
-    <ClCompile Include="Source\Challenge\Network\NetworkClient.cpp" />
-    <ClCompile Include="Source\Challenge\Network\NetworkInterface.cpp" />
-    <ClCompile Include="Source\Challenge\Network\NetworkManager.cpp" />
-    <ClCompile Include="Source\Challenge\Network\NetworkServer.cpp" />
     <ClCompile Include="Source\Challenge\Network\NetworkSocket.cpp" />
     <ClCompile Include="Source\Challenge\Physics\BVH\Grid.cpp" />
     <ClCompile Include="Source\Challenge\Physics\BVH\Octree.cpp" />
@@ -175,6 +179,19 @@
     <ClCompile Include="Source\Challenge\Renderer\Texture\TextureDX11.cpp" />
     <ClCompile Include="Source\Challenge\Renderer\VertexBuffer.cpp" />
     <ClCompile Include="Source\Challenge\Renderer\VertexBuffer\VertexBufferDX11.cpp" />
+    <ClInclude Include="Source\Challenge\Disk\ByteArrayInputStream.h" />
+    <ClInclude Include="Source\Challenge\Disk\ByteArrayOutputStream.h" />
+    <ClInclude Include="Source\Challenge\Font\FontConfig.h" />
+    <ClInclude Include="Source\Challenge\Font\FontManager.h" />
+    <ClInclude Include="Source\Challenge\Font\GlyphAtlasTexture.h" />
+    <ClInclude Include="Source\Challenge\Font\SystemFontReader.h" />
+    <ClInclude Include="Source\Challenge\Font\TextUtil.h" />
+    <ClInclude Include="Source\Challenge\Font\Types.h" />
+    <ClInclude Include="Source\Challenge\Network\NetworkStream.h" />
+    <ClInclude Include="Source\Challenge\Network\TCPSocket.h" />
+    <ClInclude Include="Source\Challenge\Network\UDPSocket.h" />
+    <ClInclude Include="Source\Challenge\Renderer\GraphicsObject.h" />
+    <ClInclude Include="Source\Challenge\Renderer\Shape\Label.h" />
     <ClInclude Include="Source\Challenge\Scripting\ScriptModule.h" />
     <ClInclude Include="Source\Challenge\Scripting\Helpers\GLMHelper.inl">
       <FileType>CppCode</FileType>
@@ -256,10 +273,8 @@
     <ClInclude Include="Source\Challenge\Event\Types\MouseEventData.h" />
     <ClInclude Include="Source\Challenge\Event\Types\NetworkEventData.h" />
     <ClInclude Include="Source\Challenge\Font\Font.h" />
-    <ClInclude Include="Source\Challenge\Font\FontCache.h" />
     <ClInclude Include="Source\Challenge\Font\FontEngine.h" />
     <ClInclude Include="Source\Challenge\Font\FontFace.h" />
-    <ClInclude Include="Source\Challenge\Font\FontTypes.h" />
     <ClInclude Include="Source\Challenge\Font\Glyph.h" />
     <ClInclude Include="Source\Challenge\Font\GlyphAtlas.h" />
     <ClInclude Include="Source\Challenge\Font\UnicodeRanges.h" />
@@ -303,10 +318,7 @@
     <ClInclude Include="Source\Challenge\Model\ModelMaterial.h" />
     <ClInclude Include="Source\Challenge\Model\ModelMesh.h" />
     <ClInclude Include="Source\Challenge\Model\ModelResource.h" />
-    <ClInclude Include="Source\Challenge\Network\NetworkClient.h" />
-    <ClInclude Include="Source\Challenge\Network\NetworkInterface.h" />
-    <ClInclude Include="Source\Challenge\Network\NetworkManager.h" />
-    <ClInclude Include="Source\Challenge\Network\NetworkServer.h" />
+    <ClInclude Include="Source\Challenge\Network\Network.h" />
     <ClInclude Include="Source\Challenge\Network\NetworkSocket.h" />
     <ClInclude Include="Source\Challenge\Physics\BVH\Grid.h" />
     <ClInclude Include="Source\Challenge\Physics\BVH\Octree.h" />
@@ -442,7 +454,6 @@
   <ItemGroup>
     <None Include="ChallengeEngine-settings.props" />
     <None Include="Source\Challenge\Disk\ResourceCache.inl" />
-    <None Include="Source\Challenge\Font\Font.inl" />
     <None Include="Source\Challenge\Font\GlyphAtlas.inl" />
     <None Include="Source\Challenge\Renderer\Technique\BasicColorTechnique.inl" />
     <None Include="Source\Challenge\Renderer\Technique\BasicModelTechnique.inl" />
@@ -485,6 +496,14 @@
     <FxCompile Include="Source\Challenge\Shaders\HLSL\HeightMapVertex.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(TargetDir)%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="Source\Challenge\Shaders\HLSL\LabelPixel.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\Challenge\Shaders\HLSL\LabelVertex.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="Source\Challenge\Shaders\HLSL\LineGeometry.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Geometry</ShaderType>
@@ -545,6 +564,8 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <Xml Include="..\EngineDev\Debug\effects.xml" />
+    <Xml Include="..\EngineDev\Debug\shaders.xml" />
     <Xml Include="Source\Engine\Config\effects.xml" />
     <Xml Include="Source\Engine\Config\pipeline.xml" />
     <Xml Include="Source\Engine\Config\shaders.xml" />

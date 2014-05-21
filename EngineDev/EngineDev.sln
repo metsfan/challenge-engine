@@ -8,6 +8,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GeometryTest", "GeometryTest\GeometryTest.vcxproj", "{ECEDFBB6-8EFE-4C2F-A260-48F9B9B481EC}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GUI", "GUI\GUI.vcxproj", "{8EBD264A-E17F-4D81-B7D2-CCEB6FC0300B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6B1418F0-AAF5-4925-8256-8BE1945338F1} = {6B1418F0-AAF5-4925-8256-8BE1945338F1}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Renderer", "Renderer\Renderer.vcxproj", "{18CF7D47-8C04-4E28-9392-471248B3A39A}"
 EndProject

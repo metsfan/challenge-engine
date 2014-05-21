@@ -3,7 +3,7 @@
 #include <Challenge/Challenge.h>
 #include <Challenge/View/ActorParams.h>
 #include <Challenge/Model/Model.h>
-#include <Challenge/Network/NetworkManager.h>
+#include <Challenge/Network/Network.h>
 
 namespace challenge
 {

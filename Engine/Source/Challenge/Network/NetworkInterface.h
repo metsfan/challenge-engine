@@ -11,17 +11,15 @@ namespace challenge
 	class NetworkInterface : public INetworkInterface
 	{
 	public:
-		NetworkInterface(std::string ip, int port);
+		NetworkInterface(std::string ip, int port, NetworkProto proto);
 
 		virtual std::string ReadData();
 		virtual void WriteData(std::stringstream &dataStream);
 		virtual void WriteData(std::stringstream &dataStream, NetworkAddress address);
 		virtual NetworkAddress GetAddress() { return mAddress; }
 		virtual void Close() { mSocket->Close(); }
-		virtual void SetServer(NetworkAddress addr) { mServerAddr = addr; }
+		virtual void SetServer(const NetworkAddress &addr) { mServerAddr = addr; }
 		virtual void AddClient(std::string ip, int port);
-		virtual void SetIsServer(bool server) { mIsServer = server; }
-		virtual bool IsServer() { return mIsServer; }
 
 	protected:
 		NetworkSocket *mSocket;

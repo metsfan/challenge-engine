@@ -6,7 +6,7 @@
 namespace challenge
 {
 	Shader<RendererTypeDX11>::Shader(GraphicsDeviceDX11 *device, std::wstring filename, ShaderType type) :
-			BaseShader(filename, type),
+			BaseShader(device, filename + L".cso", type),
 			mVertexShader(NULL),
 			mPixelShader(NULL),
 			mGeometryShader(NULL),
@@ -212,7 +212,7 @@ namespace challenge
 		}
 	}
 
-	int Shader<RendererTypeDX11>::GetVariableIndex(const std::string &name)
+	int32_t Shader<RendererTypeDX11>::GetVariableLocalIndex(const std::string &name)
 	{
 		for(int i = 0; i < mResources.size(); i++) {
 			ShaderResourceVarDX11 &var = mResources[i];

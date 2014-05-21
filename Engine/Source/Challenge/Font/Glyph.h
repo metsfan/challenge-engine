@@ -1,10 +1,10 @@
 #pragma once
 
-#include <Challenge/Challenge.h>
-#include <Challenge/Font/FontTypes.h>
-
 #include <ft2build.h>
-#include FT_FREETYPE_H 
+#include FT_FREETYPE_H
+
+#include <Challenge/Challenge.h>
+#include <Challenge/Font/Types.h>
 
 namespace challenge
 {
@@ -18,19 +18,22 @@ namespace challenge
         friend class FontFace;
 
 	public:
-		Glyph(FT_Library &library, FontFace &fontFace, int c, int outlineWidth);
+		Glyph(FT_Library &library, FontFace &fontFace, int c, int outlineWidth, bool hinting);
         ~Glyph();
 
-		void RenderToBuffer(FontColor &color, FontTexel *buffer, Size &size, Point &offset, int lineHeight, Glyph *prevChar = NULL);
+		void RenderToBuffer(FontTexel *buffer, Size &size, Point &offset, int lineHeight, Glyph *prevChar = NULL);
 
 		const Point& GetAdvance() const { return mAdvance; }
-		const Size& GetSize() const { return mSize; }
+        Size GetSize() const { return Size(mSize); }
+        Size GetDataSize() const { return Size(mDataSize);}
         const Point& GetBearing() const { return mBearing; }
         const int GetKerning(Glyph *prevChar);
         const int GetCharacter() { return mChar; }
 
 	private:
-		Size mSize;
+        
+		Vector2i mSize;
+        Vector2i mDataSize;
 		Point mBearing;
 		Point mAdvance;
 		Vector2 mMinTexCoord;

@@ -19,19 +19,7 @@ namespace challenge
 		if(mShader) {
 			context->SetActiveShaderProgram(mShader);
 
-			for(GlobalVar &var : mGlobals) {
-				ShaderData *data = state.GetShaderData(var.semantic);
-
-				if(data) {
-					if(var.shaderIndex < 0) {
-						var.shaderIndex = mShader->GetIndexForConstant(var.name, var.type);
-					}
-
-					if(var.shaderIndex >= 0) {
-						data->Apply(mShader, var.shaderIndex, var.type);
-					}
-				}
-			}
+			mShader->UpdateState(state);
 		}
 	}
 };

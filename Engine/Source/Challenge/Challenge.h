@@ -9,3 +9,4 @@
 #include <Challenge/Core/PlatformIncludes.h>
 #include <Challenge/Util/Logger.h>
 #include <Challenge/Util/SafeObject.hpp>
+#include <Challenge/Network/Network.h>

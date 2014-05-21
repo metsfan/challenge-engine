@@ -33,10 +33,12 @@ namespace challenge
 
 		void Load();
 
-		int GetVariableIndex(const std::string &name);
 		void SetConstantBufferData(int index, const void *data, const size_t size);
 
 		void AttachToProgram(IShaderProgram *program);
+
+	protected:
+		int32_t GetVariableLocalIndex(const std::string &name);
 
 	private:
 		ID3D11VertexShader *mVertexShader;

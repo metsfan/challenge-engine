@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Effects>
+  <Effect name="Model">
+    <Technique name="Static">
+      <Pass>
+        <ShaderProgram name="model_static" />
+      </Pass>
+    </Technique>
+    <Technique name="BoneAnimation">
+      <Pass>
+        <ShaderProgram name="model_bone_animation" />
+      </Pass>
+    </Technique>
+  </Effect>
+  <Effect name="Skybox">
+    <Technique name="Skybox">
+      <Pass>
+        <ShaderProgram name="skybox" />
+      </Pass>
+    </Technique>
+  </Effect>
+  <Effect name="Sprite">
+    <Technique name="SpriteColor">
+      <Pass>
+        <ShaderProgram name="sprite_color" />
+      </Pass>
+    </Technique>
+    <Technique name="SpriteTexture">
+      <Pass>
+        <ShaderProgram name="sprite_texture" />
+      </Pass>
+    </Technique>
+  </Effect>
+  <Effect name="HeightMap">
+    <Technique name="HeightMap">
+      <Pass>
+        <ShaderProgram name="heightmap" />
+      </Pass> 
+    </Technique>
+  </Effect>
+  <Effect name="DebugLines">
+    <Technique name="DebugLines">
+      <Pass>
+        <ShaderProgram name="debug_lines" />
+      </Pass>
+    </Technique>
+  </Effect>
+  <Effect name="Circle">
+    <Technique name="Circle">
+      <Pass>
+        <ShaderProgram name="circle" />   
+      </Pass>
+    </Technique>
+  </Effect>=
+  <Effect name="Line">
+    <Technique name="Line">
+      <Pass>
+        <ShaderProgram name="line" />
+      </Pass>
+    </Technique>
+  </Effect>
+  <Effect name="Label" >
+    <Technique name="Label">
+      <Pass>
+        <ShaderProgram name="label" />
+      </Pass>
+    </Technique>
+  </Effect>
+</Effects>

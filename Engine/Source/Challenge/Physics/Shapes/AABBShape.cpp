@@ -83,7 +83,7 @@ namespace challenge
 			mDebugShape = PrimitiveGenerator::CreatePrimitive(PrimitiveShapeBox);
 		}
 
-		glm::mat4 transform = glm::translate(glm::mat4(), this->GetPosition());
+		/*glm::mat4 transform = glm::translate(glm::mat4(), this->GetPosition());
 		transform = glm::scale(transform, mDimensions * 2.0f);
 		state.PushTransform(transform);
 
@@ -100,7 +100,7 @@ namespace challenge
 		state.SetShaderData("COLOR", &clearColorData);
 
 		state.PopTransform();
-		device->DisableState(GraphicsState::AlphaBlending);
+		device->DisableState(GraphicsState::AlphaBlending);*/
 
 		/*this->CalculateBoundingBox();
 		//glm::vec3 transformedCenter = glm::vec3(mTransform * glm::vec4(mCenter, 1.0));

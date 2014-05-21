@@ -8,11 +8,10 @@
 
 #pragma once
 
-#include <Challenge/Font/FontTypes.h>
+#include <Challenge/Font/Types.h>
 
 namespace challenge
 {
-	static const Range ASCII_RANGE(0x0020, 0x007E);
     static const Range LATIN_RANGE(0x0000, 0x007F);
     static const Range LATIN1_SUPPLEMENT_RANGE(0x0080, 0x00FF);
     static const Range LATIN_EXTENDED_A_RANGE(0x0100, 0x017F);
@@ -63,9 +62,10 @@ namespace challenge
     static const Range ARABIC_PRESENTATION_FORMS_B_RANGE(0xFE70, 0xFEFF);
     static const Range HALFWIDTH_AND_FULLWIDTH_FORMS_RANGE(0xFF00, 0xFFEF);
     static const Range CJK_UNIFIED_IDEOGRAPHS_EXTENSION_B_RANGE(0x20000, 0x2A6DF);
-    //static const Range _RANGE(0x, 0x);
-    
-    static const Range NON_LATIN_RANGE(0x00A0, USHRT_MAX);
+
+    static const Range NON_LATIN_RANGE(0x00A0, 0xFFFF);
+    static const Range ASCII_RANGE(0x0020, 0x00FF);
+    static const Range FALLBACK_RANGE(0x0000, 0xFFFF);
     
 };
 

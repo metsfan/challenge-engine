@@ -7,7 +7,8 @@ namespace challenge
 	class Color
 	{
 	public:
-		Color()
+		Color() :
+			red(0), green(0), blue(0), alpha(255)
 		{
 		}
 

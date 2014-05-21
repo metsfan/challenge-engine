@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Fonts>
+    <Font name="_system" hinting="0">
+        <FontFile filename="C:/WINDOWS/Fonts/Arial.ttf">
+            <Range name="latin" />
+            <Range name="latin1-supplement" />
+            <Range name="latin-extended-a" />
+            <Range name="latin-extended-b" />
+            <Range name="ipa-extensions" />
+            <Range name="spacing-modified-letters" />
+            <Range name="combining-diacritical-marks" />
+            <Range name="greek-coptic" />
+            <Range name="cyrillic" />
+            <Range name="cyrillic-supplement" />
+            <Range name="general-punctuation" />
+            <Range name="latin-extended-additional" />
+        </FontFile>
+    </Font>
+</Fonts>

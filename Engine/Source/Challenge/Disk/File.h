@@ -25,6 +25,12 @@ namespace challenge
 		const TByteArray& GetData() { return mData; }
 		const std::wstring& GetFilepath() { return mFilepath; }
 
+		static bool Exists(const std::string &filename)
+		{
+			std::ifstream file(filename);
+			return file.good();
+		}
+
 	private:
 		std::wstring mFilepath;
 		TByteArray mData;

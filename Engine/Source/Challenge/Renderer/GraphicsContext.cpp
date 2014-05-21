@@ -72,4 +72,27 @@ namespace challenge
 	void BaseGraphicsContext::SetActiveTexture(ITexture *texture, int slot)
 	{
 	}
+
+	int32_t BaseGraphicsContext::RegisterGlobal(const std::string &name)
+	{
+		auto it = mGlobalDataRegistry.find(name);
+		if (it == mGlobalDataRegistry.end()) {
+			int index = mGlobalDataRegistry.size();
+			mGlobalDataRegistry[name] = index;
+
+			return index;
+		}
+
+		return it->second;
+	}
+
+	int32_t BaseGraphicsContext::GetGlobalIndex(const std::string &name)
+	{
+		auto it = mGlobalDataRegistry.find(name);
+		if (it != mGlobalDataRegistry.end()) {
+			return it->second;
+		}
+
+		return -1;
+	}
 };

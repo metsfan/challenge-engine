@@ -14,10 +14,10 @@
 
  cbuffer spriteData
  {
-	 float4x4 gWVPMatrix;
-	 float4 gFrame;
-	 float4 gTexFrame;
-	 float gBorderWidth;
+	 float4x4 gWVPMatrix : WORLDVIEWPROJ_MATRIX;
+	 float4 gFrame : FRAME;
+	 float4 gTexFrame : TEXTURE_FRAME;
+	 float gBorderWidth : BORDER_WIDTH;
  };
 
 

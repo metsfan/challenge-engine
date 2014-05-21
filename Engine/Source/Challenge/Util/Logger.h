@@ -13,8 +13,8 @@ namespace challenge
 	class Logger
 	{
 	public:
-		static void log(LogLevel level, std::string message);
-		static void log(LogLevel level, const char *format, ...);
+		static void Log(LogLevel level, std::string message);
+		static void Log(LogLevel level, const char *format, ...);
 
 	private:
 		static bool s_OpenedOnce;

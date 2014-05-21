@@ -1,0 +1,182 @@
+<?xml version="1.0" standalone="yes" ?>
+<ShaderConfig>
+  <Shaders>
+    <Shader name="debug_lines_vertex" filename="DebugLinesVertex" type="vertex">
+       <Global name="gWVPMatrix" semantic="WORLDVIEWPROJ_MATRIX" type="mat4" />
+    </Shader>
+    <Shader name="debug_lines_pixel" filename="DebugLinesPixel" type="pixel">
+    </Shader>
+    <Shader name="model_basic_vertex" filename="ModelBasicVertex" type="vertex">
+      <Global name="gWVPMatrix" semantic="WORLDVIEWPROJ_MATRIX" type="mat4" />
+      <Global name="gWorldMatrix" semantic="WORLD_MATRIX" type="mat4" />
+    </Shader>
+    <Shader name="model_basic_pixel" filename="ModelBasicPixel" type="pixel">
+      <Global name="gTexture" semantic="DIFFUSE_TEXTURE" type="texture" />
+      <Global name="gColor" semantic="COLOR" type="vec4" />
+    </Shader>
+    <Shader name="model_bone_animation_vertex" filename="ModelBoneAnimationVertex" type="vertex">
+      <Global name="gWVPMatrix" semantic="WORLDVIEWPROJ_MATRIX" type="mat4" />
+      <Global name="gWorldMatrix" semantic="WORLD_MATRIX" type="mat4" />
+      <Global name="gBoneMatrices" semantic="BONE_MATRICES" type="mat4" num="75" />
+    </Shader>
+    <Shader name="skybox_vertex" filename="SkyboxVertex" type="vertex">
+      <Global name="gWVPMatrix" semantic="WORLDVIEWPROJ_MATRIX" type="mat4" />
+    </Shader>
+    <Shader name="skybox_pixel" filename="SkyboxPixel" type="pixel">
+      <Global name="gSkyboxTexture" semantic="SKYBOX_TEXTURE" type="texture" />
+    </Shader>
+    <Shader name="heightmap_vertex" filename="HeightMapVertex" type="vertex">
+      <Global name="gWVPMatrix" semantic="WORLDVIEWPROJ_MATRIX" type="mat4" />
+      <Global name="gHeightMapTexture" semantic="HEIGHTMAP_TEXTURE" type="texture" />
+      <Global name="gSize" semantic="HEIGHTMAP_SIZE" type="vec2" />
+    </Shader>
+    <Shader name="heightmap_pixel" filename="HeightMapPixel" type="pixel">
+      <Global name="gTexture" semantic="DIFFUSE_TEXTURE" type="texture" />
+    </Shader>
+    <Shader name="sprite_vertex" filename="SpriteVertex" type="vertex">
+      <Global name="gWVPMatrix" semantic="WORLDVIEWPROJ_MATRIX" type="mat4" />
+      <Global name="gFrame" semantic="FRAME" type="vec4" />
+      <Global name="gTexFrame" semantic="TEXTURE_FRAME" type="vec4" />
+      <Global name="gBorderWidth" semantic="BORDER_WIDTH" type="float" />
+    </Shader>
+    <Shader name="sprite_color_pixel" filename="SpriteColorPixel" type="pixel">
+      <Global name="gColor" semantic="BACKGROUND_COLOR" type="vec4" />
+      <Global name="gBorderColor" semantic="BORDER_COLOR" type="vec4" />
+    </Shader>
+    <Shader name="sprite_texture_pixel" filename="SpriteTexturePixel" type="pixel">
+      <Global name="gColor" semantic="BACKGROUND_COLOR" type="vec4" />
+      <Global name="gBackgroundImage" semantic="BACKGROUND_IMAGE" type="texture" />
+    </Shader>
+    <Shader name="circle_vertex" filename="CircleVertex" type="vertex">
+      <Global name="gWVPMatrix" semantic="WORLDVIEWPROJ_MATRIX" type="mat4" />
+    </Shader>
+    <Shader name="circle_pixel" filename="CirclePixel" type="pixel">
+      <Global name="gColor" semantic="COLOR" type="vec4" />
+    </Shader>
+    <Shader name="line_vertex" filename="LineVertex" type="vertex">
+    </Shader>
+    <Shader name="line_geometry" filename="LineGeometry" type="geometry">
+      <Global name="gWVPMatrix" semantic="WORLDVIEWPROJ_MATRIX" type="mat4" />
+      <Global name="gWidth" semantic="WIDTH" type="float" />
+    </Shader>
+    <Shader name="line_pixel" filename="LinePixel" type="pixel">
+      <Global name="gColor" semantic="COLOR" type="vec4" />
+    </Shader>
+    <Shader name="label_vertex" filename="LabelVertex" type="vertex">
+      <Global name="gWVPMatrix" semantic="WORLDVIEWPROJ_MATRIX" type="mat4" />
+      <Global name="gOriginAngle" semantic="ORIGIN_ANGLE" type="vec4" />
+      <Global name="gPosition" semantic="POSITION" type="vec2" />
+      <Global name="gScale" semantic="SCALE" type="float" />
+      <Global name="gLineOffsets" semantic="LINE_OFFSETS" type="float" num="20" />
+    </Shader>
+    <Shader name="label_pixel" filename="LabelPixel" type="pixel">
+      <Global name="gAtlasTexture" semantic="ATLAS_TEXTURE" type="texture" />
+      <Global name="gAlpha" semantic="ALPHA" type="float" />
+      <Global name="gColor" semantic="COLOR" type="vec4" />
+    </Shader>
+  </Shaders>
+  <ShaderPrograms>
+    <ShaderProgram name="model_static">
+      <Shaders>
+        <Shader name="model_basic_vertex" />
+        <Shader name="model_basic_pixel" />
+      </Shaders>
+      <InputLayout>
+        <InputElement name="POSITION" size="3" offset="0" />
+        <InputElement name="NORMAL" size="3" offset="12" />
+        <InputElement name="TEXCOORD" size="2" offset="24" />
+      </InputLayout>
+    </ShaderProgram>
+    <ShaderProgram name="model_bone_animation">
+      <Shaders>
+        <Shader name="model_bone_animation_vertex" />
+        <Shader name="model_basic_pixel" />
+      </Shaders>
+      <InputLayout>
+        <InputElement name="POSITION" size="3" offset="0" />
+        <InputElement name="NORMAL" size="3" offset="12" />
+        <InputElement name="TEXCOORD" size="2" offset="24" />
+        <InputElement name="BONE_WEIGHTS" size="4" offset="32" />
+        <InputElement name="BONE_INDICES" size="4" offset="48" />
+      </InputLayout>
+    </ShaderProgram>
+    <ShaderProgram name="skybox">
+      <Shaders>
+        <Shader name="skybox_vertex" />
+        <Shader name="skybox_pixel" />
+      </Shaders>
+      <InputLayout>
+        <InputElement name="POSITION" size="3" offset="0" />
+      </InputLayout>
+    </ShaderProgram>
+    <ShaderProgram name="heightmap">
+      <Shaders>
+        <Shader name="heightmap_vertex" />
+        <Shader name="heightmap_pixel" />
+      </Shaders>
+      <InputLayout>
+        <InputElement name="POSITION" size="3" offset="0" />
+        <InputElement name="TEXCOORD" size="2" offset="12" />
+      </InputLayout>
+    </ShaderProgram>
+    <ShaderProgram name="sprite_color">
+      <Shaders>
+        <Shader name="sprite_vertex" />
+        <Shader name="sprite_color_pixel" />
+      </Shaders>
+      <InputLayout>
+        <InputElement name="POSITION" size="2" offset="0" />
+      </InputLayout>
+    </ShaderProgram>
+    <ShaderProgram name="sprite_texture">
+      <Shaders>
+        <Shader name="sprite_vertex" />
+        <Shader name="sprite_texture_pixel" />
+      </Shaders>
+      <InputLayout>
+        <InputElement name="POSITION" size="2" offset="0" />
+      </InputLayout>
+    </ShaderProgram>
+    <ShaderProgram name="debug_lines">
+      <Shaders>
+        <Shader name="debug_lines_vertex" />
+        <Shader name="debug_lines_pixel" />
+      </Shaders>
+      <InputLayout>
+        <InputElement name="POSITION" size="3" offset="0" />
+        <InputElement name="COLOR" size="4" offset="12" />
+      </InputLayout>
+    </ShaderProgram>
+    <ShaderProgram name="circle">
+      <Shaders>
+        <Shader name="circle_vertex" />
+        <Shader name="circle_pixel" />
+      </Shaders>
+      <InputLayout>
+        <InputElement name="POSITION" size="3" offset="0" />
+        <InputElement name="TEXCOORD" size="2" offset="12" />
+      </InputLayout>
+    </ShaderProgram>
+    <ShaderProgram name="line">
+      <Shaders>
+        <Shader name="line_vertex" />
+        <Shader name="line_geometry" />
+        <Shader name="line_pixel" />
+      </Shaders>
+      <InputLayout>
+        <InputElement name="POSITION" size="3" offset="0" />
+      </InputLayout>
+    </ShaderProgram>
+    <ShaderProgram name="label">
+      <Shaders>
+        <Shader name="label_vertex" />
+        <Shader name="label_pixel" />
+      </Shaders>
+      <InputLayout>
+        <InputElement name="POSITION" size="2" offset="0" />
+        <InputElement name="TEXCOORD" size="2" offset="8" />
+        <InputElement name="LINE_NUM" size="1" offset="16" />
+      </InputLayout>
+    </ShaderProgram>
+  </ShaderPrograms>
+</ShaderConfig>

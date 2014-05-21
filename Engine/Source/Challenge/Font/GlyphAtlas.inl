@@ -1,3 +1,5 @@
+#include <Challenge/Font/Glyph.h>
+
 namespace challenge
 {
 	template <typename CharType>

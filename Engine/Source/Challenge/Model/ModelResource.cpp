@@ -54,7 +54,7 @@ namespace challenge
 			mModelPath = filename.substr(0, lastSlash + 1);
 			mModelName = filename.substr(lastSlash + 1, lastDot - lastSlash - 1);
 
-			//Logger::log(LogDebug, "Model path: %s", mModelPath.c_str());
+			//Logger::Log(LogDebug, "Model path: %s", mModelPath.c_str());
 			
 			this->Unserialize(inStream);
 			this->LoadAnimations();

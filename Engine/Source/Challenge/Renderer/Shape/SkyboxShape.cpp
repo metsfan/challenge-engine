@@ -89,7 +89,7 @@ namespace challenge
 
 	void SkyboxShape::Draw(IGraphicsDevice *device, RenderState &state)
 	{
-		IGraphicsContext *context = device->GetContext();
+		/*IGraphicsContext *context = device->GetContext();
 
 		glm::mat4 transform = state.GetTransform();
 		glm::mat4 projection = state.GetProjection();
@@ -113,7 +113,7 @@ namespace challenge
 			mVertexBuffer->Activate();
 			technique->ProcessNextPass(device, state);
 			device->Draw(PrimitiveTypeTriangleList, mNumVerts, 0);
-		}
+		}*/
 	}
 
 	SkyboxShape::~SkyboxShape()
