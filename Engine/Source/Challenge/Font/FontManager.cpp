@@ -111,7 +111,7 @@ namespace challenge
     
     void FontManager::LoadFontConfig(const std::string &filename)
     {
-        TFontDescMap newFonts = FontConfig::ReadResource(filename);
+        TFontDescMap newFonts = FontConfig::ReadResource(filename); 
         mConfigFonts.insert(newFonts.begin(), newFonts.end());
     }
 }

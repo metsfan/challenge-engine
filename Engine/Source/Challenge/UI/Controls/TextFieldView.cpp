@@ -1,6 +1,8 @@
 #include <Challenge/Challenge.h>
 #include <Challenge/Font/UnicodeRanges.h>
 #include <Challenge/Font/TextUtil.h>
+#include <Challenge/Font/Glyph.h>
+#include <Challenge/Font/Font.h>
 #include "TextFieldView.h"
 
 namespace challenge
@@ -55,7 +57,7 @@ namespace challenge
 		this->AddInternalSubview(mTextLabel);
 
 		mCursor->SetBackgroundColor(Color(0, 0, 0, 255));
-		mTextLabel->AddSubview(mCursor);
+		this->AddSubview(mCursor);
 		mTextLabel->SetBackgroundColor(Color::Clear());
 
 		//mLetterPositions.push_back(mCursorPosition);
@@ -87,7 +89,7 @@ namespace challenge
 			}
 
 			mCursor->SetAlpha(mCursorActive);
-			mCursor->SetX(mCursorPosition);
+			mCursor->SetX(mCursorPosition + mTextLabel->GetX());
 		}
 		else {
 			mCursorTime = 0;
@@ -119,7 +121,7 @@ namespace challenge
 	void TextFieldView::KeyPressed(const KeyboardEvent &e)
 	{
 		const Frame &frame = this->GetFrame();
-		unsigned char c = e.keyCode;
+		unsigned char c = e.virtualKeyCode;
 		if(e.shiftDown) {
 			c = toupper(c);
 		}
@@ -150,13 +152,13 @@ namespace challenge
 				
 			}
 		}
-		else if (LATIN_RANGE.Contains(c)) {
+		else if (c < 127) {
 			text.insert(text.begin() + mCursorIndex, c);
 
-			Size letterSize = TextUtil::SizeOfText(StringUtil::ToWide(std::string(1, c)), mTextLabel->GetFont());
-			newOffset = letterSize.width;
+			Glyph *glyph = mTextLabel->GetFont()->GetGlyph(c);
+			newOffset = glyph->GetAdvance().x;
 
-			mLetterPositions.insert(mLetterPositions.begin() + mCursorIndex, letterSize.width);
+			mLetterPositions.insert(mLetterPositions.begin() + mCursorIndex, glyph->GetAdvance().x);
 			
 			mCursorIndex++;
 		}
@@ -165,10 +167,10 @@ namespace challenge
 		mTextLabel->SetText(text);
 
 		Size textDims = TextUtil::SizeOfText(StringUtil::ToWide(mTextLabel->GetText()), mTextLabel->GetFont());
-		mTextLabel->SetWidth(textDims.width);
+		
 
 		if (textDims.width > this->GetWidth() && 
-			((mCursorPosition + mTextLabel->GetX()) > this->GetWidth() ||
+			((mCursorPosition + mTextLabel->GetX()) >= this->GetWidth() ||
 			(mCursorPosition + mTextLabel->GetX()) < 0)) {
 			mTextLabel->SetX(mTextLabel->GetX() - (50 * glm::sign(newOffset)));
 			//mTextLabel->SetWidth(mTextLabel->GetWidth() + 50);
@@ -176,6 +178,10 @@ namespace challenge
 		else if (textDims.width < this->GetWidth()) {
 			mTextLabel->SetX(0);
 		}
+
+		mTextLabel->SetWidth(this->GetWidth() - mTextLabel->GetX() + 10);
+
+		Logger::Log(LogDebug, "Cursor: %f, Label: %f", mCursorPosition, mTextLabel->GetX());
 
 		
 		/*if (textDims.width > this->GetWidth()) {

@@ -60,6 +60,7 @@ namespace challenge
 		mLabel->SetText(StringUtil::ToWide(mText));
 		mLabel->SetTextColor(mTextColor);
 
+		mLabel->SetSize(this->GetSize());
 		mLabel->SetPosition(frame.origin.x + parentFrame.origin.x,
 			frame.origin.y + parentFrame.origin.y + 10);
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Fonts>
-    <Font name="_system" hinting="0">
-        <FontFile filename="C:/WINDOWS/Fonts/Arial.ttf">
+    <Font name="_system" hinting="1">
+        <FontFile filename="C:/Windows/Fonts/Georgia.ttf">
             <Range name="latin" />
             <Range name="latin1-supplement" />
             <Range name="latin-extended-a" />

@@ -17,7 +17,7 @@ namespace challenge
         mBackupFont(NULL)
     {
         mUID = sUIDCounter++;
-        mScale = 2;//DeviceSpecification::GetDevicePixelDensity();
+        mScale = 1;//DeviceSpecification::GetDevicePixelDensity();
         
         FT_Error error;
         if(!sFTLibrary) {
@@ -104,7 +104,7 @@ namespace challenge
     }
     
     Glyph* Font::GetGlyph(int character, int outlineSize)
-    {
+    { 
         Glyph *glyph = NULL;
         Font *font = this;
         

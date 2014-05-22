@@ -43,7 +43,8 @@ namespace challenge
 			KeyboardEvent evt(type, keyCode, virtualKeyCode);
 
 			bool found = false;
-			auto key = std::find(mActiveKeys.begin(), mActiveKeys.end(), keyCode);
+			auto key = std::find(mActiveKeys.begin(), mActiveKeys.end(), 
+				std::pair<uint32_t, uint32_t>(keyCode, virtualKeyCode));
 
 			switch (type)
 			{
@@ -146,14 +147,15 @@ namespace challenge
 				mKeyboardEventQueue.clear();
 
 				for(KeyboardEvent &evt : keyboardEvents) {
-					auto key = std::find(mActiveKeys.begin(), mActiveKeys.end(), evt.keyCode);
+					auto key = std::find(mActiveKeys.begin(), mActiveKeys.end(), 
+						std::pair<uint32_t, uint32_t>(evt.keyCode, evt.virtualKeyCode));
 					evt.shiftDown = mShiftDown;
 					evt.ctrlDown = mCtrlDown;
 					evt.altDown = mAltDown;
 					switch(evt.type) {
 					case KeyboardEventKeyDown:
 						if(key == mActiveKeys.end()) {
-							mActiveKeys.push_back(evt.keyCode);
+							mActiveKeys.push_back(std::pair<uint32_t, uint32_t>(evt.keyCode, evt.virtualKeyCode));
 							this->PostKeyboardEvent(evt);
 						}
 				
@@ -171,10 +173,14 @@ namespace challenge
 			}
 
 			// Send key press events for all active keys
-			for(unsigned int key : mActiveKeys) {
+			for(auto keys : mActiveKeys) {
 				KeyboardEvent evt;
-				evt.keyCode = key;
+				evt.keyCode = keys.first;
+				evt.virtualKeyCode = keys.second;
 				evt.type = KeyboardEventKeyPress;
+				evt.shiftDown = mShiftDown;
+				evt.ctrlDown = mCtrlDown;
+				evt.altDown = mAltDown;
 
 				//Logger::Log(LogDebug, "Key Press: %c", key);
 

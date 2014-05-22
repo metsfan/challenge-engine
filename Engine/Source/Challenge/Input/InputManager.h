@@ -37,7 +37,7 @@ namespace challenge
 		void ProcessMouseEvent(MouseEventType type, unsigned int button, Point position);
 		void ProcessMouseWheelEvent(MouseEventType type, int delta);
 
-		std::vector<unsigned int> GetActiveKeys() { return mActiveKeys; }
+		std::vector<std::pair<uint32_t, uint32_t>> GetActiveKeys() { return mActiveKeys; }
 		bool IsKeyDown() { return mKeyDown; }
 
 		std::vector<unsigned int> GetActiveMouseButtons() { return mActiveMouseButtons; }
@@ -58,7 +58,7 @@ namespace challenge
 		std::vector<std::weak_ptr<IMouseListener>> mMouseListeners;
 
 		std::vector<uint32_t> mActiveMouseButtons;
-		std::vector<uint32_t> mActiveKeys;
+		std::vector<std::pair<uint32_t, uint32_t>> mActiveKeys;
 		Point mMousePosition;
 		bool mMouseDown;
 		bool mMouseMoving;

@@ -16,7 +16,7 @@ namespace challenge
 {
     GlyphAtlasTexture* Label::msAtlasTexture = NULL;
     
-    static const Size kGlyphAtlasSize(2048, 2048);
+	static const Size kGlyphAtlasSize(1024, 1024);
     static const char16_t kEllipsisCharacter = 0x2026;
 	static const size_t kMaxLineOffsets = 20;
     

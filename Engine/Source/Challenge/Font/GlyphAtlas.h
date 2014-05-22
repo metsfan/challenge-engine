@@ -29,7 +29,7 @@ namespace challenge
 
 	typedef std::map<uint64_t, GlyphData> TGlyphEntryMap;
     
-    static const Point kBaseOffset(3, 2);
+    static const Point kBaseOffset(5, 5);
 
     class IGlyphAtlasListener
     {
@@ -60,7 +60,7 @@ namespace challenge
         void Empty();
         void AddListener(IGlyphAtlasListener* listener);
         void RemoveListener(IGlyphAtlasListener* listener);
-        double GetScale(){return 2.0;}
+        double GetScale(){return 1.0;}
         void Validate() { Validatable::Validate();}
 
         uint64_t GenerateKey(Font* font, int character, unsigned short outlineSize = 0);

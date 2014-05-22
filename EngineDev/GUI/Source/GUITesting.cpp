@@ -5,7 +5,7 @@ void GUITesting::OnApplicationInitialized(GameApplication *app)
 {
 	auto window = app->GetWindow();
 
-	TextFieldView *textField = new TextFieldView(Frame(100, 100, 75, 30));
+	TextFieldView *textField = new TextFieldView(Frame(100, 100, 200, 30));
 	textField->SetBorderWidth(1);
 	textField->SetBorderColor(Color::Black());
 	window->AddSubview(textField);

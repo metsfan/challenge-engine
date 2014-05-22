@@ -73,8 +73,8 @@ namespace challenge
             Rect bounds(front.x, front.y, front.x, front.y);
             for(int i = 0; i < mSpans.size(); i++)
             {
-                bounds.Include(mSpans[i].x, mSpans[i].y);
-                bounds.Include(mSpans[i].x + mSpans[i].width - 1, mSpans[i].y);
+                bounds.Include(mSpans[i].x, mSpans[i].y + 1);
+                bounds.Include(mSpans[i].x + mSpans[i].width, mSpans[i].y);
             }
             
             int width = bounds.GetWidth();
@@ -89,10 +89,10 @@ namespace challenge
             memset(mBuffer, 0, size);
             for(int i = 0; i < mSpans.size(); i++)
             {
-                GlyphSpan span = mSpans[i];
+                GlyphSpan &span = mSpans[i];
                 for (int w = 0; w < span.width; ++w)
                 {
-                    mBuffer[(int)((height - 1 - (span.y - bounds.bottom)) * width
+                    mBuffer[(int)((height - 1 - (span.y - bounds.top)) * width
                                   + span.x - bounds.left + w)] = span.coverage;
                 }
             }

@@ -16,6 +16,7 @@ namespace challenge
 		KeyboardEvent() :
 			type(KeyboardEventKeyDown), 
 			keyCode(0),
+			virtualKeyCode(0),
 			shiftDown(false),
 			ctrlDown(false),
 			altDown(false),

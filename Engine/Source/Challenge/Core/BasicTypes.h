@@ -328,13 +328,13 @@ namespace challenge
 		void Include(real x, real y)
 		{
 			left = std::min(left, x);
-			bottom = std::min(bottom, y);
+			top = std::min(top, y);
 			right = std::max(right, x);
-			top = std::max(top, y);
+			bottom = std::max(bottom, y);
 		}
 
 		real GetWidth() const { return right - left; }
-		real GetHeight() const { return top - bottom; }
+		real GetHeight() const { return bottom - top; }
 
 		real left, bottom, right, top;
 	};
