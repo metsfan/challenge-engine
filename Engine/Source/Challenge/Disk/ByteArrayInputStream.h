@@ -18,6 +18,11 @@ namespace challenge
 			std::copy(input.begin(), input.begin() + size, mData.begin());
 		}
 
+		ByteArrayInputStream()
+		{
+
+		}
+
 		~ByteArrayInputStream()
 		{
 		}

@@ -17,7 +17,7 @@
     <Shader name="model_bone_animation_vertex" filename="ModelBoneAnimationVertex" type="vertex">
       <Global name="gWVPMatrix" semantic="WORLDVIEWPROJ_MATRIX" type="mat4" />
       <Global name="gWorldMatrix" semantic="WORLD_MATRIX" type="mat4" />
-      <Global name="gBoneMatrices" semantic="BONE_MATRICES" type="mat4" num="75" />
+      <Global name="gBoneMatrices" semantic="BONE_MATRICES" type="mat4" num="64" />
     </Shader>
     <Shader name="skybox_vertex" filename="SkyboxVertex" type="vertex">
       <Global name="gWVPMatrix" semantic="WORLDVIEWPROJ_MATRIX" type="mat4" />

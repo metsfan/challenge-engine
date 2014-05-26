@@ -4,6 +4,8 @@
 #include <map>
 #include <vector>
 
+#include <Challenge/Util/SafeObject.hpp>
+
 namespace challenge
 {
 	typedef std::function<void()> TDispatchFunction;
@@ -18,7 +20,7 @@ namespace challenge
 
 		static void ExecuteQueue(const std::string &queue, bool empty = true);
 
-		static TDispatchQueueMap sDispatchQueues;
+		static SafeObject<TDispatchQueueMap> sDispatchQueues;
 
 		static const std::string MainQueue;
 	};

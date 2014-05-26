@@ -30,7 +30,7 @@ cbuffer bones
 	float4x4 gBoneMatrices[MAX_BONES];
 };
 
-VS_OUT main( VS_IN vsIn)
+VS_OUT main( VS_IN vsIn) 
 {
 	VS_OUT vOut;
 

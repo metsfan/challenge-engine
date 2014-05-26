@@ -52,7 +52,6 @@
     <ClCompile Include="Source\Challenge\Font\Glyph.cpp" />
     <ClCompile Include="Source\Challenge\GameApplication.cpp" />
     <ClCompile Include="Source\Challenge\GameApplicationWindows.cpp" />
-    <ClCompile Include="Source\Challenge\GameController.cpp" />
     <ClCompile Include="Source\Challenge\Lib\include\angelscript\autowrapper\generator\generateheader.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -238,9 +237,6 @@
     <ClCompile Include="Source\Challenge\Util\XML\XMLAttribute.cpp" />
     <ClCompile Include="Source\Challenge\Util\XML\XMLDocument.cpp" />
     <ClCompile Include="Source\Challenge\Util\XML\XMLNode.cpp" />
-    <ClCompile Include="Source\Challenge\View\Actor.cpp" />
-    <ClCompile Include="Source\Challenge\View\ActorParams.cpp" />
-    <ClCompile Include="Source\Challenge\View\GameView.cpp" />
     <ClInclude Include="Source\Challenge\Audio\AudioListener.h" />
     <ClInclude Include="Source\Challenge\Audio\AudioSystem.h" />
     <ClInclude Include="Source\Challenge\Audio\Sound.h" />
@@ -280,7 +276,6 @@
     <ClInclude Include="Source\Challenge\Font\UnicodeRanges.h" />
     <ClInclude Include="Source\Challenge\GameApplication.h" />
     <ClInclude Include="Source\Challenge\GameApplicationWindows.h" />
-    <ClInclude Include="Source\Challenge\GameController.h" />
     <ClInclude Include="Source\Challenge\Lib\include\angelscript\autowrapper\aswrappedcall.h" />
     <ClInclude Include="Source\Challenge\Lib\include\angelscript\contextmgr\contextmgr.h" />
     <ClInclude Include="Source\Challenge\Lib\include\angelscript\debugger\debugger.h" />
@@ -438,6 +433,7 @@
     <ClInclude Include="Source\Challenge\Util\Logger.h" />
     <ClInclude Include="Source\Challenge\Util\PrimitiveGenerator.h" />
     <ClInclude Include="Source\Challenge\Util\SafeObject.hpp" />
+    <ClInclude Include="Source\Challenge\Util\Serializable.h" />
     <ClInclude Include="Source\Challenge\Util\StaticBlock.h" />
     <ClInclude Include="Source\Challenge\Util\StringUtil.h" />
     <ClInclude Include="Source\Challenge\Util\ImageAtlas.h" />

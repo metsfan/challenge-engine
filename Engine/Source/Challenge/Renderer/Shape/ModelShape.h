@@ -29,5 +29,12 @@ namespace challenge
 		std::vector<ITexture *> mTextures;
 		std::vector<Material *> mMeshMaterials;
 		std::vector<IVertexBuffer *> mMeshVertexBuffers;
+
+		int mWVPIndex;
+		int mWorldIndex;
+		int mBoneMatricesIndex;
+		int mDiffuseTextureIndex;
+		int mColorIndex;
+
 	};
 };

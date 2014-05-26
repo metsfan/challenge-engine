@@ -20,11 +20,4 @@ namespace challenge
 		NetworkProtoUDP,
 		NetworkProtoTCP
 	};
-
-	class INetworkObject
-	{
-	public:
-		virtual void Serialize(std::stringstream &stream) = 0;
-		virtual void Unserialize(std::stringstream &stream) = 0;
-	};
 };

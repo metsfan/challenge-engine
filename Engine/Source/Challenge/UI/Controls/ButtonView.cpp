@@ -9,7 +9,7 @@ namespace challenge
 		mState = ButtonStateDefault;
 		mTitleLabel = new LabelView();
 		mTitleLabel->SetFrame(Frame(0, 0, frame.size.width, frame.size.height));
-		mTitleLabel->SetTextColor(Color(0,0,0,1));
+		mTitleLabel->SetTextColor(Color(0,0,0,255));
 		this->AddSubview(mTitleLabel);
 	}
 

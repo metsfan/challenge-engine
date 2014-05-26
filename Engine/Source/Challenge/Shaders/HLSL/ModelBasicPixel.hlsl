@@ -33,5 +33,5 @@ float4 main(VS_OUT vOut) : SV_TARGET
 
 	float4 texColor = gTexture.Sample(gTriLinearSam, vOut.texCoord);
 	float4 Kd = 1 - ((1 - texColor) * (1 - gColor));
-	return Kd;
+	return texColor;
 }

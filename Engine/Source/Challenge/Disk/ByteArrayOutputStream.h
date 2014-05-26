@@ -54,7 +54,7 @@ namespace challenge
 			return *this;
 		}
 
-		TByteArray GetData()
+		TByteArray GetData() const 
 		{
 			TByteArray output;
 			output.resize(mSize);

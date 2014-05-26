@@ -52,7 +52,11 @@ namespace challenge
 					program->SetTexture(0, texture, mType);
 				}
 				else {
-					program->SetConstantDataStruct(var.localId, data, var.size * var.num, mType);
+					uint32_t num = state.GetShaderDataNum(var.globalId);
+
+					assert(num <= var.num);
+
+					program->SetConstantDataStruct(var.localId, data, var.size * num, mType); 
 				}
 				
 			}

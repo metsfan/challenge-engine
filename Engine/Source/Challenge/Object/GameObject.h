@@ -6,7 +6,8 @@
 
 namespace challenge
 {
-	class GameObject : public Transformable
+	class GameObject : public Transformable,
+					   public ISerializable
 	{
 	public:
 		GameObject()
@@ -52,6 +53,9 @@ namespace challenge
 
 		virtual void MoveBy(const glm::vec3 &position);
 		virtual void MoveTo(const glm::vec3 &position);
+
+		virtual void Serialize(ByteArrayOutputStream &stream);
+		virtual void Unserialize(ByteArrayInputStream &stream);
 
 		void Update(int deltaMillis);
 		void Render(IGraphicsDevice *device, RenderState &state);

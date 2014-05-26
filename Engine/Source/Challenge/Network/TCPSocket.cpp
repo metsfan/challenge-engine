@@ -13,12 +13,12 @@ namespace challenge
 	{
 	}
 
-	int Send(const TByteArray &data, const NetworkAddress *address)
+	int TCPSocket::Send(const TByteArray &data, const NetworkAddress *address)
 	{
 		return 0;
 	}
 
-	int Receive(TByteArray &data, const NetworkAddress *address)
+	int TCPSocket::Receive(TByteArray &data, NetworkAddress *address)
 	{
 		return 0;
 	}

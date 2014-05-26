@@ -372,15 +372,6 @@
     <ClCompile Include="Source\Challenge\Util\Util.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Challenge\View\Actor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Challenge\View\ActorParams.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Challenge\View\GameView.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Challenge\Challenge.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -388,9 +379,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Challenge\GameApplicationWindows.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Challenge\GameController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Challenge\Renderer\Shape\LineShape.cpp">
@@ -548,9 +536,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Challenge\GameController.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Challenge\Audio\AudioListener.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -1221,6 +1206,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Challenge\Renderer\GraphicsObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Util\Serializable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

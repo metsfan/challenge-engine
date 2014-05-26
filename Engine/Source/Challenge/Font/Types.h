@@ -24,7 +24,7 @@ namespace challenge
         
         void AddRange(Range range) { glyphRanges.push_back(range); }
         
-        std::string filepath;
+		std::string filepath;
         std::vector<Range> glyphRanges;
     };
 

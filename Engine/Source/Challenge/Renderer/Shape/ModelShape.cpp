@@ -42,59 +42,59 @@ namespace challenge
 
 			mTextures.push_back(texture);
 		}
+
+		IGraphicsContext *context = device->GetContext();
+		mWVPIndex = context->GetGlobalIndex("WORLDVIEWPROJ_MATRIX");
+		mWorldIndex = context->GetGlobalIndex("WORLD_MATRIX");
+		mBoneMatricesIndex = context->GetGlobalIndex("BONE_MATRICES");
+		mDiffuseTextureIndex = context->GetGlobalIndex("DIFFUSE_TEXTURE");
+		mColorIndex = context->GetGlobalIndex("COLOR");
 	}
 
 	void ModelShape::Draw(IGraphicsDevice *device, RenderState &state)
 	{
-		/*IGraphicsContext *context = device->GetContext();
+		IGraphicsContext *context = device->GetContext();
 		const TMeshList &meshes = mModel->GetMeshes();
 
 		glm::mat4 &wvp = state.GetWorldViewProjection();
-		ShaderDataMatrix4 wvpData(&wvp, 1);
-		state.SetShaderData("WORLDVIEWPROJ_MATRIX", &wvpData);
+		state.SetShaderData(mWVPIndex, &wvp);
 
 		glm::mat4 &transform = state.GetTransform();
-		ShaderDataMatrix4 transformData(&transform, 1);
-		state.SetShaderData("WORLD_MATRIX", &transformData);
+		state.SetShaderData(mWorldIndex, &transform);
 
 		Effect *effect = context->GetEffect("Model");
-		ShaderDataMatrix4 boneData;
 
 		if(mModel->IsAnimated()) {
 			const std::vector<glm::mat4> &boneMatrices = mModel->GetBonesForKeyframe(mCurrentAnimFrame);
-			boneData.SetData(&boneMatrices[0], boneMatrices.size());
-			state.SetShaderData("BONE_MATRICES", &boneData);
+			state.SetShaderData(mBoneMatricesIndex, (void *)&boneMatrices[0], boneMatrices.size());
 			effect->SetActiveTechnique("BoneAnimation");
 		} else {
-			state.SetShaderData("BONE_MATRICES", NULL);
+			state.SetShaderData(mBoneMatricesIndex, NULL);
 			effect->SetActiveTechnique("Static");
 		}
 
 		/*if(mTextures.size() == 0) {
 			ShaderDataVector4 colorData(&mColor, 1);
 			state.SetShaderData("COLOR", &colorData);
-		}*
+		}*/
 
 		for(int i = 0; i < meshes.size(); i++) {
 			ModelMesh *mesh = meshes[i];
 
-			ShaderDataTexture diffuseTex;
-			ShaderDataVector4 colorData;
 			glm::vec4 clearColor(0);
 
 			if(mesh->GetMaterial() >= 0 &&
 				mTextures[mesh->GetMaterial()]->IsLoaded()) {
-				diffuseTex = ShaderDataTexture(mTextures[mesh->GetMaterial()]);
-				state.SetShaderData("DIFFUSE_TEXTURE", &diffuseTex);
+				ITexture *diffuseTex = mTextures[mesh->GetMaterial()];
+				state.SetShaderData(mDiffuseTextureIndex, diffuseTex);
 				
 			} else {
-				state.SetShaderData("DIFFUSE_TEXTURE", NULL);
+				state.SetShaderData(mDiffuseTextureIndex, NULL);
 				//ShaderDataVector4 colorData(&mColor, 1);
 				//state.SetShaderData("COLOR", NULL);
 			}
 
-			colorData = ShaderDataVector4(&mColor, 1);
-			state.SetShaderData("COLOR", &colorData);
+			state.SetShaderData(mColorIndex, &mColor);
 
 			Technique *technique = effect->GetActiveTechnique();
 			technique->Begin();
@@ -103,7 +103,7 @@ namespace challenge
 				mMeshVertexBuffers[i]->Activate();
 				device->Draw(PrimitiveTypeTriangleList, mesh->GetTotalFaces(), 0);
 			}
-		}*/
+		}
 	}
 
 	ModelShape::~ModelShape()

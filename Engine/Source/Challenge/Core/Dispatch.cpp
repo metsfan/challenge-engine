@@ -3,12 +3,14 @@
 
 namespace challenge
 {
-	TDispatchQueueMap Dispatch::sDispatchQueues;
+	SafeObject<TDispatchQueueMap> Dispatch::sDispatchQueues;
 	const std::string Dispatch::MainQueue = "__MAIN_DISPATCH_QUEUE__";
 
 	void Dispatch::PushTask(const std::string &queue, TDispatchFunction task)
 	{
+		sDispatchQueues.lock();
 		sDispatchQueues[queue].push_back(task);
+		sDispatchQueues.unlock();
 	}
 
 	void Dispatch::ExecuteQueue(const std::string &queue, bool empty)

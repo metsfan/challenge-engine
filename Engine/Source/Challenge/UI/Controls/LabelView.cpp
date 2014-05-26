@@ -20,7 +20,8 @@ namespace challenge
 		mLabel(NULL),
 		mFont(NULL),
 		mTextChanged(false),
-		mLabelSprite(NULL)
+		mLabelSprite(NULL),
+		mTextColor(0, 0, 0, 255)
 	{
 		this->SetFont(FontManager::GetDefaultFont());
 	}
@@ -55,6 +56,8 @@ namespace challenge
 		if (!mLabel) {
 			mLabel = new Label(device);
 		}
+
+		//mLabel->SetAlignment(TextAlignCenter, TextAlignMiddle);
 
 		mLabel->SetFont(mFont);
 		mLabel->SetText(StringUtil::ToWide(mText));

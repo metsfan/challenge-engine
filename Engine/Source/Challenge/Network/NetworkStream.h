@@ -3,6 +3,7 @@
 #include <Challenge/Challenge.h>
 #include <Challenge/Network/Network.h>
 #include <Challenge/Network/NetworkSocket.h>
+#include <Challenge/Util/Serializable.h>
 
 namespace challenge
 {
@@ -12,13 +13,19 @@ namespace challenge
 		NetworkStream(const NetworkAddress *address, NetworkProto protocol);
 		~NetworkStream();
 
-		void Read(TByteArray &data, NetworkAddress *sender = NULL);
-		void Write(const TByteArray &data, NetworkAddress *address = NULL);
+		int Write(ISerializable *object, const NetworkAddress *address = NULL);
+		int Write(const TByteArray &data, const NetworkAddress *address = NULL);
+		int Write(const ByteArrayOutputStream &stream, const NetworkAddress *address = NULL);
+
+		int Read(ISerializable *object, NetworkAddress *address = NULL);
+		int Read(TByteArray &data, NetworkAddress *sender = NULL);
+		int Read(ByteArrayInputStream &stream, NetworkAddress *address = NULL);
 		
 		bool Open();
 		void Close();
 
 	private:
 		NetworkSocket *mSocket;
+		NetworkProto mProto;
 	};
 };

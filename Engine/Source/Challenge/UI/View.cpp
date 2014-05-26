@@ -21,7 +21,7 @@ namespace challenge
 		mAdjustedFrame(frame),
 		mTextureFrame(0, 0, 1, 1),
 		mVisible(true),
-		mZPosition(0),
+		mZPosition(-1),
 		mBackgroundImage(NULL),
 		mBackgroundImageAtlas(NULL),
 		mParent(NULL),
@@ -74,7 +74,9 @@ namespace challenge
 		if(!found) {
 			mSubviews.push_back(view);
 			view->SetParent(this);
-			view->SetZPosition(mZPosition + 1);
+			if (view->GetZPosition() < 0) {
+				view->SetZPosition(mZPosition + 1);
+			}
 		}
 
 		this->PositionSubviews();

@@ -12,7 +12,7 @@ namespace challenge
 		virtual void OnTransformChanged(Transformable *transformable) = 0;
 	};
 
-	class Transformable
+	class Transformable : public ISerializable
 	{
 	public:
 		Transformable() :
@@ -70,6 +70,9 @@ namespace challenge
 		const glm::vec3& GetRotation() { return mRotation; }
 		const glm::vec3& GetScale() { return mScale; }
 		const glm::mat4& GetTransform() { return mTransform; }
+
+		virtual void Serialize(ByteArrayOutputStream &stream);
+		virtual void Unserialize(ByteArrayInputStream &stream);
 
 	protected:
 		void Update(int deltaMillis);

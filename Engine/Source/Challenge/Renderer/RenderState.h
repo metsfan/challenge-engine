@@ -69,7 +69,7 @@ namespace challenge
 		void SetMaterial(Material *material) { mMaterial = material; }
 		Material* GetMaterial() { return mMaterial; }
 
-		void SetShaderData(int index, void *data)
+		void SetShaderData(int index, void *data, uint32_t num = 1)
 		{
 			if (index < 0) {
 				return;
@@ -77,9 +77,11 @@ namespace challenge
 
 			if (mShaderData.size() <= index) {
 				mShaderData.resize(index + 1);
+				mShaderDataNum.resize(index + 1);
 			}
 
 			mShaderData[index] = data;
+			mShaderDataNum[index] = num;
 		}
 
 		void * GetShaderData(int index) 
@@ -91,6 +93,15 @@ namespace challenge
 			return NULL;
 		}
 
+		uint32_t GetShaderDataNum(int index)
+		{
+			if (mShaderData.size() > index) {
+				return mShaderDataNum[index];
+			}
+
+			return 1;
+		}
+
 	private:
 		std::vector<LightSource *> mLightSources;
 		std::stack<glm::mat4> mTransformStack;
@@ -98,6 +109,7 @@ namespace challenge
 		glm::mat4 mTopTransform;
 		glm::mat4 mWVP;
 		std::vector<void *> mShaderData;
+		std::vector<uint32_t> mShaderDataNum;
 		Material *mMaterial;
 	};
 };

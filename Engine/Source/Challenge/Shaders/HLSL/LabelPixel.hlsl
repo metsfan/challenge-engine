@@ -1,6 +1,13 @@
-Texture2D gAtlasTexture : register(t0);
+Texture2D gAtlasTexture;
 
-SamplerState gTriLinearSam : register(s0);
+sampler gTriLinearSam =
+sampler_state
+{
+	Texture = <gAtlasTexture>;
+	MipFilter = LINEAR;
+	MinFilter = LINEAR;
+	MagFilter = LINEAR;
+};
 
 struct PS_IN
 {

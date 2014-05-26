@@ -50,4 +50,15 @@ namespace challenge
 			physicsComponent->GetPhysicsObject()->SetPosition(position);
 		}
 	}
+
+	void GameObject::Serialize(ByteArrayOutputStream &stream)
+	{
+		Transformable::Serialize(stream);
+	}
+
+	void GameObject::Unserialize(ByteArrayInputStream &stream)
+	{
+		Transformable::Unserialize(stream);
+
+	}
 }

@@ -17,4 +17,18 @@ namespace challenge
 			mChanged = false;
 		}
 	}
+
+	void Transformable::Serialize(ByteArrayOutputStream &stream)
+	{
+		stream << mPosition;
+		stream << mRotation;
+		stream << mScale;
+	}
+
+	void Transformable::Unserialize(ByteArrayInputStream &stream)
+	{
+		stream >> mPosition;
+		stream >> mRotation;
+		stream >> mScale;
+	}
 }
