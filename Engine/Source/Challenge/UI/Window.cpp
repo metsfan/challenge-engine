@@ -158,6 +158,10 @@ namespace challenge
 		while (selectedView) {
 			handled |= selectedView->View::OnKeyboardEvent(e);
 
+			if (handled) {
+				break;
+			}
+
 			selectedView = selectedView->GetParent();
 		}
 

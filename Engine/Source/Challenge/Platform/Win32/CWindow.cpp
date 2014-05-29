@@ -309,6 +309,9 @@ namespace challenge
 		case VK_SPACE:
 			application->ProcessKeyboardEvent(evt, TranslateVirtualKeyCode(wParam, lParam, true));
 
+		case VK_RETURN:
+			application->ProcessKeyboardEvent(evt, SpecialKeyEnter);
+
 		default:
 			application->ProcessKeyboardEvent(evt, 
 				TranslateVirtualKeyCode(wParam, lParam, true), 

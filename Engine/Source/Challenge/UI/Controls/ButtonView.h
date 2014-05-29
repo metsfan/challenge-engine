@@ -29,7 +29,7 @@ namespace challenge
 		void SetTitleColor(const Color &color);
 
 		void SetValue(const std::string &value) { this->SetTitleText(value); }
-		std::string GetValue() { return mTitleLabel->GetText(); }
+		std::string GetValue() { return StringUtil::ToNarrow(mTitleLabel->GetText()); }
 
 		virtual void SetBackgroundColor(const Color &color);
 

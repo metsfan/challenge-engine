@@ -16,23 +16,31 @@ namespace challenge
 		template <typename T>
 		void SetText(const T &val)
 		{
-			std::stringstream ss;
+			std::wstringstream ss;
 			ss << val;
 			this->SetText(ss.str());
 		}
 
-		void SetText(const std::string &text);
-		const std::string& GetText() { return mTextLabel->GetText(); }
+		void SetText(const std::string &text)
+		{
+			this->SetText(StringUtil::ToWide(text));
+		}
 
-		void SetFont(Font *font) { mTextLabel->SetFont(font); }
+		void SetText(const std::wstring &text);
+		const std::string& GetText() { return StringUtil::ToNarrow(mText); }
+
+		void SetFont(Font *font);
 
 		virtual void Update(int deltaMillis);
 		virtual void Render(IGraphicsDevice *device, RenderState &state, const Frame &parentFrame);
 
 		void SetValue(const std::string &value) { this->SetText(value); }
-		std::string GetValue() { return mTextLabel->GetText(); }
+		std::string GetValue() { return StringUtil::ToNarrow(mText); }
 
 		void ResetCursor();
+
+		bool IsSecure() { return mSecure; }
+		void SetSecure(bool secure) { mSecure = secure; }
 
 	protected:
 		virtual void ParseFromXML(XMLNode &node);
@@ -45,6 +53,11 @@ namespace challenge
 		int mCursorTime;
 		int mCursorIndex;
 		real mCursorPosition;
+		bool mSecure;
+		std::wstring mText;
+		std::wstring mSecureString;
+		Size mSecureCharSize;
+
 
 		int mKeyPressTime;
 		int mKeyRepeatTime;

@@ -24,6 +24,8 @@ namespace challenge
 		mTextColor(0, 0, 0, 255)
 	{
 		this->SetFont(FontManager::GetDefaultFont());
+
+		
 	}
 
 	LabelView::~LabelView()
@@ -33,7 +35,7 @@ namespace challenge
 		}
 	}
 
-	void LabelView::SetText(const std::string &text) 
+	void LabelView::SetText(const std::wstring &text) 
 	{ 
 		mText = text; 
 		mTextChanged = true;
@@ -60,12 +62,14 @@ namespace challenge
 		//mLabel->SetAlignment(TextAlignCenter, TextAlignMiddle);
 
 		mLabel->SetFont(mFont);
-		mLabel->SetText(StringUtil::ToWide(mText));
+		mLabel->SetText(mText);
 		mLabel->SetTextColor(mTextColor);
-
 		mLabel->SetSize(this->GetSize());
+		//mLabel->SetAlignment(TextAlignCenter, TextAlignTop);
+
+		
 		mLabel->SetPosition(frame.origin.x + parentFrame.origin.x,
-			frame.origin.y + parentFrame.origin.y + 10);
+			frame.origin.y + parentFrame.origin.y + 5);
 
 		mLabel->Draw(device, state);
 

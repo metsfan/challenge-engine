@@ -17,8 +17,13 @@ namespace challenge
 		LabelView(Frame frame = Frame());
 		virtual ~LabelView();
 
-		void SetText(const std::string &text);
-		const std::string& GetText() { return mText; }
+		void SetText(const std::string &text)
+		{
+			this->SetText(StringUtil::ToWide(text));
+		}
+
+		void SetText(const std::wstring &text);
+		const std::wstring& GetText() { return mText; }
 
 		void SetTextColor(Color color) { mTextColor = color; }
 
@@ -32,7 +37,7 @@ namespace challenge
 		virtual void ParseFromXML(XMLNode &node);
 
 	private:
-		std::string mText;
+		std::wstring mText;
 		Font *mFont;
 		Color mTextColor;
 		//ITexture *mLabelTexture;

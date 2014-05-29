@@ -3,6 +3,7 @@
 #include <Challenge/Font/TextUtil.h>
 #include <Challenge/Font/Glyph.h>
 #include <Challenge/Font/Font.h>
+#include <Challenge/Font/FontManager.h>
 #include "TextFieldView.h"
 
 namespace challenge
@@ -14,6 +15,8 @@ namespace challenge
 
 	static const int kLetterPadding = 1;
 
+	static const wchar_t kSecureChar = 0x2022;
+
 	TextFieldView::TextFieldView(Frame frame) :
 		FormElement(frame),
 		mTextLabel(new LabelView(Frame(0, 0, frame.size.width, frame.size.height))),
@@ -23,9 +26,12 @@ namespace challenge
 		mCursorPosition(2),
 		mCursorIndex(0),
 		mKeyPressTime(0),
-		mKeyPressed(false)
+		mKeyPressed(false),
+		mSecure(false)
 	{
 		this->SetBackgroundColor(Color(255, 255, 255, 255));
+
+		this->SetFont(FontManager::GetDefaultFont());
 
 		this->AddKeyboardEvent(KeyboardEventKeyDown, [this](View *sender, const KeyboardEvent &e) {
 			mKeyPressed = true;
@@ -72,9 +78,31 @@ namespace challenge
 	{
 	}
 
-	void TextFieldView::SetText(const std::string &text)
+	void TextFieldView::SetFont(Font *font)
 	{
-		mTextLabel->SetText(text);
+		mTextLabel->SetFont(font);
+
+		std::wstring testStr;
+		testStr.push_back(kSecureChar);
+		mSecureCharSize = TextUtil::SizeOfText(testStr, font);
+	}
+
+	void TextFieldView::SetText(const std::wstring &text)
+	{
+		mText = text;
+
+		if (mSecure) {
+			std::wstring secureString;
+			for (int i = 0; i < mText.length(); i++) {
+				secureString.push_back(kSecureChar);
+			}
+
+			mTextLabel->SetText(secureString);
+		}
+		else {
+			mTextLabel->SetText(text);
+		}
+		
 	}
 
 	void TextFieldView::Update(int deltaMillis)
@@ -129,45 +157,57 @@ namespace challenge
 			c = tolower(c);
 		}
 
-		std::string text = mTextLabel->GetText();
+		std::wstring text = mTextLabel->GetText();
 
 		int newOffset = 0;
 
 		if(c == kBackspaceKey) {
 			if(mCursorIndex > 0) {
-				
-			
-				Size letterSize = TextUtil::SizeOfText(StringUtil::ToWide(text.substr(mCursorIndex, 1)), mTextLabel->GetFont());
-
 				int newPosition = 0;
 				/*for(int i = 0; i < mCursorIndex; i++) {
 					newPosition += mLetterPositions[i];
 				}*/
 				mCursorIndex--;
 
-				newOffset = -mLetterPositions[mCursorIndex];
+				if (mSecure) {
+					newOffset = mSecureCharSize.width;
+				}
+				else {
+					newOffset = -mLetterPositions[mCursorIndex];
+				}
 
 				mLetterPositions.erase(mLetterPositions.begin() + mCursorIndex);
 				text.erase(text.begin() + mCursorIndex);
 				
 			}
 		}
-		else if (c < 127) {
+		else if (c < 127 && c >= 32) {
 			text.insert(text.begin() + mCursorIndex, c);
 
-			Glyph *glyph = mTextLabel->GetFont()->GetGlyph(c);
-			newOffset = glyph->GetAdvance().x;
-
-			mLetterPositions.insert(mLetterPositions.begin() + mCursorIndex, glyph->GetAdvance().x);
+			if (mSecure) {
+				newOffset = mSecureCharSize.width;
+			}
+			else {
+				Glyph *glyph = mTextLabel->GetFont()->GetGlyph(c);
+				newOffset = glyph->GetAdvance().x;
+			}
+			
+			mLetterPositions.insert(mLetterPositions.begin() + mCursorIndex, newOffset);
 			
 			mCursorIndex++;
 		}
 
 		mCursorPosition += newOffset;
-		mTextLabel->SetText(text);
+		this->SetText(text);
 
-		Size textDims = TextUtil::SizeOfText(StringUtil::ToWide(mTextLabel->GetText()), mTextLabel->GetFont());
+		Size textDims;
 		
+		if (mSecure) {
+			textDims = mSecureCharSize;
+		}
+		else {
+			textDims = TextUtil::SizeOfText(mTextLabel->GetText(), mTextLabel->GetFont());
+		}
 
 		if (textDims.width > this->GetWidth() && 
 			((mCursorPosition + mTextLabel->GetX()) >= this->GetWidth() ||
@@ -223,5 +263,8 @@ namespace challenge
 		FormElement::ParseFromXML(node);
 
 		this->SetText(node.GetAttributeString("text"));
+
+		bool secure = node.GetAttributeString("secure") == "true";
+		this->SetSecure(secure);
 	}
 };

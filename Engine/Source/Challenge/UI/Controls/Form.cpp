@@ -1,5 +1,6 @@
 #include <Challenge/Challenge.h>
 #include "Form.h"
+#include <Challenge/Input/InputManager.h>
 
 namespace challenge
 {
@@ -8,6 +9,31 @@ namespace challenge
 		mPanel(new PanelView(frame))
 	{
 		this->AddInternalSubview(mPanel);
+
+		this->AddKeyboardEvent(KeyboardEventKeyDown, [this](View *sender, const KeyboardEvent &e) {
+			if (e.keyCode == SpecialKeyTab) {
+				auto &subviews = this->GetSubviews();
+				bool focusNext = false;
+				for (View *view : subviews) {
+					if (focusNext) {
+						FormElement *elem = dynamic_cast<FormElement *>(view);
+						if (elem) {
+							elem->SetFocused(true);
+							break;
+						}
+					}
+
+					if (view->IsFocused()) {
+						focusNext = true;
+					}
+				}
+			}
+			else if (e.keyCode == SpecialKeyEnter) {
+				if (mSubmitDelegate) {
+					mSubmitDelegate(this, "submit");
+				}
+			}
+		});
 	}
 
 	Form::~Form()
@@ -58,9 +84,9 @@ namespace challenge
 
 	}
 
-	const std::map<std::string, std::vector<std::string>> Form::GetValues()
+	TFormValuesList& Form::GetValues()
 	{
-		std::map<std::string, std::vector<std::string>> values;
+		TFormValuesList values;
 
 		for(FormElement *element : mFormElements) {
 			if (element->GetName().length() > 0) {

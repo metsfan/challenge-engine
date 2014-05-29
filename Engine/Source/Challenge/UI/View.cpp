@@ -492,9 +492,15 @@ namespace challenge
 			mLayoutEngine = std::unique_ptr<ILayout>(new AbsoluteLayout());
 		}
 
-		const std::string &bgColorText = node.GetAttributeString("background_color");
-		if(bgColorText.length() != 0) {
-			this->SetBackgroundColor(Color::FromHexString(bgColorText));
+		const std::string &bgImage = node.GetAttributeString("background_image");
+		if (bgImage.length() > 0) {
+			this->SetBackgroundImage(bgImage);
+		}
+		else {
+			const std::string &bgColorText = node.GetAttributeString("background_color");
+			if (bgColorText.length() != 0) {
+				this->SetBackgroundColor(Color::FromHexString(bgColorText));
+			}
 		}
 		
 		this->SetId(node.GetAttributeString("id"));

@@ -31,9 +31,9 @@ namespace challenge
 				std::stringstream ss;
 				ss << std::hex << hex;
 				ss >> hexInt;
-				color.red = hexInt >> 16;
-				color.green = (hexInt << 8) >> 24;
-				color.blue = (hexInt << 16) >> 24;
+				color.red = (hexInt & 0x00FF0000) >> 16;
+				color.green = (hexInt & 0x0000FF00) >> 8;
+				color.blue = (hexInt & 0x000000FF);
 				color.alpha = 255;
 			}
 			return color;
