@@ -19,6 +19,7 @@ namespace challenge
 		virtual void OnDisappear();
 
 		virtual void Update(int deltaMillis);
+		virtual void Render(IGraphicsDevice *device, RenderState &state) {}
 
 		View * GetView() { return mView; }	
 

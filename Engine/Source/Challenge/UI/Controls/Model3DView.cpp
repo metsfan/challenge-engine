@@ -50,6 +50,13 @@ namespace challenge
 			mTargetSprite->SetPosition(this->GetX(), this->GetY());
 		}
 
+		if (this->GetSize() != mLastSize) {
+			glm::mat4 projection = glm::perspective(45.0f, this->GetWidth() / this->GetHeight(), 0.1f, 100.0f);
+			mCamera->SetProjectionMatrix(projection);
+
+			mLastSize = this->GetSize();
+		}
+
 		View::Render(device, state, parentFrame);
 
 		if (!mModel) {

@@ -170,7 +170,7 @@ namespace challenge
 				mCursorIndex--;
 
 				if (mSecure) {
-					newOffset = mSecureCharSize.width;
+					newOffset = -mSecureCharSize.width;
 				}
 				else {
 					newOffset = -mLetterPositions[mCursorIndex];

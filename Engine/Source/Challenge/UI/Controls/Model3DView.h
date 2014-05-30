@@ -24,5 +24,7 @@ namespace challenge
 		Model *mModel;
 		Camera *mCamera;
 		RenderableSpriteShape *mTargetSprite;
+
+		Size mLastSize;
 	};
 }

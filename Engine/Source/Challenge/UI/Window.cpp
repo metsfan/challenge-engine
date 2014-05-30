@@ -49,11 +49,15 @@ namespace challenge
 
 	void Window::Update(int deltaMillis)
 	{
+		mControllerStack.top()->Update(deltaMillis);
+
 		View::Update(deltaMillis);
 	}
 
 	void Window::Render(IGraphicsDevice *device, RenderState &state, const Frame &parentFrame)
 	{
+		mControllerStack.top()->Render(device, state);
+
 		state.SetProjection(mCamera->GetProjectionMatrix());
 
 		//state.PushTransform(mCamera->GetViewMatrix());
@@ -142,7 +146,7 @@ namespace challenge
 		View::RegisterViewClass("SelectList", [](Frame frame) { return new SelectListView(frame); });
 		View::RegisterViewClass("TextField", [](Frame frame) { return new TextFieldView(frame); });
 		View::RegisterViewClass("Hidden", [](Frame frame) { return new HiddenView(); });
-		View::RegisterViewClass("Model3D", [](Frame frame) { return new Model3DView(); });
+		View::RegisterViewClass("Model3D", [](Frame frame) { return new Model3DView(frame); });
 	}
 
 	/* IKeyboardListener methods */

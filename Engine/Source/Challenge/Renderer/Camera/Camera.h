@@ -30,6 +30,7 @@ namespace challenge
         virtual void Update();
         
         const glm::mat4 GetProjectionMatrix() const { return mProjectionMatrix; }
+		void SetProjectionMatrix(const glm::mat4 &m) { mProjectionMatrix = m; }
         const glm::mat4 GetViewMatrix() const { return mViewMatrix; }
 		const glm::mat4& GetInverseViewMatrix() const { return mInverseViewMatrix; }
         
@@ -42,9 +43,6 @@ namespace challenge
     protected:
         const real GetScale() const { return mScale; }
         const real GetShear() const { return mShear; }
-        
-        
-        void SetProjectionMatrix(glm::mat4 m) { mProjectionMatrix = m; }
 
 	private:
 		glm::mat4 mViewMatrix;
