@@ -24,7 +24,7 @@ namespace challenge
 
 		void SetSubmitDelegate(SubmitDelegate submitDelegate) { mSubmitDelegate = submitDelegate; }
 
-		TFormValuesList& GetValues();
+		TFormValuesList GetValues();
 
 	protected:
 		virtual void ParseFromXML(XMLNode &node);

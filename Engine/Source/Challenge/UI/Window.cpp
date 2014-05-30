@@ -112,7 +112,7 @@ namespace challenge
 
 	void Window::PopController()
 	{
-		if (mControllerStack.size() > 0) {
+		if (mControllerStack.size() > 0) { 
 			Controller *top = mControllerStack.top();
 			this->RemoveSubview(top->GetView());
 			mControllerStack.pop();
@@ -142,6 +142,7 @@ namespace challenge
 		View::RegisterViewClass("SelectList", [](Frame frame) { return new SelectListView(frame); });
 		View::RegisterViewClass("TextField", [](Frame frame) { return new TextFieldView(frame); });
 		View::RegisterViewClass("Hidden", [](Frame frame) { return new HiddenView(); });
+		View::RegisterViewClass("Model3D", [](Frame frame) { return new Model3DView(); });
 	}
 
 	/* IKeyboardListener methods */

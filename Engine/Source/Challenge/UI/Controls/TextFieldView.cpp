@@ -15,7 +15,7 @@ namespace challenge
 
 	static const int kLetterPadding = 1;
 
-	static const wchar_t kSecureChar = 0x2022;
+	static const wchar_t kSecureChar = L'*';
 
 	TextFieldView::TextFieldView(Frame frame) :
 		FormElement(frame),
@@ -157,7 +157,7 @@ namespace challenge
 			c = tolower(c);
 		}
 
-		std::wstring text = mTextLabel->GetText();
+		std::wstring text = mText;
 
 		int newOffset = 0;
 

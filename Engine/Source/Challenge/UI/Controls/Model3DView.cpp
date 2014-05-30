@@ -52,6 +52,10 @@ namespace challenge
 
 		View::Render(device, state, parentFrame);
 
+		if (!mModel) {
+			return;
+		}
+
 		RenderState modelState;
 
 		mModel->SetNextFrame(16);

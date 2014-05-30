@@ -84,7 +84,7 @@ namespace challenge
 
 	}
 
-	TFormValuesList& Form::GetValues()
+	TFormValuesList Form::GetValues()
 	{
 		TFormValuesList values;
 

@@ -36,7 +36,7 @@ namespace challenge
 
 	private:
 
-		std::mutex m_mutex;
+		std::recursive_mutex m_mutex;
 
 	};
 }
