@@ -19,7 +19,7 @@ namespace challenge
 	class ITableViewListener
 	{
 	public:
-		void OnRowSelected(TableView *table, uint32_t row);
+		virtual void OnRowSelected(TableView *table, View *view, uint32_t row) = 0;
 	};
 
 	class TableView : public View

@@ -97,8 +97,14 @@ int main(int argc, char* argv[])
 				"C:/gamedev/dungeon-raider/DungeonRaider/Common/Assets/Characters"
 			);*/
 
-			inFile = "C:/Users/Adam/Documents/Projects/dungeon-raider/DungeonRaider/Common/Media/Models/dark_mage/dark_mage_maya.dae";
-			outFile = "C:/Users/Adam/Documents/Projects/dungeon-raider/DungeonRaider/Debug/Models/Characters/dark_mage.model";
+			//inFile = "C:/Users/Adam/Documents/Projects/dungeon-raider/DungeonRaider/Common/Media/Models/dark_mage/dark_mage_maya.dae";
+			//outFile = "C:/Users/Adam/Documents/Projects/dungeon-raider/DungeonRaider/Debug/Models/Characters/dark_mage.model";
+
+			//inFile = "C:/Users/Adam/Documents/Projects/dungeon-raider/DungeonRaider/Common/Media/Models/elf_ranger/elfranger_collada.dae";
+			//outFile = "C:/Users/Adam/Documents/Projects/dungeon-raider/DungeonRaider/Debug/Models/Characters/elf_ranger.model";
+
+			inFile = "C:/Users/Adam/Documents/Projects/dungeon-raider/DungeonRaider/Common/Media/Models/warrior/warrior.DAE";
+			outFile = "C:/Users/Adam/Documents/Projects/dungeon-raider/DungeonRaider/Debug/Models/Characters/warrior.model";
 
 			//inFile = "C:/Users/Adam/Downloads/old fashion town/town.dae";
 			//outFile = "C:/Users/Adam/Documents/Projects/dungeon-raider/DungeonRaider/Debug/Models/Environments/Town/town.model";

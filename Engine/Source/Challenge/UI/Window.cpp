@@ -147,6 +147,7 @@ namespace challenge
 		View::RegisterViewClass("TextField", [](Frame frame) { return new TextFieldView(frame); });
 		View::RegisterViewClass("Hidden", [](Frame frame) { return new HiddenView(); });
 		View::RegisterViewClass("Model3D", [](Frame frame) { return new Model3DView(frame); });
+		View::RegisterViewClass("Table", [](Frame frame) { return new TableView(frame); });
 	}
 
 	/* IKeyboardListener methods */

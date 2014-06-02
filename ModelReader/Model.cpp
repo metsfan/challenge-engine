@@ -279,6 +279,13 @@ namespace model
 			}
 		}
 
-		mMeshes = newMeshes;
+		TMeshList filteredMeshes;
+		for (ModelMesh *mesh : newMeshes) {
+			if (mesh) {
+				filteredMeshes.push_back(mesh);
+			}
+		}
+
+		mMeshes = filteredMeshes;
 	}
 };

@@ -273,6 +273,7 @@ namespace challenge
 
 		virtual void PositionSubviews();
 
+
 	private:
 		Frame mFrame;
 		Frame mAdjustedFrame;

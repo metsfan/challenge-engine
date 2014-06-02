@@ -488,7 +488,7 @@ namespace challenge
 				orientation = LinearLayoutHorizontal;
 			}
 			mLayoutEngine = std::unique_ptr<ILayout>(new LinearLayout(orientation));
-		} else {
+		} else if (!mLayoutEngine) {
 			mLayoutEngine = std::unique_ptr<ILayout>(new AbsoluteLayout());
 		}
 
