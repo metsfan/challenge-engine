@@ -49,14 +49,19 @@ namespace challenge
 
 	void Window::Update(int deltaMillis)
 	{
-		mControllerStack.top()->Update(deltaMillis);
+		if (mControllerStack.size()) {
+			mControllerStack.top()->Update(deltaMillis);
+		}
+		
 
 		View::Update(deltaMillis);
 	}
 
 	void Window::Render(IGraphicsDevice *device, RenderState &state, const Frame &parentFrame)
 	{
-		mControllerStack.top()->Render(device, state);
+		if (mControllerStack.size()) {
+			mControllerStack.top()->Render(device, state);
+		}
 
 		state.SetProjection(mCamera->GetProjectionMatrix());
 

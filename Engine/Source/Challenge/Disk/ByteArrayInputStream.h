@@ -51,12 +51,16 @@ namespace challenge
 
 			do {
 				c = mData[mCursor];
-				data.push_back(c);
-
 				mCursor++;
-			} while (c != '\0');
 
-			return *this;
+				if (c == '\0') {
+					break;
+				}
+
+				data.push_back(c);
+			} while (true);
+
+			return *this; 
 		}
 
 		void Read(byte *buf, int size)
