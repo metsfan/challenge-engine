@@ -4,11 +4,19 @@
 
 namespace challenge
 {
-	SphereShape::SphereShape(const glm::vec3 &center, real radius) :
+	SphereShape::SphereShape(real radius) :
 		GeometricShape(),
-		mRadius(radius),
-		mCenter(center)
+		mRadius(radius)
 	{
-		this->CalculateBoundingBox();
+		this->UpdateShape();
+	}
+
+	void SphereShape::UpdateShape()
+	{
+		if (mCollisionShape != NULL) {
+			delete mCollisionShape;
+		}
+
+		mCollisionShape = new btSphereShape(mRadius);
 	}
 };

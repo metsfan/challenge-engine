@@ -7,6 +7,8 @@
 #include <Challenge/Physics/Collision/CollisionDetector.h>
 //#include <Challenge/Physics/Collision/CollisionResolver.h>
 
+#include <btBulletDynamicsCommon.h>
+
 namespace challenge
 {
 	class PhysicsWorld
@@ -14,21 +16,21 @@ namespace challenge
 	public:
 		PhysicsWorld();
 
-		void SetGravity(glm::vec3 gravity) { 
-			mGravityForce = new GravityForceGenerator(gravity); 
-		} 
+		void SetGravity(const glm::vec3 &gravity);
 
 		void AddObject(PhysicsObject *body);
 
 		void Update(uint32_t deltaMillis);
 
 	private:
-		CollisionDetector *mCollisionDetector;
+		btDiscreteDynamicsWorld *mPhysicsWorld;
+
+		//CollisionDetector *mCollisionDetector;
 		//CollisionResolver *mCollisionResolver;
 		SafeObject<std::vector<PhysicsObject *>> mObjects;
-		GravityForceGenerator *mGravityForce;
-		bool stopGravity;
+		//GravityForceGenerator *mGravityForce;
+		//bool stopGravity;
 
-		void ApplyGravity(real duration);
+		//void ApplyGravity(real duration);
 	};
 };

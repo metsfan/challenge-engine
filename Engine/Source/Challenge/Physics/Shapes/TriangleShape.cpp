@@ -1,6 +1,8 @@
 #include <Challenge/Challenge.h>
 //#include <Challenge/Physics/Shapes/Intersection.h>
-#include "TriangleShape.h"
+#include <Challenge/Physics/Shapes/TriangleShape.h>
+
+#include <BulletCollision/CollisionShapes/btTriangleShape.h>
 
 namespace challenge
 {
@@ -8,32 +10,7 @@ namespace challenge
 		mTriangle(a, b, c)
 	{
 		//this->CalculateNormal();
-		this->CalculateBoundingBox();
-	}
-
-	void TriangleShape::CalculateBoundingBox()
-	{
-		float minX, minY, minZ, maxX, maxY, maxZ;
-		minX = minY = minZ = INFINITY;
-		maxX = maxY = maxZ = -INFINITY;
-
-		for(int i = 0; i < 3; i++) {
-			if (mTriangle[i].x < minX) minX = mTriangle[i].x;
-			if (mTriangle[i].x > maxX) maxX = mTriangle[i].x;
-
-			if (mTriangle[i].y < minY) minY = mTriangle[i].y;
-			if (mTriangle[i].y > maxY) maxY = mTriangle[i].y;
-
-			if (mTriangle[i].z < minZ) minZ = mTriangle[i].z;
-			if (mTriangle[i].z > maxZ) maxZ = mTriangle[i].z;
-		}
-
-		mBoundingBox.mMin.x = minX;
-		mBoundingBox.mMin.y = minY;
-		mBoundingBox.mMin.z = minZ;
-		mBoundingBox.mMax.x = maxX;
-		mBoundingBox.mMax.y = maxY;
-		mBoundingBox.mMax.z = maxZ;
+		this->UpdateShape();
 	}
 
 	bool TriangleShape::Intersects(IGeometricShape *other, CollisionData *collision) const
@@ -49,6 +26,15 @@ namespace challenge
 		translated[2] = mTriangle[2] + this->GetPosition();
 
 		return ray.GetIntersection(translated, t);
+	}
+
+	void TriangleShape::UpdateShape()
+	{
+		if (mCollisionShape) {
+			delete mCollisionShape;
+		}
+
+		mCollisionShape = new btTriangleShape(ToBullet(mTriangle[0]), ToBullet(mTriangle[1]), ToBullet(mTriangle[2]));
 	}
 	
 	void TriangleShape::DrawDebug(IGraphicsDevice *device, RenderState &state)

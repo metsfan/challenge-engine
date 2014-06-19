@@ -3,7 +3,8 @@
 #include <Challenge/Challenge.h>
 #include <Challenge/Util/Util.h>
 #include <Challenge/Math/BoundingBox.h>
-#include <Challenge/Physics/Shapes/GeometricShape.h>
+
+#include <btBulletDynamicsCommon.h>
 
 namespace challenge
 {
@@ -39,6 +40,10 @@ namespace challenge
 
 	typedef std::vector<IPhysicsObject *> TObjectList;
 	typedef std::vector<RigidBody *> TRigidBodyList;
+
+	static inline btVector3 ToBullet(const glm::vec3 &vec) {
+		return btVector3(vec.x, vec.y, vec.z);
+	}
 
 	/*class PhysicsObject : public IPhysicsObject
 	{

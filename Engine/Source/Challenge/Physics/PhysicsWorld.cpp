@@ -1,50 +1,53 @@
 #include <Challenge/Challenge.h>
-#include "PhysicsWorld.h"
-using namespace challenge;
+#include <Challenge/Physics/PhysicsWorld.h>
 
-PhysicsWorld::PhysicsWorld()
+namespace challenge
 {
-	mCollisionDetector = new CollisionDetector();
-	//mCollisionResolver = new CollisionResolver();
-	mGravityForce = new GravityForceGenerator(glm::vec3(0, -20, 0));
-}
+	PhysicsWorld::PhysicsWorld()
+	{
+		// Build the broadphase
+		btBroadphaseInterface* broadphase = new btDbvtBroadphase();
 
-void PhysicsWorld::AddObject(PhysicsObject *object)
-{
-	mObjects.lock();
-	mObjects.push_back(object);
-	mObjects.unlock();
+		// Set up the collision configuration and dispatcher
+		btDefaultCollisionConfiguration* collisionConfiguration = new btDefaultCollisionConfiguration();
+		btCollisionDispatcher* dispatcher = new btCollisionDispatcher(collisionConfiguration);
 
-	//mCollisionDetector->AddObject(object);
-}
+		// The actual physics solver
+		btSequentialImpulseConstraintSolver* solver = new btSequentialImpulseConstraintSolver;
 
-
-void PhysicsWorld::Update(uint32_t deltaMillis)
-{
-	real duration = deltaMillis * 0.001;
-	if(mObjects.size() > 0) {
-		mObjects.lock();
-		auto objects = mObjects;
-		mObjects.unlock();
-
-		//this->ApplyGravity(duration);
-		for (PhysicsObject *object : mObjects) {
-			object->Update(duration);
-		}
+		// The world.
+		mPhysicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
 	}
 
-	mCollisionDetector->ResolveCollision(mObjects);
-	//TCollisionDataList collisions = mCollisionDetector->FindCollisions();
+	void PhysicsWorld::AddObject(PhysicsObject *object)
+	{
+		mObjects.lock();
 
-	//mCollisionResolver->ResolveCollisions(collisions, duration);
+		mObjects.push_back(object);
+		mPhysicsWorld->addRigidBody(object->mRigidBody);
 
-}
+		mObjects.unlock();
+	}
 
-/* Private methods */
+	void PhysicsWorld::SetGravity(const glm::vec3 &gravity) 
+	{
+		mPhysicsWorld->setGravity(btVector3(gravity.x, gravity.y, gravity.z));
+	}
 
-void PhysicsWorld::ApplyGravity(real duration)
-{
-	for (PhysicsObject *object : mObjects) {
-		mGravityForce->ApplyForce(object, duration);
+	void PhysicsWorld::Update(uint32_t deltaMillis)
+	{
+		real duration = deltaMillis * 0.001;
+		if (mObjects.size() > 0) {
+			mObjects.lock();
+
+			auto objects = mObjects;
+			mPhysicsWorld->stepSimulation(duration);
+
+			mObjects.unlock();
+
+			for (PhysicsObject *object : mObjects) {
+				object->Update(duration);
+			}
+		}
 	}
 }

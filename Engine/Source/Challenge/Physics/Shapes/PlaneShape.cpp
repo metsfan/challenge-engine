@@ -17,12 +17,21 @@ namespace challenge
 
 		switch(otherType) {
 		case kShapeTypeAABB:
-			AABBShape *aabb = static_cast<AABBShape *>(other);
+			BoxShape *aabb = static_cast<BoxShape *>(other);
 			//intersects = IntersectionTests::AABBIntersectsPlane(aabb, this);
 			break;
 		}
 
 		return intersects;
+	}
+
+	void PlaneShape::UpdateShape()
+	{
+		if (mCollisionShape) {
+			delete mCollisionShape;
+		}
+
+		mCollisionShape = new btStaticPlaneShape(ToBullet(mNormal), mComponents.w);
 	}
 };
 

@@ -24,35 +24,12 @@ namespace challenge
 
 		void DrawDebug(IGraphicsDevice *device, RenderState &state);
 
-		virtual bool Intersects(const IGeometricShape *other, CollisionData *collision = NULL) const
-		{
-			return other->Intersects(this, collision);
-		}
-
-		virtual bool Intersects(const AABBShape *aabb, CollisionData *collision = NULL) const
-		{
-			return IntersectionTests::AABBIntersectsTriangle(aabb, this, collision);
-		}
-
-		virtual bool Intersects(const OBBShape *obb, CollisionData *collision = NULL) const
-		{
-			return false;
-		}
-
-		virtual bool Intersects(const TriangleShape *triangle, CollisionData *collision = NULL) const
-		{
-			return false;
-		}
-
-		virtual bool Intersects(const TriangleMeshShape *mesh, CollisionData *collision = NULL) const
-		{
-			return false;
-		}
+		const Triangle& GetTriangle() { return mTriangle; }
 		
 	private:
 		Triangle mTriangle;
 
-		void CalculateBoundingBox();
+		void UpdateShape();
 	};
 
 	typedef std::vector<TriangleShape *> TTriangleList;

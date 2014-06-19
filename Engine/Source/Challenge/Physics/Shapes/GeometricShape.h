@@ -5,17 +5,19 @@
 #include <Challenge/Physics/Collision/CollisionData.h>
 #include <Challenge/Math/Ray.h>
 #include <Challenge/Renderer/Shape/MeshShape.h>
+#include <Challenge/Physics/PhysicsCore.h>
 
+#include <btBulletDynamicsCommon.h>
 
 namespace challenge
 {
 	typedef enum {
-		kShapeTypeAABB,
-		kShapeTypeOBB,
+		kShapeTypeBox,
 		kShapeTypePlane,
 		kShapeTypeSphere,
 		kShapeTypeTriangle,
-		kShapeTypeTriangleMesh
+		kShapeTypeTriangleMesh,
+		kShapeTypeCapsule
 	} GeometricShapeType;
 
 	struct DebugLinesVertex
@@ -28,7 +30,7 @@ namespace challenge
 
 	class Model;
 
-	class AABBShape;
+	class BoxShape;
 	class OBBShape;
 	class TriangleShape;
 	class TriangleMeshShape;
@@ -38,11 +40,6 @@ namespace challenge
 	public:
 		virtual bool Intersects(const IGeometricShape *other, CollisionData *collision = NULL) const = 0;
 		virtual bool Intersects(const BoundingBox &bounds) const = 0;
-
-		virtual bool Intersects(const AABBShape *aabb, CollisionData *collision = NULL) const = 0;
-		virtual bool Intersects(const OBBShape *obb, CollisionData *collision = NULL) const = 0;
-		virtual bool Intersects(const TriangleShape *triangle, CollisionData *collision = NULL) const = 0;
-		virtual bool Intersects(const TriangleMeshShape *mesh, CollisionData *collision = NULL) const = 0;
 		//virtual TPointsList Intersection(IGeometricShape *other) = 0;
 
 		virtual GeometricShapeType GetType() const = 0;
@@ -63,6 +60,8 @@ namespace challenge
 
 	class GeometricShape : public IGeometricShape
 	{
+		friend class PhysicsObject;
+
 	public:
 		GeometricShape();
 		GeometricShape(GeometricShape *other);
@@ -72,12 +71,12 @@ namespace challenge
 		virtual bool Contains(const BoundingBox &bounds) const { return mBoundingBox.Contains(bounds); }
 		virtual bool ContainedWithin(const BoundingBox &bounds) const { return bounds.Contains(mBoundingBox); }
 		//virtual TPointsList Intersection(IGeometricShape *other) = 0;
+		bool Intersects(const IGeometricShape *other, CollisionData *collision = NULL) const;
 
 		virtual glm::vec3 GetPosition() const { return mPosition; }
 		virtual void SetPosition(glm::vec3 position) 
 		{ 
 			mPosition = position; 
-			this->CalculateBoundingBox();
 		}
 
 		virtual glm::mat3 CalculateInertiaTensor(float mass) { return glm::mat3(); }
@@ -96,15 +95,16 @@ namespace challenge
 		glm::mat4 mTransform;
 		Model *mDebugShape;
 
+		btCollisionShape *mCollisionShape;
+
 	private:
-		virtual void CalculateBoundingBox() {}
+		virtual void UpdateShape() {}
 
 	};
 };
 
-#include <Challenge/Physics/Shapes/AABBShape.h>
+#include <Challenge/Physics/Shapes/BoxShape.h>
 #include <Challenge/Physics/Shapes/TriangleMeshShape.h>
-#include <Challenge/Physics/Shapes/OBBShape.h>
 #include <Challenge/Physics/Shapes/PlaneShape.h>
 #include <Challenge/Physics/Shapes/SphereShape.h>
 #include <Challenge/Physics/Shapes/TriangleMeshShape.h>
@@ -119,15 +119,11 @@ namespace challenge
 		{
 			switch(type)
 			{
-			case kShapeTypeAABB:
-				return AABBShape::CreateFromPointsList(points, transform);
-
-			case kShapeTypeOBB:
-				return OBBShape::CreateFromPointsList(points, transform);
+			case kShapeTypeBox:
+				return BoxShape::CreateFromPointsList(points, transform);
 
 			case kShapeTypeTriangleMesh:
 				return TriangleMeshShape::CreateFromPointsList(points);
-				break;
 			}
 		}
 	};

@@ -18,6 +18,8 @@ namespace challenge
 		{
 			mNormal = normal;
 			mComponents = glm::vec4(normal, mComponents.w);
+
+			this->UpdateShape();
 		}
 
 		const glm::vec3& GetNormal() const { return mNormal; }
@@ -25,6 +27,8 @@ namespace challenge
 		void SetD(real D)
 		{
 			mComponents.w = D;
+
+			this->UpdateShape();
 		}
 
 		real GetD() const { return mComponents.w; }
@@ -33,6 +37,8 @@ namespace challenge
 		{
 			mComponents = plane;
 			mNormal = glm::vec3(plane);
+
+			this->UpdateShape();
 		}
 
 		const glm::vec4& GetPlane() const { return mComponents; }
@@ -40,5 +46,7 @@ namespace challenge
 	private:
 		glm::vec4 mComponents;
 		glm::vec3 mNormal;
+
+		void UpdateShape();
 	};
 };

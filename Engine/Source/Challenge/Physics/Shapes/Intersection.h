@@ -5,7 +5,7 @@
 
 namespace challenge
 {
-	class AABBShape;
+	class BoxShape;
 	class OBBShape;
 	class TriangleShape;
 	class TriangleMeshShape;
@@ -15,11 +15,11 @@ namespace challenge
 	{
 	public:
 		//static bool SphereIntersectsSphere(const SphereShape *sphere1,const  SphereShape *sphere2, CollisionData *collision = NULL);
-		static bool AABBIntersectsSphere(const AABBShape *aabb, const SphereShape *sphere, CollisionData *collision = NULL);
-		//static bool AABBIntersectsPlane(const AABBShape *aabb, const PlaneShape *plane, CollisionData *collision = NULL);
-		static bool AABBIntersectsAABB(const AABBShape *aabb1, const AABBShape *aabb2, CollisionData *collision = NULL);
-		static bool AABBIntersectsOBB(const AABBShape *aabb, const OBBShape *obb, CollisionData *collision = NULL);
-		static bool AABBIntersectsTriangle(const AABBShape *aabb, const TriangleShape *triangle, CollisionData *collision = NULL);
+		static bool AABBIntersectsSphere(const BoxShape *aabb, const SphereShape *sphere, CollisionData *collision = NULL);
+		//static bool AABBIntersectsPlane(const BoxShape *aabb, const PlaneShape *plane, CollisionData *collision = NULL);
+		static bool AABBIntersectsAABB(const BoxShape *aabb1, const BoxShape *aabb2, CollisionData *collision = NULL);
+		static bool AABBIntersectsOBB(const BoxShape *aabb, const OBBShape *obb, CollisionData *collision = NULL);
+		static bool AABBIntersectsTriangle(const BoxShape *aabb, const TriangleShape *triangle, CollisionData *collision = NULL);
 
 		static bool OBBIntersectsOBB(const OBBShape *obb1, const OBBShape *obb2, CollisionData *collision = NULL);
 

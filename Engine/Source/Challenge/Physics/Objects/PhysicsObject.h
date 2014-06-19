@@ -2,10 +2,14 @@
 
 #include <Challenge/Challenge.h>
 
+#include <btBulletDynamicsCommon.h>
+
 namespace challenge
 {
 	class PhysicsObject
 	{
+		friend class PhysicsWorld;
+
 	public:
 		PhysicsObject() :
 			mMass(0)

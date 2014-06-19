@@ -6,7 +6,8 @@
 namespace challenge
 {
 	GeometricShape::GeometricShape() :
-		mDebugShape(NULL)
+		mDebugShape(NULL),
+		mCollisionShape(NULL)
 	{
 	}
 
