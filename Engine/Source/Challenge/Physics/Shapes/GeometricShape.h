@@ -37,6 +37,8 @@ namespace challenge
 
 	class IGeometricShape
 	{
+		friend class PhysicsObject;
+
 	public:
 		virtual bool Intersects(const IGeometricShape *other, CollisionData *collision = NULL) const = 0;
 		virtual bool Intersects(const BoundingBox &bounds) const = 0;
@@ -54,14 +56,14 @@ namespace challenge
 		virtual bool ContainedWithin(const BoundingBox &bounds) const = 0;
 
 		virtual void DrawDebug(IGraphicsDevice *device, RenderState &state) = 0;
+
+		virtual btCollisionShape * GetBulletShape() = 0;
 	};
 
 	typedef std::list<IGeometricShape *> TGeometricShapeLinkedList;
 
 	class GeometricShape : public IGeometricShape
 	{
-		friend class PhysicsObject;
-
 	public:
 		GeometricShape();
 		GeometricShape(GeometricShape *other);
@@ -83,11 +85,20 @@ namespace challenge
 		virtual BoundingBox GetBoundingBox() const { return mBoundingBox; }
 
 		virtual IGeometricShape* Clone() { return NULL; }
-		virtual void SetTransform(const glm::mat4 &transform) { mTransform = transform; }
+		virtual void SetTransform(const glm::mat4 &transform) 
+		{ 
+			mTransform = transform; 
+			mPosition = glm::vec3(transform[3]);
+		}
 
 		bool RayIntersects(const Ray &ray, float &t) const { return false; }
 
 		virtual void DrawDebug(IGraphicsDevice *device, RenderState &state) {}
+
+		btCollisionShape * GetBulletShape()
+		{
+			return mCollisionShape;
+		}
 
 	protected:
 		glm::vec3 mPosition;

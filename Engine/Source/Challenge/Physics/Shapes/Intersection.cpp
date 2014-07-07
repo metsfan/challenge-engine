@@ -3,7 +3,7 @@
 #include <Challenge/Physics/Util/Math.h>
 #include <Challenge/Util/Logger.h>
 #include "SphereShape.h"
-#include "AABBShape.h"
+#include "BoxShape.h"
 #include "PlaneShape.h"
 #include "TriangleShape.h"
 
@@ -16,7 +16,7 @@ namespace challenge
 	return false;
 	}
 
-	bool IntersectionTests::AABBIntersectsPlane(const AABBShape *aabb, const PlaneShape *plane, CollisionData *collision)
+	bool IntersectionTests::AABBIntersectsPlane(const BoxShape *aabb, const PlaneShape *plane, CollisionData *collision)
 	{
 	glm::vec3 xAxis = glm::vec3(1.0, 0.0, 0.0);
 	glm::vec3 yAxis = glm::vec3(0.0, 1.0, 0.0);
@@ -178,7 +178,7 @@ namespace challenge
 	return intersects;
 	}*/
 
-	bool IntersectionTests::AABBIntersectsSphere(const AABBShape *aabb, const SphereShape *sphere, CollisionData *collision)
+	bool IntersectionTests::AABBIntersectsSphere(const BoxShape *aabb, const SphereShape *sphere, CollisionData *collision)
 	{
 		double sqDistance = glm::distance2(aabb->GetPosition(), sphere->GetPosition());
 		double sqRadius = sphere->GetRadius() * sphere->GetRadius();
@@ -186,7 +186,7 @@ namespace challenge
 		return sqDistance <= sqRadius;
 	}
 
-	bool IntersectionTests::AABBIntersectsAABB(const AABBShape *aabb1, const AABBShape *aabb2, CollisionData *collision)
+	bool IntersectionTests::AABBIntersectsAABB(const BoxShape *aabb1, const BoxShape *aabb2, CollisionData *collision)
 	{
 		bool intersects = aabb1->GetBoundingBox().Intersects(aabb2->GetBoundingBox());
 
@@ -198,7 +198,7 @@ namespace challenge
 		return intersects;
 	}
 
-	bool IntersectionTests::AABBIntersectsOBB(const AABBShape *aabb, const OBBShape *obb, CollisionData *collision)
+	bool IntersectionTests::AABBIntersectsOBB(const BoxShape *aabb, const OBBShape *obb, CollisionData *collision)
 	{
 		glm::mat3 axes1;
 		const glm::mat3 &axes2 = obb->GetAxes();
@@ -213,7 +213,7 @@ namespace challenge
 		return intersects;
 	}
 
-	bool IntersectionTests::AABBIntersectsTriangle(const AABBShape *aabb, const TriangleShape *triangle, CollisionData *collision)
+	bool IntersectionTests::AABBIntersectsTriangle(const BoxShape *aabb, const TriangleShape *triangle, CollisionData *collision)
 	{
 		glm::vec3 c = aabb->GetPosition();
 		const glm::vec3 &tc = triangle->GetPosition();

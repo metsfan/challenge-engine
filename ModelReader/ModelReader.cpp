@@ -8,7 +8,7 @@ void write_model(std::string &inFile, std::string &outFile, const glm::mat4 &tra
 {
 	std::cout << "Reading model file.\n";
 	try {
-		glm::mat4 transform = glm::rotate(glm::mat4(), 180.0f, glm::vec3(0.0f, 1.0, 0.0f));
+		glm::mat4 transform = glm::rotate(glm::mat4(), 90.0f, glm::vec3(1, 0, 0));
 		//transform = glm::scale(transform, glm::vec3(5));
 		model::Model model(inFile, transform);
 		
@@ -85,8 +85,8 @@ int main(int argc, char* argv[])
 			break;
 		} else if(command == 4) { // Debug mode
 
-			glm::mat4 transform = glm::rotate(glm::mat4(), 90.0f, glm::vec3(1, 0, 0));
-			transform = glm::scale(transform, glm::vec3(5));
+			//glm::mat4 transform = glm::rotate(glm::mat4(), 90.0f, glm::vec3(1, 0, 0));
+			//glm::mat4 transform = glm::scale(transform, glm::vec3(5));
 			/*write_directory(
 				"C:/gamedev/dungeon-raider/DungeonRaider/Common/Media/Models/molten_chasm/objects/_3ds",
 				"C:/gamedev/dungeon-raider/DungeonRaider/Common/Assets/Objects",
@@ -103,8 +103,11 @@ int main(int argc, char* argv[])
 			//inFile = "C:/Users/Adam/Documents/Projects/dungeon-raider/DungeonRaider/Common/Media/Models/elf_ranger/elfranger_collada.dae";
 			//outFile = "C:/Users/Adam/Documents/Projects/dungeon-raider/DungeonRaider/Debug/Models/Characters/elf_ranger.model";
 
-			inFile = "C:/Users/Adam/Documents/Projects/dungeon-raider/DungeonRaider/Common/Media/Models/warrior/warrior.DAE";
-			outFile = "C:/Users/Adam/Documents/Projects/dungeon-raider/DungeonRaider/Debug/Models/Characters/warrior.model";
+			//inFile = "C:/Users/Adam/Documents/Projects/dungeon-raider/DungeonRaider/Common/Media/Models/warrior/warrior.DAE";
+			//outFile = "C:/Users/Adam/Documents/Projects/dungeon-raider/DungeonRaider/Debug/Models/Characters/warrior.model";
+
+			inFile = "C:/Users/Adam/Documents/Projects/dungeon-raider/DungeonRaider/Common/Media/Models/molten_chasm/molten_chasm.DAE";
+			outFile = "C:/Users/Adam/Documents/Projects/dungeon-raider/DungeonRaider/Debug/Models/Environments/MoltenChasm/molten_chasm.model";
 
 			//inFile = "C:/Users/Adam/Downloads/old fashion town/town.dae";
 			//outFile = "C:/Users/Adam/Documents/Projects/dungeon-raider/DungeonRaider/Debug/Models/Environments/Town/town.model";

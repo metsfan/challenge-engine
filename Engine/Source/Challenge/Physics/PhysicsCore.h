@@ -20,6 +20,8 @@ namespace challenge
 	typedef void(TCollisionCallback)(IPhysicsObject*, IPhysicsObject*);
 	typedef std::vector<TCollisionCallback *> TCollisionCallbackList;
 
+	class IGeometricShape;
+
 	class IPhysicsObject
 	{
 	public:
@@ -43,6 +45,10 @@ namespace challenge
 
 	static inline btVector3 ToBullet(const glm::vec3 &vec) {
 		return btVector3(vec.x, vec.y, vec.z);
+	}
+
+	static inline glm::vec3 FromBullet(const btVector3 &vec) {
+		return glm::vec3(vec.x(), vec.y(), vec.z());
 	}
 
 	/*class PhysicsObject : public IPhysicsObject

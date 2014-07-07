@@ -14,11 +14,11 @@ namespace challenge
 		float normal[3];
 	};
 
-	class BoxShape : public Shape
+	class CubeShape : public Shape
 	{
 	public:
-		BoxShape(IGraphicsDevice *device, int size);
-		~BoxShape();
+		CubeShape(IGraphicsDevice *device, int size);
+		~CubeShape();
 
 		virtual void Draw(IGraphicsDevice *device, RenderState &state);
 

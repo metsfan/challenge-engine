@@ -129,13 +129,7 @@
     <ClCompile Include="Source\Challenge\Physics\Forces\GravityForceGenerator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Challenge\Physics\Shapes\AABBShape.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Challenge\Physics\Shapes\GeometricShape.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Challenge\Physics\Shapes\OBBShape.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Challenge\Physics\Shapes\PlaneShape.cpp">
@@ -190,9 +184,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Challenge\Renderer\Shader\ShaderProgram.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Challenge\Renderer\Shape\BoxShape.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Challenge\Renderer\Shape\HeightMapShape.cpp">
@@ -414,9 +405,6 @@
     <ClCompile Include="Source\Challenge\Physics\Collision\CollisionDetector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Challenge\Physics\Shapes\Intersection.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Challenge\Physics\Collision\CollisionData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -532,6 +520,21 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Challenge\Renderer\Shape\Label.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Physics\Shapes\BoxShape.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Physics\Shapes\CapsuleShape.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Renderer\Shape\CubeShape.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Physics\Objects\CharacterController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\Math\Sphere.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -774,9 +777,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Challenge\Renderer\Shader\ShaderProgram.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Challenge\Renderer\Shape\BoxShape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Challenge\Renderer\Shape\HeightMapShape.h">
@@ -1049,9 +1049,6 @@
     <ClInclude Include="Source\Challenge\Physics\Collision\CollisionDetector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Challenge\Physics\Shapes\Intersection.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Challenge\Physics\Collision\CollisionData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -1209,6 +1206,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Challenge\Util\Serializable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Physics\Shapes\CapsuleShape.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Physics\Shapes\BoxShape.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Renderer\Shape\CubeShape.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Physics\Objects\CharacterController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\Math\Sphere.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

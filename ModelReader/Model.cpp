@@ -4,6 +4,7 @@
 #include "ModelMesh.h"
 #include "ModelAnimation.h"
 #include <aiScene.h>
+#include <aiPostProcess.h>
 #include <rapidxml.hpp>
 
 namespace model
@@ -62,7 +63,7 @@ namespace model
 			mMeshes[i]->CalculateBoneWeights(mBones);
 		}
 
-		this->ConsolidateMeshes();
+		//this->ConsolidateMeshes();
 	}
 
 	void Model::ReadModelData(const aiNode *node, aiMatrix4x4 globalTransform)
@@ -82,6 +83,7 @@ namespace model
 					aiVector3D pos = mesh->mVertices[index];
 
 					aiMatrix4x4 xForm = node->mTransformation;
+					aiMultiplyMatrix4(&xForm, &mGlobalTransform);
 					aiMatrix3x3 normalXForm = aiMatrix3x3(xForm);
 					aiTransformVecByMatrix4(&pos, &xForm);
 
@@ -89,9 +91,9 @@ namespace model
 					verts[m].position[1] = pos.y;
 					verts[m].position[2] = pos.z;
 
-					if(pos.y < mMinY) {
+					/*if(pos.y < mMinY) {
 						mMinY = pos.y;
-					}
+					}*/
 				
 					if(mesh->mNormals != NULL) {
 						aiVector3D normal = mesh->mNormals[index];

@@ -3,6 +3,8 @@
 #include <Challenge/Physics/Shapes/GeometricShape.h>
 #include <Challenge/Model/Model.h>
 
+#include <BulletCollision/NarrowPhaseCollision/btGjkPairDetector.h>
+
 namespace challenge
 {
 	GeometricShape::GeometricShape() :
@@ -20,6 +22,11 @@ namespace challenge
 
 	GeometricShape::~GeometricShape()
 	{
+	}
+
+	bool GeometricShape::Intersects(const IGeometricShape *other, CollisionData *collision) const
+	{
+		return false;
 	}
 
 	/*void GeometricShape::DrawDebug(IGraphicsDevice *device, RenderState &state)

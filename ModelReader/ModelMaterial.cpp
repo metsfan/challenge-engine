@@ -55,7 +55,7 @@ namespace model
 				aiString path;
 				mMaterial->GetTexture(nType, j, &path);
 				std::string pathStr(path.data);
-				int pos = pathStr.rfind("/");
+				int pos = pathStr.rfind("\\");
 				std::string basename = pathStr.substr(pos+1);
 				boost::to_lower(basename);
 				// Write path

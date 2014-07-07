@@ -1,9 +1,9 @@
 #include <Challenge/Challenge.h>
-#include "BoxShape.h"
+#include "CubeShape.h"
 
 namespace challenge
 {
-	BoxShape::BoxShape(IGraphicsDevice *device, int size) :
+	CubeShape::CubeShape(IGraphicsDevice *device, int size) :
 		Shape(device, "box"),
 		mSize(size),
 		mBuffer(NULL)
@@ -127,7 +127,7 @@ namespace challenge
 		mBuffer->SetData((void *)vertex_data, sizeof(vertex_data));*/
 	}
 
-	void BoxShape::Draw(IGraphicsDevice *device, RenderState &state)
+	void CubeShape::Draw(IGraphicsDevice *device, RenderState &state)
 	{
 		/*ITechnique *technique = mMaterial->GetTechnique(1);
 		technique->Begin();
@@ -139,7 +139,7 @@ namespace challenge
 		
 	}
 
-	BoxShape::~BoxShape()
+	CubeShape::~CubeShape()
 	{
 		if (mBuffer) {
 			delete mBuffer;

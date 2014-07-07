@@ -25,6 +25,8 @@ namespace challenge
 
 		IGeometricShape* Clone();
 
+		void Build();
+
 	private:
 		Octree *mDataTree;
 		bool mTreeSet;

@@ -16,7 +16,7 @@ namespace challenge
 		bool intersects = false;
 
 		switch(otherType) {
-		case kShapeTypeAABB:
+		case kShapeTypeBox:
 			BoxShape *aabb = static_cast<BoxShape *>(other);
 			//intersects = IntersectionTests::AABBIntersectsPlane(aabb, this);
 			break;

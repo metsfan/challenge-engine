@@ -8,6 +8,7 @@ namespace challenge
 	enum CapsuleAxis
 	{
 		CapsuleAxisX,
+		CapsuleAxisY,
 		CapsuleAxisZ
 	};
 

@@ -8,6 +8,7 @@ namespace challenge
 		BaseComponent(owner),
 		mObject(object)
 	{
+		object->SetUserData(owner);
 	}
 
 	PhysicsComponent::~PhysicsComponent()

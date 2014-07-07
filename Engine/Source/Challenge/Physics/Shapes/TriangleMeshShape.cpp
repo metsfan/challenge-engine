@@ -14,6 +14,8 @@ namespace challenge
 			shape->AddTriangle(points[i], points[i+1], points[i+2]);
 		}
 
+		shape->Build();
+
 		return shape;
 	}
 
@@ -22,8 +24,6 @@ namespace challenge
 		mDebugTriangle(NULL)
 	{
 		mDataTree = new Octree(BoundingBox(-1000, -1000, -1000, 1000, 1000, 1000), 3);
-
-		mCollisionShape = new btBvhTriangleMeshShape(&mTriangles, true);
 	}
 
 	IGeometricShape* TriangleMeshShape::Clone()
@@ -33,7 +33,7 @@ namespace challenge
 
 	void TriangleMeshShape::AddTriangle(const glm::vec3 &a, const glm::vec3 &b, const glm::vec3 &c)
 	{
-		mTriangles.addTriangle(ToBullet(a), ToBullet(b), ToBullet(c));
+		mTriangles.addTriangle(ToBullet(a), ToBullet(b), ToBullet(c), true);
 	}
 
 	void TriangleMeshShape::DrawDebug(IGraphicsDevice *device, RenderState &state)
@@ -41,5 +41,10 @@ namespace challenge
 		if (mDebugTriangle) {
 			mDebugTriangle->DrawDebug(device, state);
 		}
+	}
+
+	void TriangleMeshShape::Build()
+	{
+		mCollisionShape = new btBvhTriangleMeshShape(&mTriangles, true, true);
 	}
 };

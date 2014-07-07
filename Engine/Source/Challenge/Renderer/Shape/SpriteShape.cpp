@@ -18,8 +18,8 @@ namespace challenge
 			// Create sprite vertex buffer, which all sprites will use
 			SpriteVertex verts[4] = {
 				0.0, 0.0,
-				1.0, 0.0,
 				0.0, 1.0,
+				1.0, 0.0,
 				1.0, 1.0
 			};
 

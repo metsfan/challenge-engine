@@ -20,6 +20,10 @@ namespace challenge
 
 		void AddObject(PhysicsObject *body);
 
+		PhysicsObject * RayIntersection(const Ray &ray, glm::vec3 &intersectionPoint);
+
+		std::vector<PhysicsObject *> GetCollisions(IGeometricShape *shape);
+
 		void Update(uint32_t deltaMillis);
 
 	private:
@@ -28,6 +32,7 @@ namespace challenge
 		//CollisionDetector *mCollisionDetector;
 		//CollisionResolver *mCollisionResolver;
 		SafeObject<std::vector<PhysicsObject *>> mObjects;
+		std::map<const btCollisionObject *, PhysicsObject *> mBulletObjectMap;
 		//GravityForceGenerator *mGravityForce;
 		//bool stopGravity;
 

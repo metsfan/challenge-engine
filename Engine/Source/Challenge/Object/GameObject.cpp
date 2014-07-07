@@ -24,10 +24,10 @@ namespace challenge
 
 		state.PopTransform();
 
-		/*auto physicsComponent = this->FindComponent<PhysicsComponent>();
+		auto physicsComponent = this->FindComponent<PhysicsComponent>();
 		if (physicsComponent) {
 			physicsComponent->GetPhysicsObject()->DrawDebug(device, state);
-		}*/
+		}
 		
 	}
 
@@ -60,5 +60,6 @@ namespace challenge
 	{
 		Transformable::Unserialize(stream);
 
+		this->MoveTo(this->GetPosition());
 	}
 }

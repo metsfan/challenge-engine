@@ -32,18 +32,21 @@ namespace challenge
 		GeometricShape(),
 		mDimensions(dimensions)
 	{
+		this->UpdateShape();
 	}
 
 	BoxShape::BoxShape(BoxShape *other) :
 		GeometricShape(other),
 		mDimensions(other->mDimensions)
 	{
+		this->UpdateShape();
 	}
 
 	BoxShape::BoxShape(const BoundingBox &box) :
 		GeometricShape()
 	{
 		mDimensions = (box.mMax - box.mMin) * 0.5f;
+		this->UpdateShape();
 	}
 
 	bool BoxShape::RayIntersects(const Ray &ray, float &t) const
@@ -57,7 +60,8 @@ namespace challenge
 			delete mCollisionShape;
 		}
 
-		mCollisionShape = new btBoxShape(btVector3(mDimensions.x, mDimensions.y, mDimensions.z));
+		mCollisionShape = new btBoxShape(ToBullet(mDimensions));
+		mCollisionShape->setMargin(0);
 	}
 
 	//void BoxShape::CreateDebugShape(MeshShape *shape, RenderState &state)
@@ -67,24 +71,22 @@ namespace challenge
 			mDebugShape = PrimitiveGenerator::CreatePrimitive(PrimitiveShapeBox);
 		}
 
-		/*glm::mat4 transform = glm::translate(glm::mat4(), this->GetPosition());
+		glm::mat4 transform = glm::translate(glm::mat4(), this->GetPosition());
 		transform = glm::scale(transform, mDimensions * 2.0f);
 		state.PushTransform(transform);
 
 		glm::vec4 color(1, 0, 0, 0.5);
-		ShaderDataVector4 colorData(&color, 1);
-		state.SetShaderData("COLOR", &colorData);
-		state.SetShaderData("DIFFUSE_TEXTURE", NULL);
+		state.SetShaderData(device->GetContext()->GetGlobalIndex("COLOR"), &color);
+		state.SetShaderData(device->GetContext()->GetGlobalIndex("DIFFUSE_TEXTURE"), NULL);
 		device->EnableState(GraphicsState::AlphaBlending);
 
 		mDebugShape->Render(device, state);
 
 		glm::vec4 clearColor(0, 0, 0, 0);
-		ShaderDataVector4 clearColorData(&clearColor, 1);
-		state.SetShaderData("COLOR", &clearColorData);
+		state.SetShaderData(device->GetContext()->GetGlobalIndex("COLOR"), &clearColor);
 
 		state.PopTransform();
-		device->DisableState(GraphicsState::AlphaBlending);*/
+		device->DisableState(GraphicsState::AlphaBlending);
 
 		/*this->CalculateBoundingBox();
 		//glm::vec3 transformedCenter = glm::vec3(mTransform * glm::vec4(mCenter, 1.0));

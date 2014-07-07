@@ -16,9 +16,13 @@
     <ClCompile Include="Source\Challenge\Font\GlyphAtlas.cpp" />
     <ClCompile Include="Source\Challenge\Font\GlyphAtlasTexture.cpp" />
     <ClCompile Include="Source\Challenge\Font\TextUtil.cpp" />
+    <ClCompile Include="Source\Challenge\Math\Sphere.cpp" />
     <ClCompile Include="Source\Challenge\Network\NetworkStream.cpp" />
     <ClCompile Include="Source\Challenge\Network\TCPSocket.cpp" />
     <ClCompile Include="Source\Challenge\Network\UDPSocket.cpp" />
+    <ClCompile Include="Source\Challenge\Physics\Objects\CharacterController.cpp" />
+    <ClCompile Include="Source\Challenge\Physics\Shapes\BoxShape.cpp" />
+    <ClCompile Include="Source\Challenge\Physics\Shapes\CapsuleShape.cpp" />
     <ClCompile Include="Source\Challenge\Renderer\Shape\Label.cpp" />
     <ClCompile Include="Source\Challenge\Scripting\ScriptFunction.cpp" />
     <ClCompile Include="Source\Challenge\Scripting\ScriptModule.cpp" />
@@ -132,11 +136,8 @@
     <ClCompile Include="Source\Challenge\Physics\Objects\PhysicsObject.cpp" />
     <ClCompile Include="Source\Challenge\Physics\PhysicsCore.cpp" />
     <ClCompile Include="Source\Challenge\Physics\PhysicsWorld.cpp" />
-    <ClCompile Include="Source\Challenge\Physics\Shapes\AABBShape.cpp" />
     <ClCompile Include="Source\Challenge\Physics\Shapes\TriangleMeshShape.cpp" />
     <ClCompile Include="Source\Challenge\Physics\Shapes\GeometricShape.cpp" />
-    <ClCompile Include="Source\Challenge\Physics\Shapes\Intersection.cpp" />
-    <ClCompile Include="Source\Challenge\Physics\Shapes\OBBShape.cpp" />
     <ClCompile Include="Source\Challenge\Physics\Shapes\PlaneShape.cpp" />
     <ClCompile Include="Source\Challenge\Physics\Shapes\SphereShape.cpp" />
     <ClCompile Include="Source\Challenge\Physics\Shapes\TriangleShape.cpp" />
@@ -162,7 +163,7 @@
     <ClCompile Include="Source\Challenge\Renderer\Shader\Shader.cpp" />
     <ClCompile Include="Source\Challenge\Renderer\Shader\ShaderProgram.cpp" />
     <ClCompile Include="Source\Challenge\Renderer\Shape.cpp" />
-    <ClCompile Include="Source\Challenge\Renderer\Shape\BoxShape.cpp" />
+    <ClCompile Include="Source\Challenge\Renderer\Shape\CubeShape.cpp" />
     <ClCompile Include="Source\Challenge\Renderer\Shape\CircleShape.cpp" />
     <ClCompile Include="Source\Challenge\Renderer\Shape\HeightMapShape.cpp" />
     <ClCompile Include="Source\Challenge\Renderer\Shape\LineShape.cpp" />
@@ -186,9 +187,13 @@
     <ClInclude Include="Source\Challenge\Font\SystemFontReader.h" />
     <ClInclude Include="Source\Challenge\Font\TextUtil.h" />
     <ClInclude Include="Source\Challenge\Font\Types.h" />
+    <ClInclude Include="Source\Challenge\Math\Sphere.h" />
     <ClInclude Include="Source\Challenge\Network\NetworkStream.h" />
     <ClInclude Include="Source\Challenge\Network\TCPSocket.h" />
     <ClInclude Include="Source\Challenge\Network\UDPSocket.h" />
+    <ClInclude Include="Source\Challenge\Physics\Objects\CharacterController.h" />
+    <ClInclude Include="Source\Challenge\Physics\Shapes\BoxShape.h" />
+    <ClInclude Include="Source\Challenge\Physics\Shapes\CapsuleShape.h" />
     <ClInclude Include="Source\Challenge\Renderer\GraphicsObject.h" />
     <ClInclude Include="Source\Challenge\Renderer\Shape\Label.h" />
     <ClInclude Include="Source\Challenge\Scripting\ScriptModule.h" />
@@ -329,7 +334,6 @@
     <ClInclude Include="Source\Challenge\Physics\Shapes\AABBShape.h" />
     <ClInclude Include="Source\Challenge\Physics\Shapes\TriangleMeshShape.h" />
     <ClInclude Include="Source\Challenge\Physics\Shapes\GeometricShape.h" />
-    <ClInclude Include="Source\Challenge\Physics\Shapes\Intersection.h" />
     <ClInclude Include="Source\Challenge\Physics\Shapes\OBBShape.h" />
     <ClInclude Include="Source\Challenge\Physics\Shapes\PlaneShape.h" />
     <ClInclude Include="Source\Challenge\Physics\Shapes\SphereShape.h" />
@@ -368,7 +372,7 @@
     <ClInclude Include="Source\Challenge\Renderer\Shader\Shader.h" />
     <ClInclude Include="Source\Challenge\Renderer\Shader\ShaderProgram.h" />
     <ClInclude Include="Source\Challenge\Renderer\Shape.h" />
-    <ClInclude Include="Source\Challenge\Renderer\Shape\BoxShape.h" />
+    <ClInclude Include="Source\Challenge\Renderer\Shape\CubeShape.h" />
     <ClInclude Include="Source\Challenge\Renderer\Shape\HeightMapShape.h" />
     <ClInclude Include="Source\Challenge\Renderer\Shape\MeshShape.h" />
     <ClInclude Include="Source\Challenge\Renderer\Shape\ModelShape.h" />

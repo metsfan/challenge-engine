@@ -21,7 +21,7 @@ namespace challenge
 		{
 		}
 
-		glm::vec3 ValueAt(float t)
+		glm::vec3 ValueAt(float t) const 
 		{
 			return mOrigin + (mDirection * t);
 		}

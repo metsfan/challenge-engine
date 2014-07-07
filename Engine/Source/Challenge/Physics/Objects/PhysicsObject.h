@@ -12,19 +12,17 @@ namespace challenge
 
 	public:
 		PhysicsObject() :
-			mMass(0)
+			PhysicsObject(NULL)
 		{
 		}
+
+		PhysicsObject(IGeometricShape *shape);
 
 		~PhysicsObject()
 		{
 		}
 
-		void SetPosition(const glm::vec3 &position) 
-		{ 
-			mPosition = position; 
-			mShape->SetPosition(position);
-		}
+		virtual void SetPosition(const glm::vec3 &position);
 
 		void MoveBy(const glm::vec3 &delta)
 		{
@@ -39,10 +37,13 @@ namespace challenge
 		void SetAcceleration(const glm::vec3 &acceleration) { mAcceleration = acceleration; }
 		const glm::vec3& GetAcceleration() { return mAcceleration; }
 
-		void SetShape(IGeometricShape *shape) { mShape = shape; }
+		void SetShape(IGeometricShape *shape);
 		IGeometricShape * GetShape() { return mShape; }
 
-		void SetMass(real mass) { mMass = mass; }
+		void SetTransform(const glm::mat4 &transform);
+		const glm::mat4& GetTransform() { return mTransform; }
+
+		void SetMass(real mass);
 		real GetMass() { return mMass; }
 		bool HasInfiniteMass() { return mMass == INFINITY; }
 
@@ -55,19 +56,34 @@ namespace challenge
 
 		virtual void ResolveCollision(const CollisionData &collision);
 
-		void Update(real seconds);
+		virtual void Update(real seconds);
 		void DrawDebug(IGraphicsDevice *device, RenderState &state)
 		{
 			mShape->DrawDebug(device, state);
 		}
 
-	private:
+		virtual void SetPhysicsWorld(btDiscreteDynamicsWorld *world);
+
+		void SetUserData(void *ptr)
+		{
+			mUserData = ptr;
+		}
+
+		void * GetUserData() { return mUserData; }
+
+	protected:
 		glm::vec3 mPosition;
 		glm::vec3 mVelocity;
 		glm::vec3 mAcceleration;
+		glm::mat4 mTransform;
 		IGeometricShape *mShape;
 		real mMass;
 
 		glm::vec3 mTotalForce;
+
+		btRigidBody *mRigidBody;
+		btMotionState *mMotionState;
+
+		void *mUserData;
 	};
 };

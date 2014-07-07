@@ -6,10 +6,10 @@
 
 #include <Challenge/Challenge.h>
 #include <Challenge/Platform/Win32/CWindow.h>
-#include <Challenge/Renderer/Shape/BoxShape.h>
+#include <Challenge/Renderer/Shape/CubeShape.h>
 #include <Challenge/Util/PrimitiveGenerator.h>
 
-#include <btBulletDynamicsCommon.h>
+#include <Challenge/Physics/PhysicsWorld.h>
 
 using namespace challenge;
 
@@ -24,52 +24,25 @@ public:
 
 		mCamera->MoveTo(glm::vec3(-380, -45, 120));
 
-		// Build the broadphase
-		btBroadphaseInterface* broadphase = new btDbvtBroadphase();
-
-		// Set up the collision configuration and dispatcher
-		btDefaultCollisionConfiguration* collisionConfiguration = new btDefaultCollisionConfiguration();
-		btCollisionDispatcher* dispatcher = new btCollisionDispatcher(collisionConfiguration);
-
-		// The actual physics solver
-		btSequentialImpulseConstraintSolver* solver = new btSequentialImpulseConstraintSolver;
-
 		// The world.
-		mPhysicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
-		mPhysicsWorld->setGravity(btVector3(0, -10, 0));
+		mPhysicsWorld = new PhysicsWorld();
+		mPhysicsWorld->SetGravity(glm::vec3(0, -10, 0));
 
 		TriangleMeshShape *mesh = dynamic_cast<TriangleMeshShape *>(mEnvironment->CreateBoundingVolume(kShapeTypeTriangleMesh, glm::mat4()));
 
-		
-		btTriangleMesh *envMesh = new btTriangleMesh();
-		auto &tris = mesh->GetTriangles();
-
-		for (auto tri : tris) {
-			const Triangle &shape = tri->GetTriangle();
-			btVector3 v1(shape[0].x, shape[0].y, shape[0].z);
-			btVector3 v2(shape[1].x, shape[1].y, shape[1].z);
-			btVector3 v3(shape[2].x, shape[2].y, shape[2].z);
-			envMesh->addTriangle(v1, v2, v3);
-		}
-
-		btBvhTriangleMeshShape *environmentShape = new btBvhTriangleMeshShape(envMesh, true);
-
-		btDefaultMotionState *envMotionState = new btDefaultMotionState();
-		
-		btRigidBody::btRigidBodyConstructionInfo envObjInfo(0, envMotionState, environmentShape);
-		btRigidBody *envObj = new btRigidBody(envObjInfo);
-		mPhysicsWorld->addRigidBody(envObj);
+		PhysicsObject *envObj = new PhysicsObject(mesh);
+		mPhysicsWorld->AddObject(envObj);
 
 		mBoxPosition = glm::vec3(-380, -20, 16);
 
-		btBoxShape *boxShape = new btBoxShape(btVector3(5, 5, 5));
-		boxShape->calculateLocalInertia(1, btVector3(0, 0, 0));
-		btTransform transform(btTransform(btQuaternion(0, 0, 0, 1), btVector3(mBoxPosition.x, mBoxPosition.y, mBoxPosition.z)));
-		btDefaultMotionState *boxMotionState = new btDefaultMotionState(transform);
-		btRigidBody::btRigidBodyConstructionInfo boxObjInfo(1, boxMotionState, boxShape);
-		mBoxBody = new btRigidBody(boxObjInfo);
+		BoxShape *boxShape = new BoxShape(glm::vec3(5, 5, 5));
+		mBoxBody = new PhysicsObject(boxShape);
+		//mBoxBody->SetAcceleration(glm::vec3(10, 0, 0));
+		mBoxBody->SetPosition(mBoxPosition);
+		mBoxBody->SetMass(1);
+		
 		//mBoxBody->translate(btVector3(mBoxPosition.x, mBoxPosition.y, mBoxPosition.z));
-		mPhysicsWorld->addRigidBody(mBoxBody);
+		mPhysicsWorld->AddObject(mBoxBody);
 
 		mBoxShape = NULL;
 	}
@@ -84,12 +57,9 @@ public:
 		mCamera->Update();
 
 		float step = (float)deltaMillis / 1000.0f;
-		mPhysicsWorld->stepSimulation(1 / 60.f, 10);
+		mPhysicsWorld->Update(step);
 
-		btTransform trans;
-		mBoxBody->getMotionState()->getWorldTransform(trans);
-		btVector3 position = trans.getOrigin();
-		mBoxPosition = glm::vec3(position.x(), position.y(), position.z());
+		mBoxPosition = mBoxBody->GetPosition();
 
 		Logger::Log(LogDebug, "Position: %f, %f, %f", mBoxPosition.x, mBoxPosition.y, mBoxPosition.z);
 	}
@@ -132,14 +102,14 @@ public:
 	Model *mEnvironment;
 	PerspectiveCamera *mCamera;
 
-	btRigidBody *mBoxBody;
+	PhysicsObject *mBoxBody;
 	Model *mBoxShape;
 	glm::vec3 mBoxPosition;
 
 	int mColorIndex;
 	int mDiffuseTexIndex;
 
-	btDiscreteDynamicsWorld *mPhysicsWorld;
+	PhysicsWorld *mPhysicsWorld;
 
 };
 
