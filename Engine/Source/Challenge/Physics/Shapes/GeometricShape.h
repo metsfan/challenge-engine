@@ -120,6 +120,7 @@ namespace challenge
 #include <Challenge/Physics/Shapes/SphereShape.h>
 #include <Challenge/Physics/Shapes/TriangleMeshShape.h>
 #include <Challenge/Physics/Shapes/TriangleShape.h>
+#include <Challenge/Physics/Shapes/CapsuleShape.h>
 
 namespace challenge
 {
@@ -135,6 +136,9 @@ namespace challenge
 
 			case kShapeTypeTriangleMesh:
 				return TriangleMeshShape::CreateFromPointsList(points);
+
+			case kShapeTypeCapsule:
+				return CapsuleShape::CreateFromPointsList(points);
 			}
 		}
 	};

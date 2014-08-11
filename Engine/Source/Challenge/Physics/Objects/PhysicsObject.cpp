@@ -17,7 +17,7 @@ namespace challenge
 		if (mAcceleration != glm::vec3()) {
 			mRigidBody->applyCentralForce(ToBullet(mAcceleration));
 		}
-		
+
 		if (mVelocity != glm::vec3()) {
 			mRigidBody->setLinearVelocity(ToBullet(mVelocity));
 		}
@@ -28,6 +28,7 @@ namespace challenge
 
 		mPosition = glm::vec3(position.x(), position.y(), position.z());
 		mShape->SetPosition(mPosition);
+		mRigidBody->setWorldTransform(trans);
 	}
 
 	void PhysicsObject::SetTransform(const glm::mat4 &transform)
@@ -58,8 +59,8 @@ namespace challenge
 	}
 
 	void PhysicsObject::SetMass(real mass)
-	{ 
-		mMass = mass; 
+	{
+		mMass = mass;
 
 		if (mRigidBody) {
 			mRigidBody->setMassProps(mass, btVector3());
@@ -74,19 +75,20 @@ namespace challenge
 		if (mRigidBody) {
 			btTransform transform(btTransform(btQuaternion(0, 0, 0, 1), ToBullet(mPosition)));
 			mRigidBody->setWorldTransform(transform);
+			mMotionState->setWorldTransform(transform);
 		}
 	}
 
 	void PhysicsObject::SetShape(IGeometricShape *shape)
 	{
 		mShape = shape;
-		
+
 		if (shape) {
 			mPosition = shape->GetPosition();
 		}
 	}
 
-	void PhysicsObject::SetPhysicsWorld(btDiscreteDynamicsWorld *world)
+	void PhysicsObject::SetPhysicsWorld(btDiscreteDynamicsWorld *world, int collisionGroup, int collisionFilter)
 	{
 		btTransform transform(btTransform(btQuaternion(0, 0, 0, 1), ToBullet(mPosition)));
 
@@ -96,6 +98,7 @@ namespace challenge
 
 		mRigidBody->setUserPointer(this);
 
-		world->addRigidBody(mRigidBody);
+		world->addRigidBody(mRigidBody, collisionGroup, collisionFilter);
 	}
+
 };

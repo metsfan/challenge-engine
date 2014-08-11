@@ -18,6 +18,8 @@ namespace challenge
 	{
 		mPosition += delta;
 		mViewChanged = true;
+
+		mViewMatrix = glm::translate(mViewMatrix, delta);
 	}
 
 	void Camera::MoveTo(glm::vec3 position)
@@ -51,6 +53,11 @@ namespace challenge
 		mViewChanged = true;
 	}
 
+	void Camera::Rotate(real angle, const glm::vec3 &axis)
+	{
+		mViewMatrix = glm::rotate(mViewMatrix, angle, axis);
+	}
+
 	void Camera::RotateTo(glm::vec3 rotation)
 	{
 		mRotation = rotation;
@@ -79,6 +86,8 @@ namespace challenge
 	void Camera::ScaleBy(real delta)
 	{
 		mScale *= delta;
+
+		mViewMatrix = glm::scale(mViewMatrix, glm::vec3(delta));
 	}
 
 	void Camera::ScaleTo(real scale)
@@ -143,7 +152,7 @@ namespace challenge
 	{
 		//if (mViewChanged) 
 		//{
-			mViewMatrix = glm::mat4();
+			/*mViewMatrix = glm::mat4();
 
 			mViewMatrix = glm::translate(mViewMatrix, mPosition);
 			
@@ -163,7 +172,7 @@ namespace challenge
 			if (mShear != 0.0) {
 				mViewMatrix = glm::scale(mViewMatrix, glm::vec3(0, mScale, 0));
 				mViewMatrix[1][2] *= mShear;
-			}
+			}*/
 
 			mInverseViewMatrix = glm::inverse(mViewMatrix);
 			mViewProjectionMatrix = mProjectionMatrix * mInverseViewMatrix;
@@ -171,6 +180,12 @@ namespace challenge
         
 			mViewChanged = false;
 		//}
+	}
+
+	void Camera::Reset()
+	{
+		mViewMatrix = mInverseViewMatrix = glm::mat4();
+		mViewProjectionMatrix = mInverseViewProjectionMatrix = mProjectionMatrix;
 	}
 };
 

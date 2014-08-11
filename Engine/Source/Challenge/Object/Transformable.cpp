@@ -5,7 +5,7 @@ namespace challenge
 {
 	void Transformable::Update(int deltaMillis)
 	{
-		if (mChanged) {
+		//if (mChanged) {
 			mTransform = glm::translate(glm::mat4(), mPosition);
 
 			mTransform = glm::rotate(mTransform, mRotation.z, glm::vec3(0, 0, 1));
@@ -15,7 +15,7 @@ namespace challenge
 			mTransform = glm::scale(mTransform, mScale);
 
 			mChanged = false;
-		}
+		//}
 	}
 
 	void Transformable::Serialize(ByteArrayOutputStream &stream)
@@ -30,5 +30,10 @@ namespace challenge
 		stream >> mPosition;
 		stream >> mRotation;
 		stream >> mScale;
+
+		//Logger::Log(LogDebug, "Position: %f, %f, %f", mPosition.x, mPosition.y, mPosition.z);
+
+		mChanged = true;
+		mTestPos = mPosition;
 	}
 }

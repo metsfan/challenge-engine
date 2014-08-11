@@ -1,6 +1,7 @@
 #include <Challenge/Challenge.h>
 #include <Challenge/Physics/PhysicsWorld.h>
 #include <BulletCollision/CollisionDispatch/btGhostObject.h>
+#include <BulletCollision/NarrowPhaseCollision/btRaycastCallback.h>
 
 namespace challenge
 {
@@ -27,12 +28,12 @@ namespace challenge
 		mPhysicsWorld->getDispatchInfo().m_allowedCcdPenetration = 0.001f;
 	}
 
-	void PhysicsWorld::AddObject(PhysicsObject *object)
+	void PhysicsWorld::AddObject(PhysicsObject *object, int collisionGroup, int collisionFilter)
 	{
 		mObjects.lock();
 
 		mObjects.push_back(object);
-		object->SetPhysicsWorld(mPhysicsWorld);
+		object->SetPhysicsWorld(mPhysicsWorld, collisionGroup, collisionFilter);
 
 		mObjects.unlock();
 	}
@@ -51,7 +52,7 @@ namespace challenge
 			auto objects = mObjects;
 			float fixedsubstep = 1.f / 1000.0f;
 			mPhysicsWorld->stepSimulation(1.0f / 60.f, 10, fixedsubstep);
-
+			mPhysicsWorld->debugDrawWorld();
 			mObjects.unlock();
 
 			for (PhysicsObject *object : mObjects) {
@@ -60,15 +61,21 @@ namespace challenge
 		}
 	}
 
-	PhysicsObject * PhysicsWorld::RayIntersection(const Ray &ray, glm::vec3 &intersectionPoint)
+	PhysicsObject * PhysicsWorld::RayIntersection(const Ray &ray, glm::vec3 &intersectionPoint, int collisionMask)
 	{
+		mPhysicsWorld->updateAabbs();
+		mPhysicsWorld->computeOverlappingPairs();
+
 		btVector3 start = ToBullet(ray.GetOrigin());
-		btVector3 end = ToBullet(ray.ValueAt(1000));
+		btVector3 end = ToBullet(ray.ValueAt(5000));
 
 		btCollisionWorld::ClosestRayResultCallback rayCallback(start, end);
+		rayCallback.m_collisionFilterGroup = kPhysicsObjectAllFilter;
+		rayCallback.m_collisionFilterMask = collisionMask;
+		rayCallback.m_flags |= btTriangleRaycastCallback::kF_FilterBackfaces;
+		rayCallback.m_flags |= btTriangleRaycastCallback::kF_UseSubSimplexConvexCastRaytest;
 
 		mPhysicsWorld->rayTest(start, end, rayCallback);
-
 		if (rayCallback.hasHit()) {
 			PhysicsObject *object = reinterpret_cast<PhysicsObject *>(rayCallback.m_collisionObject->getUserPointer());
 			if (object) {

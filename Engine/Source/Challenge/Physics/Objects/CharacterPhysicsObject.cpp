@@ -60,7 +60,8 @@ namespace challenge
 		return PhysicsObject::CollidesWith(other, collision);
 	}
 
-	void CharacterPhysicsObject::SetPhysicsWorld(btDiscreteDynamicsWorld *world)
+	void CharacterPhysicsObject::SetPhysicsWorld(btDiscreteDynamicsWorld *world, int collisionGroup,
+		int collisionFilter)
 	{
 		btTransform transform(btTransform(btQuaternion(0, 0, 0, 1), ToBullet(mPosition)));
 		mMotionState = new btDefaultMotionState(transform);
@@ -81,10 +82,9 @@ namespace challenge
 
 		mCharacterController = new btKinematicCharacterController(mGhostObject, btShape, 1);
 		world->getPairCache()->setInternalGhostPairCallback(new btGhostPairCallback());
-
 		
-		world->addCollisionObject(mGhostObject, btBroadphaseProxy::CharacterFilter, 
-			btBroadphaseProxy::StaticFilter | btBroadphaseProxy::DefaultFilter);
+		world->addCollisionObject(mGhostObject, collisionGroup, 
+			collisionFilter);
 		world->addAction(mCharacterController);
 		mCharacterController->setWalkDirection(btVector3(0.0, 0.0, 0.0));
 		mCharacterController->setMaxSlope(glm::radians(180.0));

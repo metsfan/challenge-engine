@@ -37,6 +37,7 @@ namespace challenge
 		btPairCachingGhostObject *mGhostObject;
 		btKinematicCharacterController *mCharacterController;
 
-		void SetPhysicsWorld(btDiscreteDynamicsWorld *world);
+		void SetPhysicsWorld(btDiscreteDynamicsWorld *world, int collisionGroup = kPhysicsObjectDefaultGroup,
+			int collisionFilter = kPhysicsObjectAllFilter);
 	};
 };

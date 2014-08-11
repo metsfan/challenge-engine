@@ -6,6 +6,14 @@
 
 namespace challenge
 {
+	enum PhysicsObjectFlags
+	{
+		PhysicsObjectFlagNoGravity = (1 << 1)
+	};
+
+	static const int kPhysicsObjectDefaultGroup = btBroadphaseProxy::DefaultFilter;
+	static const int kPhysicsObjectAllFilter = btBroadphaseProxy::AllFilter;
+
 	class PhysicsObject
 	{
 		friend class PhysicsWorld;
@@ -62,7 +70,8 @@ namespace challenge
 			mShape->DrawDebug(device, state);
 		}
 
-		virtual void SetPhysicsWorld(btDiscreteDynamicsWorld *world);
+		virtual void SetPhysicsWorld(btDiscreteDynamicsWorld *world, int collisionGroup = kPhysicsObjectDefaultGroup,
+			int collisionFilter = kPhysicsObjectAllFilter);
 
 		void SetUserData(void *ptr)
 		{
@@ -71,6 +80,9 @@ namespace challenge
 
 		void * GetUserData() { return mUserData; }
 
+		void SetFlags(uint32_t flags) { mFlags = flags; }
+		uint32_t GetFlags() { return mFlags; }
+
 	protected:
 		glm::vec3 mPosition;
 		glm::vec3 mVelocity;
@@ -78,6 +90,8 @@ namespace challenge
 		glm::mat4 mTransform;
 		IGeometricShape *mShape;
 		real mMass;
+
+		uint32_t mFlags;
 
 		glm::vec3 mTotalForce;
 

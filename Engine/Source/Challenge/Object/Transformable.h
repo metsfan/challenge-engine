@@ -81,6 +81,7 @@ namespace challenge
 		glm::vec3 mPosition;
 		glm::vec3 mRotation;
 		glm::vec3 mScale;
+		glm::vec3 mTestPos;
 
 		bool mChanged;
 

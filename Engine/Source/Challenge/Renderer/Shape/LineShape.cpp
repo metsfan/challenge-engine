@@ -6,7 +6,9 @@ namespace challenge
 	LineShape::LineShape(IGraphicsDevice *device) :
 		Shape(device, "line"),
 		mReloadPoints(false),
-		mMesh(NULL)
+		mMesh(NULL),
+		mColor(1, 0, 0, 1),
+		mWidth(5)
 	{
 	}
 
@@ -26,13 +28,10 @@ namespace challenge
 				mReloadPoints = false;
 			}
 
-			/*ShaderDataFloat widthData(&mWidth, 1);
-			state.SetShaderData("WIDTH", &widthData);
-
-			ShaderDataVector4 colorData(&mColor, 1);
-			state.SetShaderData("COLOR", &colorData);
+			state.SetShaderData(device->GetContext()->GetGlobalIndex("WIDTH"), &mWidth);
+			state.SetShaderData(device->GetContext()->GetGlobalIndex("COLOR"), &mColor);
 			
-			mMesh->Draw(device, state);*/
+			mMesh->Draw(device, state);
 		}
 	}
 }

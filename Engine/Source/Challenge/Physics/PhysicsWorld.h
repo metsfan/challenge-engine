@@ -18,9 +18,10 @@ namespace challenge
 
 		void SetGravity(const glm::vec3 &gravity);
 
-		void AddObject(PhysicsObject *body);
+		void AddObject(PhysicsObject *body, int collisionGroup = kPhysicsObjectDefaultGroup,
+			int collisionFilter = kPhysicsObjectAllFilter);
 
-		PhysicsObject * RayIntersection(const Ray &ray, glm::vec3 &intersectionPoint);
+		PhysicsObject * RayIntersection(const Ray &ray, glm::vec3 &intersectionPoint, int collisionMask = kPhysicsObjectAllFilter);
 
 		std::vector<PhysicsObject *> GetCollisions(IGeometricShape *shape);
 

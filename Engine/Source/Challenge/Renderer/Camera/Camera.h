@@ -14,6 +14,7 @@ namespace challenge
         virtual void MoveTo(glm::vec3 position);
         
         virtual void RotateBy(glm::vec3 delta);
+		virtual void Rotate(real angle, const glm::vec3 &axis);
         virtual void RotateTo(glm::vec3 rotation);
         
         virtual void ScaleBy(real delta);
@@ -28,6 +29,7 @@ namespace challenge
 		void LookAt(glm::vec3 eye, glm::vec3 center, glm::vec3 up = glm::vec3(0, 1, 0));
         
         virtual void Update();
+		void Reset();
         
         const glm::mat4 GetProjectionMatrix() const { return mProjectionMatrix; }
 		void SetProjectionMatrix(const glm::mat4 &m) { mProjectionMatrix = m; }

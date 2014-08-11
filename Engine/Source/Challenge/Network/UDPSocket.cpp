@@ -13,9 +13,12 @@ namespace challenge
 			if (result == SOCKET_ERROR) {
 				//TODO report errors here
 				int error = WSAGetLastError();
-				Logger::Log(LogDebug, "Network error: %d", error);
+				Logger::Log(LogDebug, "Network error initializing: %d", error);
 			}
 		}
+
+		//u_long iMode = 1;
+		//ioctlsocket(this->GetSocket(), FIONBIO, &iMode);
 	}
 
 	UDPSocket::~UDPSocket()
@@ -40,7 +43,7 @@ namespace challenge
 		if (status == SOCKET_ERROR) {
 			//TODO report errors here
 			int error = WSAGetLastError();
-			Logger::Log(LogDebug, "Network error: %d", error);
+			Logger::Log(LogDebug, "Network error sending: %d", error);
 		}
 
 		return status;
@@ -56,7 +59,7 @@ namespace challenge
 		if (status == SOCKET_ERROR) {
 			//TODO report errors here
 			int error = WSAGetLastError();
-			Logger::Log(LogDebug, "Network error: %d", error);
+			Logger::Log(LogDebug, "Network error receiving: %d", error);
 		}
 
 		if (address) {
