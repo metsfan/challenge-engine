@@ -65,7 +65,7 @@ namespace challenge
 		std::list<OctreeObject> mShapes;
 		OctreeNode *mChildren[8];
 		bool mHasChildren;
-		std::string mNodeId;
+		UUID mNodeId;
 	};
 
 	enum OctreeFlags

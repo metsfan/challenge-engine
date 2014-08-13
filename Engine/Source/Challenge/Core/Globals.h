@@ -36,6 +36,10 @@
 #include <glm/gtx/transform.hpp>
 #include <glm/gtx/epsilon.hpp>
 
+#include <Poco/JSON/Parser.h>
+#include <Poco/UUID.h>
+#include <Poco/UUIDGenerator.h>
+
 #define ROOT_DIR "C:/gamedev/dungeon-raider/DungeonRaider/DungeonRaider/Source"
 #define GUID_SIZE 36
 #define CURL_STATICLIB 1
@@ -53,3 +57,10 @@ const float DEG2RAD = 3.14159/180;
 typedef std::string ActorType;
 typedef std::string ActorId;
 typedef float real;
+
+using Poco::UUID;
+
+static UUID UUIDZero;
+
+#define RandomUUID() (Poco::UUIDGenerator::defaultGenerator().createRandom())
+

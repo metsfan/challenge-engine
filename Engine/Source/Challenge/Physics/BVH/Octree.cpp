@@ -11,7 +11,7 @@ namespace challenge
 	OctreeNode::OctreeNode(float minx, float maxx, float miny, float maxy, float minz, float maxz) :
 		mBounds(minx, miny, minz, maxx, maxy, maxz),
 		mHasChildren(false),
-		mNodeId(Util::uuid_create())
+		mNodeId(RandomUUID())
 	{
 		memset(mChildren, 0, sizeof(mChildren));
 	}
@@ -19,7 +19,7 @@ namespace challenge
 	OctreeNode::OctreeNode(const BoundingBox &bounds) :
 		mBounds(bounds),
 		mHasChildren(false),
-		mNodeId(Util::uuid_create())
+		mNodeId(RandomUUID())
 	{
 		memset(mChildren, 0, sizeof(mChildren));
 	}

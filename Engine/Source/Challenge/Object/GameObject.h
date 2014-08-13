@@ -57,10 +57,14 @@ namespace challenge
 		virtual void Serialize(ByteArrayOutputStream &stream);
 		virtual void Unserialize(ByteArrayInputStream &stream);
 
+		void SetId(const UUID &id) { mId = id; }
+		const UUID & GetId() { return mId; }
+
 		void Update(int deltaMillis);
 		void Render(IGraphicsDevice *device, RenderState &state);
 
 	private:
 		std::vector<IComponent *> mComponents;
+		UUID mId;
 	};
 };

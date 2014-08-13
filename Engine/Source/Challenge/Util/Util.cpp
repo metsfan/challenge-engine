@@ -138,24 +138,6 @@ namespace challenge
 		return return_vec;
 	}
 
-	std::string Util::uuid_create()
-	{
-	#ifdef WIN32
-		UUID uuid;
-		UuidCreate(&uuid);
-		unsigned char * str;
-		UuidToStringA(&uuid, &str);
-		std::string s((char*)str);
-		RpcStringFreeA(&str);
-	#else 
-		uuid_t uuid;
-		uuid_generate_random ( uuid );
-		char s[37];
-		uuid_unparse ( uuid, s );
-	#endif
-		return s;
-	}
-
 	std::string Util::GetFilenameExtension(std::string filename)
 	{
 		int lastIndex = filename.find_last_of('.');
