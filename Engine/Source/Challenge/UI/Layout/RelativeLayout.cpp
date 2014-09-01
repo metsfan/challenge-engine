@@ -80,7 +80,7 @@ namespace challenge
 				measureBounds.left = layoutParams.rightOfView->GetLayoutParams().measureBounds.right + 
 					layoutParams.rightOfView->GetMargin().right;
 
-				if (!layoutParams.rightOfView && !layoutParams.alignParentRight) {
+				if (!layoutParams.leftOfView && !layoutParams.alignParentRight) {
 					measureBounds.right = measureBounds.left + frame.size.width;
 				}
 			}

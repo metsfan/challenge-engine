@@ -17,8 +17,5 @@ namespace challenge
 	protected:
 		virtual void PositionSubviews() = 0;
 		virtual void PostLayout() = 0;
-
-	private:
-		void WrapToSubviews();
 	};
 };

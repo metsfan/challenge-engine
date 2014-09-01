@@ -12,12 +12,14 @@
         height="50"
         id="view2"
         right_of="view1"
+        margin_left="10"
         background_color="FFFF00"
         />
   <View width="match_parent"
         height="100"
         id="view3"
         below="view1"
+        margin_top="5"
         background_color="0000FF"
         />
 </RelativeLayout>

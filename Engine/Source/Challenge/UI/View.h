@@ -378,6 +378,7 @@ namespace challenge
 
 		void InvalidateLayout();
 		bool IsLayoutInvalid() { return mLayoutInvalid; }
+		void WrapToSubviews();
 
 	private:
 		Frame mFrame;
