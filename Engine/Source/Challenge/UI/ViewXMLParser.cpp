@@ -22,10 +22,8 @@ namespace challenge
 		
 		Frame frame;
 		if(tokens.size() == 4) {
-			frame.origin.x = atoi(tokens[0].c_str());
-			frame.origin.y = atoi(tokens[1].c_str());
-			frame.size.width = atoi(tokens[2].c_str());
-			frame.size.height = atoi(tokens[3].c_str());
+			frame.origin = ParsePoint(tokens[0] + "," + tokens[1]);
+			frame.size = ParseSize(tokens[2] + "," + tokens[3]);
 		}
 
 		return frame;
@@ -52,8 +50,25 @@ namespace challenge
 
 		Size size;
 		if (tokens.size() == 2) {
-			size.width = atoi(tokens[0].c_str());
-			size.height = atoi(tokens[1].c_str());
+			if (tokens[0] == "match_parent") {
+				size.width = MATCH_PARENT;
+			}
+			else if (tokens[0] == "wrap_content") {
+				size.width = WRAP_CONTENT;
+			}
+			else {
+				size.width = atof(tokens[0].c_str());
+			}
+
+			if (tokens[1] == "match_parent") {
+				size.height = MATCH_PARENT;
+			}
+			else if (tokens[1] == "wrap_content") {
+				size.height = WRAP_CONTENT;
+			}
+			else {
+				size.height = atof(tokens[1].c_str());
+			}
 		}
 
 		return size;

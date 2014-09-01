@@ -320,7 +320,7 @@ namespace challenge
 		{
 		}
 
-		Rect(real _left, real _bottom, real _right, real _top) :
+		Rect(real _left, real _top, real _right, real _bottom) :
 			left(_left), bottom(_bottom), right(_right), top(_top)
 		{
 		}

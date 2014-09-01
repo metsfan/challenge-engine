@@ -8,7 +8,7 @@ namespace challenge
 	{
 	public:
 		Dialog() :
-			View(),
+			View(Frame(0, 0, 0, 0)),
 			mModalWindow(NULL)
 		{
 		}

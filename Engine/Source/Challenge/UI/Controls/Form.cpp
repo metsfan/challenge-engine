@@ -40,13 +40,6 @@ namespace challenge
 	{
 	}
 
-	void Form::PositionSubviews()
-	{
-		View::PositionSubviews();
-
-		this->FindFormElements(this);
-	}
-
 	void Form::AddElement(FormElement *formElement)
 	{
 		auto it = std::find(mFormElements.begin(), mFormElements.end(), formElement);
@@ -113,6 +106,13 @@ namespace challenge
 	void Form::OnXMLParseComplete()
 	{
 
+	}
+
+	void Form::Measure(const Size &parentSize)
+	{
+		View::Measure(parentSize);
+
+		this->FindFormElements(this);
 	}
 
 	void Form::FindFormElements(View *view)

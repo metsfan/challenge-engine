@@ -32,7 +32,7 @@ namespace challenge
 
 		virtual void FindFormElements(View *view);
 
-		virtual void PositionSubviews();
+		virtual void Measure(const Size &parentSize);
 
 		void AddElement(FormElement *formElement);
 		void AddMultiFormElement(MultiFormElement *formElement);

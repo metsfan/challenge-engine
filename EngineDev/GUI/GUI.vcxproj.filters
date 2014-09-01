@@ -27,4 +27,8 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Xml Include="Resources\Layout\LinearLayoutTest.xml" />
+    <Xml Include="Resources\Layout\RelativeLayoutTest.xml" />
+  </ItemGroup>
 </Project>

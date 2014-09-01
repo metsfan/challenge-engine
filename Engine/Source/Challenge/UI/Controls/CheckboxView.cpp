@@ -29,7 +29,7 @@ namespace challenge
 		}
 
 		mCheckedImage->SetBackgroundImage(sDefaultCheckedImage);
-		mCheckedImage->SetVisible(false);
+		mCheckedImage->SetVisibility(ViewGone);
 		mCheckedImage->SetSize(sDefaultCheckedImage->GetSize());
 		this->AddInternalSubview(mCheckedImage);
 
@@ -62,11 +62,11 @@ namespace challenge
 		mSelected = selected;
 
 		if(mSelected) {
-			mCheckedImage->SetVisible(true);
-			mUncheckedImage->SetVisible(false);
+			mCheckedImage->SetVisibility(ViewVisible);
+			mUncheckedImage->SetVisibility(ViewVisible);
 		} else {
-			mCheckedImage->SetVisible(false);
-			mUncheckedImage->SetVisible(true);
+			mCheckedImage->SetVisibility(ViewGone);
+			mUncheckedImage->SetVisibility(ViewGone);
 		}
 	}
 

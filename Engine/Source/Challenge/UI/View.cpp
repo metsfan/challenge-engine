@@ -9,18 +9,15 @@
 #include <Challenge/UI/ViewXMLParser.h>
 #include <Challenge/Input/InputManager.h>
 
-#include <Challenge/UI/Layout/AbsoluteLayout.h>
-#include <Challenge/UI/Layout/LinearLayout.h>
-
 namespace challenge
 {
 	std::map<std::string, TViewCreatorFunction> View::sViewCreatorRegistry;
 
-	View::View(Frame frame, LayoutType layout) :
+	View::View(const Frame &frame) :
 		mFrame(frame),
 		mAdjustedFrame(frame),
 		mTextureFrame(0, 0, 1, 1),
-		mVisible(true),
+		mVisibility(ViewVisible),
 		mZPosition(-1),
 		mBackgroundImage(NULL),
 		mBackgroundImageAtlas(NULL),
@@ -34,10 +31,9 @@ namespace challenge
 		mAlpha(1),
 		mHoriAlign(HorizontalAlignLeft),
 		mVertAlign(VerticalAlignTop),
-		mRotation(0)
+		mRotation(0),
+		mLayoutInvalid(true)
 	{
-		this->SetLayoutType(layout);
-
 		mFrameSet = (frame.origin.x != 0 || frame.origin.y != 0 ||
 			frame.size.width != 0 || frame.size.height != 0);
 	}
@@ -79,7 +75,7 @@ namespace challenge
 			}
 		}
 
-		this->PositionSubviews();
+		this->InvalidateLayout();
 	}
 
 	View * View::RemoveSubview(View *view)
@@ -91,6 +87,8 @@ namespace challenge
 				return view;
 			}
 		}
+
+		this->InvalidateLayout();
 
 		return NULL;
 	}
@@ -104,6 +102,8 @@ namespace challenge
 
 		mSubviews.clear();
 
+		this->InvalidateLayout();
+
 		return subviews;
 	}
 
@@ -115,29 +115,12 @@ namespace challenge
 		if (parent) {
 			parent->RemoveSubview(this);
 		}
+
+		this->InvalidateLayout();
 	}
 
 	void View::Update(int deltaMillis)
 	{
-		if (mFrame.size.width < 0) {
-			mFrame.size.width = 0;
-		}
-
-		if (mFrame.size.height < 0) {
-			mFrame.size.height = 0;
-		}
-
-		if (this->GetParent()) {
-			if (this->GetParent()->mHoriAlign == HorizontalAlignCenter) {
-				mFrame.origin.x = (this->GetParent()->GetWidth() * 0.5) - (this->GetWidth() * 0.5);
-			}
-
-			if (this->GetParent()->mVertAlign == VerticalAlignMiddle) {
-				mFrame.origin.y = (this->GetParent()->GetHeight() * 0.5) - (this->GetHeight() * 0.5);
-			}
-		}
-		
-
 		for(int j = 0; j < mSubviews.size(); j++) {
 			mSubviews[j]->Update(deltaMillis);
 		}
@@ -157,7 +140,7 @@ namespace challenge
 			mFrame.size.height
 		);
 
-		if(mVisible) {
+		if(mVisibility == ViewVisible) {
 			if(!mSprite) {
 				mSprite = new SpriteShape(device, "sprite");
 			}
@@ -228,6 +211,8 @@ namespace challenge
 		mBackgroundImageAtlas = NULL;
 		mBackgroundImage = std::shared_ptr<Image>(new Image(imageName));
 		mBackgroundImageChanged = true;
+
+		this->InvalidateLayout();
 	}
 
 	void View::SetBackgroundImage(std::shared_ptr<Image> image)
@@ -238,6 +223,8 @@ namespace challenge
 			mFrame.size = image->GetSize();
 		}
 		mBackgroundImageChanged = true;
+
+		this->InvalidateLayout();
 	}
 
 	void View::SetBackgroundImage(std::shared_ptr<ImageAtlas> atlas, const std::string &key)
@@ -249,6 +236,8 @@ namespace challenge
 			mFrame.size = atlas->GetImageSize(key);
 		}
 		mBackgroundImageChanged = true;
+
+		this->InvalidateLayout();
 	}
 
 	void View::SetFocused(bool focused)
@@ -268,16 +257,18 @@ namespace challenge
 		}
 	}
 
-	void View::SetVisible(bool visible)
+	void View::SetVisibility(ViewVisibility visibility)
 	{
-		mVisible = visible;
+		mVisibility = visibility;
 
-		this->PositionSubviews();
+		this->InvalidateLayout();
 	}
 
 	void View::ClipSubviews(bool clip)
 	{
 		mClipSubviews = clip;
+
+		this->InvalidateLayout();
 	}
 
 	Window* View::GetWindow()
@@ -323,7 +314,7 @@ namespace challenge
 	{
 		View * selectedView = NULL;
 
-		if(mVisible) {
+		if(mVisibility == ViewVisible) {
 			if(mClipSubviews && !this->ContainsPoint(p)) {
 				return NULL;
 			}
@@ -386,6 +377,8 @@ namespace challenge
 		this->AddSubview(view);
 		view->SetZPosition(view->mZPosition + 10000);
 		mInternalSubviews.push_back(view);
+
+		this->InvalidateLayout();
 	}
 
 	View * View::FindViewById(const std::string &id)
@@ -451,13 +444,17 @@ namespace challenge
 				this->SetSize(ViewXMLParser::ParseSize(node.GetAttributeString("size")));
 			}
 			else {
+				std::string width = "0", height = "0";
+
 				if (node.HasAttribute("width")) {
-					this->SetWidth(node.GetAttributeFloat("width"));
+					width = node.GetAttributeString("width");
 				}
 
 				if (node.HasAttribute("height")) {
-					this->SetWidth(node.GetAttributeFloat("height"));
+					height = node.GetAttributeString("height");
 				}
+
+				this->SetSize(ViewXMLParser::ParseSize(width + "," + height));
 			}
 
 			if (node.HasAttribute("position")) {
@@ -465,11 +462,11 @@ namespace challenge
 			}
 			else {
 				if (node.HasAttribute("x")) {
-					this->SetWidth(node.GetAttributeFloat("x"));
+					this->SetX(node.GetAttributeFloat("x"));
 				}
 
 				if (node.HasAttribute("y")) {
-					this->SetWidth(node.GetAttributeFloat("y"));
+					this->SetY(node.GetAttributeFloat("y"));
 				}
 			}
 		}
@@ -478,18 +475,52 @@ namespace challenge
 			this->SetZPosition(node.GetAttributeFloat("z_index"));
 		}
 		
-		this->SetPadding(ViewXMLParser::ParseRect(node.GetAttributeString("padding")));
+		if (node.HasAttribute("padding")) {
+			this->SetPadding(ViewXMLParser::ParseRect(node.GetAttributeString("padding")));
+		}
+		else {
+			Rect padding;
+			if (node.HasAttribute("padding_left")) {
+				padding.left = node.GetAttributeFloat("padding_left");
+			} 
 
-		const std::string &layout = node.GetAttributeString("layout");
-		if(layout == "linear") {
-			const std::string &orientationVal = node.GetAttributeString("orientation");
-			LinearLayoutOrientation orientation = LinearLayoutVertical;
-			if(orientationVal == "horizontal") {
-				orientation = LinearLayoutHorizontal;
+			if (node.HasAttribute("padding_right")) {
+				padding.right = node.GetAttributeFloat("padding_right");
 			}
-			mLayoutEngine = std::unique_ptr<ILayout>(new LinearLayout(orientation));
-		} else if (!mLayoutEngine) {
-			mLayoutEngine = std::unique_ptr<ILayout>(new AbsoluteLayout());
+
+			if (node.HasAttribute("padding_top")) {
+				padding.top = node.GetAttributeFloat("padding_top");
+			}
+
+			if (node.HasAttribute("padding_bottom")) {
+				padding.bottom = node.GetAttributeFloat("padding_bottom");
+			}
+
+			this->SetPadding(padding);
+		}
+		
+		if (node.HasAttribute("margin")) {
+			this->SetMargin(ViewXMLParser::ParseRect(node.GetAttributeString("margin")));
+		}
+		else {
+			Rect margin;
+			if (node.HasAttribute("margin_left")) {
+				margin.left = node.GetAttributeFloat("margin_left");
+			}
+
+			if (node.HasAttribute("margin_right")) {
+				margin.right = node.GetAttributeFloat("margin_right");
+			}
+
+			if (node.HasAttribute("margin_top")) {
+				margin.top = node.GetAttributeFloat("margin_top");
+			}
+
+			if (node.HasAttribute("margin_bottom")) {
+				margin.bottom = node.GetAttributeFloat("margin_bottom");
+			}
+
+			this->SetMargin(margin);
 		}
 
 		const std::string &bgImage = node.GetAttributeString("background_image");
@@ -505,15 +536,24 @@ namespace challenge
 		
 		this->SetId(node.GetAttributeString("id"));
 
-		bool visible = node.GetAttributeString("visible") != "false";
-		this->SetVisible(visible); 
+		const std::string &visibility = node.GetAttributeString("visibility");
+		if (visibility == "invisible") {
+			this->SetVisibility(ViewInvisible);
+		}
+		else if (visibility == "gone") {
+			this->SetVisibility(ViewGone);
+		}
+		else {
+			this->SetVisibility(ViewVisible);
+		}
+		
 
 		const TXMLAttributeMap &attrs = node.GetAttributes();
 		for (auto &pair : attrs) {
 			this->SetAttribute(pair.second.GetName(), pair.second.GetValue());
 		}
 
-		const std::string &horiAlign = node.GetAttributeString("horizontal_align");
+		const std::string &horiAlign = node.GetAttributeString("halign");
 		if (horiAlign == "left") {
 			mHoriAlign = HorizontalAlignLeft;
 		}
@@ -524,7 +564,7 @@ namespace challenge
 			mHoriAlign = HorizontalAlignRight;
 		}
 
-		const std::string &vertAlign = node.GetAttributeString("vertical_align");
+		const std::string &vertAlign = node.GetAttributeString("valign");
 		if (vertAlign == "top") {
 			mVertAlign = VerticalAlignTop;
 		}
@@ -534,35 +574,78 @@ namespace challenge
 		else if (vertAlign == "bottom") {
 			mVertAlign = VerticalAlignBottom;
 		}
+
+		/* Layout params */
+		mLayoutParams.alignParentBottom = node.GetAttributeBoolean("align_parent_bottom");
+		mLayoutParams.alignParentLeft = node.GetAttributeBoolean("align_parent_left");
+		mLayoutParams.alignParentRight = node.GetAttributeBoolean("align_parent_right");
+		mLayoutParams.alignParentTop = node.GetAttributeBoolean("align_parent_top");
+
+		mLayoutParams.aboveViewId = node.GetAttributeString("above");
+		mLayoutParams.belowViewId = node.GetAttributeString("below");
+		mLayoutParams.leftOfViewId = node.GetAttributeString("left_of");
+		mLayoutParams.rightOfViewId = node.GetAttributeString("right_of");
+
+		mLayoutParams.layoutWeight = node.GetAttributeInt("weight");
+		mLayoutParams.alignment = AlignmentInherit;
+		mLayoutParams.subviewAlignment = AlignmentInherit;
 	}
 
 	void View::OnXMLParseComplete()
 	{
 	}
 
-	void View::SetLayoutType(LayoutType layout)
+	void View::InvalidateLayout()
 	{
-		switch(layout)
-		{
-		case LayoutTypeAbsolute:
-			mLayoutEngine = std::unique_ptr<ILayout>(new AbsoluteLayout());
-			break;
-
-		case LayoutTypeLinear:
-			mLayoutEngine = std::unique_ptr<ILayout>(new LinearLayout());
-			break;
-		};
+		mLayoutInvalid = true;
 	}
 
-	void View::PositionSubviews()
+	void View::Measure(const Size &parentSize)
 	{
-		mLayoutEngine->PositionSubviews(this, !mFrameSet);
+		if (mVisibility == ViewGone) {
+			this->SetSize(0, 0);
+		}
+		else {
+			Size newSize = mFrame.size;
 
-		if(mParent) {
-			mParent->PositionSubviews();
+			if (mLayoutParams.size.width == MATCH_PARENT) {
+				newSize.width = parentSize.width;
+			}
+
+			if (mLayoutParams.size.height == MATCH_PARENT) {
+				newSize.height = parentSize.height;
+			}
+
+			Size measureSize = newSize;
+			if (mLayoutParams.size.width == WRAP_CONTENT) {
+				measureSize.width = parentSize.width;
+			}
+
+			if (mLayoutParams.size.height == WRAP_CONTENT) {
+				measureSize.height = parentSize.height;
+			}
+
+			for (View *view : mSubviews) {
+				if (view->GetVisibility() != ViewVisible) {
+					continue;
+				}
+
+				Size viewMeasureSize = measureSize;
+				const Rect &viewMargin = view->GetMargin();
+				const Rect &viewPadding = view->GetPadding();
+
+				viewMeasureSize.width = viewMeasureSize.width - viewMargin.right - viewMargin.left - mPadding.left - 
+					mPadding.right - mMargin.right - mMargin.left - viewPadding.right - viewPadding.left;
+				viewMeasureSize.height = viewMeasureSize.height - viewMargin.bottom - viewMargin.top - mPadding.top - 
+					mPadding.bottom - mMargin.bottom - viewPadding.bottom - viewPadding.top;
+
+				view->Measure(viewMeasureSize);
+			}
+
+			this->SetSize(newSize);
 		}
 
-		//Logger::Log(LogDebug, "Position subviews");
+		mLayoutInvalid = false;
 	}
 
 	View * View::CreateFromResource(const std::wstring &resource)

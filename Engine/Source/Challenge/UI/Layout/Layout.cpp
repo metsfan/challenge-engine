@@ -4,23 +4,72 @@
 
 namespace challenge
 {
-	void BaseLayout::PositionSubviews(View *view, bool updateSize)
+	void Layout::Update(int deltaMillis)
 	{
-		if (updateSize) {
-			int width = view->GetWidth(), height = view->GetHeight();
+		View::Update(deltaMillis);
 
-			TViewList subviews = view->GetSubviews();
-			for (View *view : subviews) {
-				const Frame &frame = view->GetFrame();
-				const Rect &padding = view->GetPadding();
-
-				int farX = frame.origin.x + frame.size.width + padding.left + padding.right;
-				int farY = frame.origin.y + frame.size.height + padding.top + padding.bottom;
-				width = std::max(width, farX);
-				height = std::max(height, farY);
+		if (this->GetParent()) {
+			if (this->IsLayoutInvalid()) {
+				this->Measure(this->GetParent()->GetSize());
 			}
-
-			view->SetSize(width, height);
+			
 		}
+	}
+
+	void Layout::Measure(const Size &parentSize)
+	{
+		View::Measure(parentSize);
+
+		this->PositionSubviews();
+
+		const Size &sizeSpec = this->GetLayoutParams().size;
+		if (sizeSpec.width == WRAP_CONTENT || sizeSpec.height == WRAP_CONTENT) {
+			this->WrapToSubviews();
+		}
+
+		this->PostLayout();
+	}
+
+	void Layout::WrapToSubviews()
+	{
+		const Size &spec = this->GetLayoutParams().size;
+		Size size = this->GetSize();
+
+		const Rect &padding = this->GetPadding();
+		
+		// If the size is wrap content, we can now set the size with our subviews measured
+		if (spec.width == WRAP_CONTENT) {
+			if (this->GetSubviews().size() == 0) {
+				size.width = 0;
+			}
+			else {
+				int left = INFINITY, right = -INFINITY;
+
+				for (View *view : this->GetSubviews()) {
+					left = glm::min<real>(left, view->GetX());
+					right = glm::max<real>(right, view->GetX() + view->GetWidth() + view->GetRightMargin());
+				}
+
+				size.width = (right - left) + padding.right + padding.left;
+			}
+		}
+
+		if (spec.height == WRAP_CONTENT) {
+			if (this->GetSubviews().size() == 0) {
+				size.height = 0;
+			}
+			else {
+				int top = INFINITY, bottom = -INFINITY;
+
+				for (View *view : this->GetSubviews()) {
+					top = glm::min<real>(top, view->GetY());
+					bottom = glm::max<real>(bottom, view->GetY() + view->GetHeight() + view->GetBottomMargin());
+				}
+
+				size.height = (bottom - top) + padding.bottom + padding.top;
+			}
+		}
+
+		this->SetSize(size);
 	}
 };

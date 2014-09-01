@@ -22,7 +22,8 @@ public:
 		mEnvironment = new Model("molten_chasm.model");
 		mCamera = new PerspectiveCamera(1.3, 45, 1.0, 1000.0, app->GetScreenSize());
 
-		mCamera->MoveTo(glm::vec3(-380, -45, 120));
+		mCamera->MoveBy(glm::vec3(-390, -65, 80));
+		//mCamera->Rotate(-90, glm::vec3(0, 1, 0));
 
 		// The world.
 		mPhysicsWorld = new PhysicsWorld();

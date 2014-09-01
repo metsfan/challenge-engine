@@ -25,6 +25,9 @@ namespace challenge
 		void SetPosition(glm::vec3 position);
 		virtual glm::vec3 GetPosition() const;
 
+		real GetRadius() { return mRadius; }
+		real GetHeight() { return mHeight; }
+
 		void DrawDebug(IGraphicsDevice *device, RenderState &state);
 
 	private:

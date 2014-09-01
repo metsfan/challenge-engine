@@ -4,7 +4,7 @@
 namespace challenge
 {
 	Controller::Controller() :
-		Controller(new View())
+		Controller(new View(Frame()))
 	{
 	}
 

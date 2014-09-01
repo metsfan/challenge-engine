@@ -5,7 +5,6 @@
 #include <Challenge/UI/Events/UIEventArgs.h>
 #include <Challenge/UI/Types.h>
 #include <Challenge/Util/XML/XML.h>
-#include <Challenge/UI/Layout/Layout.h>
 #include <Challenge/Util/ImageAtlas.h>
 
 namespace challenge
@@ -38,7 +37,7 @@ namespace challenge
 		}
 	};
 
-	enum ControlType 
+	enum ControlType
 	{
 		ControlTypeButton,
 		ControlTypePanel
@@ -65,6 +64,53 @@ namespace challenge
 		VerticalAlignBottom
 	};
 
+	enum ViewVisibility
+	{
+		ViewVisible,
+		ViewInvisible,
+		ViewGone
+	};
+
+	enum ViewAlignment
+	{
+		AlignmentInherit = 0,
+		AlignmentLeft = (1 << 1),
+		AlignmentRight = (1 << 2),
+		AlignmentBottom = (1 << 3),
+		AlignmentTop = (1 << 4),
+		AlignmentCenterHorizontal = (1 << 5),
+		AlignmentCenterVertical = (1 << 6),
+		AlignmentCenter = AlignmentCenterVertical | AlignmentCenterHorizontal
+	};
+
+	struct LayoutParams
+	{
+		Size size;
+		Rect measureBounds;
+		Size measureSize;
+
+		/* Relative Layout params */
+		bool alignParentTop = false;
+		bool alignParentBottom = false;
+		bool alignParentLeft = false;
+		bool alignParentRight = false;
+
+		View *leftOfView = NULL;
+		View *rightOfView = NULL;
+		View *aboveView = NULL;
+		View *belowView = NULL;
+
+		std::string leftOfViewId;
+		std::string rightOfViewId;
+		std::string aboveViewId;
+		std::string belowViewId;
+
+		/* Linear Layout params*/
+		uint32_t layoutWeight = 0;
+		ViewAlignment alignment = AlignmentInherit;
+		ViewAlignment subviewAlignment = AlignmentInherit;
+	};
+
 	class View;
 
 	typedef std::shared_ptr<View> ViewPtr;
@@ -74,7 +120,7 @@ namespace challenge
 	struct ControlMatrices {
 		glm::mat4 gWVPMatrix;
 	};
-	
+
 	__declspec(align(16))
 	struct ControlData {
 		glm::vec4 gBackgroundColor;
@@ -84,6 +130,9 @@ namespace challenge
 
 	typedef std::function<View * (Frame)> TViewCreatorFunction;
 
+	static int MATCH_PARENT = 0xFF00;
+	static int WRAP_CONTENT = 0xFF01;
+
 	class View
 	{
 		friend class Window;
@@ -91,11 +140,22 @@ namespace challenge
 		friend class ViewXMLParser;
 
 	public:
-		View(Frame frame = Frame(), LayoutType layout = LayoutTypeAbsolute);
-		View(real x, real y, real width, real height, LayoutType layout = LayoutTypeAbsolute) :
-			View(Frame(x, y, width, height), layout)
+		View(const Frame &frame = Frame());
+		View(real x, real y, real width, real height) :
+			View(Frame(x, y, width, height))
 		{
 		}
+
+		View(const Size &size = Size()) :
+			View(Frame(0, 0, size.width, size.height))
+		{
+		}
+
+		View(real width, real height) :
+			View(Size(width, height))
+		{
+		}
+
 		virtual ~View(void);
 
 		void SafeDelete();
@@ -107,7 +167,7 @@ namespace challenge
 		const std::string& GetId() { return mId; }
 
 		View * FindViewById(const std::string &id);
-		
+
 		template <typename T>
 		T * FindViewById(const std::string &id)
 		{
@@ -120,39 +180,57 @@ namespace challenge
 		const Frame& GetAdjustedFrame() { return mAdjustedFrame; }
 		const virtual Frame& GetFrame() const { return mFrame; }
 
-		virtual void SetSize(Size size) { mFrame.size = size; }
-		virtual void SetSize(int width, int height) 
+		virtual void SetSize(Size size)
+		{
+			mFrame.size = size; this->InvalidateLayout();
+			mLayoutParams.size = size;
+		}
+		virtual void SetSize(int width, int height)
 		{
 			mFrame.size.width = width;
 			mFrame.size.height = height;
+			mLayoutParams.size = Size(width, height);
+			this->InvalidateLayout();
 		}
-		virtual void SetPosition(Point point) { mFrame.origin = point; }
+		virtual void SetPosition(Point point) { mFrame.origin = point; this->InvalidateLayout(); }
 		virtual void SetPosition(real x, real y)
 		{
 			mFrame.origin.x = x;
 			mFrame.origin.y = y;
+			this->InvalidateLayout();
 		}
 
-		virtual void SetX(real x) { mFrame.origin.x = x; }
-		virtual void SetY(real y) { mFrame.origin.y = y; }
-		virtual void SetWidth(real width) { mFrame.size.width = width; }
-		virtual void SetHeight(real height) { mFrame.size.height = height; }
+		virtual void SetX(real x) { mFrame.origin.x = x; this->InvalidateLayout(); }
+		virtual void SetY(real y) { mFrame.origin.y = y; this->InvalidateLayout(); }
+
+		virtual void SetWidth(real width)
+		{
+			mFrame.size.width = width;
+			mLayoutParams.size.width = width;
+			this->InvalidateLayout();
+		}
+		virtual void SetHeight(real height)
+		{
+			mFrame.size.height = height;
+			mLayoutParams.size.height = height;
+			this->InvalidateLayout();
+		}
 
 		real GetX() { return mFrame.origin.x; }
 		real GetY() { return mFrame.origin.y; }
 		real GetWidth() { return mFrame.size.width; }
 		real GetHeight() { return mFrame.size.height; }
 
-		const Size& GetSize() { return mFrame.size;  }
-		const Point& GetPosition() { return mFrame.origin;  }
+		const Size& GetSize() { return mFrame.size; }
+		const Point& GetPosition() { return mFrame.origin; }
 
 		virtual Point GetPositionInView(const Point &position, View *other);
 
-		virtual void SetPadding(const Rect &padding) { mPadding = padding; }
-		virtual void SetLeftPadding(real padding) { mPadding.left = padding; }
-		virtual void SetBottomPadding(real padding) { mPadding.bottom = padding; }
-		virtual void SetRightPadding(real padding) { mPadding.right = padding; }
-		virtual void SetTopPadding(real padding) { mPadding.top = padding; }
+		virtual void SetPadding(const Rect &padding) { mPadding = padding; this->InvalidateLayout(); }
+		virtual void SetLeftPadding(real padding) { mPadding.left = padding; this->InvalidateLayout(); }
+		virtual void SetBottomPadding(real padding) { mPadding.bottom = padding; this->InvalidateLayout(); }
+		virtual void SetRightPadding(real padding) { mPadding.right = padding; this->InvalidateLayout(); }
+		virtual void SetTopPadding(real padding) { mPadding.top = padding; this->InvalidateLayout(); }
 
 		const Rect& GetPadding() { return mPadding; }
 		virtual real GetLeftPadding() { return mPadding.left; }
@@ -160,20 +238,32 @@ namespace challenge
 		virtual real GetRightPadding() { return mPadding.right; }
 		virtual real GetTopPadding() { return mPadding.top; }
 
+		virtual void SetMargin(const Rect &margin) { mMargin = margin; this->InvalidateLayout(); }
+		virtual void SetLeftMargin(real margin) { mMargin.left = margin; this->InvalidateLayout(); }
+		virtual void SetBottomMargin(real margin) { mMargin.bottom = margin; this->InvalidateLayout(); }
+		virtual void SetRightMargin(real margin) { mMargin.right = margin; this->InvalidateLayout(); }
+		virtual void SetTopMargin(real margin) { mMargin.top = margin; this->InvalidateLayout(); }
+
+		const Rect& GetMargin() { return mMargin; }
+		virtual real GetLeftMargin() { return mMargin.left; }
+		virtual real GetBottomMargin() { return mMargin.bottom; }
+		virtual real GetRightMargin() { return mMargin.right; }
+		virtual real GetTopMargin() { return mMargin.top; }
+
 		HorizontalAlignment GetHorizontalAlignment() { return mHoriAlign; }
 		VerticalAlignment GetVerticalAlignment() { return mVertAlign; }
 
 		void SetHorizontalAlignment(HorizontalAlignment halign) { mHoriAlign = halign; }
 		void SetVerticalAlignment(VerticalAlignment valign) { mVertAlign = valign; }
 
-		virtual void SetVisible(bool visible);
-		virtual bool IsVisible() { return mVisible; }
+		virtual void SetVisibility(ViewVisibility visibility);
+		virtual ViewVisibility GetVisibility() { return mVisibility; }
 
-		virtual void SetBackgroundColor(const Color &color) { mBackgroundColor = color; }
+		virtual void SetBackgroundColor(const Color &color) { mBackgroundColor = color; this->InvalidateLayout(); }
 		const virtual Color& GetBackgroundColor() const { return mBackgroundColor; }
 
-		void SetBorderColor(const Color &color) { mBorderColor = color; }
-		void SetBorderWidth(float width) { mBorderWidth = width; }
+		void SetBorderColor(const Color &color) { mBorderColor = color; this->InvalidateLayout(); }
+		void SetBorderWidth(float width) { mBorderWidth = width; this->InvalidateLayout(); }
 
 		virtual void SetBackgroundImage(std::wstring imageName);
 		virtual void SetBackgroundImage(std::string imageName)
@@ -193,7 +283,7 @@ namespace challenge
 		virtual void SetZPosition(float zPosition) { mZPosition = zPosition; }
 		virtual float GetZPosition() { return mZPosition; }
 
-		virtual void SetParent(View *parent) { mParent = parent; }
+		virtual void SetParent(View *parent) { mParent = parent; this->InvalidateLayout(); }
 
 		View * GetParent() const { return mParent; }
 
@@ -209,13 +299,7 @@ namespace challenge
 		real GetAlpha() { return mAlpha; }
 
 		Window* GetWindow();
-		void SetWindow(Window *window) { mWindow = window; }
-
-		void SetLayoutType(LayoutType layout);
-		void SetLayoutEngine(ILayout *layout)
-		{
-			mLayoutEngine = std::unique_ptr<ILayout>(layout);
-		}
+		void SetWindow(Window *window) { mWindow = window; this->InvalidateLayout(); }
 
 		void SetAttribute(const std::string &name, const std::string &value);
 		std::string GetAttribute(const std::string &name);
@@ -228,6 +312,25 @@ namespace challenge
 		}
 
 		virtual real GetRotation() { return mRotation; }
+
+		void SetLayoutParams(const LayoutParams &params) { mLayoutParams = params; this->InvalidateLayout(); }
+		const LayoutParams& GetLayoutParams() { return mLayoutParams; }
+
+		/* Relative Layout methods */
+		void SetAlignParentLeft(bool align) { mLayoutParams.alignParentLeft = align; this->InvalidateLayout(); }
+		void SetAlignParentRight(bool align) { mLayoutParams.alignParentRight = align; this->InvalidateLayout(); }
+		void SetAlignParentBottom(bool align) { mLayoutParams.alignParentBottom = align; this->InvalidateLayout(); }
+		void SetAlignParentTop(bool align) { mLayoutParams.alignParentTop = align; this->InvalidateLayout(); }
+
+		void SetLeftOf(View *view) { mLayoutParams.leftOfView = view; this->InvalidateLayout(); }
+		void SetRightOf(View *view) { mLayoutParams.rightOfView = view; this->InvalidateLayout(); }
+		void SetAbove(View *view) { mLayoutParams.aboveView = view; this->InvalidateLayout(); }
+		void SetBelow(View *view) { mLayoutParams.belowView = view; this->InvalidateLayout(); }
+
+		/* Linear Layout methods */
+		void SetLayoutWeight(uint32_t weight) { mLayoutParams.layoutWeight = weight; this->InvalidateLayout(); }
+		void SetAlignment(ViewAlignment align) { mLayoutParams.alignment = align; this->InvalidateLayout(); }
+		void SetSubviewAlignment(ViewAlignment align) { mLayoutParams.subviewAlignment = align; this->InvalidateLayout(); }
 
 		/* Event Delegates */
 		void AddMouseEvent(MouseEventType type, MouseEventDelegate eventDelegate);
@@ -271,14 +374,17 @@ namespace challenge
 
 		void SetFocusedInternal(bool focused) { mFocused = focused; }
 
-		virtual void PositionSubviews();
+		virtual void Measure(const Size &parentSize);
 
+		void InvalidateLayout();
+		bool IsLayoutInvalid() { return mLayoutInvalid; }
 
 	private:
 		Frame mFrame;
 		Frame mAdjustedFrame;
 		Frame mTextureFrame;
 		Rect mPadding;
+		Rect mMargin;
 		real mAlpha;
 		Color mBackgroundColor;
 		std::shared_ptr<Image> mBackgroundImage;
@@ -286,8 +392,8 @@ namespace challenge
 		std::string mBackgroundImageKey;
 		bool mBackgroundImageChanged;
 		ControlType mType;
-		bool mVisible;
-		TViewList mSubviews; 
+		ViewVisibility mVisibility;
+		TViewList mSubviews;
 		TViewList mInternalSubviews;
 		float mZPosition;
 		View * mParent;
@@ -305,9 +411,10 @@ namespace challenge
 		VerticalAlignment mVertAlign;
 		std::map<std::string, std::string> mAttributes;
 
-		Window *mWindow;
+		LayoutParams mLayoutParams;
+		bool mLayoutInvalid;
 
-		std::unique_ptr<ILayout> mLayoutEngine;
+		Window *mWindow;
 
 		TUIEventDelegateMap mDelegates;
 		TMouseEventDelegateMap mMouseDelegates;

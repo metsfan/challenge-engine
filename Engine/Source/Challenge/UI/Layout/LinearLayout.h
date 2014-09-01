@@ -11,13 +11,17 @@ namespace challenge
 		LinearLayoutHorizontal
 	};
 
-	class LinearLayout : public BaseLayout
+	class LinearLayout : public Layout
 	{
 	public:
-		LinearLayout(LinearLayoutOrientation orientation = LinearLayoutVertical);
+		LinearLayout(const Size &size = Size(), LinearLayoutOrientation orientation = LinearLayoutVertical);
 		~LinearLayout();
 
-		void PositionSubviews(View *view, bool updateSize);
+		void ParseFromXML(XMLNode &node);
+
+	protected:
+		void PositionSubviews();
+		void PostLayout();
 
 	private:
 		LinearLayoutOrientation mOrientation;

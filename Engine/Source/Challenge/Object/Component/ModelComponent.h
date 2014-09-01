@@ -22,7 +22,7 @@ namespace challenge
 
 		void SetAnimation(const std::string &animation)
 		{
-			mModel->SetActiveAnimation(animation);
+			mModel->SetActiveAnimation(animation, false);
 		}
 
 		void QueueAnimation(const std::string &animation, bool loop)

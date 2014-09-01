@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout width="match_parent"
+                height="wrap_content"
+                background_color="00FF00"
+                padding="10,10,10,10">
+  <View width="75"
+        height="100"
+        id="view1"
+        background_color="FF00FF"
+        />
+  <View width="match_parent"
+        height="50"
+        id="view2"
+        right_of="view1"
+        background_color="FFFF00"
+        />
+  <View width="match_parent"
+        height="100"
+        id="view3"
+        below="view1"
+        background_color="0000FF"
+        />
+</RelativeLayout>

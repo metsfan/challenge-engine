@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout width="wrap_content"
+              height="wrap_content"
+              background_color="00FF00"
+              padding_bottom="5">
+  <View width="80"
+        height="50"
+        background_color="FF0000"
+        />
+  <View width="60"
+        height="75"
+        background_color="FFF000"
+        />
+  <View width="105"
+        height="20"
+        background_color="FF0F0F"
+        />
+</LinearLayout>

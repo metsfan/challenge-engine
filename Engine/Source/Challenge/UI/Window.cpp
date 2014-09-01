@@ -52,7 +52,6 @@ namespace challenge
 		if (mControllerStack.size()) {
 			mControllerStack.top()->Update(deltaMillis);
 		}
-		
 
 		View::Update(deltaMillis);
 	}
@@ -153,6 +152,8 @@ namespace challenge
 		View::RegisterViewClass("Hidden", [](Frame frame) { return new HiddenView(); });
 		View::RegisterViewClass("Model3D", [](Frame frame) { return new Model3DView(frame); });
 		View::RegisterViewClass("Table", [](Frame frame) { return new TableView(frame); });
+		View::RegisterViewClass("LinearLayout", [](Frame frame) { return new LinearLayout(frame.size); });
+		View::RegisterViewClass("RelativeLayout", [](Frame frame) { return new RelativeLayout(frame.size); });
 	}
 
 	/* IKeyboardListener methods */

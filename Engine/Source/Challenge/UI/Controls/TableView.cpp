@@ -9,8 +9,6 @@ namespace challenge
 		mDataSource(NULL),
 		mListener(NULL)
 	{
-		this->SetLayoutEngine(new LinearLayout(LinearLayoutVertical));
-
 		this->AddMouseEvent(MouseEventMouseDown, [this](View *sender, const MouseEvent &e) {
 			if (!mListener) {
 				return;
@@ -52,7 +50,7 @@ namespace challenge
 				View *view = views[i];
 				const std::string &key = view->GetAttribute("key");
 				if (key.size()) {
-					view->SetVisible(false);
+					view->SetVisibility(ViewGone);
 					mReusableViewCache[key].push(view);
 				} else {
 					view->SafeDelete();
@@ -63,7 +61,7 @@ namespace challenge
 			for (int i = 0; i < numRows; i++) {
 				View *row = mDataSource->GetViewForRow(this, i);
 				row->SetAttribute("row", std::to_string(i));
-				row->SetVisible(true);
+				row->SetVisibility(ViewVisible);
 
 				this->AddSubview(row);
 			}

@@ -13,6 +13,9 @@
 #include <Challenge/UI/Controls/Model3DView.h>
 #include <Challenge/UI/Controls/FileSelectView.h>
 
+#include <Challenge/UI/Layout/LinearLayout.h>
+#include <Challenge/UI/Layout/RelativeLayout.h>
+
 #include <Challenge/UI/Dialog/AlertDialog.h>
 
 #include <Challenge/UI/Window.h>

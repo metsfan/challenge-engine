@@ -31,7 +31,7 @@ namespace challenge
 		this->AddInternalSubview(mSelectedLabel);
 		this->AddInternalSubview(mSelectButton);
 		//this->AddInternalSubview(mOptionsPanel);
-		mOptionsPanel->SetVisible(false);
+		mOptionsPanel->SetVisibility(ViewGone);
 		mOptionsPanel->SetScrollable(true);
 		mOptionsPanel->SetBackgroundColor(Color::White());
 		mOptionsPanel->SetBorderWidth(1);
@@ -42,14 +42,14 @@ namespace challenge
 		auto showSelectPanel = [this](View *sender, const MouseEvent &e) {
 			auto window = this->GetWindow();
 			if (window) {
-				if (mOptionsPanel->IsVisible()) {
-					mOptionsPanel->SetVisible(false);
+				if (mOptionsPanel->GetVisibility() == ViewVisible) {
+					mOptionsPanel->SetVisibility(ViewGone);
 					mOptionsPanel->RemoveFromSuperview();
 				}
 				else {
 					mOptionsPanel->SetPosition(this->GetPositionInView(mOptionsPanelPosition, window));
 					mOptionsPanel->SetFocused(true);
-					mOptionsPanel->SetVisible(true);
+					mOptionsPanel->SetVisibility(ViewGone);
 					window->AddSubview(mOptionsPanel);
 				}
 			}
@@ -91,7 +91,7 @@ namespace challenge
 		itemButton->SetTag(index);
 		itemButton->AddMouseEvent(MouseEventMouseUp, [this](View *sender, const MouseEvent &e) {
 			this->SetSelectedIndex(sender->GetTag());
-			mOptionsPanel->SetVisible(false);
+			mOptionsPanel->SetVisibility(ViewGone);
 			mOptionsPanel->RemoveFromSuperview();
 		});
 

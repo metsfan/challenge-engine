@@ -9,17 +9,14 @@ namespace challenge
 		Dialog(),
 		mTitleLabel(new LabelView(Frame(0, 0, 100, 30))),
 		mMessageLabel(new LabelView(Frame(0, 0, 100, 30))),
-		mButtonsView(new View())
+		mButtonsView(new View(Frame()))
 	{
-		this->SetLayoutType(LayoutTypeLinear);
-
 		this->AddInternalSubview(mTitleLabel);
 		mTitleLabel->SetText(title);
 
 		this->AddInternalSubview(mMessageLabel);
 		mMessageLabel->SetText(message);
 
-		mButtonsView->SetLayoutEngine(new LinearLayout(LinearLayoutHorizontal));
 		this->AddInternalSubview(mButtonsView);
 
 		va_list args;

@@ -57,6 +57,16 @@ namespace challenge
 		return "";
 	}
 
+	bool XMLNode::GetAttributeBoolean(const std::string &name)
+	{
+		std::string strval = this->GetAttributeString(name);
+		if (strval == "true") {
+			return true;
+		}
+
+		return false;
+	}
+
 	short XMLNode::GetAttributeShort(const std::string &name)
 	{
 		std::string strval = this->GetAttributeString(name);

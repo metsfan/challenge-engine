@@ -18,7 +18,7 @@ namespace challenge
 		}
 
 		void SetVisible(bool visible) {
-			FormElement::SetVisible(false);
+			FormElement::SetVisibility(ViewGone);
 		}
 
 		bool IsVisible() { return false; }

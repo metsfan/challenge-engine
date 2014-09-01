@@ -119,7 +119,7 @@ namespace challenge
 			}
 		}
 
-		if(this->IsVisible() && mScrollable) {
+		if(this->GetVisibility() == ViewVisible && mScrollable) {
 			const Frame &adjustedFrame = this->GetAdjustedFrame();
 			/*if(mContentSize.width > this->GetFrame().size.width) {
 				mHorizontalScrollbar->SetPosition(adjustedFrame.origin.x, mHorizontalScrollbar->GetFrame().origin.y);

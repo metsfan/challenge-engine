@@ -60,7 +60,7 @@ namespace challenge
 			mCollisionShape = new btCapsuleShape(mRadius, mHeight);
 		}
 		
-		//mCollisionShape->setMargin(mHeight);
+		mCollisionShape->setMargin(0);
 	}
 
 	void CapsuleShape::DrawDebug(IGraphicsDevice *device, RenderState &state)
@@ -70,6 +70,7 @@ namespace challenge
 		}
 
 		glm::mat4 transform = glm::translate(glm::mat4(), mPosition);
+		transform = glm::translate(transform, glm::vec3(0, -mHeight * 0.5, 0));
 		transform = glm::scale(transform, glm::vec3(mRadius, mHeight, mRadius));
 		state.PushTransform(transform);
 

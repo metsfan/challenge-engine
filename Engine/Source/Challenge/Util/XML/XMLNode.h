@@ -29,6 +29,7 @@ namespace challenge
 		void AddChild(XMLNode &node) { mChildren.push_back(node); }
 
 		std::string GetAttributeString(const std::string &name);
+		bool GetAttributeBoolean(const std::string &name);
 		short GetAttributeShort(const std::string &name);
 		int GetAttributeInt(const std::string &name);
 		float GetAttributeFloat(const std::string &name);
