@@ -146,7 +146,7 @@ namespace challenge
 		{
 		}
 
-		View(const Size &size = Size()) :
+		View(const Size &size) :
 			View(Frame(0, 0, size.width, size.height))
 		{
 		}
@@ -315,6 +315,7 @@ namespace challenge
 
 		void SetLayoutParams(const LayoutParams &params) { mLayoutParams = params; this->InvalidateLayout(); }
 		const LayoutParams& GetLayoutParams() { return mLayoutParams; }
+		virtual void Measure(const Size &parentSize);
 
 		/* Relative Layout methods */
 		void SetAlignParentLeft(bool align) { mLayoutParams.alignParentLeft = align; this->InvalidateLayout(); }
@@ -373,8 +374,6 @@ namespace challenge
 		virtual void OnLoadComplete() {}
 
 		void SetFocusedInternal(bool focused) { mFocused = focused; }
-
-		virtual void Measure(const Size &parentSize);
 
 		void InvalidateLayout();
 		bool IsLayoutInvalid() { return mLayoutInvalid; }

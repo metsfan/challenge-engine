@@ -33,10 +33,14 @@ namespace challenge
 
 		virtual void SetBackgroundColor(const Color &color);
 
+		virtual void Measure(const Size &parentSize);
+
 	protected:
 		ButtonState mState;
 		LabelView *mTitleLabel;
 
 		virtual void ParseFromXML(XMLNode &node);
+
+		
 	};
 };

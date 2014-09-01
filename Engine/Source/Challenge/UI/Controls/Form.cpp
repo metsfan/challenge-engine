@@ -108,11 +108,25 @@ namespace challenge
 
 	}
 
+	void Form::AddSubview(View *view)
+	{
+		View::AddSubview(view);
+
+		this->FindFormElements(view);
+	}
+
+	void Form::Update(int deltaMillis)
+	{
+		if (this->IsLayoutInvalid()) {
+			this->FindFormElements(this);
+		}
+
+		View::Update(deltaMillis);
+	}
+
 	void Form::Measure(const Size &parentSize)
 	{
 		View::Measure(parentSize);
-
-		this->FindFormElements(this);
 	}
 
 	void Form::FindFormElements(View *view)

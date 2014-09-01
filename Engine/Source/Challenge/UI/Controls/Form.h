@@ -26,13 +26,18 @@ namespace challenge
 
 		TFormValuesList GetValues();
 
+		void AddSubview(View *view);
+		void Update(int deltaMillis);
+
+		virtual void Measure(const Size &parentSize);
+
 	protected:
 		virtual void ParseFromXML(XMLNode &node);
 		virtual void OnXMLParseComplete();
 
 		virtual void FindFormElements(View *view);
 
-		virtual void Measure(const Size &parentSize);
+		
 
 		void AddElement(FormElement *formElement);
 		void AddMultiFormElement(MultiFormElement *formElement);

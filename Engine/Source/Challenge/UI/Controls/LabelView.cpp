@@ -41,6 +41,28 @@ namespace challenge
 		mTextChanged = true;
 	}
 
+	void LabelView::Measure(const Size &parentSize)
+	{
+		View::Measure(parentSize);
+
+		const Size &spec = this->GetLayoutParams().size;
+		Size size = this->GetSize();
+
+		TextUtilParams params;
+		params.maxWidth = parentSize.width;
+		Size textSize = TextUtil::SizeOfText(mText, mFont, params);
+
+		if (spec.width == WRAP_CONTENT) {
+			size.width = textSize.width + 5;
+		}
+
+		if (spec.height == WRAP_CONTENT) {
+			size.height = textSize.height;
+		}
+
+		this->SetSize(size);
+	}
+
 	void LabelView::Update(int deltaMillis)
 	{
 		View::Update(deltaMillis);

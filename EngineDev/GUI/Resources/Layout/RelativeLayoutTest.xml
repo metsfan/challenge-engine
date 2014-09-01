@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout width="match_parent"
-                height="wrap_content"
+                height="match_parent"
                 background_color="00FF00"
                 padding="10,10,10,10">
   <View width="75"
@@ -22,4 +22,14 @@
         margin_top="5"
         background_color="0000FF"
         />
+
+  <Button width="wrap_content"
+          height="wrap_content"
+          id="button1"
+          below="view3"
+          margin_top="10"
+          text="Click Me"
+          background_color="CC0000"
+          padding="5,5,5,5"
+          />
 </RelativeLayout>

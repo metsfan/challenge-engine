@@ -30,6 +30,8 @@ namespace challenge
 		void SetFont(Font *font) { mFont = font; }
 		Font* GetFont() { return mFont; }
 
+		virtual void Measure(const Size &parentSize);
+
 		virtual void Update(int deltaMillis);
 		virtual void Render(IGraphicsDevice *device, RenderState &state, const Frame &parentFrame);
 

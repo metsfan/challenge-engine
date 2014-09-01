@@ -39,6 +39,27 @@ namespace challenge
 	{
 		mTitleLabel->SetTextColor(color);
 	}
+
+	void ButtonView::Measure(const Size &parentSize)
+	{
+		View::Measure(parentSize);
+
+		mTitleLabel->SetSize(this->GetSize());
+		mTitleLabel->Measure(parentSize);
+
+		Size spec = this->GetLayoutParams().size;
+		Size size = this->GetSize();
+
+		if (spec.width == WRAP_CONTENT) {
+			size.width = mTitleLabel->GetWidth();
+		}
+
+		if (spec.height == WRAP_CONTENT) {
+			size.height = mTitleLabel->GetHeight();
+		}
+
+		this->SetSize(size);
+	}
 };
 
 /*void ButtonView::OnRender(GLSLProgram *program)
