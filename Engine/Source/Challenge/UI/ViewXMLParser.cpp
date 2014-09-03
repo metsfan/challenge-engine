@@ -36,9 +36,9 @@ namespace challenge
 		Rect rect;
 		if(tokens.size() == 4) {
 			rect.left = atoi(tokens[0].c_str());
-			rect.bottom = atoi(tokens[1].c_str());
+			rect.top = atoi(tokens[1].c_str());
 			rect.right = atoi(tokens[2].c_str());
-			rect.top = atoi(tokens[3].c_str());
+			rect.bottom = atoi(tokens[3].c_str());
 		}
 
 		return rect;
@@ -116,5 +116,42 @@ namespace challenge
 		}
 
 		return NULL;
+	}
+
+	ViewAlignment ViewXMLParser::ParseAlignment(const std::string &alignmentStr)
+	{
+		if (alignmentStr == "center") {
+			return AlignmentCenter;
+		}
+		else {
+			int alignment = AlignmentInherit;
+
+			auto tokens = StringUtil::SplitString(alignmentStr, std::string("|"));
+			for (int i = 0; i < tokens.size(); i++) {
+				std::string &token = tokens[i];
+
+				if (token == "left") {
+					alignment |= AlignmentLeft;
+				}
+				else if (token == "right") {
+					alignment |= AlignmentRight;
+				}
+				else if (token == "top") {
+					alignment |= AlignmentTop;
+				}
+				else if (token == "bottom") {
+					alignment |= AlignmentBottom;
+				}
+				else if (token == "center") {
+					if (i == 0) {
+						alignment |= AlignmentCenterHorizontal;
+					} else {
+						alignment |= AlignmentCenterVertical;
+					}
+				}
+			}
+
+			return (ViewAlignment)alignment;
+		}
 	}
 };

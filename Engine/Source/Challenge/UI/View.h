@@ -106,7 +106,7 @@ namespace challenge
 		std::string belowViewId;
 
 		/* Linear Layout params*/
-		uint32_t layoutWeight = 0;
+		uint32_t weight = 0;
 		ViewAlignment alignment = AlignmentInherit;
 		ViewAlignment subviewAlignment = AlignmentInherit;
 	};
@@ -329,7 +329,7 @@ namespace challenge
 		void SetBelow(View *view) { mLayoutParams.belowView = view; this->InvalidateLayout(); }
 
 		/* Linear Layout methods */
-		void SetLayoutWeight(uint32_t weight) { mLayoutParams.layoutWeight = weight; this->InvalidateLayout(); }
+		void SetLayoutWeight(uint32_t weight) { mLayoutParams.weight = weight; this->InvalidateLayout(); }
 		void SetAlignment(ViewAlignment align) { mLayoutParams.alignment = align; this->InvalidateLayout(); }
 		void SetSubviewAlignment(ViewAlignment align) { mLayoutParams.subviewAlignment = align; this->InvalidateLayout(); }
 
@@ -337,23 +337,23 @@ namespace challenge
 		void AddMouseEvent(MouseEventType type, MouseEventDelegate eventDelegate);
 		void AddKeyboardEvent(KeyboardEventType type, KeyboardEventDelegate eventDelegate);
 
-		static View * CreateFromResource(const std::wstring &resource);
+		static View * CreateFromResource(const std::wstring &resource, View *root = NULL);
 
-		static View * CreateFromResource(const std::string &resource)
+		static View * CreateFromResource(const std::string &resource, View *root = NULL)
 		{
-			return View::CreateFromResource(StringUtil::ToWide(resource));
+			return View::CreateFromResource(StringUtil::ToWide(resource), root);
 		}
 
 		template <typename T>
-		static T * CreateFromResource(const std::wstring &resource)
+		static T * CreateFromResource(const std::wstring &resource, View *root = NULL)
 		{
-			return dynamic_cast<T *>(View::CreateFromResource(resource));
+			return dynamic_cast<T *>(View::CreateFromResource(resource), root);
 		}
 
 		template <typename T>
-		static T * CreateFromResource(const std::string &resource)
+		static T * CreateFromResource(const std::string &resource, View *root = NULL)
 		{
-			return View::CreateFromResource<T>(StringUtil::ToWide(resource));
+			return View::CreateFromResource<T>(StringUtil::ToWide(resource), root);
 		}
 
 		static void RegisterViewClass(const std::string &name, TViewCreatorFunction creator);

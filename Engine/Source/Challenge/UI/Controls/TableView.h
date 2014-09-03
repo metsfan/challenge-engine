@@ -22,6 +22,8 @@ namespace challenge
 		virtual void OnRowSelected(TableView *table, View *view, uint32_t row) = 0;
 	};
 
+	class LinearLayout;
+
 	class TableView : public View
 	{
 	public:
@@ -45,6 +47,7 @@ namespace challenge
 	private:
 		ITableViewDataSource *mDataSource;
 		ITableViewListener *mListener;
+		LinearLayout *mTableRows;
 
 		std::map<std::string, std::queue<View *>> mReusableViewCache;
 	};

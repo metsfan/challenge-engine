@@ -27,6 +27,25 @@ namespace challenge
 		}
 
 		void SetText(const std::wstring &text);
+
+		template <typename T>
+		void SetPlaceholder(const T &val)
+		{
+			std::wstringstream ss;
+			ss << val;
+			this->SetPlaceholder(ss.str());
+		}
+
+		void SetPlaceholder(const std::string &text)
+		{
+			this->SetPlaceholder(StringUtil::ToWide(text));
+		}
+
+		void SetPlaceholder(const std::wstring &text)
+		{
+			mPlaceholder = text;
+		}
+
 		const std::string& GetText() { return StringUtil::ToNarrow(mText); }
 
 		void SetFont(Font *font);
@@ -41,6 +60,8 @@ namespace challenge
 
 		bool IsSecure() { return mSecure; }
 		void SetSecure(bool secure) { mSecure = secure; }
+
+		virtual void Measure(const Size &parentSize);
 
 	protected:
 		virtual void ParseFromXML(XMLNode &node);
@@ -57,6 +78,7 @@ namespace challenge
 		std::wstring mText;
 		std::wstring mSecureString;
 		Size mSecureCharSize;
+		std::wstring mPlaceholder;
 
 
 		int mKeyPressTime;

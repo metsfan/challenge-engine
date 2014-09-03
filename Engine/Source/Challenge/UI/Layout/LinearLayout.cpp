@@ -33,8 +33,11 @@ namespace challenge
 		const Rect &margin = this->GetMargin();
 		const LayoutParams &layoutParams = this->GetLayoutParams();
 
+		
+
 		Point offset(padding.left, padding.top);
 		auto &subviews = this->GetSubviews();
+
 		for (View *view : subviews) {
 			if (view->GetVisibility() != ViewVisible) {
 				continue;
@@ -69,6 +72,9 @@ namespace challenge
 				offset.y = measureBounds.bottom + viewMargin.bottom;
 			}
 		}
+
+		// Calculate weighted views
+
 
 	}
 

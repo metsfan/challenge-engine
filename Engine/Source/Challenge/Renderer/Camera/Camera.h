@@ -12,6 +12,7 @@ namespace challenge
         
         virtual void MoveBy(glm::vec3 delta);
         virtual void MoveTo(glm::vec3 position);
+		virtual void Translate(const glm::vec3 &delta);
         
         virtual void RotateBy(glm::vec3 delta);
 		virtual void Rotate(real angle, const glm::vec3 &axis);

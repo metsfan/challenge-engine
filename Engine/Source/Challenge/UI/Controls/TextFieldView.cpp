@@ -132,6 +132,10 @@ namespace challenge
 			}
 		}
 
+		if (mText.length() == 0 && mTextLabel->GetText() != mPlaceholder) {
+			mTextLabel->SetText(mPlaceholder);
+		}
+
 		View::Update(deltaMillis);
 	}
 
@@ -258,6 +262,20 @@ namespace challenge
 		}
 	}
 
+	void TextFieldView::Measure(const Size &parentSize)
+	{
+		View::Measure(parentSize);
+
+		const Size &spec = this->GetLayoutParams().size;
+		Size size = this->GetSize();
+
+		if (spec.height == WRAP_CONTENT) {
+			size.height = mTextLabel->GetFont()->GetMaxCharHeight();
+		}
+
+		this->SetSize(size);
+	}
+
 	void TextFieldView::ParseFromXML(XMLNode &node)
 	{
 		FormElement::ParseFromXML(node);
@@ -266,5 +284,9 @@ namespace challenge
 
 		bool secure = node.GetAttributeString("secure") == "true";
 		this->SetSecure(secure);
+
+		if (node.HasAttribute("placeholder")) {
+			this->SetPlaceholder(node.GetAttributeString("placeholder"));
+		}
 	}
 };

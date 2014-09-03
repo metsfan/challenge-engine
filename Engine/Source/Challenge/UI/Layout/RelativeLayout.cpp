@@ -53,11 +53,12 @@ namespace challenge
 			const Rect &viewMargin = subview->GetMargin();
 			const Rect &viewPadding = subview->GetPadding();
 			LayoutParams layoutParams = subview->GetLayoutParams();
-			Rect measureBounds(frame.origin.x, frame.origin.y,
-				frame.origin.x + frame.size.width, frame.origin.y + frame.size.height);
 
 			frame.size.width += viewPadding.left + viewPadding.right;
 			frame.size.height += viewPadding.top + viewPadding.bottom;
+
+			Rect measureBounds(frame.origin.x, frame.origin.y,
+				frame.origin.x + frame.size.width, frame.origin.y + frame.size.height);
 
 			if (layoutParams.alignParentRight && sizeSpec.width != WRAP_CONTENT) {
 				measureBounds.right = this->GetWidth() - padding.right - viewMargin.right;
@@ -78,7 +79,7 @@ namespace challenge
 
 			if (layoutParams.rightOfView) {
 				measureBounds.left = layoutParams.rightOfView->GetLayoutParams().measureBounds.right + 
-					layoutParams.rightOfView->GetMargin().right;
+					layoutParams.rightOfView->GetRightMargin();
 
 				if (!layoutParams.leftOfView && !layoutParams.alignParentRight) {
 					measureBounds.right = measureBounds.left + frame.size.width;
@@ -111,7 +112,8 @@ namespace challenge
 			}
 
 			if (layoutParams.belowView) {
-				measureBounds.top = layoutParams.belowView->GetLayoutParams().measureBounds.bottom;
+				const LayoutParams &belowLayoutParams = layoutParams.belowView->GetLayoutParams();
+				measureBounds.top = belowLayoutParams.measureBounds.bottom + layoutParams.belowView->GetBottomMargin();
 
 				if (!layoutParams.aboveView && !layoutParams.alignParentTop) {
 					measureBounds.bottom = measureBounds.top + frame.size.height;
@@ -159,25 +161,33 @@ namespace challenge
 
 	void RelativeLayout::PostLayout()
 	{
-		for (View *subview : mSortedSubviews) {
-			Frame frame = subview->GetFrame();
-			const LayoutParams &layoutParams = subview->GetLayoutParams();
+		const Size &spec = this->GetLayoutParams().size;
 
-			if (layoutParams.alignParentRight) {
-				frame.origin.x = this->GetWidth() - this->GetRightPadding() - frame.size.width;
-			}
-			else if (layoutParams.alignment & AlignmentCenterHorizontal) {
-				frame.origin.x = (this->GetWidth() - this->GetRightPadding() - frame.size.width) * 0.5;
-			}
+		if (spec.width == WRAP_CONTENT || spec.height == WRAP_CONTENT) {
+			for (View *subview : mSortedSubviews) {
+				Frame frame = subview->GetFrame();
+				const LayoutParams &layoutParams = subview->GetLayoutParams();
 
-			if (layoutParams.alignParentBottom) {
-				frame.origin.y = this->GetHeight() - this->GetBottomPadding() - frame.size.height;
-			}
-			else if (layoutParams.alignment & AlignmentCenterVertical) {
-				frame.origin.y = (this->GetHeight() - this->GetBottomPadding() - frame.size.height) * 0.5;
-			}
+				if (spec.width == WRAP_CONTENT) {
+					if (layoutParams.alignParentRight) {
+						frame.origin.x = this->GetWidth() - this->GetRightPadding() - frame.size.width;
+					}
+					else if (layoutParams.alignment & AlignmentCenterHorizontal) {
+						frame.origin.x = (this->GetWidth() - this->GetRightPadding() - frame.size.width) * 0.5;
+					}
+				}
 
-			subview->SetFrame(frame);
+				if (spec.height == WRAP_CONTENT) {
+					if (layoutParams.alignParentBottom) {
+						frame.origin.y = this->GetHeight() - this->GetBottomPadding() - frame.size.height;
+					}
+					else if (layoutParams.alignment & AlignmentCenterVertical) {
+						frame.origin.y = (this->GetHeight() - this->GetBottomPadding() - frame.size.height) * 0.5;
+					}
+				}
+
+				subview->SetFrame(frame);
+			}
 		}
 	}
 

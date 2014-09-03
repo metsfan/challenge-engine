@@ -14,6 +14,7 @@ namespace challenge
 		static Rect ParseRect(const std::string &rectStr);
 		static Size ParseSize(const std::string &sizeStr);
 		static Point ParsePoint(const std::string &pointStr);
+		static ViewAlignment ParseAlignment(const std::string &alignmentStr);
 
 	private:
 		static View * ParseView(XMLNode &node);

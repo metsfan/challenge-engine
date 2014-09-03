@@ -14,7 +14,7 @@ namespace challenge
 				return;
 			}
 
-			auto &subviews = this->GetSubviews();
+			auto &subviews = mTableRows->GetSubviews();
 
 			for (View *view : subviews) {
 				if (view->ContainsPoint(e.position)) {
@@ -24,6 +24,9 @@ namespace challenge
 				}
 			}
 		});
+
+		mTableRows = new LinearLayout(Size(MATCH_PARENT, WRAP_CONTENT));
+		this->AddSubview(mTableRows);
 	}
 
 	TableView::~TableView()
@@ -44,7 +47,7 @@ namespace challenge
 	void TableView::ReloadData()
 	{
 		if (mDataSource) {
-			TViewList views = this->RemoveAllSubviews();
+			TViewList views = mTableRows->RemoveAllSubviews();
 
 			for (int i = 0; i < views.size(); i++) {
 				View *view = views[i];
@@ -63,8 +66,10 @@ namespace challenge
 				row->SetAttribute("row", std::to_string(i));
 				row->SetVisibility(ViewVisible);
 
-				this->AddSubview(row);
+				mTableRows->AddSubview(row);
 			}
+		
+			this->InvalidateLayout();
 		}
 	}
 

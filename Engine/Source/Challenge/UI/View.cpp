@@ -36,6 +36,7 @@ namespace challenge
 	{
 		mFrameSet = (frame.origin.x != 0 || frame.origin.y != 0 ||
 			frame.size.width != 0 || frame.size.height != 0);
+		mLayoutParams.size = mFrame.size;
 	}
 
 	View::~View()
@@ -471,6 +472,14 @@ namespace challenge
 			}
 		}
 
+		if (node.HasAttribute("border_width")) {
+			this->SetBorderWidth(node.GetAttributeInt("border_width"));
+		}
+
+		if (node.HasAttribute("border_color")) {
+			this->SetBorderColor(Color::FromHexString(node.GetAttributeString("border_color")));
+		}
+
 		if (node.HasAttribute("z_index")) {
 			this->SetZPosition(node.GetAttributeFloat("z_index"));
 		}
@@ -553,28 +562,6 @@ namespace challenge
 			this->SetAttribute(pair.second.GetName(), pair.second.GetValue());
 		}
 
-		const std::string &horiAlign = node.GetAttributeString("halign");
-		if (horiAlign == "left") {
-			mHoriAlign = HorizontalAlignLeft;
-		}
-		else if (horiAlign == "center") {
-			mHoriAlign = HorizontalAlignCenter;
-		}
-		else if (horiAlign == "right") {
-			mHoriAlign = HorizontalAlignRight;
-		}
-
-		const std::string &vertAlign = node.GetAttributeString("valign");
-		if (vertAlign == "top") {
-			mVertAlign = VerticalAlignTop;
-		}
-		else if (vertAlign == "middle") {
-			mVertAlign = VerticalAlignMiddle;
-		}
-		else if (vertAlign == "bottom") {
-			mVertAlign = VerticalAlignBottom;
-		}
-
 		/* Layout params */
 		mLayoutParams.alignParentBottom = node.GetAttributeBoolean("align_parent_bottom");
 		mLayoutParams.alignParentLeft = node.GetAttributeBoolean("align_parent_left");
@@ -586,9 +573,12 @@ namespace challenge
 		mLayoutParams.leftOfViewId = node.GetAttributeString("left_of");
 		mLayoutParams.rightOfViewId = node.GetAttributeString("right_of");
 
-		mLayoutParams.layoutWeight = node.GetAttributeInt("weight");
+		mLayoutParams.weight = node.GetAttributeInt("weight");
 		mLayoutParams.alignment = AlignmentInherit;
 		mLayoutParams.subviewAlignment = AlignmentInherit;
+
+		mLayoutParams.alignment = ViewXMLParser::ParseAlignment(node.GetAttributeString("alignment"));
+		mLayoutParams.subviewAlignment = ViewXMLParser::ParseAlignment(node.GetAttributeString("subview_alignment"));
 	}
 
 	void View::OnXMLParseComplete()
@@ -625,7 +615,9 @@ namespace challenge
 				measureSize.height = parentSize.height;
 			}
 
-			for (View *view : mSubviews) {
+			auto subviews = mSubviews;
+
+			for (View *view : subviews) {
 				if (view->GetVisibility() != ViewVisible) {
 					continue;
 				}
@@ -664,11 +656,11 @@ namespace challenge
 				real left = INFINITY, right = -INFINITY;
 
 				for (View *view : this->GetSubviews()) {
-					left = glm::min<real>(left, view->GetX());
+					//left = glm::min<real>(left, view->GetX());
 					right = glm::max<real>(right, view->GetX() + view->GetWidth() + view->GetRightMargin());
 				}
 
-				size.width = (right - left) + padding.right + padding.left;
+				size.width = right + padding.right + padding.left;
 			}
 		}
 
@@ -684,19 +676,23 @@ namespace challenge
 					bottom = glm::max<real>(bottom, view->GetY() + view->GetHeight() + view->GetBottomMargin());
 				}
 
-				size.height = (bottom - top) + padding.bottom + padding.top;
+				size.height = bottom + padding.bottom + padding.top;
 			}
 		}
 
 		mFrame.size = size;
 	}
 
-	View * View::CreateFromResource(const std::wstring &resource)
+	View * View::CreateFromResource(const std::wstring &resource, View *root)
 	{
 		Asset asset(resource);
 		View *view = ViewXMLParser::Parse(&asset);
 		if (view) {
 			view->OnLoadComplete();
+		}
+
+		if (root) {
+			root->AddSubview(view);
 		}
 
 		return view;

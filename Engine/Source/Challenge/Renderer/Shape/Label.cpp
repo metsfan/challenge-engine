@@ -173,7 +173,7 @@ namespace challenge
                 
                 outlineCursor.x += outlineKerning;
                     
-                if (mHasCutOff && currentLine + 1 == mNumLines)
+                if (mHasCutOff && currentLine + 1 == mNumLines && false)
                 {
                     // We are on the last line and are at risk of needing an ellipse
                     if (outlineCursor.x + outlineSize.x + outlineEllipsis.size.x > mScaledSize.width)

@@ -40,6 +40,12 @@ namespace challenge
 		mTitleLabel->SetTextColor(color);
 	}
 
+	void ButtonView::Update(int deltaMillis)
+	{
+		mTitleLabel->SetX(this->GetLeftPadding());
+		mTitleLabel->SetY(this->GetTopPadding());
+	}
+
 	void ButtonView::Measure(const Size &parentSize)
 	{
 		View::Measure(parentSize);

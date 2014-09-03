@@ -28,6 +28,14 @@ namespace challenge
 		mViewChanged = true;
 	}
 
+	void Camera::Translate(const glm::vec3 &delta)
+	{
+		mPosition += delta;
+		mViewChanged = true;
+
+		mViewMatrix = glm::translate(mViewMatrix, delta);
+	}
+
 	void Camera::RotateBy(glm::vec3 delta)
 	{
 		mRotation += delta;

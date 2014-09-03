@@ -221,6 +221,8 @@
     <ClCompile Include="Source\Challenge\UI\Dialog\AlertDialog.cpp" />
     <ClCompile Include="Source\Challenge\UI\Dialog\Dialog.cpp" />
     <ClCompile Include="Source\Challenge\UI\Events\UIEventArgs.cpp" />
+    <ClCompile Include="Source\Challenge\UI\Layout\AbsoluteLayout.cpp" />
+    <ClCompile Include="Source\Challenge\UI\Layout\FrameLayout.cpp" />
     <ClCompile Include="Source\Challenge\UI\Layout\Layout.cpp" />
     <ClCompile Include="Source\Challenge\UI\Layout\LinearLayout.cpp" />
     <ClCompile Include="Source\Challenge\UI\Layout\RelativeLayout.cpp" />
@@ -419,6 +421,8 @@
     <ClInclude Include="Source\Challenge\UI\Dialog\AlertDialog.h" />
     <ClInclude Include="Source\Challenge\UI\Dialog\Dialog.h" />
     <ClInclude Include="Source\Challenge\UI\Events\UIEventArgs.h" />
+    <ClInclude Include="Source\Challenge\UI\Layout\AbsoluteLayout.h" />
+    <ClInclude Include="Source\Challenge\UI\Layout\FrameLayout.h" />
     <ClInclude Include="Source\Challenge\UI\Layout\Layout.h" />
     <ClInclude Include="Source\Challenge\UI\Layout\LinearLayout.h" />
     <ClInclude Include="Source\Challenge\UI\Layout\RelativeLayout.h" />

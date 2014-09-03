@@ -15,6 +15,8 @@
 
 #include <Challenge/UI/Layout/LinearLayout.h>
 #include <Challenge/UI/Layout/RelativeLayout.h>
+#include <Challenge/UI/Layout/AbsoluteLayout.h>
+#include <Challenge/UI/Layout/FrameLayout.h>
 
 #include <Challenge/UI/Dialog/AlertDialog.h>
 

@@ -53,7 +53,7 @@ namespace challenge
 		Size textSize = TextUtil::SizeOfText(mText, mFont, params);
 
 		if (spec.width == WRAP_CONTENT) {
-			size.width = textSize.width + 5;
+			size.width = textSize.width;
 		}
 
 		if (spec.height == WRAP_CONTENT) {
@@ -90,8 +90,8 @@ namespace challenge
 		//mLabel->SetAlignment(TextAlignCenter, TextAlignTop);
 
 		
-		mLabel->SetPosition(frame.origin.x + parentFrame.origin.x,
-			frame.origin.y + parentFrame.origin.y + 5);
+		mLabel->SetPosition(frame.origin.x + parentFrame.origin.x + this->GetLeftPadding(),
+			frame.origin.y + parentFrame.origin.y + this->GetTopPadding());
 
 		mLabel->Draw(device, state);
 

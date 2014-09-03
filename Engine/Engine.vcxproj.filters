@@ -303,9 +303,6 @@
     <ClCompile Include="Source\Challenge\UI\Events\UIEventArgs.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Challenge\UI\Layout\AbsoluteLayout.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Challenge\UI\Layout\Layout.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -535,6 +532,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Challenge\Math\Sphere.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\UI\Layout\RelativeLayout.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\UI\Layout\AbsoluteLayout.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Challenge\UI\Layout\FrameLayout.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -911,9 +917,6 @@
     <ClInclude Include="Source\Challenge\UI\Events\UIEventArgs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Challenge\UI\Layout\AbsoluteLayout.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Challenge\UI\Layout\Layout.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -1221,6 +1224,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Challenge\Math\Sphere.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\UI\Layout\RelativeLayout.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\UI\Layout\AbsoluteLayout.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Challenge\UI\Layout\FrameLayout.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

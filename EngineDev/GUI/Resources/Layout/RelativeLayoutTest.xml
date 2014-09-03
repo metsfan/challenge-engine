@@ -32,4 +32,15 @@
           background_color="CC0000"
           padding="5,5,5,5"
           />
+
+  <Label width="wrap_content"      
+         height="wrap_content"          
+         id="label1"        
+         below="button1"         
+         margin_top="10"         
+         text="A label"        
+         text_color="FF0000"         
+         background_color="0000FF"         
+         padding="10,10,10,10"
+          />
 </RelativeLayout>

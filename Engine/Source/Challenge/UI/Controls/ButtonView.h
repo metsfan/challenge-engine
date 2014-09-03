@@ -34,6 +34,7 @@ namespace challenge
 		virtual void SetBackgroundColor(const Color &color);
 
 		virtual void Measure(const Size &parentSize);
+		virtual void Update(int deltaMillis);
 
 	protected:
 		ButtonState mState;
