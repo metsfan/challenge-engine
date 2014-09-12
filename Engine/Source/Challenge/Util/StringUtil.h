@@ -73,9 +73,12 @@ namespace challenge
 
 		static std::string ToNarrow(const std::wstring &str)
 		{
-			std::wstring_convert<std::codecvt<wchar_t, char, std::mbstate_t>> converter;
+			std::string outStr;
+			for (int i = 0; i < str.length(); i++) {
+				outStr += (char) str[i];
+			}
 
-			return converter.to_bytes(str);
+			return outStr;
 		}
 
 	};

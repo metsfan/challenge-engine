@@ -17,7 +17,9 @@ namespace challenge
 	void RelativeLayout::PositionSubviews()
 	{
 		// Resolve any views that are referenced by ID
-		for (View *subview : this->GetSubviews()) {
+		auto subviews = this->GetSubviews();
+
+		for (View *subview : subviews) {
 			LayoutParams layoutParams = subview->GetLayoutParams();
 
 			if (!layoutParams.leftOfView && layoutParams.leftOfViewId.length()) {

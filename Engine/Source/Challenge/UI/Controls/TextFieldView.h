@@ -46,7 +46,7 @@ namespace challenge
 			mPlaceholder = text;
 		}
 
-		const std::string& GetText() { return StringUtil::ToNarrow(mText); }
+		std::string GetText() { return StringUtil::ToNarrow(mText); }
 
 		void SetFont(Font *font);
 
