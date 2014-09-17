@@ -63,6 +63,26 @@ namespace challenge
 			return *this; 
 		}
 
+		template <>
+		ByteArrayInputStream& operator>><UUID>(UUID &data)
+		{
+			if (mData.size() > mCursor) {
+				mData.resize(mData.size() * 2);
+
+				char buffer[16];
+				memcpy(&data, buffer, 16);
+
+				data.copyFrom(buffer);
+
+				mCursor += sizeof(UUID);
+			}
+			else {
+				memset(&data, 0, sizeof(UUID));
+			}
+
+			return *this;
+		}
+
 		void Read(byte *buf, int size)
 		{
 			memcpy(buf, &mData[mCursor], size);

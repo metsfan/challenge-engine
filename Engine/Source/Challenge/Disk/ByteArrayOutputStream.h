@@ -54,6 +54,22 @@ namespace challenge
 			return *this;
 		}
 
+		template <>
+		ByteArrayOutputStream& operator<<<UUID>(const UUID &data)
+		{
+			int cursor = mSize;
+
+			this->AccomdateIncrease(17);
+
+			char buffer[16];
+			data.copyTo(buffer);
+
+			memcpy(&mData[cursor], buffer, 16);
+
+			return *this;
+		}
+
+
 		TByteArray GetData() const 
 		{
 			TByteArray output;
