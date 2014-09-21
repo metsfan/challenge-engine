@@ -7,7 +7,8 @@ namespace challenge
 	TableView::TableView(Frame frame) :
 		View(frame),
 		mDataSource(NULL),
-		mListener(NULL)
+		mListener(NULL),
+		mReloadData(false)
 	{
 		this->AddMouseEvent(MouseEventMouseDown, [this](View *sender, const MouseEvent &e) {
 			if (!mListener) {
@@ -45,6 +46,11 @@ namespace challenge
 	}
 
 	void TableView::ReloadData()
+	{
+		mReloadData = true;
+	}
+
+	void TableView::ReloadDataInternal()
 	{
 		if (mDataSource) {
 			TViewList views = mTableRows->RemoveAllSubviews();
@@ -84,5 +90,15 @@ namespace challenge
 		}
 		
 		return NULL;
+	}
+
+	void TableView::Update(int deltaMillis)
+	{
+		View::Update(deltaMillis);
+
+		if (mReloadData) {
+			mReloadData = false;
+			this->ReloadDataInternal();
+		}
 	}
 };

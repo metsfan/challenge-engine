@@ -14,7 +14,7 @@ namespace challenge
 			if (e.keyCode == SpecialKeyTab) {
 				auto &subviews = this->GetSubviews();
 				bool focusNext = false;
-				for (View *view : subviews) {
+				for (View *view : mFormElements) {
 					if (focusNext) {
 						FormElement *elem = dynamic_cast<FormElement *>(view);
 						if (elem) {

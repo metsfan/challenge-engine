@@ -44,11 +44,16 @@ namespace challenge
 
 		View * GetCachedView(const std::string &key);
 
+		void Update(int deltaMillis);
+
 	private:
+		bool mReloadData;
+
 		ITableViewDataSource *mDataSource;
 		ITableViewListener *mListener;
 		LinearLayout *mTableRows;
 
 		std::map<std::string, std::queue<View *>> mReusableViewCache;
+		void ReloadDataInternal();
 	};
 };

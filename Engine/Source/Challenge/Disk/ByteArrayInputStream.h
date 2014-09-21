@@ -70,11 +70,11 @@ namespace challenge
 				mData.resize(mData.size() * 2);
 
 				char buffer[16];
-				memcpy(&data, buffer, 16);
+				memcpy(buffer, &mData[mCursor], 16);
 
 				data.copyFrom(buffer);
 
-				mCursor += sizeof(UUID);
+				mCursor += sizeof(UUID) + 1;
 			}
 			else {
 				memset(&data, 0, sizeof(UUID));
