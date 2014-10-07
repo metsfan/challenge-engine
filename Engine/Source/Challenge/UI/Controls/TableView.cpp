@@ -5,7 +5,7 @@
 namespace challenge
 {
 	TableView::TableView(Frame frame) :
-		View(frame),
+		PanelView(frame),
 		mDataSource(NULL),
 		mListener(NULL),
 		mReloadData(false)

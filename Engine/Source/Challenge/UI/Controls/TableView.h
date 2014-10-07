@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Challenge/Challenge.h>
-#include <Challenge/UI/View.h>
+#include <Challenge/UI/Controls/PanelView.h>
 
 #include <queue>
 
@@ -24,7 +24,7 @@ namespace challenge
 
 	class LinearLayout;
 
-	class TableView : public View
+	class TableView : public PanelView
 	{
 	public:
 		TableView(Frame frame = Frame());
